@@ -17,24 +17,24 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of **equatiomatic is** to reduce the pain associated with writing \LaTex 
+The goal of equatiomatic is to reduce the pain associated with writing \LaTex 
 code from a fitted model. At present, only `lm` models are handled, but the 
 hope is to expand to a greater number of models in the future.
 
 ## Installation
 
-**equatiomatic** is not yet on CRAN. Install the dev version from GitHub with
+equatiomatic is not yet on CRAN. Install the dev version from GitHub with
 
 ``` r
 remotes::install_github("datalorax/equatiomatic")
 ```
 
 ## Examples
-
 Below are a few simple examples of how to use the package. 
 
+
 ```{r example1}
-library(equatiomattic)
+library(equatiomatic)
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
@@ -57,8 +57,7 @@ extract_eq_lm(mod2)
 
 ![](man/figures/eq2.png)
 
-For categorical variables, it will place the levels for the coefficients as
-subscripts
+For categorical it will place the levels for the coefficients as subscripts
 
 ```{r example3}
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
@@ -85,7 +84,6 @@ extract_eq_lm(mod4)
 ![](man/figures/eq4.png)
 
 ## Extension
-
 This project is brand new. If you would like to contribute, we'd love your help!
 We are particularly interested in extending to more models. At present, we have
 only implemented `lm`, but hope to change that in the near future. Stay tuned!
