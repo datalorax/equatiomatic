@@ -27,7 +27,7 @@ remotes::install_github("datalorax/equatiomatic")
 Below are a few simple examples of how to use the package.
 
 ``` r
-library(equatiomattic)
+library(equatiomatic)
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
