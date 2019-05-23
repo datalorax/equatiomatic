@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
 <!-- badges: end -->
 
 The goal of equatiomatic is to reduce the pain associated with writing 
