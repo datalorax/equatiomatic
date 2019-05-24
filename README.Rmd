@@ -43,11 +43,23 @@ mod1 <- lm(mpg ~ cyl + disp, mtcars)
 extract_eq_lm(mod1)
 ```
 
-The above shows what is output to the screen. When working in R Markdown, you 
-then just need to copy the code to wherever you want your equation to show up
-and it will render like the below.
+The equation is returned as a string. You can copy/paste it into your R Markdown
+doc and it will render as
 
 ![](man/figures/eq1.png)
+
+You can make copy/pasting easier by surrounding in `cat`. Or, alternatively,
+preview the equation with `texPreview::tex_preview`.
+
+
+```{r echo = FALSE}
+library(texPreview)
+tex_opts$set(returnType='html')
+```
+
+```{r tex_preview}
+texPreview::tex_preview(extract_eq_lm(mod1))
+```
 
 It can also handle shortcut syntax. 
 

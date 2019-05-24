@@ -47,10 +47,7 @@ extract_eq_lm <- function(model) {
   rhs_eq <- paste0(betas, full_rhs, ")")
   rhs_eq <- paste("\\alpha +", paste(rhs_eq, collapse = " + "))
   error <- "+ \\epsilon"
-  cat(
-    paste("$$\n",
-          paste0(lhs_eq, rhs_eq),
-          error,
-          "\n$$")
-  )
+
+  paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
+
 }
