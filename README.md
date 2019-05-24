@@ -37,7 +37,7 @@ extract_eq_lm(mod1)
 ```
 
 The equation is returned as a string. You can copy/paste it into your R
-Markdown doc and it will render as
+Markdown doc (minus the quotes) and it will render as
 
 ![](man/figures/eq1.png)
 
@@ -54,8 +54,10 @@ It can also handle shortcut syntax.
 
 ``` r
 mod2 <- lm(mpg ~ ., mtcars)
-extract_eq_lm(mod2)
-#> [1] "$$\n mpg = \\alpha + \\beta_{1}(cyl) + \\beta_{2}(disp) + \\beta_{3}(hp) + \\beta_{4}(drat) + \\beta_{5}(wt) + \\beta_{6}(qsec) + \\beta_{7}(vs) + \\beta_{8}(am) + \\beta_{9}(gear) + \\beta_{10}(carb) + \\epsilon \n$$"
+cat(extract_eq_lm(mod2))
+#> $$
+#>  mpg = \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp) + \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs) + \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon 
+#> $$
 ```
 
 ![](man/figures/eq2.png)
@@ -65,8 +67,10 @@ subscripts
 
 ``` r
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
-extract_eq_lm(mod3)
-#> [1] "$$\n Sepal.Length = \\alpha + \\beta_{1}(Sepal.Width) + \\beta_{2}(Species_{versicolor}) + \\beta_{3}(Species_{virginica}) + \\epsilon \n$$"
+cat(extract_eq_lm(mod3))
+#> $$
+#>  Sepal.Length = \alpha + \beta_{1}(Sepal.Width) + \beta_{2}(Species_{versicolor}) + \beta_{3}(Species_{virginica}) + \epsilon 
+#> $$
 ```
 
 ![](man/figures/eq3.png)
@@ -83,8 +87,10 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
 
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 
-extract_eq_lm(mod4)
-#> [1] "$$\n out = \\alpha + \\beta_{1}(cont1) + \\beta_{2}(cat2_{B}) + \\beta_{3}(cat2_{C}) + \\beta_{4}(cont2) + \\beta_{5}(cat1_{b}) + \\beta_{6}(cat1_{c}) + \\epsilon \n$$"
+cat(extract_eq_lm(mod4))
+#> $$
+#>  out = \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \beta_{4}(cont2) + \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon 
+#> $$
 ```
 
 ![](man/figures/eq4.png)

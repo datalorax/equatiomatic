@@ -44,12 +44,12 @@ extract_eq_lm(mod1)
 ```
 
 The equation is returned as a string. You can copy/paste it into your R Markdown
-doc and it will render as
+doc (minus the quotes) and it will render as
 
 ![](man/figures/eq1.png)
 
-You can make copy/pasting easier by surrounding in `cat`. Or, alternatively,
-preview the equation with `texPreview::tex_preview`.
+You can make copy/pasting easier by surrounding in `cat`. Or,
+alternatively, preview the equation with `texPreview::tex_preview`.
 
 
 ```{r echo = FALSE}
@@ -65,7 +65,7 @@ It can also handle shortcut syntax.
 
 ```{r example2}
 mod2 <- lm(mpg ~ ., mtcars)
-extract_eq_lm(mod2)
+cat(extract_eq_lm(mod2))
 ```
 
 ![](man/figures/eq2.png)
@@ -74,7 +74,7 @@ For categorical it will place the levels for the coefficients as subscripts
 
 ```{r example3}
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
-extract_eq_lm(mod3)
+cat(extract_eq_lm(mod3))
 ```
 
 ![](man/figures/eq3.png)
@@ -91,7 +91,7 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
 
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 
-extract_eq_lm(mod4)
+cat(extract_eq_lm(mod4))
 ```
 
 ![](man/figures/eq4.png)
