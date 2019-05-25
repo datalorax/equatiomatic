@@ -11,7 +11,14 @@ Authors@R: c(
            family = "Rosenberg",
            role = "aut",
            email = "jmrosenberg@utk.edu")
+    ),
+    person(given   = 'Jonathan',
+           family  = 'Sidi',
+           role    =  'ctb',           
+           email   = 'yonis@metrumrg.com',
+           comment = c(ORCID = "https://orcid.org/0000-0002-4222-1819")
     )
+   )
 Description: The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of
              the package, extract_eq_lm, takes a fitted lm object as its input
