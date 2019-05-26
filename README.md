@@ -103,3 +103,9 @@ This project is brand new. If you would like to contribute, we’d love
 your help\! We are particularly interested in extending to more models.
 At present, we have only implemented `lm`, but hope to change that in
 the near future. Stay tuned\!
+
+## Code of Conduct
+
+Please note that the ‘equatiomatic’ project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
+this project, you agree to abide by its terms.

@@ -3,3 +3,4 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^\.travis\.yml$
+^CODE_OF_CONDUCT\.md$
