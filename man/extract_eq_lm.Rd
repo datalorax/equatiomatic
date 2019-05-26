@@ -4,7 +4,8 @@
 \alias{extract_eq_lm}
 \title{Latex code for `lm` models}
 \usage{
-extract_eq_lm(model, preview = FALSE, use_text = FALSE)
+extract_eq_lm(model, preview = FALSE, use_text = FALSE,
+  aligned = FALSE, width = 80, align_env = "aligned")
 }
 \arguments{
 \item{model}{A fitted `lm` model}
@@ -13,7 +14,18 @@ extract_eq_lm(model, preview = FALSE, use_text = FALSE)
 previewed in the viewer pane?}
 
 \item{use_text}{Logical, defaults to \code{FALSE}. Should the variable names
-be wrapped in the \code{\\text{}} command}
+be wrapped in the \code{\\text{}} command?}
+
+\item{aligned}{Logical, defaults to \code{FALSE}. Should the equation be
+inserted in a special \code{aligned} TeX environment and automatically
+wrapped to a specific width?}
+
+\item{width}{Integer, defaults to 80. The suggested of characters per line in
+the split equation. Used only when \code{aligned} is \code{TRUE}}
+
+\item{align_env}{TeX environment to wrap around equation. Must be one of
+\code{aligned}, \code{aligned*}, \code{align}, or \code{align*}. Defaults
+to \code{aligned}}
 }
 \description{
 Uses the variable names supplied to \link[stats]{lm} to produce a LaTeX
@@ -51,4 +63,10 @@ extract_eq_lm(mod1, use_text = TRUE)
 
 # Categorical variables
 extract_eq_lm(mod3, use_text = TRUE)
+
+# Wrap equations in an "aligned" environment
+extract_eq_lm(mod2, aligned = TRUE)
+
+# Wider equation wrapping
+extract_eq_lm(mod2, aligned = TRUE, width = 100)
 }
