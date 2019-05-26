@@ -56,7 +56,11 @@ extract_eq_lm <- function(model, preview = FALSE) {
   eq <- paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
 
   if(preview) {
-    return(tex_preview(eq))
+    if (!requireNamespace("texPreview", quietly = TRUE)) {
+      stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
+           call. = FALSE)
+    }
+    return(texPreview::tex_preview(eq))
   }
   cat(eq)
 }

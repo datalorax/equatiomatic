@@ -1,6 +1,5 @@
 #' @keywords internal
 #' @importFrom stats terms formula model.matrix
-#' @importFrom texPreview tex_preview
 
 "_PACKAGE"
 
