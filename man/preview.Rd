@@ -4,7 +4,7 @@
 \alias{preview}
 \title{Preview equation}
 \usage{
-preview(eq)
+preview(eq, ...)
 }
 \arguments{
 \item{eq}{LaTeX equation built with \code{build_tex}}

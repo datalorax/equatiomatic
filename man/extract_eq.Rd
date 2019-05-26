@@ -29,6 +29,8 @@ to \code{aligned}.}
 
 \item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
 estimates be included in the equation instead of math symbols?}
+
+\item{\dots}{arguments passed to \code{texPreview::\link[texPreview]{tex_preview}}}
 }
 \description{
 Extract the variable names from a model to produce a LaTeX equation, which is
