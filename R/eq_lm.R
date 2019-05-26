@@ -6,6 +6,8 @@
 #' @param model A fitted `lm` model
 #' @param preview Logical, defaults to \code{FALSE}. Should the equation be
 #' previewed in the viewer pane?
+#' @param use_text Logical, defaults to \code{FALSE}. Should the variable names
+#' be wrapped in the \code{\\text{}} command
 #'
 #' @export
 #' @examples
@@ -33,19 +35,34 @@
 #'
 #' # Or preview the equation
 #' extract_eq_lm(mod4, preview = TRUE)
+#'
+#' # Use \text{}
+#' # Simple model
+#' extract_eq_lm(mod1, use_text = TRUE)
+#'
+#' # Categorical variables
+#' extract_eq_lm(mod3, use_text = TRUE)
 
-extract_eq_lm <- function(model, preview = FALSE) {
+extract_eq_lm <- function(model, preview = FALSE, use_text = FALSE) {
+  lhs  <- all.vars(formula(model))[1]
+
   formula_rhs <- labels(terms(formula(model)))
   full_rhs  <- colnames(model.matrix(model))[-1]
 
   cat_vars <- detect_categorical(formula_rhs, full_rhs)
-  dummied <- add_dummy_subscripts(formula_rhs[cat_vars], full_rhs)
+  dummied <- add_dummy_subscripts(formula_rhs[cat_vars], full_rhs, use_text)
 
-  dummied[formula_rhs[!cat_vars]] <- formula_rhs[!cat_vars]
+  if (use_text) {
+    lhs <- wrap_text(lhs)
+
+    dummied[formula_rhs[!cat_vars]] <- wrap_text(formula_rhs[!cat_vars])
+  } else {
+    dummied[formula_rhs[!cat_vars]] <- formula_rhs[!cat_vars]
+  }
 
   full_rhs <- unlist(dummied[formula_rhs])
 
-  lhs  <- all.vars(formula(model))[1]
+  # Construct TeX
   lhs_eq <- paste(lhs, "= ")
 
   betas <- paste0("\\beta_{", seq_along(full_rhs), "}(")
@@ -55,7 +72,7 @@ extract_eq_lm <- function(model, preview = FALSE) {
 
   eq <- paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
 
-  if(preview) {
+  if (preview) {
     if (!requireNamespace("texPreview", quietly = TRUE)) {
       stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
            call. = FALSE)

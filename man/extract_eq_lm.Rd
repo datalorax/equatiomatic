@@ -4,13 +4,16 @@
 \alias{extract_eq_lm}
 \title{Latex code for `lm` models}
 \usage{
-extract_eq_lm(model, preview = FALSE)
+extract_eq_lm(model, preview = FALSE, use_text = FALSE)
 }
 \arguments{
 \item{model}{A fitted `lm` model}
 
 \item{preview}{Logical, defaults to \code{FALSE}. Should the equation be
 previewed in the viewer pane?}
+
+\item{use_text}{Logical, defaults to \code{FALSE}. Should the variable names
+be wrapped in the \code{\\text{}} command}
 }
 \description{
 Uses the variable names supplied to \link[stats]{lm} to produce a LaTeX
@@ -41,4 +44,11 @@ extract_eq_lm(mod4)
 
 # Or preview the equation
 extract_eq_lm(mod4, preview = TRUE)
+
+# Use \\text{}
+# Simple model
+extract_eq_lm(mod1, use_text = TRUE)
+
+# Categorical variables
+extract_eq_lm(mod3, use_text = TRUE)
 }
