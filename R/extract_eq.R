@@ -19,7 +19,7 @@
 #'   to \code{aligned}.
 #' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
 #'   estimates be included in the equation instead of math symbols?
-#'
+#' @param \dots arguments passed to \code{texPreview::\link[texPreview]{tex_preview}}
 #' @export
 #'
 #' @examples
@@ -77,7 +77,7 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
   eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
 
   if (preview) {
-    preview(eq)
+    preview(eq,...)
   }
 
   cat(eq)
@@ -324,10 +324,10 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
 #'
 #' @param eq LaTeX equation built with \code{build_tex}
 #'
-preview <- function(eq) {
+preview <- function(eq,...) {
   if (!requireNamespace("texPreview", quietly = TRUE)) {
     stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
          call. = FALSE)
   }
-  return(texPreview::tex_preview(eq))
+  return(texPreview::tex_preview(eq,...))
 }
