@@ -28,12 +28,10 @@ Description: The goal of equatiomatic is to reduce the pain associated with
              and returns the corresponding LaTeX code for the model.
 License: MIT + file LICENSE
 Depends: R (>= 3.3.0)
-Imports: 
-    broom, stats
-Suggests: texPreview
+Imports: broom, stats
+Suggests: texPreview,testthat
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-Suggests: 
-    testthat
+
