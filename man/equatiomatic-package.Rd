@@ -22,6 +22,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Jonathan Sidi \email{yonis@metrumrg.com} (https://orcid.org/0000-0002-4222-1819) [contributor]
+  \item Andrew Heiss \email{andrew@andrewheiss.com} (https://orcid.org/0000-0002-3948-3914) [contributor]
 }
 
 }
