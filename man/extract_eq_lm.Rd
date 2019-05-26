@@ -4,10 +4,13 @@
 \alias{extract_eq_lm}
 \title{Latex code for `lm` models}
 \usage{
-extract_eq_lm(model)
+extract_eq_lm(model, preview = FALSE)
 }
 \arguments{
 \item{model}{A fitted `lm` model}
+
+\item{preview}{Logical, defaults to \code{FALSE}. Should the equation be
+previewed in the viewer pane?}
 }
 \description{
 Uses the variable names supplied to \link[stats]{lm} to produce a LaTeX
@@ -35,4 +38,7 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
                 out   = rnorm(300, 10, 0.5))
 mod4 <- lm(out ~., d)
 extract_eq_lm(mod4)
+
+# Or preview the equation
+extract_eq_lm(mod4, preview = TRUE)
 }

@@ -4,6 +4,8 @@
 #' equation, which is output to the screen.
 #'
 #' @param model A fitted `lm` model
+#' @param preview Logical, defaults to \code{FALSE}. Should the equation be
+#' previewed in the viewer pane?
 #'
 #' @export
 #' @examples
@@ -28,8 +30,11 @@
 #'                 out   = rnorm(300, 10, 0.5))
 #' mod4 <- lm(out ~., d)
 #' extract_eq_lm(mod4)
+#'
+#' # Or preview the equation
+#' extract_eq_lm(mod4, preview = TRUE)
 
-extract_eq_lm <- function(model) {
+extract_eq_lm <- function(model, preview = FALSE) {
   formula_rhs <- labels(terms(formula(model)))
   full_rhs  <- colnames(model.matrix(model))[-1]
 
@@ -48,6 +53,10 @@ extract_eq_lm <- function(model) {
   rhs_eq <- paste("\\alpha +", paste(rhs_eq, collapse = " + "))
   error <- "+ \\epsilon"
 
-  paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
+  eq <- paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
 
+  if(preview) {
+    return(tex_preview(eq))
+  }
+  cat(eq)
 }

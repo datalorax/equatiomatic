@@ -9,9 +9,10 @@
 status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
 <!-- badges: end -->
 
-The goal of equatiomatic is to reduce the pain associated with writing 
-code from a fitted model. At present, only `lm` models are handled, but
-the hope is to expand to a greater number of models in the future.
+The goal of equatiomatic is to reduce the pain associated with writing
+LaTex code from a fitted model. At present, only `lm` models are
+handled, but the hope is to expand to a greater number of models in the
+future.
 
 ## Installation
 
@@ -30,31 +31,34 @@ Below are a few simple examples of how to use the package.
 library(equatiomatic)
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
-
 # Give the results to extract_eq_lm
 extract_eq_lm(mod1)
-#> [1] "$$\n mpg = \\alpha + \\beta_{1}(cyl) + \\beta_{2}(disp) + \\epsilon \n$$"
+#> $$
+#>  mpg = \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \epsilon 
+#> $$
 ```
 
-The equation is returned as a string. You can copy/paste it into your R
-Markdown doc (minus the quotes) and it will render as
+Including the above in an R Markdown document with `results = "asis"`
+will render the equation to look like the below.
 
 ![](man/figures/eq1.png)
 
-You can make copy/pasting easier by surrounding in `cat`. Or,
-alternatively, preview the equation with `texPreview::tex_preview`.
+Alternatively, you can run the code interactively, copy/paste the
+equation to where you want it in your doc, and make any edits you’d
+like. There is also the optional `preview` argument that will allow you
+to see what the equations look like before you have them rendered.
 
 ``` r
-texPreview::tex_preview(extract_eq_lm(mod1))
+extract_eq_lm(mod1, preview = TRUE)
 ```
 
-<img src="man/figures/README-tex_preview-1.png" width="100%" />
+<img src="man/figures/README-example-preview-1.png" width="100%" />
 
 It can also handle shortcut syntax.
 
 ``` r
 mod2 <- lm(mpg ~ ., mtcars)
-cat(extract_eq_lm(mod2))
+extract_eq_lm(mod2)
 #> $$
 #>  mpg = \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp) + \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs) + \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon 
 #> $$
@@ -67,7 +71,7 @@ subscripts
 
 ``` r
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
-cat(extract_eq_lm(mod3))
+extract_eq_lm(mod3)
 #> $$
 #>  Sepal.Length = \alpha + \beta_{1}(Sepal.Width) + \beta_{2}(Species_{versicolor}) + \beta_{3}(Species_{virginica}) + \epsilon 
 #> $$
@@ -84,10 +88,8 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
                cont1 = rnorm(300, 100, 1),
                cont2 = rnorm(300, 50, 5),
                out   = rnorm(300, 10, 0.5))
-
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
-
-cat(extract_eq_lm(mod4))
+extract_eq_lm(mod4)
 #> $$
 #>  out = \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \beta_{4}(cont2) + \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon 
 #> $$
