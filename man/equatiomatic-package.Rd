@@ -19,5 +19,10 @@ Authors:
   \item Joshua Rosenberg \email{jmrosenberg@utk.edu}
 }
 
+Other contributors:
+\itemize{
+  \item Jonathan Sidi \email{yonis@metrumrg.com} (https://orcid.org/0000-0002-4222-1819) [contributor]
+}
+
 }
 \keyword{internal}
