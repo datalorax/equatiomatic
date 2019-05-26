@@ -2,18 +2,20 @@
 % Please edit documentation in R/eq_lm.R
 \name{extract_eq_lm}
 \alias{extract_eq_lm}
-\title{Latex code for `lm` models}
+\title{Latex code for \code{lm} models}
 \usage{
-extract_eq_lm(model, preview = FALSE)
+extract_eq_lm(model, preview = FALSE, ...)
 }
 \arguments{
-\item{model}{A fitted `lm` model}
+\item{model}{A fitted \code{lm} model}
 
 \item{preview}{Logical, defaults to \code{FALSE}. Should the equation be
 previewed in the viewer pane?}
+
+\item{\dots}{arguments passed to \link[texPreview:tex_preview]{tex_preview}}
 }
 \description{
-Uses the variable names supplied to \link[stats]{lm} to produce a LaTeX
+Uses the variable names supplied to \link[stats:lm]{lm} to produce a LaTeX
 equation, which is output to the screen.
 }
 \examples{
@@ -41,4 +43,7 @@ extract_eq_lm(mod4)
 
 # Or preview the equation
 extract_eq_lm(mod4, preview = TRUE)
+}
+\seealso{
+\code{\link[texPreview]{tex_preview}}
 }

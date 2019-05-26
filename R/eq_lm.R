@@ -1,12 +1,12 @@
 #' Latex code for `lm` models
 #'
-#' Uses the variable names supplied to \link[stats]{lm} to produce a LaTeX
+#' Uses the variable names supplied to [lm][stats::lm] to produce a LaTeX
 #' equation, which is output to the screen.
 #'
 #' @param model A fitted `lm` model
 #' @param preview Logical, defaults to \code{FALSE}. Should the equation be
 #' previewed in the viewer pane?
-#'
+#' @param \dots arguments passed to [tex_preview][texPreview::tex_preview]
 #' @export
 #' @examples
 #'
@@ -33,34 +33,39 @@
 #'
 #' # Or preview the equation
 #' extract_eq_lm(mod4, preview = TRUE)
+#' @seealso
+#'  \code{\link[texPreview]{tex_preview}}
+#' @importFrom texPreview tex_preview
+extract_eq_lm <- function(model, preview = FALSE,...) {
 
-extract_eq_lm <- function(model, preview = FALSE) {
-  formula_rhs <- labels(terms(formula(model)))
-  full_rhs  <- colnames(model.matrix(model))[-1]
+  formula_rhs <- labels(stats::terms(stats::formula(model)))
+  full_rhs    <- colnames(stats::model.matrix(model))[-1]
 
-  cat_vars <- detect_categorical(formula_rhs, full_rhs)
-  dummied <- add_dummy_subscripts(formula_rhs[cat_vars], full_rhs)
+  cat_vars    <- detect_categorical(formula_rhs, full_rhs)
+  dummied     <- add_dummy_subscripts(formula_rhs[cat_vars], full_rhs)
 
   dummied[formula_rhs[!cat_vars]] <- formula_rhs[!cat_vars]
 
   full_rhs <- unlist(dummied[formula_rhs])
 
-  lhs  <- all.vars(formula(model))[1]
-  lhs_eq <- paste(lhs, "= ")
+  lhs      <- all.vars(stats::formula(model))[1]
+  lhs_eq   <- paste(lhs, "= ")
 
-  betas <- paste0("\\beta_{", seq_along(full_rhs), "}(")
-  rhs_eq <- paste0(betas, full_rhs, ")")
-  rhs_eq <- paste("\\alpha +", paste(rhs_eq, collapse = " + "))
-  error <- "+ \\epsilon"
+  betas    <- paste0("\\beta_{", seq_along(full_rhs), "}(")
+  rhs_eq   <- paste0(betas, full_rhs, ")")
+  rhs_eq   <- paste("\\alpha +", paste(rhs_eq, collapse = " + "))
+  error    <- "+ \\epsilon"
 
-  eq <- paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
+  eq       <- paste("$$\n", paste0(lhs_eq, rhs_eq), error, "\n$$")
 
   if(preview) {
-    if (!requireNamespace("texPreview", quietly = TRUE)) {
-      stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
-           call. = FALSE)
-    }
-    return(texPreview::tex_preview(eq))
+
+    texPreview::tex_preview(eq,...)
+
+  }else{
+
+    cat(eq)
+    invisible(eq)
   }
-  cat(eq)
+
 }

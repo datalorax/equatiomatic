@@ -1,6 +1,6 @@
 Package: equatiomatic
 Title: Transform models into LaTeX equations
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person(given = "Daniel",
            family = "Anderson",
@@ -23,7 +23,11 @@ Description: The goal of equatiomatic is to reduce the pain associated with
              the package, extract_eq_lm, takes a fitted lm object as its input
              and returns the corresponding LaTeX code for the model.
 License: MIT + file LICENSE
-Suggests: texPreview
+Depends: R (>= 3.3.0)
+Imports: texPreview, stats
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
+Suggests: 
+    testthat

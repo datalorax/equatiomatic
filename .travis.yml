@@ -1,4 +1,19 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
 cache: packages
+os:
+- linux
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y texlive-base texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+  texlive-fonts-extra
+- tlmgr install standalone
+addons:
+  apt:
+    update:
+    - true
+    sources:
+    - sourceline: ppa:opencpu/imagemagick
+    packages:
+    - libmagick++-dev
