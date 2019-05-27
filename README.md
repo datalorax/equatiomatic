@@ -25,12 +25,18 @@ remotes::install_github("datalorax/equatiomatic")
 
 ## Examples
 
-Below are a few simple examples of how to use the package.
+![](man/figures/equatiomatic.gif)
+
+The gif above shows the basic functionality.
+
+In non-gif form:
 
 ``` r
 library(equatiomatic)
+
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
+
 # Give the results to extract_eq_lm
 extract_eq_lm(mod1)
 #> $$
@@ -66,8 +72,8 @@ extract_eq_lm(mod2)
 
 ![](man/figures/eq2.png)
 
-For categorical it will place the levels for the coefficients as
-subscripts
+For categorical variables, it will place the levels of the variables as
+subscripts.
 
 ``` r
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
@@ -79,7 +85,7 @@ extract_eq_lm(mod3)
 
 ![](man/figures/eq3.png)
 
-And it preserves the order the variables are supplied in
+It preserves the order the variables are supplied in the formula.
 
 ``` r
 set.seed(8675309)
@@ -96,6 +102,35 @@ extract_eq_lm(mod4)
 ```
 
 ![](man/figures/eq4.png)
+
+You can wrap the equations at a specified width, which defaults to 80.
+
+``` r
+extract_eq_lm(mod4, aligned = TRUE)
+#> $$
+#> \begin{aligned}
+#> out =& \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \\
+#> & \beta_{4}(cont2) + \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon
+#> \end{aligned}
+#> $$
+```
+
+![](man/figures/eq5.png)
+
+And you can optionally have the variables themselves be non-italicized.
+
+``` r
+extract_eq_lm(mod4, aligned = TRUE, width = 100, use_text = TRUE)
+#> $$
+#> \begin{aligned}
+#> \text{out} =& \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \\
+#> & \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \\
+#> & \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon
+#> \end{aligned}
+#> $$
+```
+
+![](man/figures/eq6.png)
 
 ## Extension
 
