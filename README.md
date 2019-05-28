@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# equatiomatic
+# equatiomatic <img src="tools/logo.png" align="right"/>
 
 <!-- badges: start -->
 
