@@ -67,20 +67,16 @@ extract_eq_lm <- function(model, preview = FALSE, use_text = FALSE,
   lhs  <- all.vars(formula(model))[1]
 
   formula_rhs <- labels(terms(formula(model)))
-  full_rhs  <- colnames(model.matrix(model))[-1]
+  full_rhs  <- names(coef(model))[-1]
 
   cat_vars <- detect_categorical(formula_rhs, full_rhs)
   dummied <- add_dummy_subscripts(formula_rhs[cat_vars], full_rhs, use_text)
 
   if (use_text) {
     lhs <- wrap_text(lhs)
-
-    dummied[formula_rhs[!cat_vars]] <- wrap_text(formula_rhs[!cat_vars])
-  } else {
-    dummied[formula_rhs[!cat_vars]] <- formula_rhs[!cat_vars]
   }
 
-  full_rhs <- unlist(dummied[formula_rhs])
+  full_rhs <- unlist(dummied)
 
   # Construct TeX
   betas <- paste0("\\beta_{", seq_along(full_rhs), "}(")
