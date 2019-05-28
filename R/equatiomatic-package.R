@@ -1,5 +1,5 @@
 #' @keywords internal
-#' @importFrom stats terms formula model.matrix
+#' @importFrom stats terms formula coef
 
 "_PACKAGE"
 
