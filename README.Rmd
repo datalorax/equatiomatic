@@ -62,14 +62,13 @@ where you want it in your doc, and make any edits you'd like. There is also the
 optional `preview` argument that will allow you to see what the equations look
 like before you have them rendered.
 
-```{r echo = FALSE}
-library(texPreview)
-tex_opts$set(returnType = 'html')
-```
-
-```{r example-preview, out.width = "50%"}
+```{r example-preview, eval = FALSE}
 extract_eq(mod1, preview = TRUE)
 ```
+
+and it will show up in your RStudio view pane like below.
+
+![](man/figures/preview.png)
 
 You can also request it return the actual coefficients
 

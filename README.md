@@ -58,10 +58,11 @@ to see what the equations look like before you have them rendered.
 
 ``` r
 extract_eq(mod1, preview = TRUE)
-#> $$
-#>  \text{mpg} = \alpha + \beta_{1} (\text{cyl}) + \beta_{2} (\text{disp}) + \epsilon 
-#> $$
 ```
+
+and it will show up in your RStudio view pane like below.
+
+![](man/figures/preview.png)
 
 You can also request it return the actual coefficients
 
