@@ -71,6 +71,14 @@ tex_opts$set(returnType = 'html')
 extract_eq(mod1, preview = TRUE)
 ```
 
+You can also request it return the actual coefficients
+
+```{r use_coefs}
+extract_eq(mod1, use_coefs = TRUE)
+```
+
+![](man/figures/eq2.png)
+
 It can also handle shortcut syntax. 
 
 ```{r example2}
@@ -78,7 +86,7 @@ mod2 <- lm(mpg ~ ., mtcars)
 extract_eq(mod2)
 ```
 
-![](man/figures/eq2.png)
+![](man/figures/eq3.png)
 
 For categorical variables, it will place the levels of the variables as
 subscripts.
@@ -88,7 +96,7 @@ mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
 extract_eq(mod3)
 ```
 
-![](man/figures/eq3.png)
+![](man/figures/eq4.png)
 
 It preserves the order the variables are supplied in the formula.
 
@@ -103,7 +111,7 @@ mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 extract_eq(mod4)
 ```
 
-![](man/figures/eq4.png)
+![](man/figures/eq5.png)
 
 
 You can wrap the equations at a specified width, which defaults to 80.
@@ -112,7 +120,8 @@ You can wrap the equations at a specified width, which defaults to 80.
 extract_eq(mod4, wrap = TRUE)
 ```
 
-![](man/figures/eq5.png)
+![](man/figures/eq6.png)
+
 
 And you can optionally have the variables themselves be italicized.
 
@@ -120,7 +129,7 @@ And you can optionally have the variables themselves be italicized.
 extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
 ```
 
-![](man/figures/eq6.png)
+![](man/figures/eq7.png)
 
 You're not limited to just `lm` models! You should be able to use any model
 supported by [**broom**](https://cran.r-project.org/package=broom), like
@@ -137,7 +146,7 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 ```
 
-![](man/figures/eq7.png)
+![](man/figures/eq8.png)
 
 
 ## Extension
