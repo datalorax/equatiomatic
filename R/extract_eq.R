@@ -77,7 +77,7 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
   eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
 
   if (preview) {
-    preview(eq)
+    return(preview(eq))
   }
 
   cat(eq)
@@ -172,21 +172,21 @@ extract_rhs <- function(model) {
 
   # Loop through the full_rhs data frame and build a list of all model
   # estimates, terms, subscripts, and interactions
-  rhs <- mapply(function(eq_term, eq_estimate) {
-    sapply(eq_term, function(single_term) {
+  rhs <- Map(function(eq_term, eq_estimate) {
+    vapply(eq_term, function(single_term) {
       # Check if an overarching term (e.g. "Species") is at the beginning of an
       # existing term (e.g. "Speciesversicolor"). If so, separate the combined
       # term into term and subscript elements
-      extracted <- sapply(formula_rhs_terms, function(possible_term) {
+      extracted <- lapply(formula_rhs_terms, function(possible_term) {
         if (grepl(paste0("^", possible_term, "."), single_term)) {
           list(term = possible_term,
                subscript = gsub(possible_term, "", single_term),
                estimate = eq_estimate)
         }
-      }, USE.NAMES = FALSE)
+      })
 
       # Remove all NULLs from extracted
-      extracted[sapply(extracted, is.null)] <- NULL
+      extracted[vapply(extracted, is.null, logical(1))] <- NULL
 
       # Return extracted pieces
       if (length(extracted) == 0) {
@@ -195,8 +195,8 @@ extract_rhs <- function(model) {
       } else {
         list(extracted[[1]])
       }
-    }, USE.NAMES = FALSE)
-  }, full_rhs$split, full_rhs$estimate, SIMPLIFY = FALSE)
+    }, list(1), USE.NAMES = FALSE)
+  }, full_rhs$split, full_rhs$estimate)
 
   names(rhs) <- full_rhs$term
 
@@ -247,37 +247,43 @@ texify_term <- function(term, ital_vars) {
 #' @return A character string
 #'
 build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-                      width = width, align_env = align_env, use_coefs = use_coefs) {
+                      width = width, align_env = align_env,
+                      use_coefs = use_coefs) {
   lhs <- texify_term(lhs, ital_vars)
 
   rhs_no_intercept <- rhs[!grepl("(Intercept)", rhs)]
 
-  # Convert each equation element to TeX, adding subscripts and \text{}s where needed
-  texified_terms <- sapply(rhs_no_intercept, function(eq_term) {
-    sapply(eq_term, function(term_elements) {
+  # Convert each equation element to TeX, adding subscripts and \text{}s where
+  # needed
+  texified_terms <- lapply(rhs_no_intercept, function(eq_term) {
+    vapply(eq_term, function(term_elements) {
 
       if (exists("subscript", where = term_elements)) {
-        out <- paste0(texify_term(term_elements[["term"]], ital_vars = ital_vars),
+        out <- paste0(texify_term(term_elements[["term"]],
+                                  ital_vars = ital_vars),
                       "_{",
-                      texify_term(term_elements[["subscript"]], ital_vars = ital_vars),
+                      texify_term(term_elements[["subscript"]],
+                                  ital_vars = ital_vars),
                       "}")
       } else {
         out <- texify_term(term_elements[["term"]], ital_vars = ital_vars)
       }
 
       out
-    })
+    }, character(1))
   })
 
   # If any of the texified terms are length > 1, they're interaction terms and
   # need to be joined by \times
-  with_interactions <- sapply(texified_terms, function(x) {
+  with_interactions <- vapply(texified_terms, function(x) {
     paste(x, collapse = " \\times ")
-  })
+  }, character(1))
 
   # Build a list of equation coefficients, either \beta_{i} or the actual value
   if (use_coefs) {
-    coef_estimates <- sapply(rhs_no_intercept, function(x) x[[1]][["estimate"]])
+    coef_estimates <- vapply(rhs_no_intercept,
+                             function(x) x[[1]][["estimate"]],
+                             double(1))
     coefs <- round(coef_estimates, 2)
 
     intercept_raw <- rhs[grepl("(Intercept)", rhs)][[1]][[1]][["estimate"]]
