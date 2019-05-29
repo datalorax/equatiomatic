@@ -22,33 +22,45 @@ Extract a nested list of the explanatory/independent/x variables of a model
 mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
 
 str(extract_rhs(mod1))
-#> List of 6
-#>  $ Sepal.Width                   :List of 1
-#>   ..$ :List of 1
-#>   .. ..$ term: chr "Sepal.Width"
-#>  $ Speciesversicolor             :List of 1
-#>   ..$ :List of 2
-#>   .. ..$ term     : chr "Species"
-#>   .. ..$ subscript: chr "versicolor"
-#>  $ Speciesvirginica              :List of 1
-#>   ..$ :List of 2
-#>   .. ..$ term     : chr "Species"
-#>   .. ..$ subscript: chr "virginica"
-#>  $ Petal.Length                  :List of 1
-#>   ..$ :List of 1
-#>   .. ..$ term: chr "Petal.Length"
-#>  $ Speciesversicolor:Petal.Length:List of 2
-#>   ..$ :List of 2
-#>   .. ..$ term     : chr "Species"
-#>   .. ..$ subscript: chr "versicolor"
-#>   ..$ :List of 1
-#>   .. ..$ term: chr "Petal.Length"
-#>  $ Speciesvirginica:Petal.Length :List of 2
-#>   ..$ :List of 2
-#>   .. ..$ term     : chr "Species"
-#>   .. ..$ subscript: chr "virginica"
-#>   ..$ :List of 1
-#>   .. ..$ term: chr "Petal.Length"
+#>List of 7
+#> $ (Intercept)                   :List of 1
+#>  ..$ :List of 2
+#>  .. ..$ term    : chr "(Intercept)"
+#>  .. ..$ estimate: num 2.93
+#> $ Sepal.Width                   :List of 1
+#>  ..$ :List of 2
+#>  .. ..$ term    : chr "Sepal.Width"
+#>  .. ..$ estimate: num 0.45
+#> $ Speciesversicolor             :List of 1
+#>  ..$ :List of 3
+#>  .. ..$ term     : chr "Species"
+#>  .. ..$ subscript: chr "versicolor"
+#>  .. ..$ estimate : num -1.05
+#> $ Speciesvirginica              :List of 1
+#>  ..$ :List of 3
+#>  .. ..$ term     : chr "Species"
+#>  .. ..$ subscript: chr "virginica"
+#>  .. ..$ estimate : num -2.62
+#> $ Petal.Length                  :List of 1
+#>  ..$ :List of 2
+#>  .. ..$ term    : chr "Petal.Length"
+#>  .. ..$ estimate: num 0.368
+#> $ Speciesversicolor:Petal.Length:List of 2
+#>  ..$ :List of 3
+#>  .. ..$ term     : chr "Species"
+#>  .. ..$ subscript: chr "versicolor"
+#>  .. ..$ estimate : num 0.292
+#>  ..$ :List of 2
+#>  .. ..$ term    : chr "Petal.Length"
+#>  .. ..$ estimate: num 0.292
+#> $ Speciesvirginica:Petal.Length :List of 2
+#>  ..$ :List of 3
+#>  .. ..$ term     : chr "Species"
+#>  .. ..$ subscript: chr "virginica"
+#>  .. ..$ estimate : num 0.523
+#>  ..$ :List of 2
+#>  .. ..$ term    : chr "Petal.Length"
+#>  .. ..$ estimate: num 0.523
 }
 }
 \keyword{internal}

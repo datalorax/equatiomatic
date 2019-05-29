@@ -116,33 +116,45 @@ extract_lhs <- function(model) {
 #' mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
 #'
 #' str(extract_rhs(mod1))
-#' #> List of 6
-#' #>  $ Sepal.Width                   :List of 1
-#' #>   ..$ :List of 1
-#' #>   .. ..$ term: chr "Sepal.Width"
-#' #>  $ Speciesversicolor             :List of 1
-#' #>   ..$ :List of 2
-#' #>   .. ..$ term     : chr "Species"
-#' #>   .. ..$ subscript: chr "versicolor"
-#' #>  $ Speciesvirginica              :List of 1
-#' #>   ..$ :List of 2
-#' #>   .. ..$ term     : chr "Species"
-#' #>   .. ..$ subscript: chr "virginica"
-#' #>  $ Petal.Length                  :List of 1
-#' #>   ..$ :List of 1
-#' #>   .. ..$ term: chr "Petal.Length"
-#' #>  $ Speciesversicolor:Petal.Length:List of 2
-#' #>   ..$ :List of 2
-#' #>   .. ..$ term     : chr "Species"
-#' #>   .. ..$ subscript: chr "versicolor"
-#' #>   ..$ :List of 1
-#' #>   .. ..$ term: chr "Petal.Length"
-#' #>  $ Speciesvirginica:Petal.Length :List of 2
-#' #>   ..$ :List of 2
-#' #>   .. ..$ term     : chr "Species"
-#' #>   .. ..$ subscript: chr "virginica"
-#' #>   ..$ :List of 1
-#' #>   .. ..$ term: chr "Petal.Length"
+#' #>List of 7
+#' #> $ (Intercept)                   :List of 1
+#' #>  ..$ :List of 2
+#' #>  .. ..$ term    : chr "(Intercept)"
+#' #>  .. ..$ estimate: num 2.93
+#' #> $ Sepal.Width                   :List of 1
+#' #>  ..$ :List of 2
+#' #>  .. ..$ term    : chr "Sepal.Width"
+#' #>  .. ..$ estimate: num 0.45
+#' #> $ Speciesversicolor             :List of 1
+#' #>  ..$ :List of 3
+#' #>  .. ..$ term     : chr "Species"
+#' #>  .. ..$ subscript: chr "versicolor"
+#' #>  .. ..$ estimate : num -1.05
+#' #> $ Speciesvirginica              :List of 1
+#' #>  ..$ :List of 3
+#' #>  .. ..$ term     : chr "Species"
+#' #>  .. ..$ subscript: chr "virginica"
+#' #>  .. ..$ estimate : num -2.62
+#' #> $ Petal.Length                  :List of 1
+#' #>  ..$ :List of 2
+#' #>  .. ..$ term    : chr "Petal.Length"
+#' #>  .. ..$ estimate: num 0.368
+#' #> $ Speciesversicolor:Petal.Length:List of 2
+#' #>  ..$ :List of 3
+#' #>  .. ..$ term     : chr "Species"
+#' #>  .. ..$ subscript: chr "versicolor"
+#' #>  .. ..$ estimate : num 0.292
+#' #>  ..$ :List of 2
+#' #>  .. ..$ term    : chr "Petal.Length"
+#' #>  .. ..$ estimate: num 0.292
+#' #> $ Speciesvirginica:Petal.Length :List of 2
+#' #>  ..$ :List of 3
+#' #>  .. ..$ term     : chr "Species"
+#' #>  .. ..$ subscript: chr "virginica"
+#' #>  .. ..$ estimate : num 0.523
+#' #>  ..$ :List of 2
+#' #>  .. ..$ term    : chr "Petal.Length"
+#' #>  .. ..$ estimate: num 0.523
 #' }
 extract_rhs <- function(model) {
   # Extract RHS from formula
@@ -151,18 +163,15 @@ extract_rhs <- function(model) {
   # Extract unique terms from formula (no interactions)
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
 
-  # Extract coefficients from model
-  full_rhs_raw <- broom::tidy(model, quick = TRUE)$term
+  # Extract coefficient names and values from model
+  full_rhs <- broom::tidy(model, quick = TRUE)
 
-  # Remove intercept (since some models might be intercept-less and we don't
-  # want to automatically remove the first element with full_rhs[-1])
-  full_rhs <- full_rhs_raw[!grepl("(Intercept)", full_rhs_raw)]
+  # Split interactions split into character vectors
+  full_rhs$split <- strsplit(full_rhs$term, ":")
 
-  # Make a list of all terms, with interactions split into character vectors
-  split_rhs <- sapply(full_rhs, function(x) strsplit(x, ":"))
-
-  # Build list of all model terms, subscripts, and interactions
-  rhs <- lapply(split_rhs, function(eq_term) {
+  # Loop through the full_rhs data frame and build a list of all model
+  # estimates, terms, subscripts, and interactions
+  rhs <- mapply(function(eq_term, eq_estimate) {
     sapply(eq_term, function(single_term) {
       # Check if an overarching term (e.g. "Species") is at the beginning of an
       # existing term (e.g. "Speciesversicolor"). If so, separate the combined
@@ -170,7 +179,8 @@ extract_rhs <- function(model) {
       extracted <- sapply(formula_rhs_terms, function(possible_term) {
         if (grepl(paste0("^", possible_term, "."), single_term)) {
           list(term = possible_term,
-               subscript = gsub(possible_term, "", single_term))
+               subscript = gsub(possible_term, "", single_term),
+               estimate = eq_estimate)
         }
       }, USE.NAMES = FALSE)
 
@@ -179,13 +189,15 @@ extract_rhs <- function(model) {
 
       # Return extracted pieces
       if (length(extracted) == 0) {
-        list(list(term = single_term))
+        list(list(term = single_term,
+                  estimate = eq_estimate))
       } else {
         list(extracted[[1]])
       }
     }, USE.NAMES = FALSE)
+  }, full_rhs$split, full_rhs$estimate, SIMPLIFY = FALSE)
 
-  })
+  names(rhs) <- full_rhs$term
 
   return(rhs)
 }
