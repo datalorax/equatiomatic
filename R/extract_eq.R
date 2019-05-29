@@ -17,6 +17,8 @@
 #' @param align_env TeX environment to wrap around equation. Must be one of
 #'   \code{aligned}, \code{aligned*}, \code{align}, or \code{align*}. Defaults
 #'   to \code{aligned}.
+#' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
+#'   estimates be included in the equation instead of math symbols?
 #'
 #' @export
 #'
@@ -54,6 +56,9 @@
 #' # Wider equation wrapping
 #' extract_eq(mod2, wrap = TRUE, width = 150)
 #'
+#' # Include model estimates instead of Greek letters
+#' extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
+#'
 #' # Use other model types, like glm
 #' set.seed(8675309)
 #' d <- data.frame(out = sample(0:1, 100, replace = TRUE),
@@ -65,11 +70,11 @@
 #' extract_eq(mod5, wrap = TRUE)
 #'
 extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-                       width = 120, align_env = "aligned") {
+                       width = 120, align_env = "aligned", use_coefs = FALSE) {
   lhs <- extract_lhs(model)
   rhs <- extract_rhs(model)
 
-  eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env)
+  eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
 
   if (preview) {
     if (!requireNamespace("texPreview", quietly = TRUE)) {
@@ -241,15 +246,18 @@ texify_term <- function(term, ital_vars) {
 #' @param wrap Passed from \code{extract_eq}
 #' @param width Passed from \code{extract_eq}
 #' @param align_env Passed from \code{extract_eq}
+#' @param use_coefs Passed from \code{extract_eq}
 #'
 #' @return A character string
 #'
 build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-                      width = width, align_env = align_env) {
+                      width = width, align_env = align_env, use_coefs = use_coefs) {
   lhs <- texify_term(lhs, ital_vars)
 
+  rhs_no_intercept <- rhs[!grepl("(Intercept)", rhs)]
+
   # Convert each equation element to TeX, adding subscripts and \text{}s where needed
-  texified_terms <- sapply(rhs, function(eq_term) {
+  texified_terms <- sapply(rhs_no_intercept, function(eq_term) {
     sapply(eq_term, function(term_elements) {
 
       if (exists("subscript", where = term_elements)) {
@@ -271,15 +279,26 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
     paste(x, collapse = " \\times ")
   })
 
-  # Create vector of subscripted betas
-  betas <- paste0("\\beta_{", seq_along(with_interactions), "}")
+  # Build a list of equation coefficients, either \beta_{i} or the actual value
+  if (use_coefs) {
+    coef_estimates <- sapply(rhs_no_intercept, function(x) x[[1]][["estimate"]])
+    coefs <- round(coef_estimates, 2)
 
-  # Add betas to terms and concatenate with +s
-  with_betas <- paste0(betas, "(", with_interactions, ")", collapse = " + ")
+    intercept_raw <- rhs[grepl("(Intercept)", rhs)][[1]][[1]][["estimate"]]
+    intercept <- paste0(round(intercept_raw, 2), " + ")
+  } else {
+    # Create vector of subscripted betas
+    coefs <- paste0("\\beta_{", seq_along(with_interactions), "}")
+
+    intercept <- "\\alpha + "
+  }
+
+  # Add betas or coefs to terms and concatenate with +s
+  with_coefs <- paste0(coefs, " (", with_interactions, ")", collapse = " + ")
 
   # Create complete equation, wrapped if needed
   if (wrap) {
-    full_eq <- paste0(lhs, " =& ", "\\alpha + ", with_betas, " + \\epsilon")
+    full_eq <- paste0(lhs, " =& ", intercept, with_coefs, " + \\epsilon")
 
     # Wrap equation
     eq_wrapped <- strwrap(full_eq, width = width, prefix = "& ", initial = "")
@@ -291,7 +310,7 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
                  "\n\\end{", align_env, "}",
                  "\n$$")
   } else {
-    full_eq <- paste0(lhs, " = ", "\\alpha + ", with_betas, " + \\epsilon")
+    full_eq <- paste0(lhs, " = ", intercept, with_coefs, " + \\epsilon")
 
     eq <- paste("$$\n", full_eq, "\n$$")
   }

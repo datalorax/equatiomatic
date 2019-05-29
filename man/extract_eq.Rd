@@ -5,7 +5,7 @@
 \title{LaTeX code for R models}
 \usage{
 extract_eq(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-  width = 120, align_env = "aligned")
+  width = 120, align_env = "aligned", use_coefs = FALSE)
 }
 \arguments{
 \item{model}{A fitted model}
@@ -26,6 +26,9 @@ line in the wrapped equation. Used only when \code{aligned} is \code{TRUE}.}
 \item{align_env}{TeX environment to wrap around equation. Must be one of
 \code{aligned}, \code{aligned*}, \code{align}, or \code{align*}. Defaults
 to \code{aligned}.}
+
+\item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
+estimates be included in the equation instead of math symbols?}
 }
 \description{
 Extract the variable names from a model to produce a LaTeX equation, which is
@@ -65,6 +68,9 @@ extract_eq(mod2, wrap = TRUE)
 
 # Wider equation wrapping
 extract_eq(mod2, wrap = TRUE, width = 150)
+
+# Include model estimates instead of Greek letters
+extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
 
 # Use other model types, like glm
 set.seed(8675309)
