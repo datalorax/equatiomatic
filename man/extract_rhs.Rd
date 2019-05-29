@@ -18,7 +18,7 @@ A list with one element per future equation term. Term components
 Extract a nested list of the explanatory/independent/x variables of a model
 }
 \examples{
-
+\dontrun{
 mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
 
 str(extract_rhs(mod1))
@@ -49,6 +49,6 @@ str(extract_rhs(mod1))
 #>   .. ..$ subscript: chr "virginica"
 #>   ..$ :List of 1
 #>   .. ..$ term: chr "Petal.Length"
-
+}
 }
 \keyword{internal}

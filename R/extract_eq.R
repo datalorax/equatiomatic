@@ -112,8 +112,7 @@ extract_lhs <- function(model) {
 #'   like subscripts are nested inside each list element. List elements with two
 #'   or more terms are interactions.
 #'
-#' @examples
-#'
+#' @examples \dontrun{
 #' mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
 #'
 #' str(extract_rhs(mod1))
@@ -144,7 +143,7 @@ extract_lhs <- function(model) {
 #' #>   .. ..$ subscript: chr "virginica"
 #' #>   ..$ :List of 1
 #' #>   .. ..$ term: chr "Petal.Length"
-#'
+#' }
 extract_rhs <- function(model) {
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))  # RHS in formula
