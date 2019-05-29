@@ -12,15 +12,19 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # equatiomatic <img src="tools/logo.png" align="right"/>
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
+[![Travis build status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic) 
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of equatiomatic is to reduce the pain associated with writing LaTex 
-code from a fitted model. At present, only `lm` models are handled, but the 
-hope is to expand to a greater number of models in the future.
+The goal of **equatiomatic** is to reduce the pain associated with writing LaTeX
+code from a fitted model. In the future, the package will support any model
+supported by [**broom**](https://cran.r-project.org/package=broom); so far it
+has only been tested with `lm` and `glm` models.
+
 
 ## Installation
 
@@ -36,10 +40,7 @@ remotes::install_github("datalorax/equatiomatic")
 
 The gif above shows the basic functionality. 
 
-
-
 In non-gif form: 
-
 
 ```{r example1}
 library(equatiomatic)
@@ -47,8 +48,8 @@ library(equatiomatic)
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
-# Give the results to extract_eq_lm
-extract_eq_lm(mod1)
+# Give the results to extract_eq
+extract_eq(mod1)
 ```
 
 Including the above in an R Markdown document with `results = "asis"` will
@@ -63,18 +64,18 @@ like before you have them rendered.
 
 ```{r echo = FALSE}
 library(texPreview)
-tex_opts$set(returnType='html')
+tex_opts$set(returnType = 'html')
 ```
 
-```{r example-preview}
-extract_eq_lm(mod1, preview = TRUE)
+```{r example-preview, out.width = "50%"}
+extract_eq(mod1, preview = TRUE)
 ```
 
 It can also handle shortcut syntax. 
 
 ```{r example2}
 mod2 <- lm(mpg ~ ., mtcars)
-extract_eq_lm(mod2)
+extract_eq(mod2)
 ```
 
 ![](man/figures/eq2.png)
@@ -84,7 +85,7 @@ subscripts.
 
 ```{r example3}
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
-extract_eq_lm(mod3)
+extract_eq(mod3)
 ```
 
 ![](man/figures/eq3.png)
@@ -99,7 +100,7 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
                cont2 = rnorm(300, 50, 5),
                out   = rnorm(300, 10, 0.5))
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
-extract_eq_lm(mod4)
+extract_eq(mod4)
 ```
 
 ![](man/figures/eq4.png)
@@ -108,23 +109,44 @@ extract_eq_lm(mod4)
 You can wrap the equations at a specified width, which defaults to 80.
 
 ```{r example5}
-extract_eq_lm(mod4, aligned = TRUE)
+extract_eq(mod4, wrap = TRUE)
 ```
 
 ![](man/figures/eq5.png)
 
-And you can optionally have the variables themselves be non-italicized.
+And you can optionally have the variables themselves be italicized.
 
 ```{r example6}
-extract_eq_lm(mod4, aligned = TRUE, width = 100, use_text = TRUE)
+extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
 ```
 
 ![](man/figures/eq6.png)
 
+You're not limited to just `lm` models! You should be able to use any model
+supported by [**broom**](https://cran.r-project.org/package=broom), like
+logistic regression with `glm()`:
+
+```{r example7}
+set.seed(8675309)
+d <- data.frame(out = sample(0:1, 100, replace = TRUE),
+                cat1 = rep(letters[1:3], 100),
+                cat2 = rep(LETTERS[1:3], each = 100),
+                cont1 = rnorm(300, 100, 1),
+                cont2 = rnorm(300, 50, 5))
+mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
+extract_eq(mod5, wrap = TRUE)
+```
+
+![](man/figures/eq7.png)
+
+
 ## Extension
+
 This project is brand new. If you would like to contribute, we'd love your help!
 We are particularly interested in extending to more models. At present, we have
-only implemented `lm`, but hope to change that in the near future. Stay tuned!
+only tested `lm` and `glm`, but hope to support any model supported by
+[**broom**](https://cran.r-project.org/package=broom) in the future.
+
 
 ## Code of Conduct
 

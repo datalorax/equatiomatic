@@ -7,12 +7,14 @@
 
 [![Travis build
 status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
-The goal of equatiomatic is to reduce the pain associated with writing
-LaTex code from a fitted model. At present, only `lm` models are
-handled, but the hope is to expand to a greater number of models in the
-future.
+The goal of **equatiomatic** is to reduce the pain associated with
+writing LaTeX code from a fitted model. In the future, the package will
+support any model supported by
+[**broom**](https://cran.r-project.org/package=broom); so far it has
+only been tested with `lm` and `glm` models.
 
 ## Installation
 
@@ -37,10 +39,10 @@ library(equatiomatic)
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
-# Give the results to extract_eq_lm
-extract_eq_lm(mod1)
+# Give the results to extract_eq
+extract_eq(mod1)
 #> $$
-#>  mpg = \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \epsilon 
+#>  \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon 
 #> $$
 ```
 
@@ -55,18 +57,18 @@ like. There is also the optional `preview` argument that will allow you
 to see what the equations look like before you have them rendered.
 
 ``` r
-extract_eq_lm(mod1, preview = TRUE)
+extract_eq(mod1, preview = TRUE)
 ```
 
-<img src="man/figures/README-example-preview-1.png" width="100%" />
+<img src="man/figures/README-example-preview-1.png" width="50%" />
 
 It can also handle shortcut syntax.
 
 ``` r
 mod2 <- lm(mpg ~ ., mtcars)
-extract_eq_lm(mod2)
+extract_eq(mod2)
 #> $$
-#>  mpg = \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp) + \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs) + \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon 
+#>  \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon 
 #> $$
 ```
 
@@ -77,9 +79,9 @@ subscripts.
 
 ``` r
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
-extract_eq_lm(mod3)
+extract_eq(mod3)
 #> $$
-#>  Sepal.Length = \alpha + \beta_{1}(Sepal.Width) + \beta_{2}(Species_{versicolor}) + \beta_{3}(Species_{virginica}) + \epsilon 
+#>  \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon 
 #> $$
 ```
 
@@ -95,9 +97,9 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
                cont2 = rnorm(300, 50, 5),
                out   = rnorm(300, 10, 0.5))
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
-extract_eq_lm(mod4)
+extract_eq(mod4)
 #> $$
-#>  out = \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \beta_{4}(cont2) + \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon 
+#>  \text{out} = \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon 
 #> $$
 ```
 
@@ -106,38 +108,63 @@ extract_eq_lm(mod4)
 You can wrap the equations at a specified width, which defaults to 80.
 
 ``` r
-extract_eq_lm(mod4, aligned = TRUE)
+extract_eq(mod4, wrap = TRUE)
 #> $$
 #> \begin{aligned}
-#> out =& \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \\
-#> & \beta_{4}(cont2) + \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon
+#> \text{out} =& \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) \\
+#> & + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
 
 ![](man/figures/eq5.png)
 
-And you can optionally have the variables themselves be non-italicized.
+And you can optionally have the variables themselves be italicized.
 
 ``` r
-extract_eq_lm(mod4, aligned = TRUE, width = 100, use_text = TRUE)
+extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
 #> $$
 #> \begin{aligned}
-#> \text{out} =& \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \\
-#> & \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \\
-#> & \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon
+#> out =& \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \beta_{4}(cont2) + \\
+#> & \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
 
 ![](man/figures/eq6.png)
 
+You’re not limited to just `lm` models\! You should be able to use any
+model supported by
+[**broom**](https://cran.r-project.org/package=broom), like logistic
+regression with `glm()`:
+
+``` r
+set.seed(8675309)
+d <- data.frame(out = sample(0:1, 100, replace = TRUE),
+                cat1 = rep(letters[1:3], 100),
+                cat2 = rep(LETTERS[1:3], each = 100),
+                cont1 = rnorm(300, 100, 1),
+                cont2 = rnorm(300, 50, 5))
+mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
+extract_eq(mod5, wrap = TRUE)
+#> $$
+#> \begin{aligned}
+#> \text{out} =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \\
+#> & \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \\
+#> & \beta_{6}(\text{cont2}) + \epsilon
+#> \end{aligned}
+#> $$
+```
+
+![](man/figures/eq7.png)
+
 ## Extension
 
 This project is brand new. If you would like to contribute, we’d love
 your help\! We are particularly interested in extending to more models.
-At present, we have only implemented `lm`, but hope to change that in
-the near future. Stay tuned\!
+At present, we have only tested `lm` and `glm`, but hope to support any
+model supported by [**broom**](https://cran.r-project.org/package=broom)
+in the future.
 
 ## Code of Conduct
 

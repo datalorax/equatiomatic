@@ -1,4 +1,5 @@
 #' @keywords internal
+#' @importFrom broom tidy
 #' @importFrom stats terms formula coef
 
 "_PACKAGE"
