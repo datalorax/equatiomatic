@@ -317,7 +317,7 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
 
 #' Preview equation
 #'
-#' Use \code{texPreview::\link[broom]{tex_preview}} to preview the final
+#' Use \code{texPreview::\link[texPreview]{tex_preview}} to preview the final
 #' equation.
 #'
 #' @keywords internal
