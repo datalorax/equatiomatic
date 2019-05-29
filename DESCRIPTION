@@ -27,6 +27,8 @@ Description: The goal of equatiomatic is to reduce the pain associated with
              the package, extract_eq_lm, takes a fitted lm object as its input
              and returns the corresponding LaTeX code for the model.
 License: MIT + file LICENSE
+Imports: 
+    broom
 Suggests: texPreview
 Encoding: UTF-8
 LazyData: true
