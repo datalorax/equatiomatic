@@ -67,7 +67,7 @@ library(texPreview)
 tex_opts$set(returnType = 'html')
 ```
 
-```{r example-preview}
+```{r example-preview, out.width = "50%"}
 extract_eq(mod1, preview = TRUE)
 ```
 
@@ -137,7 +137,7 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 ```
 
-**TODO: Insert image here**
+![](man/figures/eq7.png)
 
 
 ## Extension

@@ -60,7 +60,7 @@ to see what the equations look like before you have them rendered.
 extract_eq(mod1, preview = TRUE)
 ```
 
-<img src="man/figures/README-example-preview-1.png" width="100%" />
+<img src="man/figures/README-example-preview-1.png" width="50%" />
 
 It can also handle shortcut syntax.
 
@@ -156,7 +156,7 @@ extract_eq(mod5, wrap = TRUE)
 #> $$
 ```
 
-**TODO: Insert image here**
+![](man/figures/eq7.png)
 
 ## Extension
 
