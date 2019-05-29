@@ -77,11 +77,7 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
   eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
 
   if (preview) {
-    if (!requireNamespace("texPreview", quietly = TRUE)) {
-      stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
-           call. = FALSE)
-    }
-    return(texPreview::tex_preview(eq))
+    preview(eq)
   }
 
   cat(eq)
@@ -316,4 +312,22 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
   }
 
   return(eq)
+}
+
+
+#' Preview equation
+#'
+#' Use \code{texPreview::\link[broom]{tex_preview}} to preview the final
+#' equation.
+#'
+#' @keywords internal
+#'
+#' @param eq LaTeX equation built with \code{build_tex}
+#'
+preview <- function(eq) {
+  if (!requireNamespace("texPreview", quietly = TRUE)) {
+    stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
+         call. = FALSE)
+  }
+  return(texPreview::tex_preview(eq))
 }
