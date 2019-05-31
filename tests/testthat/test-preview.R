@@ -10,7 +10,6 @@ testthat::describe('preview',{
   it('texPreview',{
     ret <- extract_eq(fit,preview = TRUE)
     testthat::expect_equal(ret,expect_fit)
-
   })
 
   texPreview::tex_opts$restore()

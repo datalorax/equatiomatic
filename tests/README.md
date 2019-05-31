@@ -1,6 +1,6 @@
 Tests and Coverage
 ================
-31 May, 2019 06:41:41
+31 May, 2019 06:53:45
 
   - [Coverage](#coverage)
   - [Unit Tests](#unit-tests)
@@ -28,8 +28,8 @@ package.
 
 | file                                      | n |  time | error | failed | skipped | warning |
 | :---------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-basic.R](testthat/test-basic.R)     | 2 | 0.125 |     0 |      0 |       0 |       0 |
-| [test-preview.R](testthat/test-preview.R) | 1 | 0.230 |     0 |      0 |       0 |       0 |
+| [test-basic.R](testthat/test-basic.R)     | 2 | 0.020 |     0 |      0 |       0 |       0 |
+| [test-preview.R](testthat/test-preview.R) | 1 | 0.236 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -38,9 +38,9 @@ package.
 
 | file                                          | context | test                   | status | n |  time |
 | :-------------------------------------------- | :------ | :--------------------- | :----- | -: | ----: |
-| [test-basic.R](testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.015 |
-| [test-basic.R](testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.110 |
-| [test-preview.R](testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.230 |
+| [test-basic.R](testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.017 |
+| [test-basic.R](testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.003 |
+| [test-preview.R](testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.236 |
 
 </details>
 

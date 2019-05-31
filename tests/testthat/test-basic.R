@@ -16,7 +16,6 @@ testthat::describe('extract',{
   it('all variables',{
     ret <- extract_eq(fit1)
     testthat::expect_equal(ret,expect_fit1)
-
   })
 
 })

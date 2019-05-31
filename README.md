@@ -55,8 +55,10 @@ will render the equation to look like the below.
 
 Alternatively, you can run the code interactively, copy/paste the
 equation to where you want it in your doc, and make any edits you’d
-like. There is also the optional `preview` argument that will allow you
-to see what the equations look like before you have them rendered.
+like.
+
+There is also the optional `preview` argument that will allow you to see
+what the equations look like before you have them rendered.
 
 ``` r
 extract_eq(mod1, preview = TRUE)
