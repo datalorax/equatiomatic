@@ -17,6 +17,8 @@ addons:
     - sourceline: ppa:opencpu/imagemagick
     packages:
     - libmagick++-dev
+r_packages:
+- devtools
 r_github_packages:
 - metrumresearchgroup/covrpage
 #- r-lib/pkgdown
