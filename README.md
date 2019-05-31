@@ -44,7 +44,7 @@ mod1 <- lm(mpg ~ cyl + disp, mtcars)
 # Give the results to extract_eq
 extract_eq(mod1)
 #> $$
-#>  \text{mpg} = \alpha + \beta_{1} (\text{cyl}) + \beta_{2} (\text{disp}) + \epsilon 
+#>   \text{mpg} = \alpha + \beta_{1} (\text{cyl}) + \beta_{2} (\text{disp}) + \epsilon
 #> $$
 ```
 
@@ -71,7 +71,7 @@ You can also request it return the actual coefficients
 ``` r
 extract_eq(mod1, use_coefs = TRUE)
 #> $$
-#>  \text{mpg} = 34.66 + -1.59 (\text{cyl}) + -0.02 (\text{disp}) + \epsilon 
+#>   \text{mpg} = 34.66 + -1.59 (\text{cyl}) + -0.02 (\text{disp}) + \epsilon
 #> $$
 ```
 
@@ -83,7 +83,7 @@ It can also handle shortcut syntax.
 mod2 <- lm(mpg ~ ., mtcars)
 extract_eq(mod2)
 #> $$
-#>  \text{mpg} = \alpha + \beta_{1} (\text{cyl}) + \beta_{2} (\text{disp}) + \beta_{3} (\text{hp}) + \beta_{4} (\text{drat}) + \beta_{5} (\text{wt}) + \beta_{6} (\text{qsec}) + \beta_{7} (\text{vs}) + \beta_{8} (\text{am}) + \beta_{9} (\text{gear}) + \beta_{10} (\text{carb}) + \epsilon 
+#>   \text{mpg} = \alpha + \beta_{1} (\text{cyl}) + \beta_{2} (\text{disp}) + \beta_{3} (\text{hp}) + \beta_{4} (\text{drat}) + \beta_{5} (\text{wt}) + \beta_{6} (\text{qsec}) + \beta_{7} (\text{vs}) + \beta_{8} (\text{am}) + \beta_{9} (\text{gear}) + \beta_{10} (\text{carb}) + \epsilon
 #> $$
 ```
 
@@ -96,7 +96,7 @@ subscripts.
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
 extract_eq(mod3)
 #> $$
-#>  \text{Sepal.Length} = \alpha + \beta_{1} (\text{Sepal.Width}) + \beta_{2} (\text{Species}_{\text{versicolor}}) + \beta_{3} (\text{Species}_{\text{virginica}}) + \epsilon 
+#>   \text{Sepal.Length} = \alpha + \beta_{1} (\text{Sepal.Width}) + \beta_{2} (\text{Species}_{\text{versicolor}}) + \beta_{3} (\text{Species}_{\text{virginica}}) + \epsilon
 #> $$
 ```
 
@@ -114,7 +114,7 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 extract_eq(mod4)
 #> $$
-#>  \text{out} = \alpha + \beta_{1} (\text{cont1}) + \beta_{2} (\text{cat2}_{\text{B}}) + \beta_{3} (\text{cat2}_{\text{C}}) + \beta_{4} (\text{cont2}) + \beta_{5} (\text{cat1}_{\text{b}}) + \beta_{6} (\text{cat1}_{\text{c}}) + \epsilon 
+#>   \text{out} = \alpha + \beta_{1} (\text{cont1}) + \beta_{2} (\text{cat2}_{\text{B}}) + \beta_{3} (\text{cat2}_{\text{C}}) + \beta_{4} (\text{cont2}) + \beta_{5} (\text{cat1}_{\text{b}}) + \beta_{6} (\text{cat1}_{\text{c}}) + \epsilon
 #> $$
 ```
 
@@ -123,13 +123,12 @@ extract_eq(mod4)
 You can wrap the equations at a specified width, which defaults to 80.
 
 ``` r
-extract_eq(mod4, wrap = TRUE)
+print(extract_eq(mod4),width=80)
 #> $$
-#> \begin{aligned}
-#> \text{out} =& \alpha + \beta_{1} (\text{cont1}) + \beta_{2} (\text{cat2}_{\text{B}}) + \beta_{3} \\
-#> & (\text{cat2}_{\text{C}}) + \beta_{4} (\text{cont2}) + \beta_{5} (\text{cat1}_{\text{b}}) + \beta_{6} \\
-#> & (\text{cat1}_{\text{c}}) + \epsilon
-#> \end{aligned}
+#>   \text{out} &= \alpha + \beta_{1} (\text{cont1}) + \beta_{2} \\
+#>   & (\text{cat2}_{\text{B}}) + \beta_{3} (\text{cat2}_{\text{C}}) + \beta_{4} \\
+#>   & (\text{cont2}) + \beta_{5} (\text{cat1}_{\text{b}}) + \beta_{6} \\
+#>   & (\text{cat1}_{\text{c}}) + \epsilon
 #> $$
 ```
 
@@ -138,12 +137,11 @@ extract_eq(mod4, wrap = TRUE)
 And you can optionally have the variables themselves be italicized.
 
 ``` r
-extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
+print(extract_eq(mod4, ital_vars = TRUE),width = 80)
 #> $$
-#> \begin{aligned}
-#> out =& \alpha + \beta_{1} (cont1) + \beta_{2} (cat2_{B}) + \beta_{3} (cat2_{C}) + \beta_{4} (cont2) \\
-#> & + \beta_{5} (cat1_{b}) + \beta_{6} (cat1_{c}) + \epsilon
-#> \end{aligned}
+#>   out &= \alpha + \beta_{1} (cont1) + \beta_{2} (cat2_{B}) + \beta_{3} (cat2_{C}) \\
+#>   & + \beta_{4} (cont2) + \beta_{5} (cat1_{b}) + \beta_{6} (cat1_{c}) + \\
+#>   & \epsilon
 #> $$
 ```
 
@@ -162,13 +160,12 @@ d <- data.frame(out = sample(0:1, 100, replace = TRUE),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5))
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
-extract_eq(mod5, wrap = TRUE)
+print(extract_eq(mod5),width=80)
 #> $$
-#> \begin{aligned}
-#> \text{out} =& \alpha + \beta_{1} (\text{cat1}_{\text{b}}) + \beta_{2} (\text{cat1}_{\text{c}}) + \beta_{3} \\
-#> & (\text{cat2}_{\text{B}}) + \beta_{4} (\text{cat2}_{\text{C}}) + \beta_{5} (\text{cont1}) + \beta_{6} (\text{cont2}) + \\
-#> & \epsilon
-#> \end{aligned}
+#>   \text{out} &= \alpha + \beta_{1} (\text{cat1}_{\text{b}}) + \beta_{2} \\
+#>   & (\text{cat1}_{\text{c}}) + \beta_{3} (\text{cat2}_{\text{B}}) + \beta_{4} \\
+#>   & (\text{cat2}_{\text{C}}) + \beta_{5} (\text{cont1}) + \beta_{6} \\
+#>   & (\text{cont2}) + \epsilon
 #> $$
 ```
 

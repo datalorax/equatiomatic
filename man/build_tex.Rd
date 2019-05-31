@@ -4,8 +4,7 @@
 \alias{build_tex}
 \title{Build a complete TeX equation}
 \usage{
-build_tex(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-  width = width, align_env = align_env, use_coefs = use_coefs)
+build_tex(lhs, rhs, ital_vars = ital_vars, use_coefs = use_coefs)
 }
 \arguments{
 \item{lhs}{Left-hand side of the equation; character; comes from
@@ -15,12 +14,6 @@ build_tex(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
 from \code{extract_rhs}}
 
 \item{ital_vars}{Passed from \code{extract_eq}}
-
-\item{wrap}{Passed from \code{extract_eq}}
-
-\item{width}{Passed from \code{extract_eq}}
-
-\item{align_env}{Passed from \code{extract_eq}}
 
 \item{use_coefs}{Passed from \code{extract_eq}}
 }

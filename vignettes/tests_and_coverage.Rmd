@@ -30,8 +30,9 @@ Coverage summary is created using the
 
 | Object                               | Coverage (%) |
 | :----------------------------------- | :----------: |
-| equatiomatic                         |    82.05     |
-| [R/extract\_eq.R](https://github.com/yonicd/equatiomatic/tree/master/R/extract_eq.R) |    82.05     |
+| equatiomatic                         |      0       |
+| [R/extract\_eq.R](https://github.com/yonicd/equatiomatic/tree/printer/R/extract_eq.R) |      0       |
+| [R/printer.R](https://github.com/yonicd/equatiomatic/tree/printer/R/printer.R)        |      0       |
 
 <br>
 
@@ -43,8 +44,8 @@ package.
 
 | file                                      | n |  time | error | failed | skipped | warning |
 | :---------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-basic.R)     | 2 | 0.125 |     0 |      0 |       0 |       0 |
-| [test-preview.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-preview.R) | 1 | 0.230 |     0 |      0 |       0 |       0 |
+| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/printer/tests/testthat/test-basic.R)     | 2 | 0.006 |     0 |      0 |       0 |       0 |
+| [test-preview.R](https://github.com/yonicd/equatiomatic/tree/printer/tests/testthat/test-preview.R) | 1 | 0.226 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -53,9 +54,9 @@ package.
 
 | file                                          | context | test                   | status | n |  time |
 | :-------------------------------------------- | :------ | :--------------------- | :----- | -: | ----: |
-| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.015 |
-| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.110 |
-| [test-preview.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.230 |
+| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/printer/tests/testthat/test-basic.R#L14)     | basic   | extract: default       | PASS   | 1 | 0.003 |
+| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/printer/tests/testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.003 |
+| [test-preview.R](https://github.com/yonicd/equatiomatic/tree/printer/tests/testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.226 |
 
 </details>
 

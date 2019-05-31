@@ -1,6 +1,6 @@
 Tests and Coverage
 ================
-26 May, 2019 08:04:55
+31 May, 2019 17:46:39
 
   - [Coverage](#coverage)
   - [Unit Tests](#unit-tests)
@@ -13,11 +13,11 @@ This output is created by
 Coverage summary is created using the
 [covr](https://github.com/r-lib/covr) package.
 
-| Object                     | Coverage (%) |
-| :------------------------- | :----------: |
-| equatiomatic               |     100      |
-| [R/eq\_lm.R](../R/eq_lm.R) |     100      |
-| [R/utils.R](../R/utils.R)  |     100      |
+| Object                               | Coverage (%) |
+| :----------------------------------- | :----------: |
+| equatiomatic                         |      0       |
+| [R/extract\_eq.R](../R/extract_eq.R) |      0       |
+| [R/printer.R](../R/printer.R)        |      0       |
 
 <br>
 
@@ -29,8 +29,8 @@ package.
 
 | file                                      | n |  time | error | failed | skipped | warning |
 | :---------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-basic.R](testthat/test-basic.R)     | 2 | 0.005 |     0 |      0 |       0 |       0 |
-| [test-preview.R](testthat/test-preview.R) | 1 | 0.219 |     0 |      0 |       0 |       0 |
+| [test-basic.R](testthat/test-basic.R)     | 2 | 0.006 |     0 |      0 |       0 |       0 |
+| [test-preview.R](testthat/test-preview.R) | 1 | 0.226 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -39,9 +39,9 @@ package.
 
 | file                                          | context | test                   | status | n |  time |
 | :-------------------------------------------- | :------ | :--------------------- | :----- | -: | ----: |
-| [test-basic.R](testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.003 |
-| [test-basic.R](testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.002 |
-| [test-preview.R](testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.219 |
+| [test-basic.R](testthat/test-basic.R#L14)     | basic   | extract: default       | PASS   | 1 | 0.003 |
+| [test-basic.R](testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.003 |
+| [test-preview.R](testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.226 |
 
 </details>
 

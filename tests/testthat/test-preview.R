@@ -8,8 +8,7 @@ testthat::describe('preview',{
   texPreview::tex_opts$set(returnType = 'tex')
 
   it('texPreview',{
-    ret <- extract_eq(fit,preview = TRUE)
-    testthat::expect_equal(ret,expect_fit)
+    testthat::expect_equal(paste0(preview(extract_eq(fit)),collapse = '\n'),expect_fit)
 
   })
 

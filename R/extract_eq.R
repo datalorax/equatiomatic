@@ -5,21 +5,10 @@
 #' [broom::tidy][broom::tidy].
 #'
 #' @param model A fitted model
-#' @param preview Logical, defaults to \code{FALSE}. Should the equation be
-#'   previewed in the viewer pane?
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\text{}} command?
-#' @param wrap Logical, defaults to \code{FALSE}. Should the equation be
-#'   inserted in a special \code{aligned} TeX environment and automatically
-#'   wrapped to a specific width?
-#' @param width Integer, defaults to 120. The suggested number of characters per
-#'   line in the wrapped equation. Used only when \code{aligned} is \code{TRUE}.
-#' @param align_env TeX environment to wrap around equation. Must be one of
-#'   \code{aligned}, \code{aligned*}, \code{align}, or \code{align*}. Defaults
-#'   to \code{aligned}.
 #' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
 #'   estimates be included in the equation instead of math symbols?
-#' @param \dots arguments passed to [texPreview::tex_preview][texPreview::tex_preview]
 #' @export
 #'
 #' @examples
@@ -45,19 +34,19 @@
 #' extract_eq(mod4)
 #'
 #' # Preview the equation
-#' extract_eq(mod4, preview = TRUE)
+#' preview(extract_eq(mod4))
 #'
 #' # Don't italicize terms
 #' extract_eq(mod1, ital_vars = FALSE)
 #'
 #' # Wrap equations in an "aligned" environment
-#' extract_eq(mod2, wrap = TRUE)
+#' print(extract_eq(mod2),template='aligned')
 #'
 #' # Wider equation wrapping
-#' extract_eq(mod2, wrap = TRUE, width = 150)
+#' print(extract_eq(mod2),template='aligned',width = 150)
 #'
 #' # Include model estimates instead of Greek letters
-#' extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
+#' extract_eq(mod2, use_coefs = TRUE)
 #'
 #' # Use other model types, like glm
 #' set.seed(8675309)
@@ -67,22 +56,18 @@
 #'                 cont1 = rnorm(300, 100, 1),
 #'                 cont2 = rnorm(300, 50, 5))
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
-#' extract_eq(mod5, wrap = TRUE)
 #'
-extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-                       width = 120, align_env = "aligned", use_coefs = FALSE,...) {
+#' print(extract_eq(mod5),wrap = 120)
+#'
+extract_eq <- function(model, ital_vars = FALSE, use_coefs = FALSE) {
+
   lhs <- extract_lhs(model)
   rhs <- extract_rhs(model)
 
-  eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
+  eq <- build_tex(lhs, rhs, ital_vars, use_coefs)
 
-  if (preview) {
-    preview(eq)
-  }
+  return(eq)
 
-  cat(eq)
-
-  invisible(eq)
 }
 
 
@@ -241,15 +226,12 @@ texify_term <- function(term, ital_vars) {
 #' @param rhs Right-hand side of the equation; list with nested elements; comes
 #'   from \code{extract_rhs}
 #' @param ital_vars Passed from \code{extract_eq}
-#' @param wrap Passed from \code{extract_eq}
-#' @param width Passed from \code{extract_eq}
-#' @param align_env Passed from \code{extract_eq}
 #' @param use_coefs Passed from \code{extract_eq}
 #'
 #' @return A character string
 #'
-build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-                      width = width, align_env = align_env, use_coefs = use_coefs) {
+build_tex <- function(lhs, rhs, ital_vars = ital_vars, use_coefs = use_coefs) {
+
   lhs <- texify_term(lhs, ital_vars)
 
   rhs_no_intercept <- rhs[!grepl("(Intercept)", rhs)]
@@ -294,42 +276,9 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
   # Add betas or coefs to terms and concatenate with +s
   with_coefs <- paste0(coefs, " (", with_interactions, ")", collapse = " + ")
 
-  # Create complete equation, wrapped if needed
-  if (wrap) {
-    full_eq <- paste0(lhs, " =& ", intercept, with_coefs, " + \\epsilon")
+  eq  <- paste0(lhs, " = ", intercept, with_coefs, " + \\epsilon")
 
-    # Wrap equation
-    eq_wrapped <- strwrap(full_eq, width = width, prefix = "& ", initial = "")
-
-    # Build aligned environment
-    eq <- paste0("$$\n",
-                 "\\begin{", align_env, "}\n",
-                 paste(eq_wrapped, collapse = " \\\\\n"),
-                 "\n\\end{", align_env, "}",
-                 "\n$$")
-  } else {
-    full_eq <- paste0(lhs, " = ", intercept, with_coefs, " + \\epsilon")
-
-    eq <- paste("$$\n", full_eq, "\n$$")
-  }
+  eq <- structure(eq,class = c('tex','character'))
 
   return(eq)
-}
-
-
-#' Preview equation
-#'
-#' Use [texPreview::tex_preview][texPreview::tex_preview] to preview the final
-#' equation.
-#'
-#' @keywords internal
-#'
-#' @param eq LaTeX equation built with \code{build_tex}
-#'
-preview <- function(eq) {
-  if (!requireNamespace("texPreview", quietly = TRUE)) {
-    stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
-         call. = FALSE)
-  }
-  return(texPreview::tex_preview(eq))
 }

@@ -117,7 +117,7 @@ extract_eq(mod4)
 You can wrap the equations at a specified width, which defaults to 80.
 
 ```{r example5}
-extract_eq(mod4, wrap = TRUE)
+print(extract_eq(mod4),width=80)
 ```
 
 ![](man/figures/eq6.png)
@@ -126,7 +126,7 @@ extract_eq(mod4, wrap = TRUE)
 And you can optionally have the variables themselves be italicized.
 
 ```{r example6}
-extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
+print(extract_eq(mod4, ital_vars = TRUE),width = 80)
 ```
 
 ![](man/figures/eq7.png)
@@ -143,7 +143,7 @@ d <- data.frame(out = sample(0:1, 100, replace = TRUE),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5))
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
-extract_eq(mod5, wrap = TRUE)
+print(extract_eq(mod5),width=80)
 ```
 
 ![](man/figures/eq8.png)

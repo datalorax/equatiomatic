@@ -4,38 +4,21 @@
 \alias{extract_eq}
 \title{LaTeX code for R models}
 \usage{
-extract_eq(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-  width = 120, align_env = "aligned", use_coefs = FALSE, ...)
+extract_eq(model, ital_vars = FALSE, use_coefs = FALSE)
 }
 \arguments{
 \item{model}{A fitted model}
 
-\item{preview}{Logical, defaults to \code{FALSE}. Should the equation be
-previewed in the viewer pane?}
-
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\text{}} command?}
 
-\item{wrap}{Logical, defaults to \code{FALSE}. Should the equation be
-inserted in a special \code{aligned} TeX environment and automatically
-wrapped to a specific width?}
-
-\item{width}{Integer, defaults to 120. The suggested number of characters per
-line in the wrapped equation. Used only when \code{aligned} is \code{TRUE}.}
-
-\item{align_env}{TeX environment to wrap around equation. Must be one of
-\code{aligned}, \code{aligned*}, \code{align}, or \code{align*}. Defaults
-to \code{aligned}.}
-
 \item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
 estimates be included in the equation instead of math symbols?}
-
-\item{\dots}{arguments passed to [texPreview::tex_preview][texPreview::tex_preview]}
 }
 \description{
 Extract the variable names from a model to produce a LaTeX equation, which is
 output to the screen. Supports any model supported by
-[broom::tidy][broom::tidy].
+\link[broom:tidy]{broom::tidy}.
 }
 \examples{
 # Simple model
@@ -60,19 +43,19 @@ mod4 <- lm(out ~ ., d)
 extract_eq(mod4)
 
 # Preview the equation
-extract_eq(mod4, preview = TRUE)
+preview(extract_eq(mod4))
 
 # Don't italicize terms
 extract_eq(mod1, ital_vars = FALSE)
 
 # Wrap equations in an "aligned" environment
-extract_eq(mod2, wrap = TRUE)
+print(extract_eq(mod2),template='aligned')
 
 # Wider equation wrapping
-extract_eq(mod2, wrap = TRUE, width = 150)
+print(extract_eq(mod2),template='aligned',width = 150)
 
 # Include model estimates instead of Greek letters
-extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
+extract_eq(mod2, use_coefs = TRUE)
 
 # Use other model types, like glm
 set.seed(8675309)
@@ -82,6 +65,7 @@ d <- data.frame(out = sample(0:1, 100, replace = TRUE),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5))
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
-extract_eq(mod5, wrap = TRUE)
+
+print(extract_eq(mod5),wrap = 120)
 
 }
