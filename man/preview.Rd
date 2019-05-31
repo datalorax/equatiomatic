@@ -10,7 +10,7 @@ preview(eq, ...)
 \item{eq}{LaTeX equation built with \code{build_tex}}
 }
 \description{
-Use \code{texPreview::\link[texPreview]{tex_preview}} to preview the final
+Use \link[texPreview:tex_preview]{texPreview::tex_preview} to preview the final
 equation.
 }
 \keyword{internal}
