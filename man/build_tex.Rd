@@ -5,7 +5,8 @@
 \title{Build a complete TeX equation}
 \usage{
 build_tex(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-  width = width, align_env = align_env, use_coefs = use_coefs)
+  width = width, align_env = align_env, use_coefs = use_coefs,
+  coef_digits = coef_digits, fix_signs = fix_signs)
 }
 \arguments{
 \item{lhs}{Left-hand side of the equation; character; comes from
@@ -23,6 +24,10 @@ from \code{extract_rhs}}
 \item{align_env}{Passed from \code{extract_eq}}
 
 \item{use_coefs}{Passed from \code{extract_eq}}
+
+\item{coef_digits}{Passed from \code{extract_eq}}
+
+\item{fix_signs}{Passed from \code{extract_eq}}
 }
 \value{
 A character string

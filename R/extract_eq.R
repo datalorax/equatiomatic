@@ -2,7 +2,7 @@
 #'
 #' Extract the variable names from a model to produce a LaTeX equation, which is
 #' output to the screen. Supports any model supported by
-#' [broom::tidy][broom::tidy].
+#' \code{broom::\link[broom]{tidy}}.
 #'
 #' @param model A fitted model
 #' @param preview Logical, defaults to \code{FALSE}. Should the equation be
@@ -19,7 +19,12 @@
 #'   to \code{aligned}.
 #' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
 #'   estimates be included in the equation instead of math symbols?
-#' @param \dots arguments passed to [texPreview::tex_preview][texPreview::tex_preview]
+#' @param coef_digits Integer, defaults to 2. The number of decimal places to
+#'   round to when displaying model estimates
+#' @param fix_signs Logical, defaults to \code{FALSE}. If disabled,
+#'   coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
+#'   + -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z))
+#'
 #' @export
 #'
 #' @examples
@@ -69,20 +74,21 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 #'
-extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-                       width = 120, align_env = "aligned", use_coefs = FALSE,...) {
+extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
+                       wrap = FALSE, width = 120, align_env = "aligned",
+                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
   lhs <- extract_lhs(model)
   rhs <- extract_rhs(model)
 
-  eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
+  eq <- build_tex(lhs, rhs, ital_vars,
+                  wrap, width, align_env,
+                  use_coefs, coef_digits, fix_signs)
 
   if (preview) {
     preview(eq)
   }
 
   cat(eq)
-
-  invisible(eq)
 }
 
 
@@ -245,11 +251,15 @@ texify_term <- function(term, ital_vars) {
 #' @param width Passed from \code{extract_eq}
 #' @param align_env Passed from \code{extract_eq}
 #' @param use_coefs Passed from \code{extract_eq}
+#' @param coef_digits Passed from \code{extract_eq}
+#' @param fix_signs Passed from \code{extract_eq}
 #'
 #' @return A character string
 #'
 build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-                      width = width, align_env = align_env, use_coefs = use_coefs) {
+                      width = width, align_env = align_env,
+                      use_coefs = use_coefs, coef_digits = coef_digits,
+                      fix_signs = fix_signs) {
   lhs <- texify_term(lhs, ital_vars)
 
   rhs_no_intercept <- rhs[!grepl("(Intercept)", rhs)]
@@ -280,10 +290,10 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
   # Build a list of equation coefficients, either \beta_{i} or the actual value
   if (use_coefs) {
     coef_estimates <- sapply(rhs_no_intercept, function(x) x[[1]][["estimate"]])
-    coefs <- round(coef_estimates, 2)
+    coefs <- round(coef_estimates, coef_digits)
 
     intercept_raw <- rhs[grepl("(Intercept)", rhs)][[1]][[1]][["estimate"]]
-    intercept <- paste0(round(intercept_raw, 2), " + ")
+    intercept <- paste0(round(intercept_raw, coef_digits), " + ")
   } else {
     # Create vector of subscripted betas
     coefs <- paste0("\\beta_{", seq_along(with_interactions), "}")
@@ -296,7 +306,10 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
 
   # Create complete equation, wrapped if needed
   if (wrap) {
-    full_eq <- paste0(lhs, " =& ", intercept, with_coefs, " + \\epsilon")
+    full_eq <- fix_coef_signs(paste0(lhs, " =& ",
+                                     intercept, with_coefs,
+                                     " + \\epsilon"),
+                              fix_signs)
 
     # Wrap equation
     eq_wrapped <- strwrap(full_eq, width = width, prefix = "& ", initial = "")
@@ -308,7 +321,10 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
                  "\n\\end{", align_env, "}",
                  "\n$$")
   } else {
-    full_eq <- paste0(lhs, " = ", intercept, with_coefs, " + \\epsilon")
+    full_eq <- fix_coef_signs(paste0(lhs, " = ",
+                                     intercept, with_coefs,
+                                     " + \\epsilon"),
+                              fix_signs)
 
     eq <- paste("$$\n", full_eq, "\n$$")
   }
@@ -317,9 +333,27 @@ build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
 }
 
 
+#' Normalize operators
+#'
+#' Convert "+ -" to "-"
+#'
+#' @keywords internal
+#'
+#' @param eq String containing a LaTeX equation
+#' @param fix_signs Passed from \code{build_tex}
+#'
+fix_coef_signs <- function(eq, fix_signs) {
+  if (fix_signs) {
+    gsub("\\+ -", "- ", eq)
+  } else {
+    eq
+  }
+}
+
+
 #' Preview equation
 #'
-#' Use [texPreview::tex_preview][texPreview::tex_preview] to preview the final
+#' Use \code{texPreview::\link[texPreview]{tex_preview}} to preview the final
 #' equation.
 #'
 #' @keywords internal
