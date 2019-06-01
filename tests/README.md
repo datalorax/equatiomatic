@@ -1,6 +1,6 @@
 Tests and Coverage
 ================
-31 May, 2019 17:46:39
+31 May, 2019 21:05:09
 
   - [Coverage](#coverage)
   - [Unit Tests](#unit-tests)
@@ -15,9 +15,9 @@ Coverage summary is created using the
 
 | Object                               | Coverage (%) |
 | :----------------------------------- | :----------: |
-| equatiomatic                         |      0       |
-| [R/extract\_eq.R](../R/extract_eq.R) |      0       |
-| [R/printer.R](../R/printer.R)        |      0       |
+| equatiomatic                         |    68.54     |
+| [R/printer.R](../R/printer.R)        |    11.54     |
+| [R/extract\_eq.R](../R/extract_eq.R) |    92.06     |
 
 <br>
 
@@ -29,8 +29,8 @@ package.
 
 | file                                      | n |  time | error | failed | skipped | warning |
 | :---------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-basic.R](testthat/test-basic.R)     | 2 | 0.006 |     0 |      0 |       0 |       0 |
-| [test-preview.R](testthat/test-preview.R) | 1 | 0.226 |     0 |      0 |       0 |       0 |
+| [test-basic.R](testthat/test-basic.R)     | 2 | 0.007 |     0 |      0 |       0 |       0 |
+| [test-preview.R](testthat/test-preview.R) | 1 | 0.212 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -40,8 +40,8 @@ package.
 | file                                          | context | test                   | status | n |  time |
 | :-------------------------------------------- | :------ | :--------------------- | :----- | -: | ----: |
 | [test-basic.R](testthat/test-basic.R#L14)     | basic   | extract: default       | PASS   | 1 | 0.003 |
-| [test-basic.R](testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.003 |
-| [test-preview.R](testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.226 |
+| [test-basic.R](testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.004 |
+| [test-preview.R](testthat/test-preview.R#L11) | preview | preview: texPreview    | PASS   | 1 | 0.212 |
 
 </details>
 
