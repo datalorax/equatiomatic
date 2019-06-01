@@ -58,7 +58,7 @@ mod4 <- lm(out ~ ., d)
 extract_eq(mod4)
 
 # Preview the equation
-extract_eq(mod4, preview = TRUE)
+
 
 # Don't italicize terms
 extract_eq(mod1, ital_vars = FALSE)
