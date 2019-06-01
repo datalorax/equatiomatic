@@ -15,52 +15,46 @@ A list with one element per future equation term. Term components
   or more terms are interactions.
 }
 \description{
-Extract a nested list of the explanatory/independent/x variables of a model
+Extract a data frame with list columns for the primary terms and subscripts
 }
 \examples{
 \dontrun{
 mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
 
+extract_rhs(mod1)
+#> # A tibble: 7 x 4
+#>   term                             estimate primary   subscripts
+#>   <chr>                               <dbl> <list>    <list>
+#> 1 (Intercept)                     2.925732  <chr [0]> <chr [1]>
+#> 2 Sepal.Width                     0.4500064 <chr [1]> <chr [1]>
+#> 3 Speciesversicolor              -1.047170  <chr [1]> <chr [1]>
+#> 4 Speciesvirginica               -2.618888  <chr [1]> <chr [1]>
+#> 5 Petal.Length                    0.3677469 <chr [1]> <chr [1]>
+#> 6 Speciesversicolor:Petal.Length  0.2920936 <chr [2]> <chr [2]>
+#> 7 Speciesvirginica:Petal.Length   0.5225336 <chr [2]> <chr [2]>
+
 str(extract_rhs(mod1))
-#>List of 7
-#> $ (Intercept)                   :List of 1
-#>  ..$ :List of 2
-#>  .. ..$ term    : chr "(Intercept)"
-#>  .. ..$ estimate: num 2.93
-#> $ Sepal.Width                   :List of 1
-#>  ..$ :List of 2
-#>  .. ..$ term    : chr "Sepal.Width"
-#>  .. ..$ estimate: num 0.45
-#> $ Speciesversicolor             :List of 1
-#>  ..$ :List of 3
-#>  .. ..$ term     : chr "Species"
-#>  .. ..$ subscript: chr "versicolor"
-#>  .. ..$ estimate : num -1.05
-#> $ Speciesvirginica              :List of 1
-#>  ..$ :List of 3
-#>  .. ..$ term     : chr "Species"
-#>  .. ..$ subscript: chr "virginica"
-#>  .. ..$ estimate : num -2.62
-#> $ Petal.Length                  :List of 1
-#>  ..$ :List of 2
-#>  .. ..$ term    : chr "Petal.Length"
-#>  .. ..$ estimate: num 0.368
-#> $ Speciesversicolor:Petal.Length:List of 2
-#>  ..$ :List of 3
-#>  .. ..$ term     : chr "Species"
-#>  .. ..$ subscript: chr "versicolor"
-#>  .. ..$ estimate : num 0.292
-#>  ..$ :List of 2
-#>  .. ..$ term    : chr "Petal.Length"
-#>  .. ..$ estimate: num 0.292
-#> $ Speciesvirginica:Petal.Length :List of 2
-#>  ..$ :List of 3
-#>  .. ..$ term     : chr "Species"
-#>  .. ..$ subscript: chr "virginica"
-#>  .. ..$ estimate : num 0.523
-#>  ..$ :List of 2
-#>  .. ..$ term    : chr "Petal.Length"
-#>  .. ..$ estimate: num 0.523
+#> Classes ‘tbl_df’, ‘tbl’ and 'data.frame': 7 obs. of  4 variables:
+#>  $ term      : chr  "(Intercept)" "Sepal.Width" "Speciesversicolor" "Speciesvirginica" ...
+#> $ estimate  : num  2.926 0.45 -1.047 -2.619 0.368 ...
+#> $ primary   :List of 7
+#>  ..$ : chr
+#>  ..$ : chr "Sepal.Width"
+#>  ..$ : chr "Species"
+#>  ..$ : chr "Species"
+#>  ..$ : chr "Petal.Length"
+#>  ..$ : chr  "Species" "Petal.Length"
+#>  ..$ : chr  "Species" "Petal.Length"
+#> $ subscripts:List of 7
+#>  ..$ : chr ""
+#>  ..$ : chr ""
+#>  ..$ : chr "versicolor"
+#>  ..$ : chr "virginica"
+#>  ..$ : chr ""
+#>  ..$ : Named chr  "versicolor:Petal.Length" "Speciesversicolor:"
+#>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
+#>  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"
+#>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
 }
 }
 \keyword{internal}
