@@ -4,7 +4,7 @@
 \alias{extract_lhs}
 \title{Extract left-hand side}
 \usage{
-extract_lhs(model)
+extract_lhs(model, ital_vars)
 }
 \arguments{
 \item{model}{A fitted model}
