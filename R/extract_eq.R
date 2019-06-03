@@ -45,7 +45,7 @@
 #' extract_eq(mod4)
 #'
 #' # Preview the equation
-#' extract_eq(mod4, preview = TRUE)
+#'
 #'
 #' # Don't italicize terms
 #' extract_eq(mod1, ital_vars = FALSE)
@@ -70,18 +70,20 @@
 #' extract_eq(mod5, wrap = TRUE)
 #'
 extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-                       width = 120, align_env = "aligned", use_coefs = FALSE,...) {
-  lhs <- extract_lhs(model)
+                       width = 120, align_env = "aligned", use_coefs = FALSE) {
+
+  lhs <- extract_lhs(model, ital_vars)
   rhs <- extract_rhs(model)
 
-  eq <- build_tex(lhs, rhs, ital_vars, wrap, width, align_env, use_coefs)
+  eq <- create_eq(lhs, rhs, ital_vars, use_coefs)
 
-  if (preview) {
-    preview(eq)
+  if(wrap) {
+    eq <- wrap(eq, width, align_env)
   }
-
-  cat(eq)
-
+  if (preview) {
+    texPreview::tex_preview(eq)
+  }
+  cat("$$\n", eq, "\n$$")
   invisible(eq)
 }
 
@@ -96,16 +98,123 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
 #'
 #' @return A character string
 #'
-extract_lhs <- function(model) {
+extract_lhs <- function(model, ital_vars) {
   lhs <- all.vars(formula(model))[1]
 
-  return(lhs)
+  add_tex_ital_v(lhs, ital_vars)
 }
 
 
+#' Detect if a given term is part of a vector of full terms
+#'
+#' @keywords internal
+#'
+#' @param full_term The full name of a single term, e.g.,
+#'   \code{"partyidOther party"}
+#' @param primary_term_v A vector of primary terms, e.g., \code{"partyid"}.
+#'   Usually the result of \code{formula_rhs[!grepl(":", formula_rhs)]}
+#' @return A logical vector the same length of \code{primary_term_v} indicating
+#'   whether the \code{full_term} is part of the given \code{primary_term_v}
+#'   element
+#' @examples \dontrun{
+#' detect_primary("partyidStrong republican", c("partyid", "age", "race"))
+#' detect_primary("age", c("partyid", "age", "race"))
+#' detect_primary("raceBlack", c("partyid", "age", "race"))
+#' }
+
+detect_primary <- function(full_term, primary_term_v) {
+  vapply(primary_term_v, function(indiv_term) {
+      grepl(indiv_term, full_term)
+    },
+    logical(1)
+    )
+}
+
+
+#' Extract the primary terms from all terms
+#'
+#' @inheritParams detect_primary
+#'
+#' @keywords internal
+#'
+#' @param all_terms A list of all the equation terms on the right hand side,
+#'   usually the result of \code{broom::tidy(model, quick = TRUE)$term}.
+#' @examples \dontrun{
+#'
+#' primaries <- c("partyid", "age", "race")
+#'
+#' full_terms <- c("partyidDon't know", "partyidOther party", "age",
+#' "partyidNot str democrat", "age", "raceBlack", "age", "raceBlack")
+#'
+#' extract_primary_term(primaries, full_terms)
+#' }
+
+extract_primary_term <- function(primary_term_v, all_terms) {
+  detected <- lapply(all_terms, detect_primary, primary_term_v)
+  lapply(detected, function(pull) primary_term_v[pull])
+}
+
+
+#' Extract the subscripts from a given term
+#'
+#'
+#' @keywords internal
+#'
+#' @param primary A single primary term, e.g., \code{"partyid"}
+#' @param full_term_v A vector of full terms, e.g.,
+#'   \code{c("partyidDon't know", "partyidOther party"}. Can be of length 1.
+#' @examples \dontrun{
+#'
+#' extract_subscripts("partyid", "partyidDon't know")
+#' extract_subscripts("partyid",
+#'                    c("partyidDon't know", "partyidOther party",
+#'                      "partyidNot str democrat"))
+#' }
+
+extract_subscripts <- function(primary, full_term_v) {
+  out <- switch(as.character(length(primary)),
+                "0" = "",
+                "1" = gsub(primary, "", full_term_v),
+                mapply_chr(function(x, y) gsub(x, "", y),
+                           x = primary,
+                           y = full_term_v)
+                )
+  out
+}
+
+#' Extract all subscripts
+#'
+#' @keywords internal
+#'
+#' @param primary_list A list of primary terms
+#' @param full_term_list A list of full terms
+#'
+#' @return A list with the subscripts. If full term has no subscript,
+#' returns \code{""}.
+#'
+#' @examples \dontrun{
+#'
+#' p_list <- list("partyid",
+#'                c("partyid", "age"),
+#'                c("age", "race"),
+#'                c("partyid", "age", "race"))
+#'
+#' ft_list <- list("partyidNot str republican",
+#'                 c("partyidInd,near dem", "age"),
+#'                 c("age", "raceBlack"),
+#'                 c("partyidInd,near dem", "age", "raceBlack"))
+#'
+#' extract_all_subscripts(p_list, ft_list)
+#' }
+
+extract_all_subscripts <- function(primary_list, full_term_list) {
+  Map(extract_subscripts, primary_list, full_term_list)
+}
+
 #' Extract right-hand side
 #'
-#' Extract a nested list of the explanatory/independent/x variables of a model
+#' Extract a data frame with list columns for the primary terms and subscripts
+# from all terms in the model
 #'
 #' @keywords internal
 #'
@@ -118,52 +227,47 @@ extract_lhs <- function(model) {
 #' @examples \dontrun{
 #' mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
 #'
+#' extract_rhs(mod1)
+#' #> # A tibble: 7 x 4
+#' #>   term                             estimate primary   subscripts
+#' #>   <chr>                               <dbl> <list>    <list>
+#' #> 1 (Intercept)                     2.925732  <chr [0]> <chr [1]>
+#' #> 2 Sepal.Width                     0.4500064 <chr [1]> <chr [1]>
+#' #> 3 Speciesversicolor              -1.047170  <chr [1]> <chr [1]>
+#' #> 4 Speciesvirginica               -2.618888  <chr [1]> <chr [1]>
+#' #> 5 Petal.Length                    0.3677469 <chr [1]> <chr [1]>
+#' #> 6 Speciesversicolor:Petal.Length  0.2920936 <chr [2]> <chr [2]>
+#' #> 7 Speciesvirginica:Petal.Length   0.5225336 <chr [2]> <chr [2]>
+#'
 #' str(extract_rhs(mod1))
-#' #>List of 7
-#' #> $ (Intercept)                   :List of 1
-#' #>  ..$ :List of 2
-#' #>  .. ..$ term    : chr "(Intercept)"
-#' #>  .. ..$ estimate: num 2.93
-#' #> $ Sepal.Width                   :List of 1
-#' #>  ..$ :List of 2
-#' #>  .. ..$ term    : chr "Sepal.Width"
-#' #>  .. ..$ estimate: num 0.45
-#' #> $ Speciesversicolor             :List of 1
-#' #>  ..$ :List of 3
-#' #>  .. ..$ term     : chr "Species"
-#' #>  .. ..$ subscript: chr "versicolor"
-#' #>  .. ..$ estimate : num -1.05
-#' #> $ Speciesvirginica              :List of 1
-#' #>  ..$ :List of 3
-#' #>  .. ..$ term     : chr "Species"
-#' #>  .. ..$ subscript: chr "virginica"
-#' #>  .. ..$ estimate : num -2.62
-#' #> $ Petal.Length                  :List of 1
-#' #>  ..$ :List of 2
-#' #>  .. ..$ term    : chr "Petal.Length"
-#' #>  .. ..$ estimate: num 0.368
-#' #> $ Speciesversicolor:Petal.Length:List of 2
-#' #>  ..$ :List of 3
-#' #>  .. ..$ term     : chr "Species"
-#' #>  .. ..$ subscript: chr "versicolor"
-#' #>  .. ..$ estimate : num 0.292
-#' #>  ..$ :List of 2
-#' #>  .. ..$ term    : chr "Petal.Length"
-#' #>  .. ..$ estimate: num 0.292
-#' #> $ Speciesvirginica:Petal.Length :List of 2
-#' #>  ..$ :List of 3
-#' #>  .. ..$ term     : chr "Species"
-#' #>  .. ..$ subscript: chr "virginica"
-#' #>  .. ..$ estimate : num 0.523
-#' #>  ..$ :List of 2
-#' #>  .. ..$ term    : chr "Petal.Length"
-#' #>  .. ..$ estimate: num 0.523
+#' #> Classes ‘tbl_df’, ‘tbl’ and 'data.frame': 7 obs. of  4 variables:
+#' #>  $ term      : chr  "(Intercept)" "Sepal.Width" "Speciesversicolor" "Speciesvirginica" ...
+#' #> $ estimate  : num  2.926 0.45 -1.047 -2.619 0.368 ...
+#' #> $ primary   :List of 7
+#' #>  ..$ : chr
+#' #>  ..$ : chr "Sepal.Width"
+#' #>  ..$ : chr "Species"
+#' #>  ..$ : chr "Species"
+#' #>  ..$ : chr "Petal.Length"
+#' #>  ..$ : chr  "Species" "Petal.Length"
+#' #>  ..$ : chr  "Species" "Petal.Length"
+#' #> $ subscripts:List of 7
+#' #>  ..$ : chr ""
+#' #>  ..$ : chr ""
+#' #>  ..$ : chr "versicolor"
+#' #>  ..$ : chr "virginica"
+#' #>  ..$ : chr ""
+#' #>  ..$ : Named chr  "versicolor:Petal.Length" "Speciesversicolor:"
+#' #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
+#' #>  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"
+#' #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
 #' }
+
 extract_rhs <- function(model) {
   # Extract RHS from formula
-  formula_rhs <- labels(terms(formula(model)))  # RHS in formula
+  formula_rhs <- labels(terms(formula(model)))
 
-  # Extract unique terms from formula (no interactions)
+  # Extract unique (primary) terms from formula (no interactions)
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
 
   # Extract coefficient names and values from model
@@ -172,150 +276,135 @@ extract_rhs <- function(model) {
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
 
-  # Loop through the full_rhs data frame and build a list of all model
-  # estimates, terms, subscripts, and interactions
-  rhs <- mapply(function(eq_term, eq_estimate) {
-    sapply(eq_term, function(single_term) {
-      # Check if an overarching term (e.g. "Species") is at the beginning of an
-      # existing term (e.g. "Speciesversicolor"). If so, separate the combined
-      # term into term and subscript elements
-      extracted <- sapply(formula_rhs_terms, function(possible_term) {
-        if (grepl(paste0("^", possible_term, "."), single_term)) {
-          list(term = possible_term,
-               subscript = gsub(possible_term, "", single_term),
-               estimate = eq_estimate)
-        }
-      }, USE.NAMES = FALSE)
+  full_rhs$primary <- extract_primary_term(formula_rhs_terms,
+                                           full_rhs$term)
 
-      # Remove all NULLs from extracted
-      extracted[sapply(extracted, is.null)] <- NULL
-
-      # Return extracted pieces
-      if (length(extracted) == 0) {
-        list(list(term = single_term,
-                  estimate = eq_estimate))
-      } else {
-        list(extracted[[1]])
-      }
-    }, USE.NAMES = FALSE)
-  }, full_rhs$split, full_rhs$estimate, SIMPLIFY = FALSE)
-
-  names(rhs) <- full_rhs$term
-
-  return(rhs)
+  full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
+                                                full_rhs$split)
+  full_rhs
 }
 
-
-#' TeXify an equation term
+#' Wraps text in \code{\\text{}}
 #'
-#' Prepare an equation term for TeX, wrapping the text with \code{\\text{}}
-#' if necessary
+#' @keywords internal
+#'
+#' @param term A character to wrap in \code{\\text{}}
+#' @param ital_vars Passed from \code{extract_eq}
+#'
+#' @return A character string
+
+#' Add tex code to make string not italicized within an equation
+#' @keywords internal
+add_tex_ital <- function(term, ital_vars) {
+  if (any(nchar(term) == 0, ital_vars)) {
+    return(term)
+  }
+  paste0("\\text{", term, "}")
+}
+
+#' Add tex code to make string not italicized within an equation for a vector
+#' of strings
+#' @keywords internal
+add_tex_ital_v <- function(term_v, ital_vars) {
+  vapply(term_v, add_tex_ital, ital_vars, FUN.VALUE = character(1))
+}
+
+#' Wraps text in \code{_{}}
 #'
 #' @keywords internal
 #'
 #' @param term A character string to TeXify
-#' @param ital_vars Passed from \code{extract_eq}
 #'
 #' @return A character string
 
-texify_term <- function(term, ital_vars) {
-  if (ital_vars) {
-    out <- term
-  } else {
-    out <- paste0("\\text{", term, "}")
-  }
-
-  return(out)
-}
-
-
-#' Build a complete TeX equation
-#'
-#' Combine the left-hand and right-hand sides of a model, wrap them with TeX
-#' commands, and combine them into a single equation
-#'
+#' Add tex code to make subscripts for a single string
 #' @keywords internal
-#'
-#' @param lhs Left-hand side of the equation; character; comes from
-#'   \code{extract_lhs}
-#' @param rhs Right-hand side of the equation; list with nested elements; comes
-#'   from \code{extract_rhs}
-#' @param ital_vars Passed from \code{extract_eq}
-#' @param wrap Passed from \code{extract_eq}
-#' @param width Passed from \code{extract_eq}
-#' @param align_env Passed from \code{extract_eq}
-#' @param use_coefs Passed from \code{extract_eq}
-#'
-#' @return A character string
-#'
-build_tex <- function(lhs, rhs, ital_vars = ital_vars, wrap = wrap,
-                      width = width, align_env = align_env, use_coefs = use_coefs) {
-  lhs <- texify_term(lhs, ital_vars)
-
-  rhs_no_intercept <- rhs[!grepl("(Intercept)", rhs)]
-
-  # Convert each equation element to TeX, adding subscripts and \text{}s where needed
-  texified_terms <- sapply(rhs_no_intercept, function(eq_term) {
-    sapply(eq_term, function(term_elements) {
-
-      if (exists("subscript", where = term_elements)) {
-        out <- paste0(texify_term(term_elements[["term"]], ital_vars = ital_vars),
-                      "_{",
-                      texify_term(term_elements[["subscript"]], ital_vars = ital_vars),
-                      "}")
-      } else {
-        out <- texify_term(term_elements[["term"]], ital_vars = ital_vars)
-      }
-
-      out
-    })
-  })
-
-  # If any of the texified terms are length > 1, they're interaction terms and
-  # need to be joined by \times
-  with_interactions <- sapply(texified_terms, function(x) {
-    paste(x, collapse = " \\times ")
-  })
-
-  # Build a list of equation coefficients, either \beta_{i} or the actual value
-  if (use_coefs) {
-    coef_estimates <- sapply(rhs_no_intercept, function(x) x[[1]][["estimate"]])
-    coefs <- round(coef_estimates, 2)
-
-    intercept_raw <- rhs[grepl("(Intercept)", rhs)][[1]][[1]][["estimate"]]
-    intercept <- paste0(round(intercept_raw, 2), " + ")
-  } else {
-    # Create vector of subscripted betas
-    coefs <- paste0("\\beta_{", seq_along(with_interactions), "}")
-
-    intercept <- "\\alpha + "
+add_tex_subscripts <- function(term) {
+  if (any(nchar(term) == 0)) {
+    return(term)
   }
-
-  # Add betas or coefs to terms and concatenate with +s
-  with_coefs <- paste0(coefs, " (", with_interactions, ")", collapse = " + ")
-
-  # Create complete equation, wrapped if needed
-  if (wrap) {
-    full_eq <- paste0(lhs, " =& ", intercept, with_coefs, " + \\epsilon")
-
-    # Wrap equation
-    eq_wrapped <- strwrap(full_eq, width = width, prefix = "& ", initial = "")
-
-    # Build aligned environment
-    eq <- paste0("$$\n",
-                 "\\begin{", align_env, "}\n",
-                 paste(eq_wrapped, collapse = " \\\\\n"),
-                 "\n\\end{", align_env, "}",
-                 "\n$$")
-  } else {
-    full_eq <- paste0(lhs, " = ", intercept, with_coefs, " + \\epsilon")
-
-    eq <- paste("$$\n", full_eq, "\n$$")
-  }
-
-  return(eq)
+  paste0("_{", term, "}")
 }
 
+#' Add tex code to make subscripts for a vector of strings
+#' @keywords internal
+add_tex_subscripts_v <- function(term_v) {
+  vapply(term_v, add_tex_subscripts, FUN.VALUE = character(1))
+}
+
+#' Adds multiplication symbol for interaction terms
+#' @keywords internal
+add_tex_mult <- function(term) {
+  paste(term, collapse = " \\times ")
+}
+
+#' Creates a full term w/subscripts
+#' @keywords internal
+create_term <- function(rhs, ital_vars) {
+  prim <- lapply(rhs$primary, add_tex_ital_v, ital_vars)
+  subs <- lapply(rhs$subscripts, add_tex_ital_v, ital_vars)
+  subs <- lapply(subs, add_tex_subscripts_v)
+
+  final <- Map(paste0, prim, subs)
+
+  vapply(final, add_tex_mult, FUN.VALUE = character(1))
+}
+
+#' Intermediary function to wrap text in "\\beta_{}"
+#' @keywords internal
+add_betas <- function(terms, nums) {
+  paste0("\\beta_{", nums,"}",
+         "(", terms, ")"
+         )
+}
+
+#' Adds greek symbols to the equation
+#' @keywords internal
+add_greek <- function(rhs, terms) {
+  if (any(grepl("(Intercept)", terms))) {
+    add_betas(terms, seq_len(nrow(rhs)))
+  } else {
+    ifelse(rhs$term == "(Intercept)",
+         "\\alpha",
+         add_betas(terms, seq_len(nrow(rhs)) - 1))
+  }
+}
+
+#' Adds coefficient values to the equation
+#' @keywords internal
+add_coefs <- function(rhs, term) {
+  ests <- round(rhs$estimate, 2)
+  ifelse(
+         rhs$term == "(Intercept)",
+         paste0(ests, term),
+         paste0(ests, "(", term, ")")
+         )
+}
+
+#' Creates the full equation
+#' @keywords internal
+create_eq <- function(lhs, rhs, ital_vars, use_coef) {
+  rhs$final_terms <- create_term(rhs, ital_vars)
+
+  if (use_coef) {
+    rhs$final_terms <- add_coefs(rhs, rhs$final_terms)
+  } else {
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
+  }
+  full_rhs <- paste(rhs$final_terms, collapse = " + ")
+
+  paste0(lhs, " = ", full_rhs, " + \\epsilon")
+}
+
+#' wraps the full equation
+#' @keywords internal
+wrap <- function(full_eq, width, align_env) {
+  eq <- gsub(" = ", " =& ", full_eq)
+  eq_wrapped <- strwrap(eq, width = width, prefix = "& ", initial = "")
+  paste0("\\begin{", align_env, "}\n",
+         paste(eq_wrapped, collapse = " \\\\\n"),
+         "\n\\end{", align_env, "}")
+}
 
 #' Preview equation
 #'
@@ -331,5 +420,7 @@ preview <- function(eq) {
     stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
          call. = FALSE)
   }
-  return(texPreview::tex_preview(eq))
+  texPreview::tex_preview(eq)
 }
+
+
