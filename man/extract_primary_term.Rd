@@ -18,7 +18,6 @@ Extract the primary terms from all terms
 }
 \examples{
 \dontrun{
-
 primaries <- c("partyid", "age", "race")
 
 full_terms <- c("partyidDon't know", "partyidOther party", "age",

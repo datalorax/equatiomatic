@@ -17,7 +17,6 @@ Extract the subscripts from a given term
 }
 \examples{
 \dontrun{
-
 extract_subscripts("partyid", "partyidDon't know")
 extract_subscripts("partyid",
                    c("partyidDon't know", "partyidOther party",

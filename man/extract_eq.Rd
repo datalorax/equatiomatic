@@ -67,9 +67,6 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
 mod4 <- lm(out ~ ., d)
 extract_eq(mod4)
 
-# Preview the equation
-
-
 # Don't italicize terms
 extract_eq(mod1, ital_vars = FALSE)
 
@@ -91,5 +88,4 @@ d <- data.frame(out = sample(0:1, 100, replace = TRUE),
                 cont2 = rnorm(300, 50, 5))
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
-
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_eq.R
 \name{add_tex_subscripts}
 \alias{add_tex_subscripts}
-\title{Wraps text in \code{_{}}}
+\title{Wrap text in \code{_{}}}
 \usage{
 add_tex_subscripts(term)
 }
@@ -11,9 +11,8 @@ add_tex_subscripts(term)
 }
 \value{
 A character string
-Add tex code to make subscripts for a single string
 }
 \description{
-Wraps text in \code{_{}}
+Add tex code to make subscripts for a single string
 }
 \keyword{internal}

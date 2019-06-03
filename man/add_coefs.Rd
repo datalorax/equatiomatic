@@ -2,11 +2,11 @@
 % Please edit documentation in R/extract_eq.R
 \name{add_coefs}
 \alias{add_coefs}
-\title{Adds coefficient values to the equation}
+\title{Add coefficient values to the equation}
 \usage{
 add_coefs(rhs, term, coef_digits)
 }
 \description{
-Adds coefficient values to the equation
+Add coefficient values to the equation
 }
 \keyword{internal}

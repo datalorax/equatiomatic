@@ -2,11 +2,31 @@
 % Please edit documentation in R/extract_eq.R
 \name{create_eq}
 \alias{create_eq}
-\title{Creates the full equation}
+\title{Create the full equation}
 \usage{
 create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs)
 }
+\arguments{
+\item{lhs}{A character string of the left-hand side variable extracted with
+\code{extract_lhs}}
+
+\item{rhs}{A data frame of right-hand side variables extracted with
+\code{extract_rhs}.}
+
+\item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
+not be wrapped in the \code{\\text{}} command?}
+
+\item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
+estimates be included in the equation instead of math symbols?}
+
+\item{coef_digits}{Integer, defaults to 2. The number of decimal places to
+round to when displaying model estimates.}
+
+\item{fix_signs}{Logical, defaults to \code{FALSE}. If disabled,
+coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
++ -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).}
+}
 \description{
-Creates the full equation
+Create the full equation
 }
 \keyword{internal}

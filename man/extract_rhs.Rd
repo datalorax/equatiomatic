@@ -16,6 +16,7 @@ A list with one element per future equation term. Term components
 }
 \description{
 Extract a data frame with list columns for the primary terms and subscripts
+from all terms in the model
 }
 \examples{
 \dontrun{

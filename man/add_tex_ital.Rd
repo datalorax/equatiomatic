@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_eq.R
 \name{add_tex_ital}
 \alias{add_tex_ital}
-\title{Wraps text in \code{\\text{}}}
+\title{Wrap text in \code{\\text{}}}
 \usage{
 add_tex_ital(term, ital_vars)
 }
@@ -13,9 +13,8 @@ add_tex_ital(term, ital_vars)
 }
 \value{
 A character string
-Add tex code to make string not italicized within an equation
 }
 \description{
-Wraps text in \code{\\text{}}
+Add tex code to make string not italicized within an equation
 }
 \keyword{internal}
