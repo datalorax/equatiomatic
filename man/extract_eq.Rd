@@ -5,7 +5,7 @@
 \title{LaTeX code for R models}
 \usage{
 extract_eq(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-  width = 120, align_env = "aligned", use_coefs = FALSE)
+  width = 120, align_env = "aligned", use_coefs = FALSE, ...)
 }
 \arguments{
 \item{model}{A fitted model}
@@ -29,11 +29,13 @@ to \code{aligned}.}
 
 \item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
 estimates be included in the equation instead of math symbols?}
+
+\item{\dots}{arguments passed to [texPreview::tex_preview][texPreview::tex_preview]}
 }
 \description{
 Extract the variable names from a model to produce a LaTeX equation, which is
 output to the screen. Supports any model supported by
-\code{broom::\link[broom]{tidy}}.
+[broom::tidy][broom::tidy].
 }
 \examples{
 # Simple model

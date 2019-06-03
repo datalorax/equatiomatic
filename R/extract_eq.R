@@ -2,7 +2,7 @@
 #'
 #' Extract the variable names from a model to produce a LaTeX equation, which is
 #' output to the screen. Supports any model supported by
-#' \code{broom::\link[broom]{tidy}}.
+#' [broom::tidy][broom::tidy].
 #'
 #' @param model A fitted model
 #' @param preview Logical, defaults to \code{FALSE}. Should the equation be
@@ -19,7 +19,7 @@
 #'   to \code{aligned}.
 #' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
 #'   estimates be included in the equation instead of math symbols?
-#'
+#' @param \dots arguments passed to [texPreview::tex_preview][texPreview::tex_preview]
 #' @export
 #'
 #' @examples
@@ -408,7 +408,7 @@ wrap <- function(full_eq, width, align_env) {
 
 #' Preview equation
 #'
-#' Use \code{texPreview::\link[texPreview]{tex_preview}} to preview the final
+#' Use [texPreview::tex_preview][texPreview::tex_preview] to preview the final
 #' equation.
 #'
 #' @keywords internal

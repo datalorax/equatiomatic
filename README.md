@@ -8,6 +8,8 @@
 [![Travis build
 status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Covrpage
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_05_31-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
