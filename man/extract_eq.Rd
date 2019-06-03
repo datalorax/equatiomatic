@@ -5,7 +5,7 @@
 \title{LaTeX code for R models}
 \usage{
 extract_eq(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-  width = 120, align_env = "aligned", use_coefs = FALSE, ...)
+  width = 120, align_env = "aligned", use_coefs = FALSE)
 }
 \arguments{
 \item{model}{A fitted model}
