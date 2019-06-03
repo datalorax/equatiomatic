@@ -2,9 +2,12 @@
 % Please edit documentation in R/extract_eq.R
 \name{add_tex_subscripts_v}
 \alias{add_tex_subscripts_v}
-\title{Add tex code to make subscripts for a vector of strings}
+\title{Wrap text in \code{_{}}}
 \usage{
 add_tex_subscripts_v(term_v)
+}
+\value{
+A vector of characters
 }
 \description{
 Add tex code to make subscripts for a vector of strings

@@ -20,7 +20,6 @@ Extract all subscripts
 }
 \examples{
 \dontrun{
-
 p_list <- list("partyid",
                c("partyid", "age"),
                c("age", "race"),

@@ -8,6 +8,9 @@ extract_lhs(model, ital_vars)
 }
 \arguments{
 \item{model}{A fitted model}
+
+\item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
+not be wrapped in the \code{\\text{}} command?}
 }
 \value{
 A character string

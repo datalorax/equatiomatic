@@ -1,5 +1,5 @@
 Package: equatiomatic
-Title: Transform models into LaTeX equations
+Title: Transform Models into LaTeX Equations
 Version: 0.0.0.9000
 Authors@R: c(
     person(given = "Daniel",

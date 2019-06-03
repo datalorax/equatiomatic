@@ -7,7 +7,7 @@
 preview(eq)
 }
 \arguments{
-\item{eq}{LaTeX equation built with \code{build_tex}}
+\item{eq}{LaTeX equation built with \code{create_eq}}
 }
 \description{
 Use [texPreview::tex_preview][texPreview::tex_preview] to preview the final

@@ -2,10 +2,12 @@
 % Please edit documentation in R/extract_eq.R
 \name{add_tex_ital_v}
 \alias{add_tex_ital_v}
-\title{Add tex code to make string not italicized within an equation for a vector
-of strings}
+\title{Wrap text in \code{\\text{}} (vectorized)}
 \usage{
 add_tex_ital_v(term_v, ital_vars)
+}
+\value{
+A vector of characters
 }
 \description{
 Add tex code to make string not italicized within an equation for a vector

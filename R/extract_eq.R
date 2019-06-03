@@ -19,6 +19,11 @@
 #'   to \code{aligned}.
 #' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
 #'   estimates be included in the equation instead of math symbols?
+#' @param coef_digits Integer, defaults to 2. The number of decimal places to
+#'   round to when displaying model estimates.
+#' @param fix_signs Logical, defaults to \code{FALSE}. If disabled,
+#'   coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
+#'   + -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).
 #' @param \dots arguments passed to [texPreview::tex_preview][texPreview::tex_preview]
 #' @export
 #'
@@ -44,9 +49,6 @@
 #' mod4 <- lm(out ~ ., d)
 #' extract_eq(mod4)
 #'
-#' # Preview the equation
-#'
-#'
 #' # Don't italicize terms
 #' extract_eq(mod1, ital_vars = FALSE)
 #'
@@ -68,14 +70,15 @@
 #'                 cont2 = rnorm(300, 50, 5))
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
-#'
-extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-                       width = 120, align_env = "aligned", use_coefs = FALSE) {
+
+extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
+                       wrap = FALSE, width = 120, align_env = "aligned",
+                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
 
   lhs <- extract_lhs(model, ital_vars)
   rhs <- extract_rhs(model)
 
-  eq <- create_eq(lhs, rhs, ital_vars, use_coefs)
+  eq <- create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs)
 
   if(wrap) {
     eq <- wrap(eq, width, align_env)
@@ -94,10 +97,10 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
 #'
 #' @keywords internal
 #'
-#' @param model A fitted model
+#' @inheritParams extract_eq
 #'
 #' @return A character string
-#'
+
 extract_lhs <- function(model, ital_vars) {
   lhs <- all.vars(formula(model))[1]
 
@@ -113,9 +116,11 @@ extract_lhs <- function(model, ital_vars) {
 #'   \code{"partyidOther party"}
 #' @param primary_term_v A vector of primary terms, e.g., \code{"partyid"}.
 #'   Usually the result of \code{formula_rhs[!grepl(":", formula_rhs)]}
+#'
 #' @return A logical vector the same length of \code{primary_term_v} indicating
 #'   whether the \code{full_term} is part of the given \code{primary_term_v}
 #'   element
+#'
 #' @examples \dontrun{
 #' detect_primary("partyidStrong republican", c("partyid", "age", "race"))
 #' detect_primary("age", c("partyid", "age", "race"))
@@ -124,10 +129,10 @@ extract_lhs <- function(model, ital_vars) {
 
 detect_primary <- function(full_term, primary_term_v) {
   vapply(primary_term_v, function(indiv_term) {
-      grepl(indiv_term, full_term)
-    },
-    logical(1)
-    )
+    grepl(indiv_term, full_term)
+  },
+  logical(1)
+  )
 }
 
 
@@ -140,7 +145,6 @@ detect_primary <- function(full_term, primary_term_v) {
 #' @param all_terms A list of all the equation terms on the right hand side,
 #'   usually the result of \code{broom::tidy(model, quick = TRUE)$term}.
 #' @examples \dontrun{
-#'
 #' primaries <- c("partyid", "age", "race")
 #'
 #' full_terms <- c("partyidDon't know", "partyidOther party", "age",
@@ -157,14 +161,12 @@ extract_primary_term <- function(primary_term_v, all_terms) {
 
 #' Extract the subscripts from a given term
 #'
-#'
 #' @keywords internal
 #'
 #' @param primary A single primary term, e.g., \code{"partyid"}
 #' @param full_term_v A vector of full terms, e.g.,
 #'   \code{c("partyidDon't know", "partyidOther party"}. Can be of length 1.
 #' @examples \dontrun{
-#'
 #' extract_subscripts("partyid", "partyidDon't know")
 #' extract_subscripts("partyid",
 #'                    c("partyidDon't know", "partyidOther party",
@@ -178,9 +180,10 @@ extract_subscripts <- function(primary, full_term_v) {
                 mapply_chr(function(x, y) gsub(x, "", y),
                            x = primary,
                            y = full_term_v)
-                )
+  )
   out
 }
+
 
 #' Extract all subscripts
 #'
@@ -193,7 +196,6 @@ extract_subscripts <- function(primary, full_term_v) {
 #' returns \code{""}.
 #'
 #' @examples \dontrun{
-#'
 #' p_list <- list("partyid",
 #'                c("partyid", "age"),
 #'                c("age", "race"),
@@ -211,10 +213,11 @@ extract_all_subscripts <- function(primary_list, full_term_list) {
   Map(extract_subscripts, primary_list, full_term_list)
 }
 
+
 #' Extract right-hand side
 #'
 #' Extract a data frame with list columns for the primary terms and subscripts
-# from all terms in the model
+#' from all terms in the model
 #'
 #' @keywords internal
 #'
@@ -284,7 +287,10 @@ extract_rhs <- function(model) {
   full_rhs
 }
 
-#' Wraps text in \code{\\text{}}
+
+#' Wrap text in \code{\\text{}}
+#'
+#' Add tex code to make string not italicized within an equation
 #'
 #' @keywords internal
 #'
@@ -293,8 +299,6 @@ extract_rhs <- function(model) {
 #'
 #' @return A character string
 
-#' Add tex code to make string not italicized within an equation
-#' @keywords internal
 add_tex_ital <- function(term, ital_vars) {
   if (any(nchar(term) == 0, ital_vars)) {
     return(term)
@@ -302,14 +306,24 @@ add_tex_ital <- function(term, ital_vars) {
   paste0("\\text{", term, "}")
 }
 
+
+#' Wrap text in \code{\\text{}} (vectorized)
+#'
 #' Add tex code to make string not italicized within an equation for a vector
 #' of strings
+#'
 #' @keywords internal
+#'
+#' @return A vector of characters
+
 add_tex_ital_v <- function(term_v, ital_vars) {
   vapply(term_v, add_tex_ital, ital_vars, FUN.VALUE = character(1))
 }
 
-#' Wraps text in \code{_{}}
+
+#' Wrap text in \code{_{}}
+#'
+#' Add tex code to make subscripts for a single string
 #'
 #' @keywords internal
 #'
@@ -317,8 +331,6 @@ add_tex_ital_v <- function(term_v, ital_vars) {
 #'
 #' @return A character string
 
-#' Add tex code to make subscripts for a single string
-#' @keywords internal
 add_tex_subscripts <- function(term) {
   if (any(nchar(term) == 0)) {
     return(term)
@@ -326,20 +338,38 @@ add_tex_subscripts <- function(term) {
   paste0("_{", term, "}")
 }
 
+
+#' Wrap text in \code{_{}}
+#'
 #' Add tex code to make subscripts for a vector of strings
+#'
 #' @keywords internal
+#'
+#' @return A vector of characters
+
 add_tex_subscripts_v <- function(term_v) {
   vapply(term_v, add_tex_subscripts, FUN.VALUE = character(1))
 }
 
-#' Adds multiplication symbol for interaction terms
+
+#' Add multiplication symbol for interaction terms
+#'
 #' @keywords internal
+
 add_tex_mult <- function(term) {
   paste(term, collapse = " \\times ")
 }
 
-#' Creates a full term w/subscripts
+
+#' Create a full term w/subscripts
+#'
 #' @keywords internal
+#'
+#' @param rhs A data frame of right-hand side variables extracted with
+#'   \code{extract_rhs}.
+#'
+#' @inheritParams extract_eq
+
 create_term <- function(rhs, ital_vars) {
   prim <- lapply(rhs$primary, add_tex_ital_v, ital_vars)
   subs <- lapply(rhs$subscripts, add_tex_ital_v, ital_vars)
@@ -350,48 +380,90 @@ create_term <- function(rhs, ital_vars) {
   vapply(final, add_tex_mult, FUN.VALUE = character(1))
 }
 
+
 #' Intermediary function to wrap text in "\\beta_{}"
+#'
 #' @keywords internal
+
 add_betas <- function(terms, nums) {
   paste0("\\beta_{", nums,"}",
          "(", terms, ")"
-         )
+  )
 }
 
+
 #' Adds greek symbols to the equation
+#'
 #' @keywords internal
+
 add_greek <- function(rhs, terms) {
   if (any(grepl("(Intercept)", terms))) {
     add_betas(terms, seq_len(nrow(rhs)))
   } else {
     ifelse(rhs$term == "(Intercept)",
-         "\\alpha",
-         add_betas(terms, seq_len(nrow(rhs)) - 1))
+           "\\alpha",
+           add_betas(terms, seq_len(nrow(rhs)) - 1))
   }
 }
 
-#' Adds coefficient values to the equation
+
+#' Add coefficient values to the equation
+#'
 #' @keywords internal
-add_coefs <- function(rhs, term) {
-  ests <- round(rhs$estimate, 2)
+
+add_coefs <- function(rhs, term, coef_digits) {
+  ests <- round(rhs$estimate, coef_digits)
   ifelse(
-         rhs$term == "(Intercept)",
-         paste0(ests, term),
-         paste0(ests, "(", term, ")")
-         )
+    rhs$term == "(Intercept)",
+    paste0(ests, term),
+    paste0(ests, "(", term, ")")
+  )
 }
 
-#' Creates the full equation
+
+#' Deduplicate operators
+#'
+#' Convert "+ -" to "-"
+#'
 #' @keywords internal
-create_eq <- function(lhs, rhs, ital_vars, use_coef) {
+#'
+#' @param eq String containing a LaTeX equation
+#'
+#' @inheritParams extract_eq
+#'
+fix_coef_signs <- function(eq, fix_signs) {
+  if (fix_signs) {
+    gsub("\\+ -", "- ", eq)
+  } else {
+    eq
+  }
+}
+
+
+#' Create the full equation
+#'
+#' @keywords internal
+#'
+#' @param lhs A character string of the left-hand side variable extracted with
+#'   \code{extract_lhs}
+#' @param rhs A data frame of right-hand side variables extracted with
+#'   \code{extract_rhs}.
+#'
+#' @inheritParams extract_eq
+
+create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
-  if (use_coef) {
-    rhs$final_terms <- add_coefs(rhs, rhs$final_terms)
+  if (use_coefs) {
+    rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms)
   }
   full_rhs <- paste(rhs$final_terms, collapse = " + ")
+
+  if (use_coefs && fix_signs) {
+    full_rhs <- fix_coef_signs(full_rhs, fix_signs)
+  }
 
   paste0(lhs, " = ", full_rhs, " + \\epsilon")
 }
@@ -406,6 +478,7 @@ wrap <- function(full_eq, width, align_env) {
          "\n\\end{", align_env, "}")
 }
 
+
 #' Preview equation
 #'
 #' Use [texPreview::tex_preview][texPreview::tex_preview] to preview the final
@@ -413,8 +486,8 @@ wrap <- function(full_eq, width, align_env) {
 #'
 #' @keywords internal
 #'
-#' @param eq LaTeX equation built with \code{build_tex}
-#'
+#' @param eq LaTeX equation built with \code{create_eq}
+
 preview <- function(eq) {
   if (!requireNamespace("texPreview", quietly = TRUE)) {
     stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
@@ -422,5 +495,3 @@ preview <- function(eq) {
   }
   texPreview::tex_preview(eq)
 }
-
-

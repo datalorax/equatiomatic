@@ -4,7 +4,7 @@
 \name{equatiomatic-package}
 \alias{equatiomatic}
 \alias{equatiomatic-package}
-\title{equatiomatic: Transform models into LaTeX equations}
+\title{equatiomatic: Transform Models into LaTeX Equations}
 \description{
 The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of

@@ -2,11 +2,11 @@
 % Please edit documentation in R/extract_eq.R
 \name{add_tex_mult}
 \alias{add_tex_mult}
-\title{Adds multiplication symbol for interaction terms}
+\title{Add multiplication symbol for interaction terms}
 \usage{
 add_tex_mult(term)
 }
 \description{
-Adds multiplication symbol for interaction terms
+Add multiplication symbol for interaction terms
 }
 \keyword{internal}

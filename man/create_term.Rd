@@ -2,11 +2,18 @@
 % Please edit documentation in R/extract_eq.R
 \name{create_term}
 \alias{create_term}
-\title{Creates a full term w/subscripts}
+\title{Create a full term w/subscripts}
 \usage{
 create_term(rhs, ital_vars)
 }
+\arguments{
+\item{rhs}{A data frame of right-hand side variables extracted with
+\code{extract_rhs}.}
+
+\item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
+not be wrapped in the \code{\\text{}} command?}
+}
 \description{
-Creates a full term w/subscripts
+Create a full term w/subscripts
 }
 \keyword{internal}

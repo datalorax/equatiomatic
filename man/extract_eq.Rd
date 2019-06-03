@@ -5,7 +5,8 @@
 \title{LaTeX code for R models}
 \usage{
 extract_eq(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-  width = 120, align_env = "aligned", use_coefs = FALSE)
+  width = 120, align_env = "aligned", use_coefs = FALSE,
+  coef_digits = 2, fix_signs = TRUE)
 }
 \arguments{
 \item{model}{A fitted model}
@@ -29,6 +30,13 @@ to \code{aligned}.}
 
 \item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
 estimates be included in the equation instead of math symbols?}
+
+\item{coef_digits}{Integer, defaults to 2. The number of decimal places to
+round to when displaying model estimates.}
+
+\item{fix_signs}{Logical, defaults to \code{FALSE}. If disabled,
+coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
++ -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).}
 
 \item{\dots}{arguments passed to [texPreview::tex_preview][texPreview::tex_preview]}
 }
@@ -59,9 +67,6 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
 mod4 <- lm(out ~ ., d)
 extract_eq(mod4)
 
-# Preview the equation
-
-
 # Don't italicize terms
 extract_eq(mod1, ital_vars = FALSE)
 
@@ -83,5 +88,4 @@ d <- data.frame(out = sample(0:1, 100, replace = TRUE),
                 cont2 = rnorm(300, 50, 5))
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
-
 }
