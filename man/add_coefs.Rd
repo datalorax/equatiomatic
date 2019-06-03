@@ -4,7 +4,7 @@
 \alias{add_coefs}
 \title{Adds coefficient values to the equation}
 \usage{
-add_coefs(rhs, term)
+add_coefs(rhs, term, coef_digits)
 }
 \description{
 Adds coefficient values to the equation

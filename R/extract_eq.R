@@ -19,6 +19,11 @@
 #'   to \code{aligned}.
 #' @param use_coefs Logical, defaults to \code{FALSE}. Should the actual model
 #'   estimates be included in the equation instead of math symbols?
+#' @param coef_digits Integer, defaults to 2. The number of decimal places to
+#'   round to when displaying model estimates.
+#' @param fix_signs Logical, defaults to \code{FALSE}. If disabled,
+#'   coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
+#'   + -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).
 #' @param \dots arguments passed to [texPreview::tex_preview][texPreview::tex_preview]
 #' @export
 #'
@@ -69,13 +74,14 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 #'
-extract_eq <- function(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-                       width = 120, align_env = "aligned", use_coefs = FALSE) {
+extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
+                       wrap = FALSE, width = 120, align_env = "aligned",
+                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
 
   lhs <- extract_lhs(model, ital_vars)
   rhs <- extract_rhs(model)
 
-  eq <- create_eq(lhs, rhs, ital_vars, use_coefs)
+  eq <- create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs)
 
   if(wrap) {
     eq <- wrap(eq, width, align_env)
@@ -372,8 +378,8 @@ add_greek <- function(rhs, terms) {
 
 #' Adds coefficient values to the equation
 #' @keywords internal
-add_coefs <- function(rhs, term) {
-  ests <- round(rhs$estimate, 2)
+add_coefs <- function(rhs, term, coef_digits) {
+  ests <- round(rhs$estimate, coef_digits)
   ifelse(
          rhs$term == "(Intercept)",
          paste0(ests, term),
@@ -381,17 +387,39 @@ add_coefs <- function(rhs, term) {
          )
 }
 
+#' Deduplicate operators
+#'
+#' Convert "+ -" to "-"
+#'
+#' @keywords internal
+#'
+#' @param eq String containing a LaTeX equation
+#' @param fix_signs Passed from \code{create_eq}
+#'
+fix_coef_signs <- function(eq, fix_signs) {
+  if (fix_signs) {
+    gsub("\\+ -", "- ", eq)
+  } else {
+    eq
+  }
+}
+
+
 #' Creates the full equation
 #' @keywords internal
-create_eq <- function(lhs, rhs, ital_vars, use_coef) {
+create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
-  if (use_coef) {
-    rhs$final_terms <- add_coefs(rhs, rhs$final_terms)
+  if (use_coefs) {
+    rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms)
   }
   full_rhs <- paste(rhs$final_terms, collapse = " + ")
+
+  if (use_coefs && fix_signs) {
+    full_rhs <- fix_coef_signs(full_rhs, fix_signs)
+  }
 
   paste0(lhs, " = ", full_rhs, " + \\epsilon")
 }
@@ -413,7 +441,7 @@ wrap <- function(full_eq, width, align_env) {
 #'
 #' @keywords internal
 #'
-#' @param eq LaTeX equation built with \code{build_tex}
+#' @param eq LaTeX equation built with \code{create_eq}
 #'
 preview <- function(eq) {
   if (!requireNamespace("texPreview", quietly = TRUE)) {

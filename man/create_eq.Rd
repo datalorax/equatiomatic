@@ -4,7 +4,7 @@
 \alias{create_eq}
 \title{Creates the full equation}
 \usage{
-create_eq(lhs, rhs, ital_vars, use_coef)
+create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs)
 }
 \description{
 Creates the full equation
