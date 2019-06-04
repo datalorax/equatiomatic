@@ -3,7 +3,8 @@
 link_name <- c("logit",
                'inverse',
                # '1/mu^2', # inverse gaussian; removed until we're certain
-               'log')
+               'log',
+               'identity') # this isn't necessary as extract_eq() does this by default
 
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
