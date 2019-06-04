@@ -165,9 +165,9 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 #> $$
 #>  \begin{aligned}
-#> \text{out} =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \\
-#> & \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \\
-#> & \beta_{6}(\text{cont2}) + \epsilon
+#> log\left[ \frac { text{out} }{ 1\quad -\quad text{out} } \right] =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \\
+#> & \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \\
+#> & \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
 #> \end{aligned} 
 #> $$
 ```
