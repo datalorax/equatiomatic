@@ -84,7 +84,7 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
     eq <- wrap(eq, width, align_env)
   }
   if (preview) {
-    texPreview::tex_preview(eq)
+    preview(eq)
   }
   cat("$$\n", eq, "\n$$")
   invisible(eq)
@@ -493,5 +493,5 @@ preview <- function(eq) {
     stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
          call. = FALSE)
   }
-  texPreview::tex_preview(eq)
+  texPreview::tex_preview(paste0("$$\n", eq, "\n$$"))
 }
