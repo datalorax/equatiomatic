@@ -479,7 +479,7 @@ create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
 modify_lhs_for_link <- function(model, lhs) {
   if (!(model$family$link %in% link_function_df$link_name)) { # is this logical operator not ideal?
     message("This link function is not presently supported; using an identity
-              function instead")
+              function instead") # this is implicit; it's just using the lhs as-is
   } else {
     matched_row_bool <- link_function_df$link_name %in% model$family$link
     filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]

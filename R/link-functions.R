@@ -3,14 +3,16 @@
 link_name <- c("logit",
                'inverse',
                # '1/mu^2', # inverse gaussian; removed until we're certain
-               'log')
+               'log',
+               'identity') # this isn't necessary as extract_eq() does this by default
 
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
 link_formula <- c("log\\left[ \\frac { y }{ 1\\quad -\\quad y }  \\right]",
                   "\\frac { 1 }{ y }",
                   # "\\frac { 1 }{ 1/{ y }^{ 2 } } ", # inverse gaussian - correct?
-                  "\\log ( { y )} ") # are the parentheses italicized here?
+                  "\\log ( { y )} ",
+                  "y") # are the parentheses italicized here?
 
 link_function_df <- data.frame(link_name, link_formula,
                                stringsAsFactors = FALSE)
