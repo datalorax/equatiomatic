@@ -9,7 +9,7 @@
 status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Covrpage
-Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_05_31-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_03-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
@@ -71,7 +71,7 @@ You can also request it return the actual coefficients
 ``` r
 extract_eq(mod1, use_coefs = TRUE)
 #> $$
-#>  \text{mpg} = 34.66 + -1.59(\text{cyl}) + -0.02(\text{disp}) + \epsilon 
+#>  \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon 
 #> $$
 ```
 

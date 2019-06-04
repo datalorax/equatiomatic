@@ -17,9 +17,6 @@ knitr::opts_chunk$set(
 ```
 
 <!--- Placeholder for tests/README.md Do Not Edit--->
-  - [Coverage](#coverage)
-  - [Unit Tests](#unit-tests)
-
 This output is created by
 [covrpage](https://github.com/metrumresearchgroup/covrpage).
 
@@ -30,8 +27,9 @@ Coverage summary is created using the
 
 | Object                               | Coverage (%) |
 | :----------------------------------- | :----------: |
-| equatiomatic                         |    82.05     |
-| [R/extract\_eq.R](https://github.com/yonicd/equatiomatic/tree/master/R/extract_eq.R) |    82.05     |
+| equatiomatic                         |      0       |
+| [R/extract\_eq.R](https://github.com/datalorax/equatiomatic/tree/master/R/extract_eq.R) |      0       |
+| [R/utils.R](https://github.com/datalorax/equatiomatic/tree/master/R/utils.R)            |      0       |
 
 <br>
 
@@ -43,8 +41,8 @@ package.
 
 | file                                      | n |  time | error | failed | skipped | warning |
 | :---------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-basic.R)     | 2 | 0.125 |     0 |      0 |       0 |       0 |
-| [test-preview.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-preview.R) | 1 | 0.230 |     0 |      0 |       0 |       0 |
+| [test-basic.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R)     | 2 | 0.014 |     0 |      0 |       0 |       0 |
+| [test-preview.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-preview.R) | 1 | 0.415 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -53,9 +51,9 @@ package.
 
 | file                                          | context | test                   | status | n |  time |
 | :-------------------------------------------- | :------ | :--------------------- | :----- | -: | ----: |
-| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.015 |
-| [test-basic.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.110 |
-| [test-preview.R](https://github.com/yonicd/equatiomatic/tree/master/tests/testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.230 |
+| [test-basic.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.012 |
+| [test-basic.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.002 |
+| [test-preview.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.415 |
 
 </details>
 
@@ -65,15 +63,15 @@ package.
 
 | Field    | Value                               |
 | :------- | :---------------------------------- |
-| Version  | R version 3.5.1 (2018-07-02)        |
+| Version  | R version 3.6.0 (2019-04-26)        |
 | Platform | x86\_64-apple-darwin15.6.0 (64-bit) |
-| Running  | macOS 10.14.5                       |
+| Running  | macOS Mojave 10.14.5                |
 | Language | en\_US                              |
-| Timezone | America/New\_York                   |
+| Timezone | America/Los\_Angeles                |
 
 | Package  | Version |
 | :------- | :------ |
-| testthat | 2.0.1   |
+| testthat | 2.1.1   |
 | covr     | 3.2.1   |
 | covrpage | 0.0.70  |
 

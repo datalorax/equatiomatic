@@ -1,7 +1,7 @@
 testthat::context('preview')
 
 fit <- lm(mpg ~ cyl + disp, mtcars)
-expect_fit <- '$$\n \\text{mpg} = \\alpha + \\beta_{1} (\\text{cyl}) + \\beta_{2} (\\text{disp}) + \\epsilon \n$$'
+expect_fit <- '\\text{mpg} = \\alpha + \\beta_{1}(\\text{cyl}) + \\beta_{2}(\\text{disp}) + \\epsilon'
 
 testthat::describe('preview',{
 
