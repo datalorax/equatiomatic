@@ -13,14 +13,15 @@ Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_03-brightgreen
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
-writing LaTeX code from a fitted model. In the future, the package will
-support any model supported by
+writing LaTeX code from a fitted model. In the future, the package aims
+to support any model supported by
 [**broom**](https://cran.r-project.org/package=broom); so far it has
 only been tested with `lm` and `glm` models.
 
 ## Installation
 
-equatiomatic is not yet on CRAN. Install the dev version from GitHub
+equatiomatic is not yet on CRAN. Install the development version from
+GitHub
 with
 
 ``` r
