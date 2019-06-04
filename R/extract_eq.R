@@ -483,7 +483,7 @@ modify_lhs_for_link <- function(model, lhs) {
   } else {
     matched_row_bool <- link_function_df$link_name %in% model$family$link
     filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
-    gsub("y", lhs, filtered_link_formula) # is there a better regex here?
+    gsub("y", lhs, filtered_link_formula, fixed = TRUE) 
   }
 }
 
