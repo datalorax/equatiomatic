@@ -13,14 +13,15 @@ Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_03-brightgreen
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
-writing LaTeX code from a fitted model. In the future, the package will
-support any model supported by
+writing LaTeX code from a fitted model. In the future, the package aims
+to support any model supported by
 [**broom**](https://cran.r-project.org/package=broom); so far it has
 only been tested with `lm` and `glm` models.
 
 ## Installation
 
-equatiomatic is not yet on CRAN. Install the dev version from GitHub
+equatiomatic is not yet on CRAN. Install the development version from
+GitHub
 with
 
 ``` r
@@ -164,9 +165,9 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 #> $$
 #>  \begin{aligned}
-#> \text{out} =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \\
-#> & \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \\
-#> & \beta_{6}(\text{cont2}) + \epsilon
+#> log\left[ \frac { text{out} }{ 1\quad -\quad text{out} } \right] =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \\
+#> & \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \\
+#> & \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
 #> \end{aligned} 
 #> $$
 ```

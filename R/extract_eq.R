@@ -78,7 +78,7 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
   lhs <- extract_lhs(model, ital_vars)
   rhs <- extract_rhs(model)
 
-  eq <- create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs)
+  eq <- create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model)
 
   if(wrap) {
     eq <- wrap(eq, width, align_env)
@@ -102,6 +102,7 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
 #' @return A character string
 
 extract_lhs <- function(model, ital_vars) {
+
   lhs <- all.vars(formula(model))[1]
 
   add_tex_ital_v(lhs, ital_vars)
@@ -451,7 +452,8 @@ fix_coef_signs <- function(eq, fix_signs) {
 #'
 #' @inheritParams extract_eq
 
-create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs) {
+create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
+                      model) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -465,7 +467,24 @@ create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs) {
     full_rhs <- fix_coef_signs(full_rhs, fix_signs)
   }
 
+  if ("glm" %in% class(model)) {
+    lhs <- modify_lhs_for_link(model, lhs)
+  }
+
   paste0(lhs, " = ", full_rhs, " + \\epsilon")
+}
+
+#' modifies lhs of equations that include a link function
+#' @keywords internal
+modify_lhs_for_link <- function(model, lhs) {
+  if (!(model$family$link %in% link_function_df$link_name)) { # is this logical operator not ideal?
+    message("This link function is not presently supported; using an identity
+              function instead") # this is implicit; it's just using the lhs as-is
+  } else {
+    matched_row_bool <- link_function_df$link_name %in% model$family$link
+    filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
+    gsub("y", lhs, filtered_link_formula, fixed = TRUE) 
+  }
 }
 
 #' wraps the full equation

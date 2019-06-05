@@ -4,7 +4,7 @@
 \alias{create_eq}
 \title{Create the full equation}
 \usage{
-create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs)
+create_eq(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model)
 }
 \arguments{
 \item{lhs}{A character string of the left-hand side variable extracted with
@@ -25,6 +25,8 @@ round to when displaying model estimates.}
 \item{fix_signs}{Logical, defaults to \code{FALSE}. If disabled,
 coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
 + -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).}
+
+\item{model}{A fitted model}
 }
 \description{
 Create the full equation
