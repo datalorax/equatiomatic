@@ -50,6 +50,19 @@ extract_lhs.glm <- function(model, ital_vars) {
   modify_lhs_for_link(model, full_lhs)
 }
 
+# subscript version
+# extract_lhs.glm <- function(model, ital_vars) {
+#   lhs <- all.vars(formula(model))[1]
+#   ss <- model$data[which(model$y == 1)[1], lhs]
+#   ss <- as.character(ss)
+  
+#   full_lhs <- paste0(add_tex_ital(lhs, ital_vars), 
+#                      "_", 
+#                      add_tex_ital(ss, ital_vars))
+  
+#   modify_lhs_for_link(model, full_lhs)
+# }
+
 
 #' modifies lhs of equations that include a link function
 #' @keywords internal
@@ -75,7 +88,7 @@ link_name <- c("logit",
 
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
-link_formula <- c("log\\left[ \\frac { P( y ) }{ 1 - P( y ) }  \\right]",
+link_formula <- c("\\log\\left[ \\frac { P( y ) }{ 1 - P( y ) }  \\right]",
                   "\\frac { 1 }{ P( y ) }",
                   # "\\frac { 1 }{ 1/{ y }^{ 2 } } ", # inverse gaussian - correct?
                   "\\log ( { y )} ",
