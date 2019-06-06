@@ -8,15 +8,19 @@
 [![Travis build
 status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
 [![Covrpage
 Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_03-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+[![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic)
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
 writing LaTeX code from a fitted model. In the future, the package aims
 to support any model supported by
 [**broom**](https://cran.r-project.org/package=broom); so far it has
-only been tested with `lm` and `glm` models.
+only been tested with `lm` and `glm` models and, at present, only
+supports binomial `glm` models (i.e., not ordinal or multinomial
+models).
 
 ## Installation
 
@@ -149,10 +153,8 @@ extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
 
 ![](man/figures/eq7.png)
 
-You’re not limited to just `lm` models\! You should be able to use any
-model supported by
-[**broom**](https://cran.r-project.org/package=broom), like logistic
-regression with `glm()`:
+You’re not limited to just `lm` models\! Try out logistic regression
+with `glm()`:
 
 ``` r
 set.seed(8675309)
@@ -165,7 +167,7 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 #> $$
 #>  \begin{aligned}
-#> log\left[ \frac { text{out} }{ 1\quad -\quad text{out} } \right] =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \\
+#> log\left[ \frac { P( \text{out} ) }{ 1 - P( \text{out} ) } \right] =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \\
 #> & \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \\
 #> & \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
 #> \end{aligned} 

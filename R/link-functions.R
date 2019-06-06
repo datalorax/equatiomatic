@@ -8,8 +8,8 @@ link_name <- c("logit",
 
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
-link_formula <- c("log\\left[ \\frac { y }{ 1\\quad -\\quad y }  \\right]",
-                  "\\frac { 1 }{ y }",
+link_formula <- c("log\\left[ \\frac { P( y ) }{ 1 - P( y ) }  \\right]",
+                  "\\frac { 1 }{ P( y ) }",
                   # "\\frac { 1 }{ 1/{ y }^{ 2 } } ", # inverse gaussian - correct?
                   "\\log ( { y )} ",
                   "y") # are the parentheses italicized here?
