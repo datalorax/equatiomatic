@@ -11,8 +11,8 @@ extract_rhs(model)
 }
 \value{
 A list with one element per future equation term. Term components
-  like subscripts are nested inside each list element. List elements with two
-  or more terms are interactions.
+like subscripts are nested inside each list element. List elements with two
+or more terms are interactions.
 }
 \description{
 Extract a data frame with list columns for the primary terms and subscripts

@@ -15,8 +15,8 @@ Usually the result of \code{formula_rhs[!grepl(":", formula_rhs)]}}
 }
 \value{
 A logical vector the same length of \code{primary_term_v} indicating
-  whether the \code{full_term} is part of the given \code{primary_term_v}
-  element
+whether the \code{full_term} is part of the given \code{primary_term_v}
+element
 }
 \description{
 Detect if a given term is part of a vector of full terms

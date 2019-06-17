@@ -5,8 +5,6 @@
 #' [broom::tidy][broom::tidy].
 #'
 #' @param model A fitted model
-#' @param preview Logical, defaults to \code{FALSE}. Should the equation be
-#'   previewed in the viewer pane?
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\text{}} command?
 #' @param wrap Logical, defaults to \code{FALSE}. Should the equation be
@@ -22,10 +20,12 @@
 #' @param coef_digits Integer, defaults to 2. The number of decimal places to
 #'   round to when displaying model estimates.
 #' @param fix_signs Logical, defaults to \code{FALSE}. If disabled,
-#'   coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
-#'   + -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).
-#' @param \dots arguments passed to [texPreview::tex_preview][texPreview::tex_preview]
+#'   coefficient estimates that are negative are preceded with a "+" (e.g.
+#'   `5(x) + -3(z)`). If enabled, the "+ -" is replaced with a "-" (e.g.
+#'   `5(x) - 3(z)`).
 #' @export
+#'
+#' @return A character of class \dQuote{equation}.
 #'
 #' @examples
 #' # Simple model
@@ -61,6 +61,9 @@
 #' # Include model estimates instead of Greek letters
 #' extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
 #'
+#' # Don't fix doubled-up "+ -" signs
+#' extract_eq(mod2, wrap = TRUE, use_coefs = TRUE, fix_signs = FALSE)
+#'
 #' # Use other model types, like glm
 #' set.seed(8675309)
 #' d <- data.frame(out = sample(0:1, 100, replace = TRUE),
@@ -71,7 +74,7 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 
-extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
+extract_eq <- function(model, ital_vars = FALSE,
                        wrap = FALSE, width = 120, align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
 
@@ -86,14 +89,13 @@ extract_eq <- function(model, preview = FALSE, ital_vars = FALSE,
                   fix_signs,
                   model)
 
-  if(wrap) {
+  if (wrap) {
     eq <- wrap(eq, width, align_env)
   }
-  if (preview) {
-    preview(eq)
-  }
-  cat("$$\n", eq, "\n$$")
-  invisible(eq)
+
+  class(eq) <- c('equation', 'character')
+
+  return(eq)
 }
 
 
@@ -105,22 +107,4 @@ wrap <- function(full_eq, width, align_env) {
   paste0("\\begin{", align_env, "}\n",
          paste(eq_wrapped, collapse = " \\\\\n"),
          "\n\\end{", align_env, "}")
-}
-
-
-#' Preview equation
-#'
-#' Use [texPreview::tex_preview][texPreview::tex_preview] to preview the final
-#' equation.
-#'
-#' @keywords internal
-#'
-#' @param eq LaTeX equation built with \code{create_eq}
-
-preview <- function(eq) {
-  if (!requireNamespace("texPreview", quietly = TRUE)) {
-    stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
-         call. = FALSE)
-  }
-  texPreview::tex_preview(paste0("$$\n", eq, "\n$$"))
 }

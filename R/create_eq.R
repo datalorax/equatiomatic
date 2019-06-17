@@ -158,7 +158,7 @@ add_greek <- function(rhs, terms) {
 }
 
 
-#' Intermediary function to wrap text in "\\beta_{}"
+#' Intermediary function to wrap text in `\\beta_{}`
 #'
 #' @keywords internal
 

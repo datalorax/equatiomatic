@@ -5,9 +5,9 @@
 #' @param model A fitted model
 #' @param \dots additional arguments passed to the specific extractor
 
- extract_lhs <- function (model, ...) {
-   UseMethod("extract_lhs", model)
- }
+extract_lhs <- function(model, ...) {
+  UseMethod("extract_lhs", model)
+}
 
 
 #' Extract left-hand side of an lm object
@@ -46,7 +46,7 @@ extract_lhs.glm <- function(model, ital_vars) {
   full_lhs <- paste(add_tex_ital_v(lhs, ital_vars),
                     "=",
                     add_tex_ital_v(ss, ital_vars))
-  
+
   modify_lhs_for_link(model, full_lhs)
 }
 
@@ -55,11 +55,11 @@ extract_lhs.glm <- function(model, ital_vars) {
 #   lhs <- all.vars(formula(model))[1]
 #   ss <- model$data[which(model$y == 1)[1], lhs]
 #   ss <- as.character(ss)
-  
-#   full_lhs <- paste0(add_tex_ital(lhs, ital_vars), 
-#                      "_", 
+
+#   full_lhs <- paste0(add_tex_ital(lhs, ital_vars),
+#                      "_",
 #                      add_tex_ital(ss, ital_vars))
-  
+
 #   modify_lhs_for_link(model, full_lhs)
 # }
 

@@ -2,11 +2,11 @@
 % Please edit documentation in R/create_eq.R
 \name{add_betas}
 \alias{add_betas}
-\title{Intermediary function to wrap text in "\\beta_{}"}
+\title{Intermediary function to wrap text in \code{\\beta_{}}}
 \usage{
 add_betas(terms, nums)
 }
 \description{
-Intermediary function to wrap text in "\\beta_{}"
+Intermediary function to wrap text in \code{\\beta_{}}
 }
 \keyword{internal}
