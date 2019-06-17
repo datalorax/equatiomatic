@@ -4,13 +4,32 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include=FALSE}
+library(magrittr)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+library(texPreview)
+
+tex_opts$set(
+  density = 600  # High resolution LaTeX output
+)
+
+# Include HTML images when knitting with github_document
+if (isTRUE(getOption('knitr.in.progress'))) {
+  tex_opts$set(
+    returnType = "html"
+  )
+} 
+
+# Don't use Helvetica in examples
+# This could go in tex_opts$set, but it doesn't seem to actually get used there
+usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 ```
 
 # equatiomatic <img src="tools/logo.png" align="right"/>
@@ -34,19 +53,20 @@ has only been tested with `lm` and `glm` models and, at present, only supports b
 
 equatiomatic is not yet on CRAN. Install the development version from GitHub with
 
-``` r
+```{r install-command, eval=FALSE}
 remotes::install_github("datalorax/equatiomatic")
 ```
 
-## Examples
+
+## Basic usage
 
 ![](https://github.com/datalorax/equatiomatic/raw/master/docs/equatiomatic.gif)
 
 The gif above shows the basic functionality. 
 
-In non-gif form: 
+To convert a model to LaTeX, feed a model object to `extract_eq()`:
 
-```{r example1}
+```{r example-basic, warning=FALSE, message=FALSE}
 library(equatiomatic)
 
 # Fit a simple model
@@ -56,87 +76,136 @@ mod1 <- lm(mpg ~ cyl + disp, mtcars)
 extract_eq(mod1)
 ```
 
-Including the above in an R Markdown document with `results = "asis"` will
-render the equation to look like the below.
-
-![](man/figures/eq1.png)
-
-Alternatively, you can run the code interactively, copy/paste the equation to
-where you want it in your doc, and make any edits you'd like. There is also the
-optional `preview` argument that will allow you to see what the equations look
-like before you have them rendered.
-
-```{r example-preview, eval = FALSE}
-extract_eq(mod1, preview = TRUE)
+```{r example-basic-preview, echo=FALSE}
+extract_eq(mod1) %>% 
+  preview(usrPackages = usrPackages)
 ```
 
-and it will show up in your RStudio view pane like below.
+The model can be built in any standard way—it can handle shortcut syntax: 
 
-![](man/figures/preview.png)
-
-You can also request it return the actual coefficients
-
-```{r use_coefs}
-extract_eq(mod1, use_coefs = TRUE)
-```
-
-![](man/figures/eq2.png)
-
-It can also handle shortcut syntax. 
-
-```{r example2}
+```{r example-shortcut}
 mod2 <- lm(mpg ~ ., mtcars)
 extract_eq(mod2)
 ```
 
-![](man/figures/eq3.png)
+```{r example-shortcut-preview, echo=FALSE}
+extract_eq(mod2) %>% 
+  preview(usrPackages = usrPackages)
+```
 
-For categorical variables, it will place the levels of the variables as
-subscripts.
+When using categorical variables, it will include the levels of the variables as subscripts:
 
-```{r example3}
+```{r example-categorical}
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
 extract_eq(mod3)
 ```
 
-![](man/figures/eq4.png)
+```{r example-categorical-preview, echo=FALSE}
+extract_eq(mod3) %>% 
+  preview(usrPackages = usrPackages)
+```
 
-It preserves the order the variables are supplied in the formula.
+It helpfully preserves the order the variables are supplied in the formula:
 
-```{r example4}
+```{r example-preserve-order}
 set.seed(8675309)
 d <- data.frame(cat1 = rep(letters[1:3], 100),
-               cat2 = rep(LETTERS[1:3], each = 100),
-               cont1 = rnorm(300, 100, 1),
-               cont2 = rnorm(300, 50, 5),
-               out   = rnorm(300, 10, 0.5))
+                cat2 = rep(LETTERS[1:3], each = 100),
+                cont1 = rnorm(300, 100, 1),
+                cont2 = rnorm(300, 50, 5),
+                out   = rnorm(300, 10, 0.5))
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 extract_eq(mod4)
 ```
 
-![](man/figures/eq5.png)
+```{r example-preserve-order-preview, echo=FALSE}
+extract_eq(mod4) %>% 
+  preview(usrPackages = usrPackages)
+```
 
+## Appearance
 
-You can wrap the equations at a specified width, which defaults to 80.
+You can wrap the equations at a specified width, which defaults to 120 characters:
 
-```{r example5}
+```{r example-wrap}
 extract_eq(mod4, wrap = TRUE)
 ```
 
-![](man/figures/eq6.png)
-
-
-And you can optionally have the variables themselves be italicized.
-
-```{r example6}
-extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
+```{r example-wrap-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE) %>% 
+  preview(usrPackages = usrPackages)
 ```
 
-![](man/figures/eq7.png)
+By default, all text in the equation is wrapped in `\text{}`. You can optionally have the variables themselves be italicized (i.e. not be wrapped in `\text{}`) with `ital_vars = TRUE`:
+
+```{r example-italics}
+extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
+```
+
+```{r example-italics-preview, echo=FALSE}
+extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE) %>% 
+  preview(usrPackages = usrPackages)
+```
+
+
+## R Markdown and previewing
+
+If you include `extract_eq()` in an R Markdown chunk with `results="asis"`, **knitr** will render will render the equation.
+
+Alternatively, you can run the code interactively, copy/paste the equation to where you want it in your document, and make any edits you'd like. 
+
+If you install [**texPreview**](https://cran.r-project.org/package=texPreview) you can use the `preview()` function to preview the equation in RStudio:
+
+```{r example-preview, eval=FALSE}
+preview(extract_eq(mod1))
+```
+
+![](man/figures/preview.png)
+
+Both `extract_eq()` and `preview()` work with **magrittr** pipes, so you can do something like this:
+
+```{r pipe-example, eval=FALSE}
+library(magrittr)  # or library(tidyverse) or any other package that exports %>%
+
+extract_eq(mod1) %>% 
+  preview()
+```
+
+
+## Extra options
+
+There are several extra options you can enable with additional arguments to `extract_eq()`
+
+### Actual coefficients
+
+You can return actual numeric coefficients instead of Greek letters with `use_coefs = TRUE`:
+
+```{r use-coefs}
+extract_eq(mod1, use_coefs = TRUE)
+```
+
+```{r use-coefs-preview, echo=FALSE}
+extract_eq(mod1, use_coefs = TRUE) %>% 
+  preview(usrPackages = usrPackages)
+```
+
+By default, it will remove doubled operators like "+ -", but you can keep those in (which is often useful for teaching) with `fix_signs = FALSE`:
+
+```{r fix-signs}
+extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
+```
+
+```{r fix-signs-preview, echo=FALSE}
+extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE) %>% 
+  preview(usrPackages = usrPackages)
+```
+
+
+## Beyond `lm()`
 
 You're not limited to just `lm` models! Try out logistic regression with `glm()`:
 
-```{r example7}
+```{r example-logit}
 set.seed(8675309)
 d <- data.frame(out = sample(0:1, 100, replace = TRUE),
                 cat1 = rep(letters[1:3], 100),

@@ -25,20 +25,19 @@ models).
 ## Installation
 
 equatiomatic is not yet on CRAN. Install the development version from
-GitHub
-with
+GitHub with
 
 ``` r
 remotes::install_github("datalorax/equatiomatic")
 ```
 
-## Examples
+## Basic usage
 
 ![](https://github.com/datalorax/equatiomatic/raw/master/docs/equatiomatic.gif)
 
 The gif above shows the basic functionality.
 
-In non-gif form:
+To convert a model to LaTeX, feed a model object to `extract_eq()`:
 
 ``` r
 library(equatiomatic)
@@ -53,36 +52,10 @@ extract_eq(mod1)
 #> $$
 ```
 
-Including the above in an R Markdown document with `results = "asis"`
-will render the equation to look like the below.
+<img src="man/figures/README-example-basic-preview-1.png" width="100%" />
 
-![](man/figures/eq1.png)
-
-Alternatively, you can run the code interactively, copy/paste the
-equation to where you want it in your doc, and make any edits you’d
-like. There is also the optional `preview` argument that will allow you
-to see what the equations look like before you have them rendered.
-
-``` r
-extract_eq(mod1, preview = TRUE)
-```
-
-and it will show up in your RStudio view pane like below.
-
-![](man/figures/preview.png)
-
-You can also request it return the actual coefficients
-
-``` r
-extract_eq(mod1, use_coefs = TRUE)
-#> $$
-#>  \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon 
-#> $$
-```
-
-![](man/figures/eq2.png)
-
-It can also handle shortcut syntax.
+The model can be built in any standard way—it can handle shortcut
+syntax:
 
 ``` r
 mod2 <- lm(mpg ~ ., mtcars)
@@ -92,10 +65,10 @@ extract_eq(mod2)
 #> $$
 ```
 
-![](man/figures/eq3.png)
+<img src="man/figures/README-example-shortcut-preview-1.png" width="100%" />
 
-For categorical variables, it will place the levels of the variables as
-subscripts.
+When using categorical variables, it will include the levels of the
+variables as subscripts:
 
 ``` r
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
@@ -105,17 +78,18 @@ extract_eq(mod3)
 #> $$
 ```
 
-![](man/figures/eq4.png)
+<img src="man/figures/README-example-categorical-preview-1.png" width="100%" />
 
-It preserves the order the variables are supplied in the formula.
+It helpfully preserves the order the variables are supplied in the
+formula:
 
 ``` r
 set.seed(8675309)
 d <- data.frame(cat1 = rep(letters[1:3], 100),
-               cat2 = rep(LETTERS[1:3], each = 100),
-               cont1 = rnorm(300, 100, 1),
-               cont2 = rnorm(300, 50, 5),
-               out   = rnorm(300, 10, 0.5))
+                cat2 = rep(LETTERS[1:3], each = 100),
+                cont1 = rnorm(300, 100, 1),
+                cont2 = rnorm(300, 50, 5),
+                out   = rnorm(300, 10, 0.5))
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 extract_eq(mod4)
 #> $$
@@ -123,9 +97,12 @@ extract_eq(mod4)
 #> $$
 ```
 
-![](man/figures/eq5.png)
+<img src="man/figures/README-example-preserve-order-preview-1.png" width="100%" />
 
-You can wrap the equations at a specified width, which defaults to 80.
+## Appearance
+
+You can wrap the equations at a specified width, which defaults to 120
+characters:
 
 ``` r
 extract_eq(mod4, wrap = TRUE)
@@ -137,21 +114,86 @@ extract_eq(mod4, wrap = TRUE)
 #> $$
 ```
 
-![](man/figures/eq6.png)
+<img src="man/figures/README-example-wrap-preview-1.png" width="100%" />
 
-And you can optionally have the variables themselves be italicized.
+By default, all text in the equation is wrapped in `\text{}`. You can
+optionally have the variables themselves be italicized (i.e. not be
+wrapped in `\text{}`) with `ital_vars = TRUE`:
 
 ``` r
-extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE)
+extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 #> $$
 #>  \begin{aligned}
-#> out =& \alpha + \beta_{1}(cont1) + \beta_{2}(cat2_{B}) + \beta_{3}(cat2_{C}) + \beta_{4}(cont2) + \\
-#> & \beta_{5}(cat1_{b}) + \beta_{6}(cat1_{c}) + \epsilon
+#> mpg =& \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp) + \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \\
+#> & \beta_{7}(vs) + \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon
 #> \end{aligned} 
 #> $$
 ```
 
-![](man/figures/eq7.png)
+<img src="man/figures/README-example-italics-preview-1.png" width="100%" />
+
+## R Markdown and previewing
+
+If you include `extract_eq()` in an R Markdown chunk with
+`results="asis"`, **knitr** will render will render the equation.
+
+Alternatively, you can run the code interactively, copy/paste the
+equation to where you want it in your document, and make any edits you’d
+like.
+
+If you install
+[**texPreview**](https://cran.r-project.org/package=texPreview) you can
+use the `preview()` function to preview the equation in RStudio:
+
+``` r
+preview(extract_eq(mod1))
+```
+
+![](man/figures/preview.png)
+
+Both `extract_eq()` and `preview()` work with **magrittr** pipes, so you
+can do something like this:
+
+``` r
+library(magrittr)  # or library(tidyverse) or any other package that exports %>%
+
+extract_eq(mod1) %>% 
+  preview()
+```
+
+## Extra options
+
+There are several extra options you can enable with additional arguments
+to `extract_eq()`
+
+### Actual coefficients
+
+You can return actual numeric coefficients instead of Greek letters with
+`use_coefs = TRUE`:
+
+``` r
+extract_eq(mod1, use_coefs = TRUE)
+#> $$
+#>  \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon 
+#> $$
+```
+
+<img src="man/figures/README-use-coefs-preview-1.png" width="100%" />
+
+By default, it will remove doubled operators like “+ -”, but you can
+keep those in (which is often useful for teaching) with `fix_signs =
+FALSE`:
+
+``` r
+extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
+#> $$
+#>  \text{mpg} = 34.66 + -1.59(\text{cyl}) + -0.02(\text{disp}) + \epsilon 
+#> $$
+```
+
+<img src="man/figures/README-fix-signs-preview-1.png" width="100%" />
+
+## Beyond `lm()`
 
 You’re not limited to just `lm` models\! Try out logistic regression
 with `glm()`:
@@ -167,9 +209,9 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 #> $$
 #>  \begin{aligned}
-#> log\left[ \frac { P( \text{out} ) }{ 1 - P( \text{out} ) } \right] =& \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \\
-#> & \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \\
-#> & \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
+#> \log\left[ \frac { P( \text{out} =& \text{1} ) }{ 1 - P( \text{out} =& \text{1} ) } \right] =& \alpha + \\
+#> & \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \\
+#> & \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
 #> \end{aligned} 
 #> $$
 ```
