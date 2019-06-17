@@ -4,10 +4,12 @@
 \alias{print.equation}
 \title{Print LaTeX equations}
 \usage{
-\method{print}{equation}(eq)
+\method{print}{equation}(x, ...)
 }
 \arguments{
-\item{eq}{LaTeX equation built with \code{\link{extract_eq}}}
+\item{x}{LaTeX equation built with \code{\link{extract_eq}}}
+
+\item{...}{not used}
 }
 \description{
 Print LaTeX equations built with \code{\link{extract_eq}}.
