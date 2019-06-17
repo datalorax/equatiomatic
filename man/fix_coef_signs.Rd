@@ -10,8 +10,9 @@ fix_coef_signs(eq, fix_signs)
 \item{eq}{String containing a LaTeX equation}
 
 \item{fix_signs}{Logical, defaults to \code{FALSE}. If disabled,
-coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
-+ -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).}
+coefficient estimates that are negative are preceded with a "+" (e.g.
+\code{5(x) + -3(z)}). If enabled, the "+ -" is replaced with a "-" (e.g.
+\code{5(x) - 3(z)}).}
 }
 \description{
 Convert "+ -" to "-"

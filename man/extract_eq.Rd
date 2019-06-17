@@ -4,15 +4,12 @@
 \alias{extract_eq}
 \title{LaTeX code for R models}
 \usage{
-extract_eq(model, preview = FALSE, ital_vars = FALSE, wrap = FALSE,
-  width = 120, align_env = "aligned", use_coefs = FALSE,
-  coef_digits = 2, fix_signs = TRUE)
+extract_eq(model, ital_vars = FALSE, wrap = FALSE, width = 120,
+  align_env = "aligned", use_coefs = FALSE, coef_digits = 2,
+  fix_signs = TRUE)
 }
 \arguments{
 \item{model}{A fitted model}
-
-\item{preview}{Logical, defaults to \code{FALSE}. Should the equation be
-previewed in the viewer pane?}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\text{}} command?}
@@ -35,15 +32,17 @@ estimates be included in the equation instead of math symbols?}
 round to when displaying model estimates.}
 
 \item{fix_signs}{Logical, defaults to \code{FALSE}. If disabled,
-coefficient estimates that are negative are preceded with a "+" (e.g. 5(x)
-+ -3(z)). If enabled, the "+ -" is replaced with a "-" (e.g. 5(x) - 3(z)).}
-
-\item{\dots}{arguments passed to [texPreview::tex_preview][texPreview::tex_preview]}
+coefficient estimates that are negative are preceded with a "+" (e.g.
+\code{5(x) + -3(z)}). If enabled, the "+ -" is replaced with a "-" (e.g.
+\code{5(x) - 3(z)}).}
+}
+\value{
+A character of class \dQuote{equation}.
 }
 \description{
 Extract the variable names from a model to produce a LaTeX equation, which is
 output to the screen. Supports any model supported by
-[broom::tidy][broom::tidy].
+\link[broom:tidy]{broom::tidy}.
 }
 \examples{
 # Simple model
@@ -78,6 +77,9 @@ extract_eq(mod2, wrap = TRUE, width = 150)
 
 # Include model estimates instead of Greek letters
 extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
+
+# Don't fix doubled-up "+ -" signs
+extract_eq(mod2, wrap = TRUE, use_coefs = TRUE, fix_signs = FALSE)
 
 # Use other model types, like glm
 set.seed(8675309)

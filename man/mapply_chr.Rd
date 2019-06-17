@@ -19,8 +19,8 @@ mapply_dbl(...)
 \item{\dots}{arguments passed to \code{base::\link[base]{mapply}}}
 }
 \value{
-A vector of the corresponding type, \code{chr} = character, 
-  \code{dbl} = double, \code{lgl} = logical, and \code{int} = logical
+A vector of the corresponding type, \code{chr} = character,
+\code{dbl} = double, \code{lgl} = logical, and \code{int} = logical
 }
 \description{
 Return a vector of the corresponding type
