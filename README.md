@@ -101,20 +101,51 @@ extract_eq(mod4)
 
 ## Appearance
 
-You can wrap the equations at a specified width, which defaults to 120
-characters:
+You can wrap the equations so that a specified number of terms appear on
+the right-hand side of the equation using `terms_per_line` (defaults to
+4):
 
 ``` r
-extract_eq(mod4, wrap = TRUE)
+extract_eq(mod2, wrap = TRUE)
 #> $$
 #>  \begin{aligned}
-#> \text{out} =& \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) \\
-#> & + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon
+#> \text{mpg} &= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\ + \\
+#>  &\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\
+#>  &\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
 #> \end{aligned} 
 #> $$
 ```
 
 <img src="man/figures/README-example-wrap-preview-1.png" width="100%" />
+
+``` r
+extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
+#> $$
+#>  \begin{aligned}
+#> \text{mpg} &= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt})\ + \\
+#>  &\quad \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#> \end{aligned} 
+#> $$
+```
+
+<img src="man/figures/README-example-wrap-longer-preview-1.png" width="100%" />
+
+When wrapping, you can change whether the lines end with trailing math
+operators like `+` (the default), or if they should begin with them
+using `operator_location = "end"` or `operator_location = "start"`:
+
+``` r
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
+#> $$
+#>  \begin{aligned}
+#> \text{mpg} &= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\\
+#>  &\quad + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\\
+#>  &\quad + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#> \end{aligned} 
+#> $$
+```
+
+<img src="man/figures/README-example-wrap-longer-location-preview-1.png" width="100%" />
 
 By default, all text in the equation is wrapped in `\text{}`. You can
 optionally have the variables themselves be italicized (i.e. not be
@@ -124,8 +155,9 @@ wrapped in `\text{}`) with `ital_vars = TRUE`:
 extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 #> $$
 #>  \begin{aligned}
-#> mpg =& \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp) + \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \\
-#> & \beta_{7}(vs) + \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon
+#> mpg &= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
+#>  &\quad \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs)\ + \\
+#>  &\quad \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon
 #> \end{aligned} 
 #> $$
 ```
@@ -193,6 +225,23 @@ extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
 
 <img src="man/figures/README-fix-signs-preview-1.png" width="100%" />
 
+This works in longer wrapped equations:
+
+``` r
+extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
+           use_coefs = TRUE, fix_signs = FALSE)
+#> $$
+#>  \begin{aligned}
+#> \text{mpg} &= 12.3 + -0.11(\text{cyl}) + 0.01(\text{disp})\ + \\
+#>  &\quad -0.02(\text{hp}) + 0.79(\text{drat}) + -3.72(\text{wt})\ + \\
+#>  &\quad 0.82(\text{qsec}) + 0.32(\text{vs}) + 2.52(\text{am})\ + \\
+#>  &\quad 0.66(\text{gear}) + -0.2(\text{carb}) + \epsilon
+#> \end{aligned} 
+#> $$
+```
+
+<img src="man/figures/README-fix-signs-long-preview-1.png" width="100%" />
+
 ## Beyond `lm()`
 
 You’re not limited to just `lm` models\! Try out logistic regression
@@ -209,14 +258,13 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 #> $$
 #>  \begin{aligned}
-#> \log\left[ \frac { P( \text{out} =& \text{1} ) }{ 1 - P( \text{out} =& \text{1} ) } \right] =& \alpha + \\
-#> & \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \\
-#> & \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
+#> \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) }  \right] &= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\
+#>  &\quad \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
 #> \end{aligned} 
 #> $$
 ```
 
-![](man/figures/eq8.png)
+<img src="man/figures/README-example-logit-preview-1.png" width="100%" />
 
 ## Extension
 
