@@ -28,9 +28,6 @@ create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
 }
 
 
-
-
-
 #' Create a full term w/subscripts
 #'
 #' @keywords internal
@@ -165,9 +162,6 @@ add_tex_mult <- function(term) {
 }
 
 
-
-
-
 #' Add coefficient values to the equation
 #'
 #' @keywords internal
@@ -180,8 +174,6 @@ add_coefs <- function(rhs, term, coef_digits) {
     paste0(ests, "(", term, ")")
   )
 }
-
-
 
 
 #' Adds greek symbols to the equation
@@ -208,9 +200,6 @@ add_betas <- function(terms, nums) {
          "(", terms, ")"
   )
 }
-
-
-
 
 
 #' Deduplicate operators

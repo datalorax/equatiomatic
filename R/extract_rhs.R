@@ -72,9 +72,6 @@ extract_rhs <- function(model) {
 }
 
 
-
-
-
 #' Extract the primary terms from all terms
 #'
 #' @inheritParams detect_primary
@@ -123,9 +120,6 @@ detect_primary <- function(full_term, primary_term_v) {
   logical(1)
   )
 }
-
-
-
 
 
 #' Extract all subscripts
@@ -181,4 +175,3 @@ extract_subscripts <- function(primary, full_term_v) {
   )
   out
 }
-
