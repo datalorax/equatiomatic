@@ -125,14 +125,34 @@ extract_eq(mod4) %>%
 
 ## Appearance
 
-You can wrap the equations at a specified width, which defaults to 120 characters:
+You can wrap the equations so that a specified number of terms appear on the right-hand side of the equation using `terms_per_line` (defaults to 4):
 
 ```{r example-wrap}
-extract_eq(mod4, wrap = TRUE)
+extract_eq(mod2, wrap = TRUE)
 ```
 
 ```{r example-wrap-preview, echo=FALSE}
 extract_eq(mod2, wrap = TRUE) %>% 
+  preview(usrPackages = usrPackages)
+```
+
+```{r example-wrap-longer}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
+```
+
+```{r example-wrap-longer-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 6) %>% 
+  preview(usrPackages = usrPackages)
+```
+
+When wrapping, you can change whether the lines end with trailing math operators like `+` (the default), or if they should begin with them using `operator_location = "end"` or `operator_location = "start"`:
+
+```{r example-wrap-longer-location}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
+```
+
+```{r example-wrap-longer-location-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start") %>% 
   preview(usrPackages = usrPackages)
 ```
 
@@ -143,7 +163,7 @@ extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 ```
 
 ```{r example-italics-preview, echo=FALSE}
-extract_eq(mod4, wrap = TRUE, width = 100, ital_vars = TRUE) %>% 
+extract_eq(mod4, wrap = TRUE, ital_vars = TRUE) %>% 
   preview(usrPackages = usrPackages)
 ```
 
@@ -200,6 +220,19 @@ extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE) %>%
   preview(usrPackages = usrPackages)
 ```
 
+This works in longer wrapped equations:
+
+```{r fix-signs-long}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
+           use_coefs = TRUE, fix_signs = FALSE)
+```
+
+```{r fix-signs-long-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 3, 
+           use_coefs = TRUE, fix_signs = FALSE) %>% 
+  preview(usrPackages = usrPackages)
+```
+
 
 ## Beyond `lm()`
 
@@ -216,7 +249,10 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 ```
 
-![](man/figures/eq8.png)
+```{r example-logit-preview, echo=FALSE}
+extract_eq(mod5, wrap = TRUE) %>% 
+  preview(usrPackages = usrPackages)
+```
 
 
 ## Extension

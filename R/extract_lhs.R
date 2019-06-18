@@ -24,7 +24,8 @@ extract_lhs.lm <- function(model, ital_vars) {
 
   lhs <- all.vars(formula(model))[1]
 
-  add_tex_ital_v(lhs, ital_vars)
+  lhs_escaped <- escape_tex(lhs)
+  add_tex_ital_v(lhs_escaped, ital_vars)
 }
 
 
@@ -43,9 +44,13 @@ extract_lhs.glm <- function(model, ital_vars) {
   lhs <- all.vars(formula(model))[1]
   ss <- model$data[which(model$y == 1)[1], lhs]
   ss <- as.character(ss)
-  full_lhs <- paste(add_tex_ital_v(lhs, ital_vars),
+
+  lhs_escaped <- escape_tex(lhs)
+  ss_escaped <- escape_tex(ss)
+
+  full_lhs <- paste(add_tex_ital_v(lhs_escaped, ital_vars),
                     "=",
-                    add_tex_ital_v(ss, ital_vars))
+                    add_tex_ital_v(ss_escaped, ital_vars))
 
   modify_lhs_for_link(model, full_lhs)
 }
