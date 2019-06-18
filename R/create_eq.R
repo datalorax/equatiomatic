@@ -41,13 +41,54 @@ create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
 #' @inheritParams extract_eq
 
 create_term <- function(rhs, ital_vars) {
-  prim <- lapply(rhs$primary, add_tex_ital_v, ital_vars)
-  subs <- lapply(rhs$subscripts, add_tex_ital_v, ital_vars)
+  prim_escaped <- lapply(rhs$primary, escape_tex)
+  prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
+
+  subs_escaped <- lapply(rhs$subscripts, escape_tex)
+  subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
   subs <- lapply(subs, add_tex_subscripts_v)
 
   final <- Map(paste0, prim, subs)
 
   vapply(final, add_tex_mult, FUN.VALUE = character(1))
+}
+
+
+#' Escape TeX
+#'
+#' Escape special TeX characters.
+#'
+#' Ten characters have special meaning in TeX \code{& \% $ # _ { } ~ ^ \\}.
+#' This function either escapes them with \\, or in the case of the last three,
+#' replaces them with special TeX macros.
+#'
+#' @keywords internal
+#'
+#' @param term A character string to escape
+#'
+#' @return A character string
+
+escape_tex <- function(term) {
+  unescaped <- c("&", "%", "$", "#", "_", "{", "}", "~", "^", "\\")
+  escaped <- c("\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}",
+               "\\char`\\~", "\\char`\\^", "\\backslash ")
+
+  if (length(term) == 0) {
+    return("")
+  }
+
+  # Split term into a vector of single characters
+  characters <- strsplit(term, "")[[1]]
+
+  # Go through term and replace all unescaped characters with their escaped versions
+  replaced <- vapply(characters,
+                     function(x) ifelse(x %in% unescaped,
+                                        escaped[which(x == unescaped)],
+                                        x),
+                     FUN.VALUE = character(1))
+
+  # Return the reassembled term
+  paste0(replaced, collapse = "")
 }
 
 
