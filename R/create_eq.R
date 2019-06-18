@@ -18,13 +18,14 @@ create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms)
   }
-  full_rhs <- paste(rhs$final_terms, collapse = " + ")
 
-  if (use_coefs && fix_signs) {
-    full_rhs <- fix_coef_signs(full_rhs, fix_signs)
-  }
+  # Add error row
+  error_row <- rhs[nrow(rhs) + 1,]
+  error_row$term <- "error"
+  error_row$final_terms <- "\\epsilon"
+  rhs <- rbind(rhs, error_row)
 
-  paste0(lhs, " = ", full_rhs, " + \\epsilon")
+  list(lhs = lhs, rhs = rhs$final_terms)
 }
 
 
@@ -212,10 +213,14 @@ add_betas <- function(terms, nums) {
 #'
 #' @inheritParams extract_eq
 #'
-fix_coef_signs <- function(eq, fix_signs) {
-  if (fix_signs) {
-    gsub("\\+ -", "- ", eq)
-  } else {
-    eq
-  }
+fix_coef_signs <- function(eq) {
+  # Side-by-side + -
+  eq_clean <- gsub("\\+ -", "- ", eq)
+
+  # + - that spans lines
+  eq_clean <- gsub("\\+ \\\\\\\\\\n &\\\\quad -",
+                   "- \\\\\\\\\n &\\\\quad ",
+                   eq_clean)
+
+  eq_clean
 }

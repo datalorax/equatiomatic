@@ -4,7 +4,8 @@
 \alias{extract_eq}
 \title{LaTeX code for R models}
 \usage{
-extract_eq(model, ital_vars = FALSE, wrap = FALSE, width = 120,
+extract_eq(model, ital_vars = FALSE, wrap = FALSE,
+  terms_per_line = 4, operator_location = "end",
   align_env = "aligned", use_coefs = FALSE, coef_digits = 2,
   fix_signs = TRUE)
 }
@@ -14,12 +15,18 @@ extract_eq(model, ital_vars = FALSE, wrap = FALSE, width = 120,
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\text{}} command?}
 
-\item{wrap}{Logical, defaults to \code{FALSE}. Should the equation be
-inserted in a special \code{aligned} TeX environment and automatically
-wrapped to a specific width?}
+\item{wrap}{Logical, defaults to \code{FALSE}. Should the terms on the
+right-hand side of the equation be split into multiple lines? This is
+helpful with models with many terms.}
 
-\item{width}{Integer, defaults to 120. The suggested number of characters per
-line in the wrapped equation. Used only when \code{aligned} is \code{TRUE}.}
+\item{terms_per_line}{Integer, defaults to 4. The number of right-hand side
+terms to include per line. Used only when \code{wrap} is \code{TRUE}.}
+
+\item{operator_location}{Character, one of \dQuote{end} (the default) or
+\dQuote{start}. When terms are split across multiple lines, they are split
+at mathematical operators like \code{+}. If set to \dQuote{end}, each line will
+end with a trailing operator (\code{+} or \code{-}). If set to \dQuote{start}, each
+line will begin with an operator.}
 
 \item{align_env}{TeX environment to wrap around equation. Must be one of
 \code{aligned}, \code{aligned*}, \code{align}, or \code{align*}. Defaults
@@ -73,13 +80,13 @@ extract_eq(mod1, ital_vars = FALSE)
 extract_eq(mod2, wrap = TRUE)
 
 # Wider equation wrapping
-extract_eq(mod2, wrap = TRUE, width = 150)
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4)
 
 # Include model estimates instead of Greek letters
-extract_eq(mod2, wrap = TRUE, use_coefs = TRUE)
+extract_eq(mod2, wrap = TRUE, terms_per_line = 2, use_coefs = TRUE)
 
 # Don't fix doubled-up "+ -" signs
-extract_eq(mod2, wrap = TRUE, use_coefs = TRUE, fix_signs = FALSE)
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4, use_coefs = TRUE, fix_signs = FALSE)
 
 # Use other model types, like glm
 set.seed(8675309)
