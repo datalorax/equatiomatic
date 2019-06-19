@@ -218,8 +218,8 @@ fix_coef_signs <- function(eq) {
   eq_clean <- gsub("\\+ -", "- ", eq)
 
   # + - that spans lines
-  eq_clean <- gsub("\\+ \\\\\\\\\\n &\\\\quad -",
-                   "- \\\\\\\\\n &\\\\quad ",
+  eq_clean <- gsub("\\+ \\\\\\\\\\n&\\\\quad -",
+                   "- \\\\\\\\\n&\\\\quad ",
                    eq_clean)
 
   eq_clean

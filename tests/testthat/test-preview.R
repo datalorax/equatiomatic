@@ -1,18 +1,29 @@
-testthat::context('preview')
+context("Previewing")
 
-fit <- lm(mpg ~ cyl + disp, mtcars)
-expect_fit <- '\\text{mpg} = \\alpha + \\beta_{1}(\\text{cyl}) + \\beta_{2}(\\text{disp}) + \\epsilon'
+test_that("Previewing works", {
+  # skip_on_cran()
 
-testthat::describe('preview',{
+  model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 
-  texPreview::tex_opts$set(returnType = 'tex')
+  actual <- "\\text{mpg} = \\alpha + \\beta_{1}(\\text{cyl}) + \\beta_{2}(\\text{disp}) + \\epsilon"
 
-  it('texPreview',{
-    ret <- extract_eq(fit,preview = TRUE)
-    testthat::expect_equal(ret,expect_fit)
+  previewed <- preview(extract_eq(model_simple),
+                       returnType = "tex", ignore.stdout = TRUE)
 
-  })
+  expect_equal(length(previewed), 3,
+               label = "preview returns a 3-element vector")
 
-  texPreview::tex_opts$restore()
+  expect_equal(previewed[2], actual,
+               label = "preview generates the correct TeX")
+})
 
+test_that("Previewing stops if texPreview is not installed", {
+  model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
+
+  with_mock(
+    "equatiomatic::is_texPreview_installed" = function() FALSE,
+    expect_error(preview(extract_eq(model_simple),
+                         returnType = "tex", ignore.stdout = TRUE),
+                 label = "preview stops if texPreview isn't installed")
+  )
 })

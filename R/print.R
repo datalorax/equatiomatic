@@ -9,6 +9,6 @@
 #'
 
 print.equation <- function(x, ...) {
-  cat("$$\n", x, "\n$$")
+  cat("$$\n", x, "\n$$", sep = "")
 }
 
