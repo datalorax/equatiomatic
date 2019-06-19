@@ -29,7 +29,11 @@ Description: The goal of equatiomatic is to reduce the pain associated with
 License: MIT + file LICENSE
 Depends: R (>= 3.3.0)
 Imports: broom, stats
-Suggests: texPreview, testthat, knitr, rmarkdown
+Suggests: 
+    texPreview,
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
 URL: https://github.com/datalorax/equatiomatic
 BugReports: https://github.com/datalorax/equatiomatic/issues
 Encoding: UTF-8
