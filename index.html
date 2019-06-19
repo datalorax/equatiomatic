@@ -97,7 +97,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2019_06_19-red.svg" alt="Covrpage Summary"></a> <a href="https://codecov.io/gh/datalorax/equatiomatic"><img src="https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg" alt="codecov"></a> <!-- badges: end --></p>
+<p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2019_06_19-brightgreen.svg" alt="Covrpage Summary"></a> <a href="https://codecov.io/gh/datalorax/equatiomatic"><img src="https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg" alt="codecov"></a> <!-- badges: end --></p>
 <p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. In the future, the package aims to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a>; so far it has only been tested with <code>lm</code> and <code>glm</code> models and, at present, only supports binomial <code>glm</code> models (i.e., not ordinal or multinomial models).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -119,21 +119,21 @@
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># Give the results to extract_eq</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod1)</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon</span></a>
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-basic-preview-1.png" width="100%"></p>
 <p>The model can be built in any standard way—it can handle shortcut syntax:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">mod2 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(mpg <span class="op">~</span><span class="st"> </span>., mtcars)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod2)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;  \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-shortcut-preview-1.png" width="100%"></p>
 <p>When using categorical variables, it will include the levels of the variables as subscripts:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mod3 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width <span class="op">+</span><span class="st"> </span>Species, iris)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod3)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;  \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon</span></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-categorical-preview-1.png" width="100%"></p>
 <p>It helpfully preserves the order the variables are supplied in the formula:</p>
@@ -146,7 +146,7 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7">mod4 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(out <span class="op">~</span><span class="st"> </span>cont1 <span class="op">+</span><span class="st"> </span>cat2 <span class="op">+</span><span class="st"> </span>cont2 <span class="op">+</span><span class="st"> </span>cat1, d)</a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod4)</a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  \text{out} = \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; \text{out} = \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-preserve-order-preview-1.png" width="100%"></p>
 </div>
@@ -156,39 +156,39 @@
 <p>You can wrap the equations so that a specified number of terms appear on the right-hand side of the equation using <code>terms_per_line</code> (defaults to 4):</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod2, <span class="dt">wrap =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;  \begin{aligned}</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; \begin{aligned}</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\ + \\</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;  &amp;\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt;  &amp;\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; \end{aligned} </span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; &amp;\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; &amp;\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; \end{aligned}</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-wrap-preview-1.png" width="100%"></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod2, <span class="dt">wrap =</span> <span class="ot">TRUE</span>, <span class="dt">terms_per_line =</span> <span class="dv">6</span>)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  \begin{aligned}</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; \begin{aligned}</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt})\ + \\</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  &amp;\quad \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; \end{aligned} </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; &amp;\quad \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; \end{aligned}</span></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-wrap-longer-preview-1.png" width="100%"></p>
 <p>When wrapping, you can change whether the lines end with trailing math operators like <code>+</code> (the default), or if they should begin with them using <code>operator_location = "end"</code> or <code>operator_location = "start"</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod2, <span class="dt">wrap =</span> <span class="ot">TRUE</span>, <span class="dt">terms_per_line =</span> <span class="dv">4</span>, <span class="dt">operator_location =</span> <span class="st">"start"</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  \begin{aligned}</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; \begin{aligned}</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\\</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  &amp;\quad + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\\</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  &amp;\quad + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; \end{aligned} </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; &amp;\quad + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\\</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; &amp;\quad + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; \end{aligned}</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-wrap-longer-location-preview-1.png" width="100%"></p>
 <p>By default, all text in the equation is wrapped in <code>\text{}</code>. You can optionally have the variables themselves be italicized (i.e. not be wrapped in <code>\text{}</code>) with <code>ital_vars = TRUE</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod2, <span class="dt">wrap =</span> <span class="ot">TRUE</span>, <span class="dt">ital_vars =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;  \begin{aligned}</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; \begin{aligned}</span></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; mpg &amp;= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;  &amp;\quad \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs)\ + \\</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;  &amp;\quad \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; \end{aligned} </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; &amp;\quad \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs)\ + \\</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; &amp;\quad \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; \end{aligned}</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-italics-preview-1.png" width="100%"></p>
 </div>
@@ -216,25 +216,25 @@
 <p>You can return actual numeric coefficients instead of Greek letters with <code>use_coefs = TRUE</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod1, <span class="dt">use_coefs =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt;  \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon</span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-use-coefs-preview-1.png" width="100%"></p>
 <p>By default, it will remove doubled operators like “+ -”, but you can keep those in (which is often useful for teaching) with <code>fix_signs = FALSE</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod1, <span class="dt">use_coefs =</span> <span class="ot">TRUE</span>, <span class="dt">fix_signs =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt;  \text{mpg} = 34.66 + -1.59(\text{cyl}) + -0.02(\text{disp}) + \epsilon </span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt; \text{mpg} = 34.66 + -1.59(\text{cyl}) + -0.02(\text{disp}) + \epsilon</span></a>
 <a class="sourceLine" id="cb13-4" data-line-number="4"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-fix-signs-preview-1.png" width="100%"></p>
 <p>This works in longer wrapped equations:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod2, <span class="dt">wrap =</span> <span class="ot">TRUE</span>, <span class="dt">terms_per_line =</span> <span class="dv">3</span>,</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">           <span class="dt">use_coefs =</span> <span class="ot">TRUE</span>, <span class="dt">fix_signs =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt;  \begin{aligned}</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; \begin{aligned}</span></a>
 <a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; \text{mpg} &amp;= 12.3 + -0.11(\text{cyl}) + 0.01(\text{disp})\ + \\</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;  &amp;\quad -0.02(\text{hp}) + 0.79(\text{drat}) + -3.72(\text{wt})\ + \\</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;  &amp;\quad 0.82(\text{qsec}) + 0.32(\text{vs}) + 2.52(\text{am})\ + \\</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt;  &amp;\quad 0.66(\text{gear}) + -0.2(\text{carb}) + \epsilon</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; \end{aligned} </span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; &amp;\quad -0.02(\text{hp}) + 0.79(\text{drat}) + -3.72(\text{wt})\ + \\</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt; &amp;\quad 0.82(\text{qsec}) + 0.32(\text{vs}) + 2.52(\text{am})\ + \\</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; &amp;\quad 0.66(\text{gear}) + -0.2(\text{carb}) + \epsilon</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; \end{aligned}</span></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-fix-signs-long-preview-1.png" width="100%"></p>
 </div>
@@ -253,10 +253,10 @@
 <a class="sourceLine" id="cb15-7" data-line-number="7">mod5 &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(out <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> d, <span class="dt">family =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/family">binomial</a></span>(<span class="dt">link =</span> <span class="st">"logit"</span>))</a>
 <a class="sourceLine" id="cb15-8" data-line-number="8"><span class="kw"><a href="reference/extract_eq.html">extract_eq</a></span>(mod5, <span class="dt">wrap =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; $$</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt;  \begin{aligned}</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) }  \right] &amp;= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt;  &amp;\quad \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; \end{aligned} </span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; \begin{aligned}</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) } \right] &amp;= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; &amp;\quad \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; \end{aligned}</span></a>
 <a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; $$</span></a></code></pre></div>
 <p><img src="reference/figures/README-example-logit-preview-1.png" width="100%"></p>
 </div>
