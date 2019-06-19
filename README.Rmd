@@ -39,7 +39,7 @@ usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 
-[![Covrpage Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_03-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+[![Covrpage Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_19-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic)
 <!-- badges: end -->
 
