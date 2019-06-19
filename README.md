@@ -34,7 +34,7 @@ remotes::install_github("datalorax/equatiomatic")
 
 ## Basic usage
 
-![](https://github.com/datalorax/equatiomatic/raw/master/docs/equatiomatic.gif)
+![](https://github.com/datalorax/equatiomatic/raw/master/img/equatiomatic.gif)
 
 The gif above shows the basic functionality.
 
