@@ -23,9 +23,9 @@ r_packages:
 - pkgdown
 r_github_packages:
 - metrumresearchgroup/covrpage
-after_success:
-- Rscript -e 'covr::codecov()'
-- Rscript -e 'devtools::install(); covrpage::covrpage_ci()'
+# after_success:
+# - Rscript -e 'covr::codecov()'
+# - Rscript -e 'devtools::install(); covrpage::covrpage_ci()'
 
 deploy:
   provider: script
