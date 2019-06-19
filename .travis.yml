@@ -26,7 +26,6 @@ r_github_packages:
 after_success:
 - Rscript -e 'covr::codecov()'
 - Rscript -e 'devtools::install(); covrpage::covrpage_ci()'
-- Rscript -e 'pkgdown::build_site()'
 
 deploy:
   provider: script
