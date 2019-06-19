@@ -18,7 +18,12 @@ test_that("Previewing works", {
 })
 
 test_that("Previewing stops if texPreview is not installed", {
-  # Maybe use withr::with_libpaths()
-  # Temporary pointless test so that this isn't empty
-  expect_equal(2 * 2, 4)
+  model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
+
+  with_mock(
+    "equatiomatic::is_texPreview_installed" = function() FALSE,
+    expect_error(preview(extract_eq(model_simple),
+                         returnType = "tex", ignore.stdout = TRUE),
+                 label = "preview stops if texPreview isn't installed")
+  )
 })
