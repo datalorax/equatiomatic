@@ -32,7 +32,7 @@ if (isTRUE(getOption('knitr.in.progress'))) {
 usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 ```
 
-# equatiomatic <img src="tools/logo.png" align="right"/>
+# equatiomatic <img src="man/figures/logo.png" align="right"/>
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic) 
