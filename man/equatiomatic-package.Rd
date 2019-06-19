@@ -6,6 +6,8 @@
 \alias{equatiomatic-package}
 \title{equatiomatic: Transform Models into LaTeX Equations}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of
              the package, extract_eq_lm, takes a fitted lm object as its input

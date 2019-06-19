@@ -5,3 +5,6 @@
 ^\.travis\.yml$
 ^CODE_OF_CONDUCT\.md$
 ^docs$
+^img$
+^_pkgdown\.yml$
+^pkgdown$

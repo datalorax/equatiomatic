@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# equatiomatic <img src="tools/logo.png" align="right"/>
+# equatiomatic <img src="man/figures/logo.png" align="right"/>
 
 <!-- badges: start -->
 
@@ -25,7 +25,8 @@ models).
 ## Installation
 
 equatiomatic is not yet on CRAN. Install the development version from
-GitHub with
+GitHub
+with
 
 ``` r
 remotes::install_github("datalorax/equatiomatic")
@@ -132,7 +133,8 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
 
 When wrapping, you can change whether the lines end with trailing math
 operators like `+` (the default), or if they should begin with them
-using `operator_location = "end"` or `operator_location = "start"`:
+using `operator_location = "end"` or `operator_location =
+"start"`:
 
 ``` r
 extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
@@ -184,7 +186,8 @@ preview(extract_eq(mod1))
 ![](man/figures/preview.png)
 
 Both `extract_eq()` and `preview()` work with **magrittr** pipes, so you
-can do something like this:
+can do something like
+this:
 
 ``` r
 library(magrittr)  # or library(tidyverse) or any other package that exports %>%
