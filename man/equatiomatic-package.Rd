@@ -13,6 +13,14 @@ The goal of equatiomatic is to reduce the pain associated with
              the package, extract_eq_lm, takes a fitted lm object as its input
              and returns the corresponding LaTeX code for the model.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/datalorax/equatiomatic}
+  \item Report bugs at \url{https://github.com/datalorax/equatiomatic/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Daniel Anderson \email{daniela@uoregon.edu} (https://orcid.org/0000-0003-4699-4680)
 
