@@ -4,11 +4,11 @@
 #'
 #' @export
 #'
-#' @param x LaTeX equation built with \code{\link{extract_eq}}
+#' @param eq LaTeX equation built with \code{\link{extract_eq}}
 #' @param ... not used
 #'
 
-print.equation <- function(x, ...) {
-  cat("$$\n", x, "\n$$")
+print.equation <- function(eq, ...) {
+  cat("$$\n", paste0(eq, collapse = " \\\\ "), "\n$$")
 }
 
