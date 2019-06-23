@@ -1,3 +1,7 @@
+create_eq <- function(lhs,...) {
+  UseMethod("create_eq", lhs)
+}
+
 #' Create the full equation
 #'
 #' @keywords internal
@@ -9,8 +13,7 @@
 #'
 #' @inheritParams extract_eq
 
-create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
-                      model) {
+create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -25,7 +28,25 @@ create_eq <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs,
   error_row$final_terms <- "\\epsilon"
   rhs <- rbind(rhs, error_row)
 
-  list(lhs = lhs, rhs = rhs$final_terms)
+  list(lhs = list(lhs), rhs = list(rhs$final_terms))
+}
+
+create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
+                          fix_signs, model) {
+  rhs$final_terms <- create_term(rhs, ital_vars)
+
+  if (use_coefs) {
+    rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else {
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
+  }
+
+  splt <- split(rhs, rhs$coefficient_type)
+  rhs_final <- lapply(splt$zeta$final_terms, function(x) {
+    c(x, splt$coefficient$final_terms, "\\epsilon")
+  })
+  attributes(lhs) <- NULL 
+  list(lhs = lhs, rhs = rhs_final)
 }
 
 
@@ -177,29 +198,45 @@ add_coefs <- function(rhs, term, coef_digits) {
 }
 
 
+add_greek <- function(rhs, ...) {
+  UseMethod("add_greek", rhs)
+}
+
 #' Adds greek symbols to the equation
 #'
 #' @keywords internal
 
-add_greek <- function(rhs, terms) {
+add_greek.default <- function(rhs, terms) {
   if (any(grepl("(Intercept)", terms))) {
-    add_betas(terms, seq_len(nrow(rhs)))
+    anno_greek("beta", seq_len(nrow(rhs)), terms)
   } else {
     ifelse(rhs$term == "(Intercept)",
            "\\alpha",
-           add_betas(terms, seq_len(nrow(rhs)) - 1))
+           anno_greek("beta", seq_len(nrow(rhs)) - 1, terms)
+           )
   }
 }
 
+add_greek.polr <- function(rhs, terms) {
+  ifelse(rhs$coefficient_type == "zeta",
+         anno_greek("alpha", 
+                    rev(seq_along(grep("zeta", rhs$coefficient_type)))),
+         anno_greek("beta", 
+                    seq_along(grep("coefficient", rhs$coefficient_type)),
+                    terms)
+         )
+}
 
 #' Intermediary function to wrap text in `\\beta_{}`
 #'
 #' @keywords internal
 
-add_betas <- function(terms, nums) {
-  paste0("\\beta_{", nums,"}",
-         "(", terms, ")"
-  )
+anno_greek <- function(greek, nums, terms = NULL) {
+  greek <- paste0("\\", greek, "_{", nums,"}")
+  if(!is.null(terms)) {
+    greek <- paste0(greek, "(", terms, ")")
+  }
+  greek
 }
 
 
