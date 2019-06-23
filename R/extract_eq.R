@@ -97,9 +97,9 @@ extract_eq <- function(model, ital_vars = FALSE,
   
   if (wrap) {
     if (operator_location == "start") {
-      line_end <- "\\\\\n &\\quad + "
+      line_end <- "\\\\\n&\\quad + "
     } else {
-      line_end <- "\\ + \\\\\n &\\quad "
+      line_end <- "\\ + \\\\\n&\\quad "
     }
 
     # Split all the RHS terms into groups of length terms_per_line

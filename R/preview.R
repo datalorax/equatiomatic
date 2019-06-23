@@ -24,12 +24,16 @@ preview <- function(eq, ...) {
   UseMethod("preview")
 }
 
+#' @keywords internal
+is_texPreview_installed <- function() {
+  requireNamespace("texPreview", quietly = TRUE)
+}
 
 #' @export
 preview.equation <- function(eq, ...) {
-  if (!requireNamespace("texPreview", quietly = TRUE)) {
-    stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`",
-         call. = FALSE)
+  if (!is_texPreview_installed()) {
+    stop("Package \"{texPreview}\" needed for preview functionality. Please install with `install.packages(\"texPreview\")`", call. = FALSE)
   }
+
   texPreview::tex_preview(paste0("$$\n", eq, "\n$$"), ...)
 }
