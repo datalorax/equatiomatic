@@ -57,14 +57,16 @@ extract_lhs.glm <- function(model, ital_vars) {
 
 extract_lhs.polr <- function(model, ital_vars) {
   tidied <- broom::tidy(model)
-  intercept_terms <- tidied$term[tidied$coefficient_type == "zeta"]
-  intercept_terms <- gsub("\\|", " >= ", intercept_terms)
+  lhs <- tidied$term[tidied$coefficient_type == "zeta"]
+  lhs_escaped <- mapply_chr(escape_tex, lhs)
 
-  lhs_escaped <- mapply_chr(escape_tex, intercept_terms)
-
-  full_lhs <- add_tex_ital_v(lhs_escaped, ital_vars)
-
-  lapply(full_lhs, function(.x) modify_lhs_for_link(model, .x))
+  lhs <- lapply(strsplit(lhs_escaped, "\\|"), add_tex_ital_v, ital_vars)
+  lhs <- lapply(lhs, paste, collapse = " \\geq ")
+  
+  full_lhs <- lapply(lhs, function(.x) modify_lhs_for_link(model, .x))
+  
+  class(full_lhs) <- c("list", class(model))
+  full_lhs
 }
 
 #' modifies lhs of equations that include a link function
