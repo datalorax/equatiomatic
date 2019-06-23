@@ -94,7 +94,7 @@ extract_eq <- function(model, ital_vars = FALSE,
                       coef_digits,
                       fix_signs,
                       model)
-
+  
   if (wrap) {
     if (operator_location == "start") {
       line_end <- "\\\\\n &\\quad + "
@@ -103,30 +103,50 @@ extract_eq <- function(model, ital_vars = FALSE,
     }
 
     # Split all the RHS terms into groups of length terms_per_line
-    rhs_groups <- split(eq_raw$rhs, ceiling(seq_along(eq_raw$rhs) / terms_per_line))
+    rhs_groups <- lapply(eq_raw$rhs, function(x) {
+      split(x, ceiling(seq_along(x) / terms_per_line))
+    })
 
     # Collapse the terms with + within each group
-    rhs_groups_collapsed <- vapply(rhs_groups, paste0, collapse = " + ",
-                                   FUN.VALUE = character(1))
+    rhs_groups_collapsed <- lapply(rhs_groups, function(x) {
+      vapply(x, paste0, collapse = " + ", FUN.VALUE = character(1))
+    })
 
     # Collapse the collapsed groups with the line ending (trailing or leading +)
-    rhs_combined <- paste(rhs_groups_collapsed, collapse = line_end)
+    rhs_combined <- lapply(rhs_groups_collapsed, function(x) {
+      paste(x, collapse = line_end)
+    })
 
-    eq <- paste0("\\begin{", align_env, "}\n",
-                 paste(eq_raw$lhs,
-                       rhs_combined,
-                       sep = " &= "),
-                 "\n\\end{", align_env, "}")
+    eq <- Map(function(.lhs, .rhs) {
+            paste0("\\begin{", align_env, "}\n",
+                   paste(.lhs,
+                         .rhs,
+                         sep = " &= "),
+                   "\n\\end{", align_env, "}")
+          }, 
+          .lhs = eq_raw$lhs, 
+          .rhs = rhs_combined)
+              
+              
   } else {
-    eq <- paste(eq_raw$lhs,
-                paste(eq_raw$rhs, collapse = " + "),
-                sep = " = ")
-  }
+    eq <- Map(function(.lhs, .rhs) {
+            paste(.lhs,
+                  paste(.rhs, collapse = " + "),
+                  sep = " = ")
+          },
+          .lhs = eq_raw$lhs,
+          .rhs = eq_raw$rhs)
 
+  }
   if (use_coefs && fix_signs) {
-    eq <- fix_coef_signs(eq)
+    eq <- lapply(eq, fix_coef_signs)
   }
-
+  
+  if(length(eq) > 1) {
+    eq <- paste(eq, collapse = "\\\\")
+  } else {
+    eq <- eq[[1]]
+  }
   class(eq) <- c('equation', 'character')
 
   return(eq)
