@@ -10,10 +10,10 @@
 
 print.equation <- function(x, ...) {
   if(length(x) > 1) {
-  	cat("$$\n", paste0(x, collapse = " \\\\ "), "\n$$")	
+  	cat("$$\n", paste0(x, collapse = " \\\\ "), "\n$$", sep = "")
   }
   else {
-  	cat("$$\n", x, "\n$$")
+  	cat("$$\n", x, "\n$$", sep = "")
   }
 }
 
