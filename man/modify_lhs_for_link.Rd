@@ -4,7 +4,7 @@
 \alias{modify_lhs_for_link}
 \title{modifies lhs of equations that include a link function}
 \usage{
-modify_lhs_for_link(model, lhs)
+modify_lhs_for_link(model, ...)
 }
 \description{
 modifies lhs of equations that include a link function

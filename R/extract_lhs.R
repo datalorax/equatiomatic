@@ -55,37 +55,50 @@ extract_lhs.glm <- function(model, ital_vars) {
   modify_lhs_for_link(model, full_lhs)
 }
 
-# subscript version
-# extract_lhs.glm <- function(model, ital_vars) {
-#   lhs <- all.vars(formula(model))[1]
-#   ss <- model$data[which(model$y == 1)[1], lhs]
-#   ss <- as.character(ss)
+extract_lhs.polr <- function(model, ital_vars) {
+  tidied <- broom::tidy(model)
+  lhs <- tidied$term[tidied$coefficient_type == "zeta"]
+  lhs_escaped <- mapply_chr(escape_tex, lhs)
 
-#   full_lhs <- paste0(add_tex_ital(lhs, ital_vars),
-#                      "_",
-#                      add_tex_ital(ss, ital_vars))
-
-#   modify_lhs_for_link(model, full_lhs)
-# }
-
+  lhs <- lapply(strsplit(lhs_escaped, "\\|"), add_tex_ital_v, ital_vars)
+  lhs <- lapply(lhs, paste, collapse = " \\geq ")
+  
+  full_lhs <- lapply(lhs, function(.x) modify_lhs_for_link(model, .x))
+  
+  class(full_lhs) <- c("list", class(model))
+  full_lhs
+}
 
 #' modifies lhs of equations that include a link function
 #' @keywords internal
-modify_lhs_for_link <- function(model, lhs) {
-  if (!(model$family$link %in% link_function_df$link_name)) { # is this logical operator not ideal?
+modify_lhs_for_link <- function(model, ...) {
+  UseMethod("modify_lhs_for_link", model)
+}
+
+#' @keywords internal
+modify_lhs_for_link.glm <- function(model, lhs) {
+  if (!(any(grepl(model$family$link, link_function_df$link_name)))) { # is this logical operator not ideal?
     message("This link function is not presently supported; using an identity
               function instead") # this is implicit; it's just using the lhs as-is
   } else {
-    matched_row_bool <- link_function_df$link_name %in% model$family$link
+    matched_row_bool <- grepl(model$family$link, link_function_df$link_name)
     filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
     gsub("y", lhs, filtered_link_formula, fixed = TRUE)
   }
 }
 
+#' @keywords internal
+modify_lhs_for_link.polr <- function(model, lhs) {
+  matched_row_bool <- grepl(model$method, link_function_df$link_name)
+  filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
+  
+  gsub("y", lhs, filtered_link_formula, fixed = TRUE)
+}
+
 
 # link-functions.R
 
-link_name <- c("logit",
+link_name <- c("logit, logistic",
                'inverse',
                # '1/mu^2', # inverse gaussian; removed until we're certain
                'log',

@@ -57,5 +57,6 @@ str(extract_rhs(mod1))
 #>  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"
 #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
 }
+
 }
 \keyword{internal}

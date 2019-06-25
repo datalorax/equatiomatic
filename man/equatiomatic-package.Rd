@@ -26,8 +26,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Joshua Rosenberg \email{jmrosenberg@utk.edu}
   \item Andrew Heiss \email{andrew@andrewheiss.com} (https://orcid.org/0000-0002-3948-3914)
+  \item Joshua Rosenberg \email{jmrosenberg@utk.edu} (http://orcid.org/0000-0003-2170-0447)
 }
 
 Other contributors:

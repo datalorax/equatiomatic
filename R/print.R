@@ -9,6 +9,11 @@
 #'
 
 print.equation <- function(x, ...) {
-  cat("$$\n", x, "\n$$", sep = "")
+  if(length(x) > 1) {
+  	cat("$$\n", paste0(x, collapse = " \\\\ "), "\n$$", sep = "")
+  }
+  else {
+  	cat("$$\n", x, "\n$$", sep = "")
+  }
 }
 

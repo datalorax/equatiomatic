@@ -49,6 +49,7 @@
 #' #>  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"
 #' #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
 #' }
+#' 
 
 extract_rhs <- function(model) {
   # Extract RHS from formula
@@ -58,7 +59,7 @@ extract_rhs <- function(model) {
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
 
   # Extract coefficient names and values from model
-  full_rhs <- broom::tidy(model, quick = TRUE)
+  full_rhs <- broom::tidy(model)
 
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
@@ -68,6 +69,7 @@ extract_rhs <- function(model) {
 
   full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
                                                 full_rhs$split)
+  class(full_rhs) <- c("data.frame", class(model))
   full_rhs
 }
 
