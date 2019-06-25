@@ -60,10 +60,14 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @inheritParams extract_eq
 
 create_term <- function(rhs, ital_vars) {
-  prim_escaped <- lapply(rhs$primary, escape_tex)
+  prim_escaped <- lapply(rhs$primary, function(x) {
+    vapply(x, escape_tex, FUN.VALUE = character(1))
+  })
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
 
-  subs_escaped <- lapply(rhs$subscripts, escape_tex)
+  subs_escaped <- lapply(rhs$subscripts, function(x) {
+    vapply(x, escape_tex, FUN.VALUE = character(1))
+  })
   subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
   subs <- lapply(subs, add_tex_subscripts_v)
 
