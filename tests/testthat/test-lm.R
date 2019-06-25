@@ -22,3 +22,22 @@ test_that("Simple lm models work", {
                label = "categorical subscripts work")
 
 })
+
+
+test_that("Interactions work", {
+  simple_int <- lm(Sepal.Length ~ Sepal.Width*Species, iris)
+
+  tex <- extract_eq(simple_int)
+  actual <- "\\text{Sepal.Length} = \\alpha + \\beta_{1}(\\text{Sepal.Width}) + \\beta_{2}(\\text{Species}_{\\text{versicolor}}) + \\beta_{3}(\\text{Species}_{\\text{virginica}}) + \\beta_{4}(\\text{Sepal.Width} \\times \\text{Species}_{\\text{versicolor}}) + \\beta_{5}(\\text{Sepal.Width} \\times \\text{Species}_{\\text{virginica}}) + \\epsilon"
+  expect_equal(tex, equation_class(actual),
+               label = "Basic interaction with subscripts")
+
+  simple_int2 <- lm(mpg ~ hp*wt, mtcars)
+  tex2 <- extract_eq(simple_int2)
+  actual2 <- "\\text{mpg} = \\alpha + \\beta_{1}(\\text{hp}) + \\beta_{2}(\\text{wt}) + \\beta_{3}(\\text{hp} \\times \\text{wt}) + \\epsilon"
+  expect_equal(tex2, equation_class(actual2),
+               label = "Basic interaction with no subscripts")
+
+
+
+})
