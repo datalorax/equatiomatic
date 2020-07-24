@@ -4,8 +4,7 @@
 \alias{create_eq.default}
 \title{Create the full equation}
 \usage{
-\method{create_eq}{default}(lhs, rhs, ital_vars, use_coefs, coef_digits,
-  fix_signs, model)
+\method{create_eq}{default}(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model)
 }
 \arguments{
 \item{lhs}{A character string of the left-hand side variable extracted with

@@ -7,8 +7,7 @@ test_that("Previewing works", {
 
   actual <- "\\text{mpg} = \\alpha + \\beta_{1}(\\text{cyl}) + \\beta_{2}(\\text{disp}) + \\epsilon"
 
-  previewed <- preview(extract_eq(model_simple),
-                       returnType = "tex", ignore.stdout = TRUE)
+  previewed <- preview(extract_eq(model_simple), returnType = "tex")
 
   expect_equal(length(previewed), 3,
                label = "preview returns a 3-element vector")

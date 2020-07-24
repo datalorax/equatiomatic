@@ -2,11 +2,11 @@
 % Please edit documentation in R/create_eq.R
 \name{anno_greek}
 \alias{anno_greek}
-\title{Intermediary function to wrap text in \code{\\beta_{}}}
+\title{Intermediary function to wrap text in \verb{\\\\beta_\{\}}}
 \usage{
 anno_greek(greek, nums, terms = NULL)
 }
 \description{
-Intermediary function to wrap text in \code{\\beta_{}}
+Intermediary function to wrap text in \verb{\\\\beta_\{\}}
 }
 \keyword{internal}

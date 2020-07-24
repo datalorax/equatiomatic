@@ -17,7 +17,7 @@ Escape special TeX characters.
 }
 \details{
 Ten characters have special meaning in TeX \code{& \% $ # _ { } ~ ^ \\}.
-This function either escapes them with \, or in the case of the last three,
+This function either escapes them with \\, or in the case of the last three,
 replaces them with special TeX macros.
 }
 \keyword{internal}

@@ -4,10 +4,17 @@
 \alias{extract_eq}
 \title{LaTeX code for R models}
 \usage{
-extract_eq(model, ital_vars = FALSE, wrap = FALSE,
-  terms_per_line = 4, operator_location = "end",
-  align_env = "aligned", use_coefs = FALSE, coef_digits = 2,
-  fix_signs = TRUE)
+extract_eq(
+  model,
+  ital_vars = FALSE,
+  wrap = FALSE,
+  terms_per_line = 4,
+  operator_location = "end",
+  align_env = "aligned",
+  use_coefs = FALSE,
+  coef_digits = 2,
+  fix_signs = TRUE
+)
 }
 \arguments{
 \item{model}{A fitted model}
@@ -49,7 +56,7 @@ A character of class \dQuote{equation}.
 \description{
 Extract the variable names from a model to produce a LaTeX equation, which is
 output to the screen. Supports any model supported by
-\link[broom:tidy]{broom::tidy}.
+\link[broom:reexports]{broom::tidy}.
 }
 \examples{
 # Simple model

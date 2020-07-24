@@ -6,7 +6,7 @@
 \alias{equatiomatic-package}
 \title{equatiomatic: Transform Models into LaTeX Equations}
 \description{
-\if{html}{\figure{logo.png}{options: align='right'}}
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
 The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of
@@ -22,17 +22,17 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Daniel Anderson \email{daniela@uoregon.edu} (https://orcid.org/0000-0003-4699-4680)
+\strong{Maintainer}: Daniel Anderson \email{daniela@uoregon.edu} (\href{https://orcid.org/0000-0003-4699-4680}{ORCID})
 
 Authors:
 \itemize{
-  \item Andrew Heiss \email{andrew@andrewheiss.com} (https://orcid.org/0000-0002-3948-3914)
-  \item Joshua Rosenberg \email{jmrosenberg@utk.edu} (http://orcid.org/0000-0003-2170-0447)
+  \item Andrew Heiss \email{andrew@andrewheiss.com} (\href{https://orcid.org/0000-0002-3948-3914}{ORCID})
+  \item Joshua Rosenberg \email{jmrosenberg@utk.edu} (\href{http://orcid.org/0000-0003-2170-0447}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item Jonathan Sidi \email{yonis@metrumrg.com} (https://orcid.org/0000-0002-4222-1819) [contributor]
+  \item Jonathan Sidi \email{yonis@metrumrg.com} (\href{https://orcid.org/0000-0002-4222-1819}{ORCID}) [contributor]
 }
 
 }
