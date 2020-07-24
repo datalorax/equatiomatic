@@ -4,7 +4,16 @@
 \alias{create_eq.default}
 \title{Create the full equation}
 \usage{
-\method{create_eq}{default}(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model)
+\method{create_eq}{default}(
+  lhs,
+  rhs,
+  ital_vars,
+  use_coefs,
+  coef_digits,
+  fix_signs,
+  model,
+  intercept
+)
 }
 \arguments{
 \item{lhs}{A character string of the left-hand side variable extracted with
@@ -28,6 +37,10 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 \code{5(x) - 3(z)}).}
 
 \item{model}{A fitted model}
+
+\item{intercept}{How should the intercept be displayed? Default is \code{"alpha"},
+but can also accept \code{"beta"}, in which case the it will be displayed
+as beta zero.}
 }
 \description{
 Create the full equation

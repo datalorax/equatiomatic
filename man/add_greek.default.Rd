@@ -4,7 +4,7 @@
 \alias{add_greek.default}
 \title{Adds greek symbols to the equation}
 \usage{
-\method{add_greek}{default}(rhs, terms)
+\method{add_greek}{default}(rhs, terms, intercept = "alpha")
 }
 \description{
 Adds greek symbols to the equation
