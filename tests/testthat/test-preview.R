@@ -21,8 +21,7 @@ test_that("Previewing stops if texPreview is not installed", {
 
   with_mock(
     "equatiomatic::is_texPreview_installed" = function() FALSE,
-    expect_error(preview(extract_eq(model_simple),
-                         returnType = "tex", ignore.stdout = TRUE),
+    expect_error(preview(extract_eq(model_simple), returnType = "tex"),
                  label = "preview stops if texPreview isn't installed")
   )
 })
