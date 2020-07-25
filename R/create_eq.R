@@ -211,11 +211,15 @@ add_greek <- function(rhs, ...) {
 #' @keywords internal
 
 add_greek.default <- function(rhs, terms, intercept = "alpha") {
+  int <- switch(intercept,
+                "alpha" = "\\alpha",
+                "beta" = "\\beta_{0}")
+
   if (any(grepl("(Intercept)", terms))) {
     anno_greek("beta", seq_len(nrow(rhs)), terms)
   } else {
     ifelse(rhs$term == "(Intercept)",
-           ifelse(intercept == "alpha", "\\alpha", "\\beta_{0}"),
+           int,
            anno_greek("beta", seq_len(nrow(rhs)) - 1, terms)
            )
   }
