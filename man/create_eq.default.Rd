@@ -12,7 +12,9 @@
   coef_digits,
   fix_signs,
   model,
-  intercept
+  intercept,
+  greek,
+  raw_tex
 )
 }
 \arguments{
@@ -41,6 +43,14 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 \item{intercept}{How should the intercept be displayed? Default is \code{"alpha"},
 but can also accept \code{"beta"}, in which case the it will be displayed
 as beta zero.}
+
+\item{greek}{What notation should be used for
+coefficients? Currently only accepts \code{"beta"} (with plans for future
+development). Can be used in combination with \code{raw_tex} to use any
+notation, e.g., \code{"\\hat{\\beta}"}.}
+
+\item{raw_tex}{Logical. Is the greek code being passed to denote coefficients
+raw tex code?}
 }
 \description{
 Create the full equation
