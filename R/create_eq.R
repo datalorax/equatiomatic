@@ -39,7 +39,7 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
   }
 
   splt <- split(rhs, rhs$coefficient_type)
@@ -215,7 +215,9 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   int <- switch(intercept,
                 "alpha" = "\\alpha",
                 "beta" = "\\beta_{0}")
-
+  if(raw_tex & !(intercept %in% c("alpha", "beta"))) {
+    int <- intercept
+  }
   if (any(grepl("(Intercept)", terms))) {
     anno_greek(greek, seq_len(nrow(rhs)), terms)
   } else {
