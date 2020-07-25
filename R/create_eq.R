@@ -13,13 +13,13 @@ create_eq <- function(lhs,...) {
 #'
 #' @inheritParams extract_eq
 
-create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model) {
+create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model, intercept) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, intercept)
   }
 
   # Add error row
@@ -45,7 +45,7 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   rhs_final <- lapply(splt$zeta$final_terms, function(x) {
     c(x, splt$coefficient$final_terms, "\\epsilon")
   })
-  attributes(lhs) <- NULL 
+  attributes(lhs) <- NULL
   list(lhs = lhs, rhs = rhs_final)
 }
 
@@ -210,12 +210,16 @@ add_greek <- function(rhs, ...) {
 #'
 #' @keywords internal
 
-add_greek.default <- function(rhs, terms) {
+add_greek.default <- function(rhs, terms, intercept = "alpha") {
+  int <- switch(intercept,
+                "alpha" = "\\alpha",
+                "beta" = "\\beta_{0}")
+
   if (any(grepl("(Intercept)", terms))) {
     anno_greek("beta", seq_len(nrow(rhs)), terms)
   } else {
     ifelse(rhs$term == "(Intercept)",
-           "\\alpha",
+           int,
            anno_greek("beta", seq_len(nrow(rhs)) - 1, terms)
            )
   }
@@ -223,9 +227,9 @@ add_greek.default <- function(rhs, terms) {
 
 add_greek.polr <- function(rhs, terms) {
   ifelse(rhs$coefficient_type == "zeta",
-         anno_greek("alpha", 
+         anno_greek("alpha",
                     rev(seq_along(grep("zeta", rhs$coefficient_type)))),
-         anno_greek("beta", 
+         anno_greek("beta",
                     seq_along(grep("coefficient", rhs$coefficient_type)),
                     terms)
          )
@@ -252,7 +256,6 @@ anno_greek <- function(greek, nums, terms = NULL) {
 #'
 #' @param eq String containing a LaTeX equation
 #'
-#' @inheritParams extract_eq
 #'
 fix_coef_signs <- function(eq) {
   # Side-by-side + -

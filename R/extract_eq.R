@@ -5,6 +5,9 @@
 #' [broom::tidy][broom::tidy].
 #'
 #' @param model A fitted model
+#' @param intercept How should the intercept be displayed? Default is \code{"alpha"},
+#' but can also accept \code{"beta"}, in which case the it will be displayed
+#' as beta zero.
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\text{}} command?
 #' @param wrap Logical, defaults to \code{FALSE}. Should the terms on the
@@ -79,9 +82,9 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 
-extract_eq <- function(model, ital_vars = FALSE,
-                       wrap = FALSE, terms_per_line = 4, operator_location = "end",
-                       align_env = "aligned",
+extract_eq <- function(model, intercept = "alpha", ital_vars = FALSE,
+                       wrap = FALSE, terms_per_line = 4,
+                       operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
 
   lhs <- extract_lhs(model, ital_vars)
@@ -93,8 +96,9 @@ extract_eq <- function(model, ital_vars = FALSE,
                       use_coefs,
                       coef_digits,
                       fix_signs,
-                      model)
-  
+                      model,
+                      intercept)
+
   if (wrap) {
     if (operator_location == "start") {
       line_end <- "\\\\\n&\\quad + "
@@ -123,11 +127,11 @@ extract_eq <- function(model, ital_vars = FALSE,
                          .rhs,
                          sep = " &= "),
                    "\n\\end{", align_env, "}")
-          }, 
-          .lhs = eq_raw$lhs, 
+          },
+          .lhs = eq_raw$lhs,
           .rhs = rhs_combined)
-              
-              
+
+
   } else {
     eq <- Map(function(.lhs, .rhs) {
             paste(.lhs,
@@ -141,7 +145,7 @@ extract_eq <- function(model, ital_vars = FALSE,
   if (use_coefs && fix_signs) {
     eq <- lapply(eq, fix_coef_signs)
   }
-  
+
   if(length(eq) > 1) {
     eq <- paste(eq, collapse = "\\\\")
   } else {

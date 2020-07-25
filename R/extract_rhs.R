@@ -49,7 +49,7 @@
 #' #>  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"
 #' #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
 #' }
-#' 
+#'
 
 extract_rhs <- function(model) {
   # Extract RHS from formula

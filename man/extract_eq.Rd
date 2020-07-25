@@ -6,6 +6,7 @@
 \usage{
 extract_eq(
   model,
+  intercept = "alpha",
   ital_vars = FALSE,
   wrap = FALSE,
   terms_per_line = 4,
@@ -18,6 +19,10 @@ extract_eq(
 }
 \arguments{
 \item{model}{A fitted model}
+
+\item{intercept}{How should the intercept be displayed? Default is \code{"alpha"},
+but can also accept \code{"beta"}, in which case the it will be displayed
+as beta zero.}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\text{}} command?}

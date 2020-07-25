@@ -2,18 +2,9 @@
 % Please edit documentation in R/utils.R
 \name{mapply_chr}
 \alias{mapply_chr}
-\alias{mapply_lgl}
-\alias{mapply_int}
-\alias{mapply_dbl}
 \title{Strict versions of \code{base::\link[base]{mapply}}}
 \usage{
 mapply_chr(...)
-
-mapply_lgl(...)
-
-mapply_int(...)
-
-mapply_dbl(...)
 }
 \arguments{
 \item{\dots}{arguments passed to \code{base::\link[base]{mapply}}}
@@ -25,15 +16,4 @@ A vector of the corresponding type, \code{chr} = character,
 \description{
 Return a vector of the corresponding type
 }
-\section{Functions}{
-\itemize{
-\item \code{mapply_chr}: Return a character vector
-
-\item \code{mapply_lgl}: Return a logical vector
-
-\item \code{mapply_int}: Return an integer vector
-
-\item \code{mapply_dbl}: Return a double vector
-}}
-
 \keyword{internal}
