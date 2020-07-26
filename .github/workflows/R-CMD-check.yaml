@@ -57,6 +57,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
+      - name: Install magick libs
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -y install libmagick++-dev
+
       - name: Install system dependencies
         if: runner.os == 'Linux'
         env:
@@ -71,6 +76,17 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
+
+      - name: install magick
+        run: |
+          install.packages(c('magick','rsvg'))
+        shell: Rscript {0}
+
+      - name: load magick
+        run: |
+          library(magick)
+          tiger <- image_read_svg('http://jeroen.github.io/images/tiger.svg', width = 350)
+          tiger
 
       - name: Session info
         run: |

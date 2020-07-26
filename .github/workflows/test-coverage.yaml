@@ -56,6 +56,7 @@ jobs:
           library(magick)
           tiger <- image_read_svg('http://jeroen.github.io/images/tiger.svg', width = 350)
           tiger
+          
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}
