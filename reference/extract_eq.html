@@ -15,21 +15,29 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,14 +45,13 @@
 
 
 
-<meta property="og:title" content="LaTeX code for R models — extract_eq" />
 
+<meta property="og:title" content="LaTeX code for R models — extract_eq" />
 <meta property="og:description" content="Extract the variable names from a model to produce a LaTeX equation, which is
 output to the screen. Supports any model supported by
 broom::tidy." />
-
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+
 
 
 
@@ -58,9 +65,10 @@ broom::tidy." />
 <![endif]-->
 
 
+
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@ broom::tidy." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -102,11 +110,10 @@ broom::tidy." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/datalorax/equatiomatic">
-    <span class="fa fa-github fa-lg"></span>
+  <a href="https://github.com/datalorax/equatiomatic/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -117,6 +124,7 @@ broom::tidy." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -128,24 +136,50 @@ broom::tidy." />
     </div>
 
     <div class="ref-description">
-    
     <p>Extract the variable names from a model to produce a LaTeX equation, which is
 output to the screen. Supports any model supported by
-<a href='https://www.rdocumentation.org/packages/broom/topics/reexports'>broom::tidy</a>.</p>
-    
+<a href='https://broom.tidymodels.org/reference/reexports.html'>broom::tidy</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extract_eq</span>(<span class='no'>model</span>, <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>operator_location</span> <span class='kw'>=</span> <span class='st'>"end"</span>,
-  <span class='kw'>align_env</span> <span class='kw'>=</span> <span class='st'>"aligned"</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>coef_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>extract_eq</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='st'>"alpha"</span>,
+  <span class='kw'>greek</span> <span class='kw'>=</span> <span class='st'>"beta"</span>,
+  <span class='kw'>raw_tex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>operator_location</span> <span class='kw'>=</span> <span class='st'>"end"</span>,
+  <span class='kw'>align_env</span> <span class='kw'>=</span> <span class='st'>"aligned"</span>,
+  <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>coef_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
       <td><p>A fitted model</p></td>
+    </tr>
+    <tr>
+      <th>intercept</th>
+      <td><p>How should the intercept be displayed? Default is <code>"alpha"</code>,
+but can also accept <code>"beta"</code>, in which case the it will be displayed
+as beta zero.</p></td>
+    </tr>
+    <tr>
+      <th>greek</th>
+      <td><p>What notation should be used for
+coefficients? Currently only accepts <code>"beta"</code> (with plans for future
+development). Can be used in combination with <code>raw_tex</code> to use any
+notation, e.g., <code>"\hat{\beta}"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>raw_tex</th>
+      <td><p>Logical. Is the greek code being passed to denote coefficients
+raw tex code?</p></td>
     </tr>
     <tr>
       <th>ital_vars</th>
@@ -195,35 +229,34 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 <code>5(x) - 3(z)</code>).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character of class &#8220;equation&#8221;.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Simple model</span>
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; $$
 #&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Include all variables</span>
-<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='no'>mtcars</span>)
+<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='no'>mtcars</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>)</div><div class='output co'>#&gt; $$
 #&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Works for categorical variables too, putting levels as subscripts</span>
-<span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Width</span> + <span class='no'>Species</span>, <span class='no'>iris</span>)
+<span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Width</span> + <span class='no'>Species</span>, <span class='no'>iris</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod3</span>)</div><div class='output co'>#&gt; $$
 #&gt; \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon
 #&gt; $$</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>8675309</span>)
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
-                <span class='kw'>cat2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>100</span>),
-                <span class='kw'>cont1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
-                <span class='kw'>cont2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span>),
-                <span class='kw'>out</span>   <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>10</span>, <span class='fl'>0.5</span>))
-<span class='no'>mod4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='no'>d</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>8675309</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
+                <span class='kw'>cat2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>100</span>),
+                <span class='kw'>cont1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
+                <span class='kw'>cont2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span>),
+                <span class='kw'>out</span>   <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>10</span>, <span class='fl'>0.5</span>))
+<span class='no'>mod4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='no'>d</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod4</span>)</div><div class='output co'>#&gt; $$
 #&gt; \text{out} = \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
 #&gt; $$</div><div class='input'>
@@ -267,13 +300,13 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Use other model types, like glm</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>8675309</span>)
-<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>0</span>:<span class='fl'>1</span>, <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-                <span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
-                <span class='kw'>cat2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>100</span>),
-                <span class='kw'>cont1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
-                <span class='kw'>cont2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span>))
-<span class='no'>mod5</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/glm'>glm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>binomial</a></span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>8675309</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>0</span>:<span class='fl'>1</span>, <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+                <span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
+                <span class='kw'>cat2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>100</span>),
+                <span class='kw'>cont1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
+                <span class='kw'>cont2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span>))
+<span class='no'>mod5</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>))
 <span class='fu'>extract_eq</span>(<span class='no'>mod5</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) } \right] &amp;= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\
@@ -281,18 +314,13 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 #&gt; \end{aligned}
 #&gt; $$</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -300,13 +328,16 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
