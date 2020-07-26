@@ -20,6 +20,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Install magick libs
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -y install libmagick++-dev
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
