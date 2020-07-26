@@ -7,6 +7,8 @@
 extract_eq(
   model,
   intercept = "alpha",
+  greek = "beta",
+  raw_tex = FALSE,
   ital_vars = FALSE,
   wrap = FALSE,
   terms_per_line = 4,
@@ -23,6 +25,14 @@ extract_eq(
 \item{intercept}{How should the intercept be displayed? Default is \code{"alpha"},
 but can also accept \code{"beta"}, in which case the it will be displayed
 as beta zero.}
+
+\item{greek}{What notation should be used for
+coefficients? Currently only accepts \code{"beta"} (with plans for future
+development). Can be used in combination with \code{raw_tex} to use any
+notation, e.g., \code{"\\hat{\\beta}"}.}
+
+\item{raw_tex}{Logical. Is the greek code being passed to denote coefficients
+raw tex code?}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\text{}} command?}

@@ -13,13 +13,14 @@ create_eq <- function(lhs,...) {
 #'
 #' @inheritParams extract_eq
 
-create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits, fix_signs, model, intercept) {
+create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
+                              fix_signs, model, intercept, greek, raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, intercept)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
 
   # Add error row
@@ -209,18 +210,20 @@ add_greek <- function(rhs, ...) {
 #' Adds greek symbols to the equation
 #'
 #' @keywords internal
-
-add_greek.default <- function(rhs, terms, intercept = "alpha") {
+add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
+                              raw_tex = FALSE) {
   int <- switch(intercept,
                 "alpha" = "\\alpha",
                 "beta" = "\\beta_{0}")
-
+  if(raw_tex & !(intercept %in% c("alpha", "beta"))) {
+    int <- intercept
+  }
   if (any(grepl("(Intercept)", terms))) {
-    anno_greek("beta", seq_len(nrow(rhs)), terms)
+    anno_greek(greek, seq_len(nrow(rhs)), terms)
   } else {
     ifelse(rhs$term == "(Intercept)",
            int,
-           anno_greek("beta", seq_len(nrow(rhs)) - 1, terms)
+           anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, raw_tex)
            )
   }
 }
@@ -239,12 +242,16 @@ add_greek.polr <- function(rhs, terms) {
 #'
 #' @keywords internal
 
-anno_greek <- function(greek, nums, terms = NULL) {
-  greek <- paste0("\\", greek, "_{", nums,"}")
-  if(!is.null(terms)) {
-    greek <- paste0(greek, "(", terms, ")")
+anno_greek <- function(greek, nums, terms = NULL, raw_tex = FALSE) {
+  if(raw_tex) {
+    out <- paste0(greek, "_{", nums,"}")
+  } else {
+    out <- paste0("\\", greek, "_{", nums,"}")
   }
-  greek
+  if(!is.null(terms)) {
+    out <- paste0(out, "(", terms, ")")
+  }
+  out
 }
 
 

@@ -6,8 +6,14 @@
 #'
 #' @param model A fitted model
 #' @param intercept How should the intercept be displayed? Default is \code{"alpha"},
-#' but can also accept \code{"beta"}, in which case the it will be displayed
-#' as beta zero.
+#'   but can also accept \code{"beta"}, in which case the it will be displayed
+#'   as beta zero.
+#' @param greek What notation should be used for
+#'   coefficients? Currently only accepts \code{"beta"} (with plans for future
+#'   development). Can be used in combination with \code{raw_tex} to use any
+#'   notation, e.g., \code{"\\hat{\\beta}"}.
+#' @param raw_tex Logical. Is the greek code being passed to denote coefficients
+#' raw tex code?
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\text{}} command?
 #' @param wrap Logical, defaults to \code{FALSE}. Should the terms on the
@@ -82,7 +88,8 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 
-extract_eq <- function(model, intercept = "alpha", ital_vars = FALSE,
+extract_eq <- function(model, intercept = "alpha", greek = "beta",
+                       raw_tex = FALSE, ital_vars = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
@@ -97,7 +104,9 @@ extract_eq <- function(model, intercept = "alpha", ital_vars = FALSE,
                       coef_digits,
                       fix_signs,
                       model,
-                      intercept)
+                      intercept,
+                      greek,
+                      raw_tex)
 
   if (wrap) {
     if (operator_location == "start") {
