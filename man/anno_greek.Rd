@@ -4,7 +4,7 @@
 \alias{anno_greek}
 \title{Intermediary function to wrap text in \verb{\\\\beta_\{\}}}
 \usage{
-anno_greek(greek, nums, terms = NULL)
+anno_greek(greek, nums, terms = NULL, raw_tex = FALSE)
 }
 \description{
 Intermediary function to wrap text in \verb{\\\\beta_\{\}}
