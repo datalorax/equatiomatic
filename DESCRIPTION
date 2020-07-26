@@ -34,7 +34,8 @@ Suggests:
     texPreview,
     testthat (>= 2.1.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 URL: https://github.com/datalorax/equatiomatic
 BugReports: https://github.com/datalorax/equatiomatic/issues
 Encoding: UTF-8

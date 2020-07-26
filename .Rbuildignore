@@ -8,3 +8,5 @@
 ^img$
 ^_pkgdown\.yml$
 ^pkgdown$
+^\.github$
+^codecov\.yml$

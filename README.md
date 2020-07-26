@@ -5,13 +5,15 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/datalorax/equatiomatic.svg?branch=master)](https://travis-ci.org/datalorax/equatiomatic)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 [![Covrpage
 Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_19-brightgreen.svg)](https://tinyurl.com/y43gpto4)
-[![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic)
+<!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
+[![R build
+status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic?branch=master)
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
@@ -167,7 +169,7 @@ extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 ## R Markdown and previewing
 
 If you include `extract_eq()` in an R Markdown chunk with
-`results="asis"`, **knitr** will render will render the equation.
+`results="asis"`, **knitr** will render the equation.
 
 Alternatively, you can run the code interactively, copy/paste the
 equation to where you want it in your document, and make any edits you’d
