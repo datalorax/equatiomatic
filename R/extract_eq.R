@@ -155,8 +155,8 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
     eq <- lapply(eq, fix_coef_signs)
   }
 
-  if(length(eq) > 1) {
-    eq <- paste(eq, collapse = "\\\\")
+  if (length(eq) > 1) {
+    eq <- paste(eq, collapse = " \\\\ ")
   } else {
     eq <- eq[[1]]
   }
