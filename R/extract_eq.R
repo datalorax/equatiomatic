@@ -130,16 +130,16 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
       paste(x, collapse = line_end)
     })
 
+    # Combine RHS and LHS using anchors (&=)
+    # This is a list of equations, typically of length 1 unless there are
+    # multiple equations like ordered logistic regression from polr()
     eq <- Map(function(.lhs, .rhs) {
-            paste0("\\begin{", align_env, "}\n",
-                   paste(.lhs,
-                         .rhs,
-                         sep = " &= "),
-                   "\n\\end{", align_env, "}")
+            paste(.lhs,
+                  paste(.rhs, collapse = " + "),
+                  sep = " &= ")
           },
           .lhs = eq_raw$lhs,
           .rhs = rhs_combined)
-
 
   } else {
     eq <- Map(function(.lhs, .rhs) {
@@ -151,15 +151,25 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
           .rhs = eq_raw$rhs)
 
   }
+
   if (use_coefs && fix_signs) {
     eq <- lapply(eq, fix_coef_signs)
   }
 
   if (length(eq) > 1) {
-    eq <- paste(eq, collapse = " \\\\ ")
+    eq <- paste(eq, collapse = " \\\\\n")
   } else {
     eq <- eq[[1]]
   }
+
+  # Add environment finally, if wrapping
+  # This comes later so that multiple equations don't get their own environments
+  if (wrap) {
+    eq <- paste0("\\begin{", align_env, "}\n",
+                 eq,
+                 "\n\\end{", align_env, "}")
+  }
+
   class(eq) <- c('equation', 'character')
 
   return(eq)
