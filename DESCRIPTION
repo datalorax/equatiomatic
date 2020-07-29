@@ -29,7 +29,9 @@ Description: The goal of equatiomatic is to reduce the pain associated with
              and returns the corresponding LaTeX code for the model.
 License: MIT + file LICENSE
 Depends: R (>= 3.3.0)
-Imports: broom, stats
+Imports: 
+    broom (>= 0.7.0), 
+    stats
 Suggests: 
     texPreview,
     testthat (>= 2.1.0),
