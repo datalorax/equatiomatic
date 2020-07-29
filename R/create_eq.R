@@ -97,10 +97,6 @@ escape_tex <- function(term) {
   escaped <- c("\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}",
                "\\char`\\~", "\\char`\\^", "\\backslash ")
 
-  if (length(term) == 0) {
-    return("")
-  }
-
   # Split term into a vector of single characters
   characters <- strsplit(term, "")[[1]]
 
@@ -233,14 +229,11 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   if (raw_tex & !(intercept %in% c("alpha", "beta"))) {
     int <- intercept
   }
-  if (any(grepl("(Intercept)", terms))) {
-    anno_greek(greek, seq_len(nrow(rhs)), terms)
-  } else {
-    ifelse(rhs$term == "(Intercept)",
-           int,
-           anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, raw_tex)
-           )
-  }
+
+  ifelse(rhs$term == "(Intercept)",
+         int,
+         anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, raw_tex)
+  )
 }
 
 add_greek.polr <- function(rhs, terms, ...) {
