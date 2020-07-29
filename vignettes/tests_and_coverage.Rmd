@@ -17,43 +17,59 @@ knitr::opts_chunk$set(
 ```
 
 <!--- Placeholder for tests/README.md Do Not Edit--->
+  - [Coverage](#coverage)
+  - [Unit Tests](#unit-tests)
+
 This output is created by
-[covrpage](https://github.com/metrumresearchgroup/covrpage).
+[covrpage](https://github.com/yonicd/covrpage).
 
 ## Coverage
 
 Coverage summary is created using the
 [covr](https://github.com/r-lib/covr) package.
 
-| Object                               | Coverage (%) |
-| :----------------------------------- | :----------: |
-| equatiomatic                         |      0       |
-| [R/extract\_eq.R](https://github.com/datalorax/equatiomatic/tree/master/R/extract_eq.R) |      0       |
-| [R/utils.R](https://github.com/datalorax/equatiomatic/tree/master/R/utils.R)            |      0       |
+| Object                                 | Coverage (%) |
+| :------------------------------------- | :----------: |
+| equatiomatic                           |     100      |
+| [R/create\_eq.R](https://github.com/datalorax/equatiomatic/tree/dev/R/create_eq.R)     |     100      |
+| [R/extract\_eq.R](https://github.com/datalorax/equatiomatic/tree/dev/R/extract_eq.R)   |     100      |
+| [R/extract\_lhs.R](https://github.com/datalorax/equatiomatic/tree/dev/R/extract_lhs.R) |     100      |
+| [R/extract\_rhs.R](https://github.com/datalorax/equatiomatic/tree/dev/R/extract_rhs.R) |     100      |
+| [R/print.R](https://github.com/datalorax/equatiomatic/tree/dev/R/print.R)              |     100      |
+| [R/utils.R](https://github.com/datalorax/equatiomatic/tree/dev/R/utils.R)              |     100      |
 
 <br>
 
 ## Unit Tests
 
 Unit Test summary is created using the
-[testthat](https://github.com/r-lib/testthat)
-package.
+[testthat](https://github.com/r-lib/testthat) package.
 
-| file                                      | n |  time | error | failed | skipped | warning |
-| :---------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-basic.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R)     | 2 | 0.014 |     0 |      0 |       0 |       0 |
-| [test-preview.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-preview.R) | 1 | 0.415 |     0 |      0 |       0 |       0 |
+| file                                                              |  n |  time | error | failed | skipped | warning |
+| :---------------------------------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R)                                 |  2 | 0.066 |     0 |      0 |       0 |       0 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R)                                   |  7 | 0.042 |     0 |      0 |       0 |       0 |
+| [test-polr.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-polr.R)                               |  3 | 0.033 |     0 |      0 |       0 |       0 |
+| [test-print.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-print.R)                             |  2 | 0.006 |     0 |      0 |       0 |       0 |
+| [test-utils.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-utils.R)                             |  8 | 0.031 |     0 |      0 |       0 |       0 |
+| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R) | 10 | 0.048 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
-<summary> Show Detailed Test Results
-</summary>
+<summary> Show Detailed Test Results </summary>
 
-| file                                          | context | test                   | status | n |  time |
-| :-------------------------------------------- | :------ | :--------------------- | :----- | -: | ----: |
-| [test-basic.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R#L13)     | basic   | extract: default       | PASS   | 1 | 0.012 |
-| [test-basic.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R#L18)     | basic   | extract: all variables | PASS   | 1 | 0.002 |
-| [test-preview.R](https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-preview.R#L12) | preview | preview: texPreview    | PASS   | 1 | 0.415 |
+| file                                                                      | context                 | test                              | status | n |  time |
+| :------------------------------------------------------------------------ | :---------------------- | :-------------------------------- | :----- | -: | ----: |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R#L16_L17)                                 | GLMs                    | Logistic regression works         | PASS   | 1 | 0.059 |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R#L24)                                     | GLMs                    | Unsupported GLMs create a message | PASS   | 1 | 0.007 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L11_L12)                                   | Linear models           | Simple lm models work             | PASS   | 3 | 0.017 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L32_L33)                                   | Linear models           | Interactions work                 | PASS   | 2 | 0.014 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L48_L49)                                   | Linear models           | Custom Greek works                | PASS   | 2 | 0.011 |
+| [test-polr.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-polr.R#L24_L25)                               | polr                    | Ordered logistic regression works | PASS   | 3 | 0.033 |
+| [test-print.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-print.R#L11_L12)                             | Printing                | Equation is printed correctly     | PASS   | 2 | 0.006 |
+| [test-utils.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-utils.R#L9_L11)                              | Utility functions       | Strict mapply\_\* functions work  | PASS   | 8 | 0.031 |
+| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R#L8_L9)   | Wrapping and formatting | Coefficient digits work correctly | PASS   | 2 | 0.010 |
+| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R#L26_L27) | Wrapping and formatting | Wrapping works correctly          | PASS   | 8 | 0.038 |
 
 </details>
 
@@ -61,19 +77,19 @@ package.
 
 <summary> Session Info </summary>
 
-| Field    | Value                               |
-| :------- | :---------------------------------- |
-| Version  | R version 3.6.0 (2019-04-26)        |
-| Platform | x86\_64-apple-darwin15.6.0 (64-bit) |
-| Running  | macOS Mojave 10.14.5                |
-| Language | en\_US                              |
-| Timezone | America/Los\_Angeles                |
+| Field    | Value                             |
+| :------- | :-------------------------------- |
+| Version  | R version 4.0.0 (2020-04-24)      |
+| Platform | x86\_64-apple-darwin17.0 (64-bit) |
+| Running  | macOS Catalina 10.15.6            |
+| Language | en\_US                            |
+| Timezone | America/New\_York                 |
 
 | Package  | Version |
 | :------- | :------ |
-| testthat | 2.1.1   |
-| covr     | 3.2.1   |
-| covrpage | 0.0.70  |
+| testthat | 2.3.2   |
+| covr     | 3.5.0   |
+| covrpage | 0.0.71  |
 
 </details>
 
