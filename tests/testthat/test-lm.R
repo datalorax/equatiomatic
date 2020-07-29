@@ -25,10 +25,10 @@ test_that("Simple lm models work", {
 
 
 test_that("Interactions work", {
-  simple_int <- lm(Sepal.Length ~ Sepal.Width*Species, iris)
+  simple_int <- lm(body_mass_g ~ bill_length_mm*species, palmerpenguins::penguins)
 
   tex <- extract_eq(simple_int)
-  actual <- "\\operatorname{Sepal.Length} = \\alpha + \\beta_{1}(\\operatorname{Sepal.Width}) + \\beta_{2}(\\operatorname{Species}_{\\operatorname{versicolor}}) + \\beta_{3}(\\operatorname{Species}_{\\operatorname{virginica}}) + \\beta_{4}(\\operatorname{Sepal.Width} \\times \\operatorname{Species}_{\\operatorname{versicolor}}) + \\beta_{5}(\\operatorname{Sepal.Width} \\times \\operatorname{Species}_{\\operatorname{virginica}}) + \\epsilon"
+  actual <- "\\operatorname{body\\_mass\\_g} = \\alpha + \\beta_{1}(\\operatorname{bill\\_length\\_mm}) + \\beta_{2}(\\operatorname{species}_{\\operatorname{Chinstrap}}) + \\beta_{3}(\\operatorname{species}_{\\operatorname{Gentoo}}) + \\beta_{4}(\\operatorname{bill\\_length\\_mm} \\times \\operatorname{species}_{\\operatorname{Chinstrap}}) + \\beta_{5}(\\operatorname{bill\\_length\\_mm} \\times \\operatorname{species}_{\\operatorname{Gentoo}}) + \\epsilon"
   expect_equal(tex, equation_class(actual),
                label = "Basic interaction with subscripts")
 

@@ -96,7 +96,8 @@ extract_eq(mod2) %>%
 When using categorical variables, it will include the levels of the variables as subscripts:
 
 ```{r example-categorical}
-mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
+library(palmerpenguins)
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 ```
 

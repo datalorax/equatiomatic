@@ -12,42 +12,53 @@
 #'   or more terms are interactions.
 #'
 #' @examples \dontrun{
-#' mod1 <- lm(Sepal.Length ~ Sepal.Width + Species * Petal.Length, iris)
+#' library(palmerpenguins)
+#' mod1 <- lm(body_mass_g ~ bill_length_mm + species * flipper_length_mm, penguins)
 #'
 #' extract_rhs(mod1)
-#' #> # A tibble: 7 x 4
-#' #>   term                             estimate primary   subscripts
-#' #>   <chr>                               <dbl> <list>    <list>
-#' #> 1 (Intercept)                     2.925732  <chr [0]> <chr [1]>
-#' #> 2 Sepal.Width                     0.4500064 <chr [1]> <chr [1]>
-#' #> 3 Speciesversicolor              -1.047170  <chr [1]> <chr [1]>
-#' #> 4 Speciesvirginica               -2.618888  <chr [1]> <chr [1]>
-#' #> 5 Petal.Length                    0.3677469 <chr [1]> <chr [1]>
-#' #> 6 Speciesversicolor:Petal.Length  0.2920936 <chr [2]> <chr [2]>
-#' #> 7 Speciesvirginica:Petal.Length   0.5225336 <chr [2]> <chr [2]>
+#' #> # A tibble: 7 x 8
+#' #>                                 term     estimate ...           primary  subscripts
+#' #> 1                        (Intercept) -3341.615846 ...
+#' #> 2                     bill_length_mm    59.304539 ...    bill_length_mm
+#' #> 3                   speciesChinstrap   -27.292519 ...           species   Chinstrap
+#' #> 4                      speciesGentoo -2215.913323 ...           species      Gentoo
+#' #> 5                  flipper_length_mm    24.962788 ... flipper_length_mm
+#' #> 6 speciesChinstrap:flipper_length_mm    -3.484628 ... flipper_length_mm Chinstrap,
+#' #> 7    speciesGentoo:flipper_length_mm    11.025972 ... flipper_length_mm    Gentoo,
 #'
 #' str(extract_rhs(mod1))
-#' #> Classes ‘tbl_df’, ‘tbl’ and 'data.frame': 7 obs. of  4 variables:
-#' #>  $ term      : chr  "(Intercept)" "Sepal.Width" "Speciesversicolor" "Speciesvirginica" ...
-#' #> $ estimate  : num  2.926 0.45 -1.047 -2.619 0.368 ...
-#' #> $ primary   :List of 7
-#' #>  ..$ : chr
-#' #>  ..$ : chr "Sepal.Width"
-#' #>  ..$ : chr "Species"
-#' #>  ..$ : chr "Species"
-#' #>  ..$ : chr "Petal.Length"
-#' #>  ..$ : chr  "Species" "Petal.Length"
-#' #>  ..$ : chr  "Species" "Petal.Length"
-#' #> $ subscripts:List of 7
-#' #>  ..$ : chr ""
-#' #>  ..$ : chr ""
-#' #>  ..$ : chr "versicolor"
-#' #>  ..$ : chr "virginica"
-#' #>  ..$ : chr ""
-#' #>  ..$ : Named chr  "versicolor:Petal.Length" "Speciesversicolor:"
-#' #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
-#' #>  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"
-#' #>  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"
+#' #> Classes ‘lm’ and 'data.frame':	7 obs. of  8 variables:
+#' #>  $ term      : chr  "(Intercept)" "bill_length_mm" "speciesChinstrap" "speciesGentoo" ...
+#' #>  $ estimate  : num  -3341.6 59.3 -27.3 -2215.9 25 ...
+#' #>  $ std.error : num  810.14 7.25 1394.17 1328.58 4.34 ...
+#' #>  $ statistic : num  -4.1247 8.1795 -0.0196 -1.6679 5.7534 ...
+#' #>  $ p.value   : num  4.69e-05 5.98e-15 9.84e-01 9.63e-02 1.97e-08 ...
+#' #>  $ split     :List of 7
+#' #>   ..$ : chr "(Intercept)"
+#' #>   ..$ : chr "bill_length_mm"
+#' #>   ..$ : chr "speciesChinstrap"
+#' #>   ..$ : chr "speciesGentoo"
+#' #>   ..$ : chr "flipper_length_mm"
+#' #>   ..$ : chr  "speciesChinstrap" "flipper_length_mm"
+#' #>   ..$ : chr  "speciesGentoo" "flipper_length_mm"
+#' #>  $ primary   :List of 7
+#' #>   ..$ : chr
+#' #>   ..$ : chr "bill_length_mm"
+#' #>   ..$ : chr "species"
+#' #>   ..$ : chr "species"
+#' #>   ..$ : chr "flipper_length_mm"
+#' #>   ..$ : chr  "species" "flipper_length_mm"
+#' #>   ..$ : chr  "species" "flipper_length_mm"
+#' #>  $ subscripts:List of 7
+#' #>   ..$ : chr ""
+#' #>   ..$ : chr ""
+#' #>   ..$ : chr "Chinstrap"
+#' #>   ..$ : chr "Gentoo"
+#' #>   ..$ : chr ""
+#' #>   ..$ : Named chr  "Chinstrap" ""
+#' #>   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
+#' #>   ..$ : Named chr  "Gentoo" ""
+#' #>   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
 #' }
 #'
 

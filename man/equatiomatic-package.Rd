@@ -10,7 +10,7 @@
 
 The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of
-             the package, extract_eq_lm, takes a fitted lm object as its input
+             the package, extract_eq, takes a fitted model object as its input
              and returns the corresponding LaTeX code for the model.
 }
 \seealso{

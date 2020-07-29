@@ -83,7 +83,8 @@ mod2 <- lm(mpg ~ ., mtcars)
 extract_eq(mod2)
 
 # Works for categorical variables too, putting levels as subscripts
-mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
+library(palmerpenguins)
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 
 set.seed(8675309)
