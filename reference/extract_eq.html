@@ -184,7 +184,7 @@ raw tex code?</p></td>
     <tr>
       <th>ital_vars</th>
       <td><p>Logical, defaults to <code>FALSE</code>. Should the variable names
-not be wrapped in the <code>\text{}</code> command?</p></td>
+not be wrapped in the <code>\operatorname{}</code> command?</p></td>
     </tr>
     <tr>
       <th>wrap</th>
@@ -238,17 +238,17 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
     <pre class="examples"><div class='input'><span class='co'># Simple model</span>
 <span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; $$
-#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon
+#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Include all variables</span>
 <span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='no'>mtcars</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>)</div><div class='output co'>#&gt; $$
-#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Works for categorical variables too, putting levels as subscripts</span>
 <span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Width</span> + <span class='no'>Species</span>, <span class='no'>iris</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod3</span>)</div><div class='output co'>#&gt; $$
-#&gt; \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon
+#&gt; \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Species}_{\operatorname{versicolor}}) + \beta_{3}(\operatorname{Species}_{\operatorname{virginica}}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>8675309</span>)
 <span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
@@ -258,45 +258,45 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
                 <span class='kw'>out</span>   <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>10</span>, <span class='fl'>0.5</span>))
 <span class='no'>mod4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='no'>d</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod4</span>)</div><div class='output co'>#&gt; $$
-#&gt; \text{out} = \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}}) + \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
+#&gt; \operatorname{out} = \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Don't italicize terms</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod1</span>, <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $$
-#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon
+#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Wrap equations in an "aligned" environment</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\ + \\
-#&gt; &amp;\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\
-#&gt; &amp;\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\
+#&gt; &amp;\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\
+#&gt; &amp;\quad \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Wider equation wrapping</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\ + \\
-#&gt; &amp;\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\
-#&gt; &amp;\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\
+#&gt; &amp;\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\
+#&gt; &amp;\quad \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Include model estimates instead of Greek letters</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \text{mpg} &amp;= 12.3 - 0.11(\text{cyl})\ + \\
-#&gt; &amp;\quad 0.01(\text{disp}) - 0.02(\text{hp})\ + \\
-#&gt; &amp;\quad 0.79(\text{drat}) - 3.72(\text{wt})\ + \\
-#&gt; &amp;\quad 0.82(\text{qsec}) + 0.32(\text{vs})\ + \\
-#&gt; &amp;\quad 2.52(\text{am}) + 0.66(\text{gear})\ - \\
-#&gt; &amp;\quad 0.2(\text{carb}) + \epsilon
+#&gt; \operatorname{mpg} &amp;= 12.3 - 0.11(\operatorname{cyl})\ + \\
+#&gt; &amp;\quad 0.01(\operatorname{disp}) - 0.02(\operatorname{hp})\ + \\
+#&gt; &amp;\quad 0.79(\operatorname{drat}) - 3.72(\operatorname{wt})\ + \\
+#&gt; &amp;\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs})\ + \\
+#&gt; &amp;\quad 2.52(\operatorname{am}) + 0.66(\operatorname{gear})\ - \\
+#&gt; &amp;\quad 0.2(\operatorname{carb}) + \epsilon
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Don't fix doubled-up "+ -" signs</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \text{mpg} &amp;= 12.3 + -0.11(\text{cyl}) + 0.01(\text{disp}) + -0.02(\text{hp})\ + \\
-#&gt; &amp;\quad 0.79(\text{drat}) + -3.72(\text{wt}) + 0.82(\text{qsec}) + 0.32(\text{vs})\ + \\
-#&gt; &amp;\quad 2.52(\text{am}) + 0.66(\text{gear}) + -0.2(\text{carb}) + \epsilon
+#&gt; \operatorname{mpg} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp}) + -0.02(\operatorname{hp})\ + \\
+#&gt; &amp;\quad 0.79(\operatorname{drat}) + -3.72(\operatorname{wt}) + 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs})\ + \\
+#&gt; &amp;\quad 2.52(\operatorname{am}) + 0.66(\operatorname{gear}) + -0.2(\operatorname{carb}) + \epsilon
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Use other model types, like glm</span>
@@ -309,8 +309,8 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 <span class='no'>mod5</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>))
 <span class='fu'>extract_eq</span>(<span class='no'>mod5</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) } \right] &amp;= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\
-#&gt; &amp;\quad \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
+#&gt; \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\
+#&gt; &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon
 #&gt; \end{aligned}
 #&gt; $$</div></pre>
   </div>

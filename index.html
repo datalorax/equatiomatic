@@ -116,21 +116,21 @@
 <span class="co"># Give the results to extract_eq</span>
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-basic-preview-1.png" width="100%"></p>
 <p>The model can be built in any standard way—it can handle shortcut syntax:</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">mod2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">mpg</span> ~ <span class="no">.</span>, <span class="no">mtcars</span>)
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-shortcut-preview-1.png" width="100%"></p>
 <p>When using categorical variables, it will include the levels of the variables as subscripts:</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="no">mod3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Sepal.Width</span> + <span class="no">Species</span>, <span class="no">iris</span>)
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod3</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Species}_{\operatorname{versicolor}}) + \beta_{3}(\operatorname{Species}_{\operatorname{virginica}}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-categorical-preview-1.png" width="100%"></p>
 <p>It helpfully preserves the order the variables are supplied in the formula:</p>
@@ -143,7 +143,7 @@
 <span class="no">mod4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">out</span> ~ <span class="no">cont1</span> + <span class="no">cat2</span> + <span class="no">cont2</span> + <span class="no">cat1</span>, <span class="no">d</span>)
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod4</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \text{out} = \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{out} = \alpha + \beta_{1}(\operatorname{cont1}) + \beta_{2}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{4}(\operatorname{cont2}) + \beta_{5}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{6}(\operatorname{cat1}_{\operatorname{c}}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-preserve-order-preview-1.png" width="100%"></p>
 </div>
@@ -154,17 +154,17 @@
 <div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\ + \\</span>
-<span class="co">#&gt; &amp;\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\</span>
-<span class="co">#&gt; &amp;\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\</span>
+<span class="co">#&gt; &amp;\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\</span>
+<span class="co">#&gt; &amp;\quad \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-wrap-preview-1.png" width="100%"></p>
 <div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">6</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt})\ + \\</span>
-<span class="co">#&gt; &amp;\quad \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt})\ + \\</span>
+<span class="co">#&gt; &amp;\quad \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-wrap-longer-preview-1.png" width="100%"></p>
@@ -172,13 +172,13 @@
 <div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">operator_location</span> <span class="kw">=</span> <span class="st">"start"</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; \text{mpg} &amp;= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\\</span>
-<span class="co">#&gt; &amp;\quad + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\\</span>
-<span class="co">#&gt; &amp;\quad + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\\</span>
+<span class="co">#&gt; &amp;\quad + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\\</span>
+<span class="co">#&gt; &amp;\quad + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-wrap-longer-location-preview-1.png" width="100%"></p>
-<p>By default, all text in the equation is wrapped in <code>\text{}</code>. You can optionally have the variables themselves be italicized (i.e. not be wrapped in <code>\text{}</code>) with <code>ital_vars = TRUE</code>:</p>
+<p>By default, all text in the equation is wrapped in <code>\operatorname{}</code>. You can optionally have the variables themselves be italicized (i.e. not be wrapped in <code>\operatorname{}</code>) with <code>ital_vars = TRUE</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ital_vars</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
@@ -213,13 +213,13 @@
 <p>You can return actual numeric coefficients instead of Greek letters with <code>use_coefs = TRUE</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>, <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-use-coefs-preview-1.png" width="100%"></p>
 <p>By default, it will remove doubled operators like “+ -”, but you can keep those in (which is often useful for teaching) with <code>fix_signs = FALSE</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>, <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">fix_signs</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \text{mpg} = 34.66 + -1.59(\text{cyl}) + -0.02(\text{disp}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-fix-signs-preview-1.png" width="100%"></p>
 <p>This works in longer wrapped equations:</p>
@@ -227,10 +227,10 @@
            <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">fix_signs</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; \text{mpg} &amp;= 12.3 + -0.11(\text{cyl}) + 0.01(\text{disp})\ + \\</span>
-<span class="co">#&gt; &amp;\quad -0.02(\text{hp}) + 0.79(\text{drat}) + -3.72(\text{wt})\ + \\</span>
-<span class="co">#&gt; &amp;\quad 0.82(\text{qsec}) + 0.32(\text{vs}) + 2.52(\text{am})\ + \\</span>
-<span class="co">#&gt; &amp;\quad 0.66(\text{gear}) + -0.2(\text{carb}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{mpg} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\</span>
+<span class="co">#&gt; &amp;\quad -0.02(\operatorname{hp}) + 0.79(\operatorname{drat}) + -3.72(\operatorname{wt})\ + \\</span>
+<span class="co">#&gt; &amp;\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs}) + 2.52(\operatorname{am})\ + \\</span>
+<span class="co">#&gt; &amp;\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb}) + \epsilon</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-fix-signs-long-preview-1.png" width="100%"></p>
@@ -251,8 +251,8 @@
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod5</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) } \right] &amp;= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\</span>
-<span class="co">#&gt; &amp;\quad \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon</span>
+<span class="co">#&gt; \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\</span>
+<span class="co">#&gt; &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-logit-preview-1.png" width="100%"></p>
