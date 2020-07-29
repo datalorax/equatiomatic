@@ -25,12 +25,13 @@ Authors@R: c(
     )
 Description: The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of
-             the package, extract_eq_lm, takes a fitted lm object as its input
+             the package, extract_eq, takes a fitted model object as its input
              and returns the corresponding LaTeX code for the model.
 License: MIT + file LICENSE
 Depends: R (>= 3.3.0)
 Imports: 
     broom (>= 0.7.0), 
+    palmerpenguins,
     stats
 Suggests: 
     texPreview,

@@ -73,10 +73,11 @@ When using categorical variables, it will include the levels of the
 variables as subscripts:
 
 ``` r
-mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
+library(palmerpenguins)
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 #> $$
-#> \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Species}_{\operatorname{versicolor}}) + \beta_{3}(\operatorname{Species}_{\operatorname{virginica}}) + \epsilon
+#> \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
 #> $$
 ```
 
