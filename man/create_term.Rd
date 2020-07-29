@@ -11,7 +11,7 @@ create_term(rhs, ital_vars)
 \code{extract_rhs}.}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
-not be wrapped in the \code{\\text{}} command?}
+not be wrapped in the \code{\\operatorname{}} command?}
 }
 \description{
 Create a full term w/subscripts

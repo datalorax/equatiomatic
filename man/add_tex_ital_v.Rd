@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_eq.R
 \name{add_tex_ital_v}
 \alias{add_tex_ital_v}
-\title{Wrap text in \code{\\text{}} (vectorized)}
+\title{Wrap text in \code{\\operatorname{}} (vectorized)}
 \usage{
 add_tex_ital_v(term_v, ital_vars)
 }

@@ -35,7 +35,7 @@ notation, e.g., \code{"\\hat{\\beta}"}.}
 raw tex code?}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
-not be wrapped in the \code{\\text{}} command?}
+not be wrapped in the \code{\\operatorname{}} command?}
 
 \item{wrap}{Logical, defaults to \code{FALSE}. Should the terms on the
 right-hand side of the equation be split into multiple lines? This is

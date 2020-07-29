@@ -15,7 +15,7 @@
 #' @param raw_tex Logical. Is the greek code being passed to denote coefficients
 #' raw tex code?
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
-#'   not be wrapped in the \code{\\text{}} command?
+#'   not be wrapped in the \code{\\operatorname{}} command?
 #' @param wrap Logical, defaults to \code{FALSE}. Should the terms on the
 #'   right-hand side of the equation be split into multiple lines? This is
 #'   helpful with models with many terms.

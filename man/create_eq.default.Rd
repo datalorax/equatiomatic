@@ -25,7 +25,7 @@
 \code{extract_rhs}.}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
-not be wrapped in the \code{\\text{}} command?}
+not be wrapped in the \code{\\operatorname{}} command?}
 
 \item{use_coefs}{Logical, defaults to \code{FALSE}. Should the actual model
 estimates be included in the equation instead of math symbols?}

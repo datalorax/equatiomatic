@@ -2,12 +2,12 @@
 % Please edit documentation in R/create_eq.R
 \name{add_tex_ital}
 \alias{add_tex_ital}
-\title{Wrap text in \code{\\text{}}}
+\title{Wrap text in \code{\\operatorname{}}}
 \usage{
 add_tex_ital(term, ital_vars)
 }
 \arguments{
-\item{term}{A character to wrap in \code{\\text{}}}
+\item{term}{A character to wrap in \code{\\operatorname{}}}
 
 \item{ital_vars}{Passed from \code{extract_eq}}
 }
