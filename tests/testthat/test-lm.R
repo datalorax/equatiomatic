@@ -37,7 +37,19 @@ test_that("Interactions work", {
   actual2 <- "\\text{mpg} = \\alpha + \\beta_{1}(\\text{hp}) + \\beta_{2}(\\text{wt}) + \\beta_{3}(\\text{hp} \\times \\text{wt}) + \\epsilon"
   expect_equal(tex2, equation_class(actual2),
                label = "Basic interaction with no subscripts")
+})
 
 
+test_that("Custom Greek works", {
+  model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 
+  tex <- extract_eq(model_simple, greek = "\\hat{\\beta}", raw_tex = TRUE)
+  actual <- "\\text{mpg} = \\alpha + \\hat{\\beta}_{1}(\\text{cyl}) + \\hat{\\beta}_{2}(\\text{disp}) + \\epsilon"
+  expect_equal(tex, equation_class(actual),
+               label = "custom Greek coefficients work")
+
+  tex <- extract_eq(model_simple, intercept = "\\zeta", greek = "\\beta", raw_tex = TRUE)
+  actual <- "\\text{mpg} = \\zeta + \\beta_{1}(\\text{cyl}) + \\beta_{2}(\\text{disp}) + \\epsilon"
+  expect_equal(tex, equation_class(actual),
+               label = "custom Greek intercept works")
 })

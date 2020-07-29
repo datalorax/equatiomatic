@@ -33,7 +33,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 }
 
 create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, model) {
+                          fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -96,10 +96,6 @@ escape_tex <- function(term) {
   unescaped <- c("&", "%", "$", "#", "_", "{", "}", "~", "^", "\\")
   escaped <- c("\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}",
                "\\char`\\~", "\\char`\\^", "\\backslash ")
-
-  if (length(term) == 0) {
-    return("")
-  }
 
   # Split term into a vector of single characters
   characters <- strsplit(term, "")[[1]]
@@ -189,14 +185,29 @@ add_tex_mult <- function(term) {
 }
 
 
+add_coefs <- function(rhs, ...) {
+  UseMethod("add_coefs", rhs)
+}
+
 #' Add coefficient values to the equation
 #'
 #' @keywords internal
 
-add_coefs <- function(rhs, term, coef_digits) {
+add_coefs.default <- function(rhs, term, coef_digits) {
   ests <- round(rhs$estimate, coef_digits)
   ifelse(
     rhs$term == "(Intercept)",
+    paste0(ests, term),
+    paste0(ests, "(", term, ")")
+  )
+}
+
+#' @keywords internal
+
+add_coefs.polr <- function(rhs, term, coef_digits) {
+  ests <- round(rhs$estimate, coef_digits)
+  ifelse(
+    rhs$coefficient_type == "zeta",
     paste0(ests, term),
     paste0(ests, "(", term, ")")
   )
@@ -215,20 +226,17 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   int <- switch(intercept,
                 "alpha" = "\\alpha",
                 "beta" = "\\beta_{0}")
-  if(raw_tex & !(intercept %in% c("alpha", "beta"))) {
+  if (raw_tex & !(intercept %in% c("alpha", "beta"))) {
     int <- intercept
   }
-  if (any(grepl("(Intercept)", terms))) {
-    anno_greek(greek, seq_len(nrow(rhs)), terms)
-  } else {
-    ifelse(rhs$term == "(Intercept)",
-           int,
-           anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, raw_tex)
-           )
-  }
+
+  ifelse(rhs$term == "(Intercept)",
+         int,
+         anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, raw_tex)
+  )
 }
 
-add_greek.polr <- function(rhs, terms) {
+add_greek.polr <- function(rhs, terms, ...) {
   ifelse(rhs$coefficient_type == "zeta",
          anno_greek("alpha",
                     rev(seq_along(grep("zeta", rhs$coefficient_type)))),
@@ -243,12 +251,12 @@ add_greek.polr <- function(rhs, terms) {
 #' @keywords internal
 
 anno_greek <- function(greek, nums, terms = NULL, raw_tex = FALSE) {
-  if(raw_tex) {
+  if (raw_tex) {
     out <- paste0(greek, "_{", nums,"}")
   } else {
     out <- paste0("\\", greek, "_{", nums,"}")
   }
-  if(!is.null(terms)) {
+  if (!is.null(terms)) {
     out <- paste0(out, "(", terms, ")")
   }
   out
