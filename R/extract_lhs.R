@@ -69,7 +69,7 @@ extract_lhs.glm <- function(model, ital_vars) {
 
 extract_lhs.polr <- function(model, ital_vars) {
   tidied <- broom::tidy(model)
-  lhs <- tidied$term[tidied$coefficient_type == "zeta"]
+  lhs <- tidied$term[tidied$coef.type == "scale"]
   lhs_escaped <- mapply_chr(escape_tex, lhs)
 
   lhs <- lapply(strsplit(lhs_escaped, "\\|"), add_tex_ital_v, ital_vars)

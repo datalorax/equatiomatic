@@ -42,8 +42,8 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
     rhs$final_terms <- add_greek(rhs, rhs$final_terms)
   }
 
-  splt <- split(rhs, rhs$coefficient_type)
-  rhs_final <- lapply(splt$zeta$final_terms, function(x) {
+  splt <- split(rhs, rhs$coef.type)
+  rhs_final <- lapply(splt$scale$final_terms, function(x) {
     c(x, splt$coefficient$final_terms, "\\epsilon")
   })
   attributes(lhs) <- NULL
@@ -207,7 +207,7 @@ add_coefs.default <- function(rhs, term, coef_digits) {
 add_coefs.polr <- function(rhs, term, coef_digits) {
   ests <- round(rhs$estimate, coef_digits)
   ifelse(
-    rhs$coefficient_type == "zeta",
+    rhs$coef.type == "scale",
     paste0(ests, term),
     paste0(ests, "(", term, ")")
   )
@@ -237,11 +237,11 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
 }
 
 add_greek.polr <- function(rhs, terms, ...) {
-  ifelse(rhs$coefficient_type == "zeta",
+  ifelse(rhs$coef.type == "scale",
          anno_greek("alpha",
-                    rev(seq_along(grep("zeta", rhs$coefficient_type)))),
+                    rev(seq_along(grep("scale", rhs$coef.type)))),
          anno_greek("beta",
-                    seq_along(grep("coefficient", rhs$coefficient_type)),
+                    seq_along(grep("coefficient", rhs$coef.type)),
                     terms)
          )
 }
