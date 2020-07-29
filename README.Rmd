@@ -37,7 +37,7 @@ usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 <!-- badges: start -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
-[![Covrpage Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_19-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+[![Covrpage Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_07_29-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
 [![R build status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
 [![Codecov test coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic?branch=master)
@@ -78,7 +78,7 @@ extract_eq(mod1)
 
 ```{r example-basic-preview, echo=FALSE}
 extract_eq(mod1) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 The model can be built in any standard way—it can handle shortcut syntax: 
@@ -90,20 +90,21 @@ extract_eq(mod2)
 
 ```{r example-shortcut-preview, echo=FALSE}
 extract_eq(mod2) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 When using categorical variables, it will include the levels of the variables as subscripts:
 
 ```{r example-categorical}
 library(palmerpenguins)
+
 mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 ```
 
 ```{r example-categorical-preview, echo=FALSE}
 extract_eq(mod3) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 It helpfully preserves the order the variables are supplied in the formula:
@@ -121,7 +122,7 @@ extract_eq(mod4)
 
 ```{r example-preserve-order-preview, echo=FALSE}
 extract_eq(mod4) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 ## Appearance
@@ -134,7 +135,7 @@ extract_eq(mod2, wrap = TRUE)
 
 ```{r example-wrap-preview, echo=FALSE}
 extract_eq(mod2, wrap = TRUE) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 ```{r example-wrap-longer}
@@ -143,7 +144,7 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
 
 ```{r example-wrap-longer-preview, echo=FALSE}
 extract_eq(mod2, wrap = TRUE, terms_per_line = 6) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 When wrapping, you can change whether the lines end with trailing math operators like `+` (the default), or if they should begin with them using `operator_location = "end"` or `operator_location = "start"`:
@@ -154,7 +155,7 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
 
 ```{r example-wrap-longer-location-preview, echo=FALSE}
 extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start") %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 By default, all text in the equation is wrapped in `\operatorname{}`. You can optionally have the variables themselves be italicized (i.e. not be wrapped in `\operatorname{}`) with `ital_vars = TRUE`:
@@ -165,7 +166,7 @@ extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 
 ```{r example-italics-preview, echo=FALSE}
 extract_eq(mod4, wrap = TRUE, ital_vars = TRUE) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 
@@ -175,21 +176,21 @@ If you include `extract_eq()` in an R Markdown chunk with `results="asis"`, **kn
 
 Alternatively, you can run the code interactively, copy/paste the equation to where you want it in your document, and make any edits you'd like. 
 
-If you install [**texPreview**](https://cran.r-project.org/package=texPreview) you can use the `preview()` function to preview the equation in RStudio:
+You can use the `tex_preview()` function from the [**texPreview**](https://cran.r-project.org/package=texPreview) package to preview the equation in RStudio:
 
 ```{r example-preview, eval=FALSE}
-preview(extract_eq(mod1))
+tex_preview(extract_eq(mod1))
 ```
 
 ![](man/figures/preview.png)
 
-Both `extract_eq()` and `preview()` work with **magrittr** pipes, so you can do something like this:
+Both `extract_eq()` and `tex_preview()` work with **magrittr** pipes, so you can do something like this:
 
 ```{r pipe-example, eval=FALSE}
 library(magrittr)  # or library(tidyverse) or any other package that exports %>%
 
 extract_eq(mod1) %>% 
-  preview()
+  tex_preview()
 ```
 
 
@@ -207,7 +208,7 @@ extract_eq(mod1, use_coefs = TRUE)
 
 ```{r use-coefs-preview, echo=FALSE}
 extract_eq(mod1, use_coefs = TRUE) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 By default, it will remove doubled operators like "+ -", but you can keep those in (which is often useful for teaching) with `fix_signs = FALSE`:
@@ -218,7 +219,7 @@ extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
 
 ```{r fix-signs-preview, echo=FALSE}
 extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 This works in longer wrapped equations:
@@ -231,7 +232,7 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
 ```{r fix-signs-long-preview, echo=FALSE}
 extract_eq(mod2, wrap = TRUE, terms_per_line = 3, 
            use_coefs = TRUE, fix_signs = FALSE) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 
@@ -252,7 +253,7 @@ extract_eq(mod5, wrap = TRUE)
 
 ```{r example-logit-preview, echo=FALSE}
 extract_eq(mod5, wrap = TRUE) %>% 
-  preview(usrPackages = usrPackages)
+  tex_preview(usrPackages = usrPackages)
 ```
 
 

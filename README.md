@@ -8,7 +8,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 [![Covrpage
-Summary](https://img.shields.io/badge/covrpage-Last_Build_2019_06_19-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_07_29-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
 [![R build
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
@@ -74,6 +74,7 @@ variables as subscripts:
 
 ``` r
 library(palmerpenguins)
+
 mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 #> $$
@@ -176,24 +177,24 @@ Alternatively, you can run the code interactively, copy/paste the
 equation to where you want it in your document, and make any edits you’d
 like.
 
-If you install
-[**texPreview**](https://cran.r-project.org/package=texPreview) you can
-use the `preview()` function to preview the equation in RStudio:
+You can use the `tex_preview()` function from the
+[**texPreview**](https://cran.r-project.org/package=texPreview) package
+to preview the equation in RStudio:
 
 ``` r
-preview(extract_eq(mod1))
+tex_preview(extract_eq(mod1))
 ```
 
 ![](man/figures/preview.png)
 
-Both `extract_eq()` and `preview()` work with **magrittr** pipes, so you
-can do something like this:
+Both `extract_eq()` and `tex_preview()` work with **magrittr** pipes, so
+you can do something like this:
 
 ``` r
 library(magrittr)  # or library(tidyverse) or any other package that exports %>%
 
 extract_eq(mod1) %>% 
-  preview()
+  tex_preview()
 ```
 
 ## Extra options
