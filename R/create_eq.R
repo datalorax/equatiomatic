@@ -239,7 +239,7 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
 add_greek.polr <- function(rhs, terms, ...) {
   ifelse(rhs$coef.type == "scale",
          anno_greek("alpha",
-                    rev(seq_along(grep("scale", rhs$coef.type)))),
+                    seq_along(grep("scale", rhs$coef.type))),
          anno_greek("beta",
                     seq_along(grep("coefficient", rhs$coef.type)),
                     terms)
