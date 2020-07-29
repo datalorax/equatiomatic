@@ -112,13 +112,13 @@ escape_tex <- function(term) {
 }
 
 
-#' Wrap text in \code{\\text{}}
+#' Wrap text in \code{\\operatorname{}}
 #'
 #' Add tex code to make string not italicized within an equation
 #'
 #' @keywords internal
 #'
-#' @param term A character to wrap in \code{\\text{}}
+#' @param term A character to wrap in \code{\\operatorname{}}
 #' @param ital_vars Passed from \code{extract_eq}
 #'
 #' @return A character string
@@ -127,11 +127,11 @@ add_tex_ital <- function(term, ital_vars) {
   if (any(nchar(term) == 0, ital_vars)) {
     return(term)
   }
-  paste0("\\text{", term, "}")
+  paste0("\\operatorname{", term, "}")
 }
 
 
-#' Wrap text in \code{\\text{}} (vectorized)
+#' Wrap text in \code{\\operatorname{}} (vectorized)
 #'
 #' Add tex code to make string not italicized within an equation for a vector
 #' of strings

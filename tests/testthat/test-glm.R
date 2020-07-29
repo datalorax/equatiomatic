@@ -11,7 +11,7 @@ test_that("Logistic regression works", {
                      family = binomial(link = "logit"))
 
   tex <- extract_eq(model_logit)
-  actual <- "\\log\\left[ \\frac { P( \\text{outcome} = \\text{1} ) }{ 1 - P( \\text{outcome} = \\text{1} ) } \\right] = \\alpha + \\beta_{1}(\\text{categorical}_{\\text{b}}) + \\beta_{2}(\\text{categorical}_{\\text{c}}) + \\beta_{3}(\\text{continuous\\_1}) + \\beta_{4}(\\text{continuous\\_2}) + \\epsilon"
+  actual <- "\\log\\left[ \\frac { P( \\operatorname{outcome} = \\operatorname{1} ) }{ 1 - P( \\operatorname{outcome} = \\operatorname{1} ) } \\right] = \\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon"
 
   expect_equal(tex, equation_class(actual),
                label = "basic equation builds correctly")

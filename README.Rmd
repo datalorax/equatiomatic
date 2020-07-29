@@ -156,7 +156,7 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start") %
   preview(usrPackages = usrPackages)
 ```
 
-By default, all text in the equation is wrapped in `\text{}`. You can optionally have the variables themselves be italicized (i.e. not be wrapped in `\text{}`) with `ital_vars = TRUE`:
+By default, all text in the equation is wrapped in `\operatorname{}`. You can optionally have the variables themselves be italicized (i.e. not be wrapped in `\operatorname{}`) with `ital_vars = TRUE`:
 
 ```{r example-italics}
 extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)

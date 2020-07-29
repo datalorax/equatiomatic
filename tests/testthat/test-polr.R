@@ -13,12 +13,12 @@ test_that("Ordered logistic regression works", {
   tex_nowrap <- extract_eq(model_polr, wrap = FALSE)
   tex_wrap <- extract_eq(model_polr, wrap = TRUE)
 
-  actual_nowrap <- "\\log\\left[ \\frac { P( \\text{A} \\geq \\text{B} ) }{ 1 - P( \\text{A} \\geq \\text{B} ) } \\right] = \\alpha_{2} + \\beta_{1}(\\text{continuous\\_1}) + \\beta_{2}(\\text{continuous\\_2}) + \\epsilon \\\\
-\\log\\left[ \\frac { P( \\text{B} \\geq \\text{C} ) }{ 1 - P( \\text{B} \\geq \\text{C} ) } \\right] = \\alpha_{1} + \\beta_{1}(\\text{continuous\\_1}) + \\beta_{2}(\\text{continuous\\_2}) + \\epsilon"
+  actual_nowrap <- "\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] = \\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon \\\\
+\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] = \\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon"
 
   actual_wrap <- "\\begin{aligned}
-\\log\\left[ \\frac { P( \\text{A} \\geq \\text{B} ) }{ 1 - P( \\text{A} \\geq \\text{B} ) } \\right] &= \\alpha_{2} + \\beta_{1}(\\text{continuous\\_1}) + \\beta_{2}(\\text{continuous\\_2}) + \\epsilon \\\\
-\\log\\left[ \\frac { P( \\text{B} \\geq \\text{C} ) }{ 1 - P( \\text{B} \\geq \\text{C} ) } \\right] &= \\alpha_{1} + \\beta_{1}(\\text{continuous\\_1}) + \\beta_{2}(\\text{continuous\\_2}) + \\epsilon
+\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] &= \\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon \\\\
+\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= \\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon
 \\end{aligned}"
 
   expect_equal(tex_nowrap, equation_class(actual_nowrap),
@@ -29,8 +29,8 @@ test_that("Ordered logistic regression works", {
 
   # Coefficients instead of letters
   tex <- extract_eq(model_polr, use_coefs = TRUE)
-  actual <- "\\log\\left[ \\frac { P( \\text{A} \\geq \\text{B} ) }{ 1 - P( \\text{A} \\geq \\text{B} ) } \\right] = 1.09 + 0.03(\\text{continuous\\_1}) - 0.03(\\text{continuous\\_2}) + \\epsilon \\\\
-\\log\\left[ \\frac { P( \\text{B} \\geq \\text{C} ) }{ 1 - P( \\text{B} \\geq \\text{C} ) } \\right] = 2.48 + 0.03(\\text{continuous\\_1}) - 0.03(\\text{continuous\\_2}) + \\epsilon"
+  actual <- "\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] = 1.09 + 0.03(\\operatorname{continuous\\_1}) - 0.03(\\operatorname{continuous\\_2}) + \\epsilon \\\\
+\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] = 2.48 + 0.03(\\operatorname{continuous\\_1}) - 0.03(\\operatorname{continuous\\_2}) + \\epsilon"
   expect_equal(tex, equation_class(actual),
                label = "basic equation + coefs builds correctly")
 })

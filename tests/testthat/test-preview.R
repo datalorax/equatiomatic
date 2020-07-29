@@ -5,7 +5,7 @@
 #
 #   model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 #
-#   actual <- "\\text{mpg} = \\alpha + \\beta_{1}(\\text{cyl}) + \\beta_{2}(\\text{disp}) + \\epsilon"
+#   actual <- "\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp}) + \\epsilon"
 #
 #   previewed <- preview(extract_eq(model_simple), returnType = "tex")
 #

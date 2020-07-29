@@ -50,7 +50,7 @@ mod1 <- lm(mpg ~ cyl + disp, mtcars)
 # Give the results to extract_eq
 extract_eq(mod1)
 #> $$
-#> \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \epsilon
+#> \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 #> $$
 ```
 
@@ -63,7 +63,7 @@ syntax:
 mod2 <- lm(mpg ~ ., mtcars)
 extract_eq(mod2)
 #> $$
-#> \text{mpg} = \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#> \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #> $$
 ```
 
@@ -76,7 +76,7 @@ variables as subscripts:
 mod3 <- lm(Sepal.Length ~ Sepal.Width + Species, iris)
 extract_eq(mod3)
 #> $$
-#> \text{Sepal.Length} = \alpha + \beta_{1}(\text{Sepal.Width}) + \beta_{2}(\text{Species}_{\text{versicolor}}) + \beta_{3}(\text{Species}_{\text{virginica}}) + \epsilon
+#> \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Species}_{\operatorname{versicolor}}) + \beta_{3}(\operatorname{Species}_{\operatorname{virginica}}) + \epsilon
 #> $$
 ```
 
@@ -95,7 +95,7 @@ d <- data.frame(cat1 = rep(letters[1:3], 100),
 mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
 extract_eq(mod4)
 #> $$
-#> \text{out} = \alpha + \beta_{1}(\text{cont1}) + \beta_{2}(\text{cat2}_{\text{B}}) + \beta_{3}(\text{cat2}_{\text{C}}) + \beta_{4}(\text{cont2}) + \beta_{5}(\text{cat1}_{\text{b}}) + \beta_{6}(\text{cat1}_{\text{c}}) + \epsilon
+#> \operatorname{out} = \alpha + \beta_{1}(\operatorname{cont1}) + \beta_{2}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{4}(\operatorname{cont2}) + \beta_{5}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{6}(\operatorname{cat1}_{\operatorname{c}}) + \epsilon
 #> $$
 ```
 
@@ -111,9 +111,9 @@ the right-hand side of the equation using `terms_per_line` (defaults to
 extract_eq(mod2, wrap = TRUE)
 #> $$
 #> \begin{aligned}
-#> \text{mpg} &= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\ + \\
-#> &\quad \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\ + \\
-#> &\quad \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#> \operatorname{mpg} &= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\
+#> &\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\
+#> &\quad \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
@@ -124,8 +124,8 @@ extract_eq(mod2, wrap = TRUE)
 extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
 #> $$
 #> \begin{aligned}
-#> \text{mpg} &= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp}) + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt})\ + \\
-#> &\quad \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs}) + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#> \operatorname{mpg} &= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt})\ + \\
+#> &\quad \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
@@ -140,18 +140,18 @@ using `operator_location = "end"` or `operator_location = "start"`:
 extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
 #> $$
 #> \begin{aligned}
-#> \text{mpg} &= \alpha + \beta_{1}(\text{cyl}) + \beta_{2}(\text{disp}) + \beta_{3}(\text{hp})\\
-#> &\quad + \beta_{4}(\text{drat}) + \beta_{5}(\text{wt}) + \beta_{6}(\text{qsec}) + \beta_{7}(\text{vs})\\
-#> &\quad + \beta_{8}(\text{am}) + \beta_{9}(\text{gear}) + \beta_{10}(\text{carb}) + \epsilon
+#> \operatorname{mpg} &= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\\
+#> &\quad + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\\
+#> &\quad + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
 
 <img src="man/figures/README-example-wrap-longer-location-preview-1.png" width="100%" />
 
-By default, all text in the equation is wrapped in `\text{}`. You can
-optionally have the variables themselves be italicized (i.e. not be
-wrapped in `\text{}`) with `ital_vars = TRUE`:
+By default, all text in the equation is wrapped in `\operatorname{}`.
+You can optionally have the variables themselves be italicized (i.e. not
+be wrapped in `\operatorname{}`) with `ital_vars = TRUE`:
 
 ``` r
 extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
@@ -208,7 +208,7 @@ You can return actual numeric coefficients instead of Greek letters with
 ``` r
 extract_eq(mod1, use_coefs = TRUE)
 #> $$
-#> \text{mpg} = 34.66 - 1.59(\text{cyl}) - 0.02(\text{disp}) + \epsilon
+#> \operatorname{mpg} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp}) + \epsilon
 #> $$
 ```
 
@@ -221,7 +221,7 @@ FALSE`:
 ``` r
 extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
 #> $$
-#> \text{mpg} = 34.66 + -1.59(\text{cyl}) + -0.02(\text{disp}) + \epsilon
+#> \operatorname{mpg} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp}) + \epsilon
 #> $$
 ```
 
@@ -234,10 +234,10 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
            use_coefs = TRUE, fix_signs = FALSE)
 #> $$
 #> \begin{aligned}
-#> \text{mpg} &= 12.3 + -0.11(\text{cyl}) + 0.01(\text{disp})\ + \\
-#> &\quad -0.02(\text{hp}) + 0.79(\text{drat}) + -3.72(\text{wt})\ + \\
-#> &\quad 0.82(\text{qsec}) + 0.32(\text{vs}) + 2.52(\text{am})\ + \\
-#> &\quad 0.66(\text{gear}) + -0.2(\text{carb}) + \epsilon
+#> \operatorname{mpg} &= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\
+#> &\quad -0.02(\operatorname{hp}) + 0.79(\operatorname{drat}) + -3.72(\operatorname{wt})\ + \\
+#> &\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs}) + 2.52(\operatorname{am})\ + \\
+#> &\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
@@ -260,8 +260,8 @@ mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 #> $$
 #> \begin{aligned}
-#> \log\left[ \frac { P( \text{out} = \text{1} ) }{ 1 - P( \text{out} = \text{1} ) } \right] &= \alpha + \beta_{1}(\text{cat1}_{\text{b}}) + \beta_{2}(\text{cat1}_{\text{c}}) + \beta_{3}(\text{cat2}_{\text{B}})\ + \\
-#> &\quad \beta_{4}(\text{cat2}_{\text{C}}) + \beta_{5}(\text{cont1}) + \beta_{6}(\text{cont2}) + \epsilon
+#> \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\
+#> &\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
