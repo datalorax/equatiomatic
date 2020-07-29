@@ -189,14 +189,29 @@ add_tex_mult <- function(term) {
 }
 
 
+add_coefs <- function(rhs, ...) {
+  UseMethod("add_coefs", rhs)
+}
+
 #' Add coefficient values to the equation
 #'
 #' @keywords internal
 
-add_coefs <- function(rhs, term, coef_digits) {
+add_coefs.default <- function(rhs, term, coef_digits) {
   ests <- round(rhs$estimate, coef_digits)
   ifelse(
     rhs$term == "(Intercept)",
+    paste0(ests, term),
+    paste0(ests, "(", term, ")")
+  )
+}
+
+#' @keywords internal
+
+add_coefs.polr <- function(rhs, term, coef_digits) {
+  ests <- round(rhs$estimate, coef_digits)
+  ifelse(
+    rhs$coefficient_type == "zeta",
     paste0(ests, term),
     paste0(ests, "(", term, ")")
   )

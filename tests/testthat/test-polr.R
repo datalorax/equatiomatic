@@ -26,4 +26,11 @@ test_that("Ordered logistic regression works", {
 
   expect_equal(tex_wrap, equation_class(actual_wrap),
                label = "basic equation builds correctly in wrapped environment")
+
+  # Coefficients instead of letters
+  tex <- extract_eq(model_polr, use_coefs = TRUE)
+  actual <- "\\log\\left[ \\frac { P( \\text{A} \\geq \\text{B} ) }{ 1 - P( \\text{A} \\geq \\text{B} ) } \\right] = 1.09 + 0.03(\\text{continuous\\_1}) - 0.03(\\text{continuous\\_2}) + \\epsilon \\\\
+\\log\\left[ \\frac { P( \\text{B} \\geq \\text{C} ) }{ 1 - P( \\text{B} \\geq \\text{C} ) } \\right] = 2.48 + 0.03(\\text{continuous\\_1}) - 0.03(\\text{continuous\\_2}) + \\epsilon"
+  expect_equal(tex, equation_class(actual),
+               label = "basic equation + coefs builds correctly")
 })
