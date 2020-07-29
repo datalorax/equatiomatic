@@ -158,42 +158,53 @@ or more terms are interactions.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Sepal.Width</span> + <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='no'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>palmerpenguins</span>)
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>body_mass_g</span> ~ <span class='no'>bill_length_mm</span> + <span class='no'>species</span> * <span class='no'>flipper_length_mm</span>, <span class='no'>penguins</span>)
 
 <span class='fu'>extract_rhs</span>(<span class='no'>mod1</span>)
-<span class='co'>#&gt; # A tibble: 7 x 4</span>
-<span class='co'>#&gt;   term                             estimate primary   subscripts</span>
-<span class='co'>#&gt;   &lt;chr&gt;                               &lt;dbl&gt; &lt;list&gt;    &lt;list&gt;</span>
-<span class='co'>#&gt; 1 (Intercept)                     2.925732  &lt;chr [0]&gt; &lt;chr [1]&gt;</span>
-<span class='co'>#&gt; 2 Sepal.Width                     0.4500064 &lt;chr [1]&gt; &lt;chr [1]&gt;</span>
-<span class='co'>#&gt; 3 Speciesversicolor              -1.047170  &lt;chr [1]&gt; &lt;chr [1]&gt;</span>
-<span class='co'>#&gt; 4 Speciesvirginica               -2.618888  &lt;chr [1]&gt; &lt;chr [1]&gt;</span>
-<span class='co'>#&gt; 5 Petal.Length                    0.3677469 &lt;chr [1]&gt; &lt;chr [1]&gt;</span>
-<span class='co'>#&gt; 6 Speciesversicolor:Petal.Length  0.2920936 &lt;chr [2]&gt; &lt;chr [2]&gt;</span>
-<span class='co'>#&gt; 7 Speciesvirginica:Petal.Length   0.5225336 &lt;chr [2]&gt; &lt;chr [2]&gt;</span>
+<span class='co'>#&gt; # A tibble: 7 x 8</span>
+<span class='co'>#&gt;                                 term     estimate ...           primary  subscripts</span>
+<span class='co'>#&gt; 1                        (Intercept) -3341.615846 ...</span>
+<span class='co'>#&gt; 2                     bill_length_mm    59.304539 ...    bill_length_mm</span>
+<span class='co'>#&gt; 3                   speciesChinstrap   -27.292519 ...           species   Chinstrap</span>
+<span class='co'>#&gt; 4                      speciesGentoo -2215.913323 ...           species      Gentoo</span>
+<span class='co'>#&gt; 5                  flipper_length_mm    24.962788 ... flipper_length_mm</span>
+<span class='co'>#&gt; 6 speciesChinstrap:flipper_length_mm    -3.484628 ... flipper_length_mm Chinstrap,</span>
+<span class='co'>#&gt; 7    speciesGentoo:flipper_length_mm    11.025972 ... flipper_length_mm    Gentoo,</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'>extract_rhs</span>(<span class='no'>mod1</span>))
-<span class='co'>#&gt; Classes ‘tbl_df’, ‘tbl’ and 'data.frame': 7 obs. of  4 variables:</span>
-<span class='co'>#&gt;  $ term      : chr  "(Intercept)" "Sepal.Width" "Speciesversicolor" "Speciesvirginica" ...</span>
-<span class='co'>#&gt; $ estimate  : num  2.926 0.45 -1.047 -2.619 0.368 ...</span>
-<span class='co'>#&gt; $ primary   :List of 7</span>
-<span class='co'>#&gt;  ..$ : chr</span>
-<span class='co'>#&gt;  ..$ : chr "Sepal.Width"</span>
-<span class='co'>#&gt;  ..$ : chr "Species"</span>
-<span class='co'>#&gt;  ..$ : chr "Species"</span>
-<span class='co'>#&gt;  ..$ : chr "Petal.Length"</span>
-<span class='co'>#&gt;  ..$ : chr  "Species" "Petal.Length"</span>
-<span class='co'>#&gt;  ..$ : chr  "Species" "Petal.Length"</span>
-<span class='co'>#&gt; $ subscripts:List of 7</span>
-<span class='co'>#&gt;  ..$ : chr ""</span>
-<span class='co'>#&gt;  ..$ : chr ""</span>
-<span class='co'>#&gt;  ..$ : chr "versicolor"</span>
-<span class='co'>#&gt;  ..$ : chr "virginica"</span>
-<span class='co'>#&gt;  ..$ : chr ""</span>
-<span class='co'>#&gt;  ..$ : Named chr  "versicolor:Petal.Length" "Speciesversicolor:"</span>
-<span class='co'>#&gt;  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"</span>
-<span class='co'>#&gt;  ..$ : Named chr  "virginica:Petal.Length" "Speciesvirginica:"</span>
-<span class='co'>#&gt;  .. ..- attr(*, "names")= chr  "Species" "Petal.Length"</span>
+<span class='co'>#&gt; Classes ‘lm’ and 'data.frame':	7 obs. of  8 variables:</span>
+<span class='co'>#&gt;  $ term      : chr  "(Intercept)" "bill_length_mm" "speciesChinstrap" "speciesGentoo" ...</span>
+<span class='co'>#&gt;  $ estimate  : num  -3341.6 59.3 -27.3 -2215.9 25 ...</span>
+<span class='co'>#&gt;  $ std.error : num  810.14 7.25 1394.17 1328.58 4.34 ...</span>
+<span class='co'>#&gt;  $ statistic : num  -4.1247 8.1795 -0.0196 -1.6679 5.7534 ...</span>
+<span class='co'>#&gt;  $ p.value   : num  4.69e-05 5.98e-15 9.84e-01 9.63e-02 1.97e-08 ...</span>
+<span class='co'>#&gt;  $ split     :List of 7</span>
+<span class='co'>#&gt;   ..$ : chr "(Intercept)"</span>
+<span class='co'>#&gt;   ..$ : chr "bill_length_mm"</span>
+<span class='co'>#&gt;   ..$ : chr "speciesChinstrap"</span>
+<span class='co'>#&gt;   ..$ : chr "speciesGentoo"</span>
+<span class='co'>#&gt;   ..$ : chr "flipper_length_mm"</span>
+<span class='co'>#&gt;   ..$ : chr  "speciesChinstrap" "flipper_length_mm"</span>
+<span class='co'>#&gt;   ..$ : chr  "speciesGentoo" "flipper_length_mm"</span>
+<span class='co'>#&gt;  $ primary   :List of 7</span>
+<span class='co'>#&gt;   ..$ : chr</span>
+<span class='co'>#&gt;   ..$ : chr "bill_length_mm"</span>
+<span class='co'>#&gt;   ..$ : chr "species"</span>
+<span class='co'>#&gt;   ..$ : chr "species"</span>
+<span class='co'>#&gt;   ..$ : chr "flipper_length_mm"</span>
+<span class='co'>#&gt;   ..$ : chr  "species" "flipper_length_mm"</span>
+<span class='co'>#&gt;   ..$ : chr  "species" "flipper_length_mm"</span>
+<span class='co'>#&gt;  $ subscripts:List of 7</span>
+<span class='co'>#&gt;   ..$ : chr ""</span>
+<span class='co'>#&gt;   ..$ : chr ""</span>
+<span class='co'>#&gt;   ..$ : chr "Chinstrap"</span>
+<span class='co'>#&gt;   ..$ : chr "Gentoo"</span>
+<span class='co'>#&gt;   ..$ : chr ""</span>
+<span class='co'>#&gt;   ..$ : Named chr  "Chinstrap" ""</span>
+<span class='co'>#&gt;   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"</span>
+<span class='co'>#&gt;   ..$ : Named chr  "Gentoo" ""</span>
+<span class='co'>#&gt;   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"</span>
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

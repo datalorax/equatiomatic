@@ -20,7 +20,7 @@
 <script src="pkgdown.js"></script><meta property="og:title" content="Transform Models into LaTeX Equations">
 <meta property="og:description" content="The goal of equatiomatic is to reduce the pain associated with
              writing LaTex formulas from fitted models. The primary function of
-             the package, extract_eq_lm, takes a fitted lm object as its input
+             the package, extract_eq, takes a fitted model object as its input
              and returns the corresponding LaTeX code for the model.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -127,10 +127,11 @@
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-shortcut-preview-1.png" width="100%"></p>
 <p>When using categorical variables, it will include the levels of the variables as subscripts:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">mod3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Sepal.Width</span> + <span class="no">Species</span>, <span class="no">iris</span>)
+<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">palmerpenguins</span>)
+<span class="no">mod3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">body_mass_g</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>, <span class="no">penguins</span>)
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod3</span>)
 <span class="co">#&gt; $$</span>
-<span class="co">#&gt; \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Species}_{\operatorname{versicolor}}) + \beta_{3}(\operatorname{Species}_{\operatorname{virginica}}) + \epsilon</span>
+<span class="co">#&gt; \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-categorical-preview-1.png" width="100%"></p>
 <p>It helpfully preserves the order the variables are supplied in the formula:</p>
