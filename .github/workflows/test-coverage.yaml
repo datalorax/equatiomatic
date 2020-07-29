@@ -20,11 +20,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Install magick libs
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -y install libmagick++-dev
-
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -46,17 +41,6 @@ jobs:
           remotes::install_cran("covr")
         shell: Rscript {0}
 
-      - name: install magick
-        run: |
-          install.packages(c('magick','rsvg'))
-        shell: Rscript {0}
-
-      - name: load magick
-        run: |
-          library(magick)
-          tiger <- image_read_svg('http://jeroen.github.io/images/tiger.svg', width = 350)
-          tiger
-          
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}

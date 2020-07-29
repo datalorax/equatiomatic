@@ -34,18 +34,13 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Install magick libs
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -y install libmagick++-dev
 
       - name: Query dependencies
         run: |
@@ -75,7 +70,6 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
-          remotes::install_cran("magick")
         shell: Rscript {0}
 
       - name: Session info
