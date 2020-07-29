@@ -88,7 +88,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Tests and Coverage</h1>
             
-            <h4 class="date">29 July, 2020 16:42:58</h4>
+            <h4 class="date">29 July, 2020 18:42:53</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/datalorax/equatiomatic/blob/master/vignettes/tests_and_coverage.Rmd"><code>vignettes/tests_and_coverage.Rmd</code></a></small>
       <div class="hidden name"><code>tests_and_coverage.Rmd</code></div>
@@ -98,7 +98,11 @@
     
     
 <!--- Placeholder for tests/README.md Do Not Edit--->
-<p>This output is created by <a href="https://github.com/metrumresearchgroup/covrpage">covrpage</a>.</p>
+<ul>
+<li><a href="#coverage">Coverage</a></li>
+<li><a href="#unit-tests">Unit Tests</a></li>
+</ul>
+<p>This output is created by <a href="https://github.com/yonicd/covrpage">covrpage</a>.</p>
 <div id="coverage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#coverage" class="anchor"></a>Coverage</h2>
@@ -111,15 +115,31 @@
 <tbody>
 <tr class="odd">
 <td align="left">equatiomatic</td>
-<td align="center">0</td>
+<td align="center">100</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/R/extract_eq.R">R/extract_eq.R</a></td>
-<td align="center">0</td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/R/create_eq.R">R/create_eq.R</a></td>
+<td align="center">100</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/R/utils.R">R/utils.R</a></td>
-<td align="center">0</td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/R/extract_eq.R">R/extract_eq.R</a></td>
+<td align="center">100</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/R/extract_lhs.R">R/extract_lhs.R</a></td>
+<td align="center">100</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/R/extract_rhs.R">R/extract_rhs.R</a></td>
+<td align="center">100</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/R/print.R">R/print.R</a></td>
+<td align="center">100</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/R/utils.R">R/utils.R</a></td>
+<td align="center">100</td>
 </tr>
 </tbody>
 </table>
@@ -141,18 +161,54 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R">test-basic.R</a></td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R">test-glm.R</a></td>
 <td align="right">2</td>
-<td align="right">0.014</td>
+<td align="right">0.066</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-preview.R">test-preview.R</a></td>
-<td align="right">1</td>
-<td align="right">0.415</td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R">test-lm.R</a></td>
+<td align="right">7</td>
+<td align="right">0.042</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-polr.R">test-polr.R</a></td>
+<td align="right">3</td>
+<td align="right">0.033</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-print.R">test-print.R</a></td>
+<td align="right">2</td>
+<td align="right">0.006</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-utils.R">test-utils.R</a></td>
+<td align="right">8</td>
+<td align="right">0.031</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R">test-wrapping-formatting.R</a></td>
+<td align="right">10</td>
+<td align="right">0.048</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -162,6 +218,14 @@
 </table>
 <details closed><p><summary> Show Detailed Test Results </summary></p>
 <table class="table">
+<colgroup>
+<col width="51%">
+<col width="16%">
+<col width="23%">
+<col width="4%">
+<col width="1%">
+<col width="3%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">file</th>
 <th align="left">context</th>
@@ -172,28 +236,84 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R#L13">test-basic.R</a></td>
-<td align="left">basic</td>
-<td align="left">extract: default</td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R#L16_L17">test-glm.R</a></td>
+<td align="left">GLMs</td>
+<td align="left">Logistic regression works</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.012</td>
+<td align="right">0.059</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-basic.R#L18">test-basic.R</a></td>
-<td align="left">basic</td>
-<td align="left">extract: all variables</td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R#L24">test-glm.R</a></td>
+<td align="left">GLMs</td>
+<td align="left">Unsupported GLMs create a message</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.002</td>
+<td align="right">0.007</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-preview.R#L12">test-preview.R</a></td>
-<td align="left">preview</td>
-<td align="left">preview: texPreview</td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L11_L12">test-lm.R</a></td>
+<td align="left">Linear models</td>
+<td align="left">Simple lm models work</td>
 <td align="left">PASS</td>
-<td align="right">1</td>
-<td align="right">0.415</td>
+<td align="right">3</td>
+<td align="right">0.017</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L32_L33">test-lm.R</a></td>
+<td align="left">Linear models</td>
+<td align="left">Interactions work</td>
+<td align="left">PASS</td>
+<td align="right">2</td>
+<td align="right">0.014</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L48_L49">test-lm.R</a></td>
+<td align="left">Linear models</td>
+<td align="left">Custom Greek works</td>
+<td align="left">PASS</td>
+<td align="right">2</td>
+<td align="right">0.011</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-polr.R#L24_L25">test-polr.R</a></td>
+<td align="left">polr</td>
+<td align="left">Ordered logistic regression works</td>
+<td align="left">PASS</td>
+<td align="right">3</td>
+<td align="right">0.033</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-print.R#L11_L12">test-print.R</a></td>
+<td align="left">Printing</td>
+<td align="left">Equation is printed correctly</td>
+<td align="left">PASS</td>
+<td align="right">2</td>
+<td align="right">0.006</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-utils.R#L9_L11">test-utils.R</a></td>
+<td align="left">Utility functions</td>
+<td align="left">Strict mapply_* functions work</td>
+<td align="left">PASS</td>
+<td align="right">8</td>
+<td align="right">0.031</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R#L8_L9">test-wrapping-formatting.R</a></td>
+<td align="left">Wrapping and formatting</td>
+<td align="left">Coefficient digits work correctly</td>
+<td align="left">PASS</td>
+<td align="right">2</td>
+<td align="right">0.010</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R#L26_L27">test-wrapping-formatting.R</a></td>
+<td align="left">Wrapping and formatting</td>
+<td align="left">Wrapping works correctly</td>
+<td align="left">PASS</td>
+<td align="right">8</td>
+<td align="right">0.038</td>
 </tr>
 </tbody>
 </table></details><details><p><summary> Session Info </summary></p>
@@ -205,15 +325,15 @@
 <tbody>
 <tr class="odd">
 <td align="left">Version</td>
-<td align="left">R version 3.6.0 (2019-04-26)</td>
+<td align="left">R version 4.0.0 (2020-04-24)</td>
 </tr>
 <tr class="even">
 <td align="left">Platform</td>
-<td align="left">x86_64-apple-darwin15.6.0 (64-bit)</td>
+<td align="left">x86_64-apple-darwin17.0 (64-bit)</td>
 </tr>
 <tr class="odd">
 <td align="left">Running</td>
-<td align="left">macOS Mojave 10.14.5</td>
+<td align="left">macOS Catalina 10.15.6</td>
 </tr>
 <tr class="even">
 <td align="left">Language</td>
@@ -221,7 +341,7 @@
 </tr>
 <tr class="odd">
 <td align="left">Timezone</td>
-<td align="left">America/Los_Angeles</td>
+<td align="left">America/New_York</td>
 </tr>
 </tbody>
 </table>
@@ -233,15 +353,15 @@
 <tbody>
 <tr class="odd">
 <td align="left">testthat</td>
-<td align="left">2.1.1</td>
+<td align="left">2.3.2</td>
 </tr>
 <tr class="even">
 <td align="left">covr</td>
-<td align="left">3.2.1</td>
+<td align="left">3.5.0</td>
 </tr>
 <tr class="odd">
 <td align="left">covrpage</td>
-<td align="left">0.0.70</td>
+<td align="left">0.0.71</td>
 </tr>
 </tbody>
 </table></details><!--- Final Status : pass --->
