@@ -185,7 +185,7 @@ to preview the equation in RStudio:
 tex_preview(extract_eq(mod1))
 ```
 
-![](man/figures/preview.png)
+![](man/figures/preview1.png)
 
 Both `extract_eq()` and `tex_preview()` work with **magrittr** pipes, so
 you can do something like this:
