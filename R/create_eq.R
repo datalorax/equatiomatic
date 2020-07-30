@@ -33,7 +33,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 }
 
 create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, model, ...) {
+                           fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -45,6 +45,24 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   splt <- split(rhs, rhs$coef.type)
   rhs_final <- lapply(splt$scale$final_terms, function(x) {
     c(x, splt$coefficient$final_terms, "\\epsilon")
+  })
+  attributes(lhs) <- NULL
+  list(lhs = lhs, rhs = rhs_final)
+}
+
+create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
+                          fix_signs, model, ...) {
+  rhs$final_terms <- create_term(rhs, ital_vars)
+
+  if (use_coefs) {
+    rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else {
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
+  }
+
+  splt <- split(rhs, rhs$coef.type)
+  rhs_final <- lapply(splt$intercept$final_terms, function(x) {
+    c(x, splt$location$final_terms, "\\epsilon")
   })
   attributes(lhs) <- NULL
   list(lhs = lhs, rhs = rhs_final)
@@ -213,6 +231,16 @@ add_coefs.polr <- function(rhs, term, coef_digits) {
   )
 }
 
+#' @keywords internal
+
+add_coefs.clm <- function(rhs, term, coef_digits) {
+  ests <- round(rhs$estimate, coef_digits)
+  ifelse(
+    rhs$coef.type == "intercept",
+    paste0(ests, term),
+    paste0(ests, "(", term, ")")
+  )
+}
 
 add_greek <- function(rhs, ...) {
   UseMethod("add_greek", rhs)
@@ -236,6 +264,8 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   )
 }
 
+#' @keywords internal
+
 add_greek.polr <- function(rhs, terms, ...) {
   ifelse(rhs$coef.type == "scale",
          anno_greek("alpha",
@@ -244,6 +274,18 @@ add_greek.polr <- function(rhs, terms, ...) {
                     seq_along(grep("coefficient", rhs$coef.type)),
                     terms)
          )
+}
+
+#' @keywords internal
+
+add_greek.clm <- function(rhs, terms, ...) {
+  ifelse(rhs$coef.type == "intercept",
+         anno_greek("alpha",
+                    seq_along(grep("intercept", rhs$coef.type))),
+         anno_greek("beta",
+                    seq_along(grep("location", rhs$coef.type)),
+                    terms)
+  )
 }
 
 #' Intermediary function to wrap text in `\\beta_{}`

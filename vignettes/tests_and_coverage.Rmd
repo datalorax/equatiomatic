@@ -31,12 +31,12 @@ Coverage summary is created using the
 | Object                                 | Coverage (%) |
 | :------------------------------------- | :----------: |
 | equatiomatic                           |     100      |
-| [R/create\_eq.R](https://github.com/datalorax/equatiomatic/tree/dev/R/create_eq.R)     |     100      |
-| [R/extract\_eq.R](https://github.com/datalorax/equatiomatic/tree/dev/R/extract_eq.R)   |     100      |
-| [R/extract\_lhs.R](https://github.com/datalorax/equatiomatic/tree/dev/R/extract_lhs.R) |     100      |
-| [R/extract\_rhs.R](https://github.com/datalorax/equatiomatic/tree/dev/R/extract_rhs.R) |     100      |
-| [R/print.R](https://github.com/datalorax/equatiomatic/tree/dev/R/print.R)              |     100      |
-| [R/utils.R](https://github.com/datalorax/equatiomatic/tree/dev/R/utils.R)              |     100      |
+| [R/create\_eq.R](https://github.com/datalorax/equatiomatic/tree/new-models/R/create_eq.R)     |     100      |
+| [R/extract\_eq.R](https://github.com/datalorax/equatiomatic/tree/new-models/R/extract_eq.R)   |     100      |
+| [R/extract\_lhs.R](https://github.com/datalorax/equatiomatic/tree/new-models/R/extract_lhs.R) |     100      |
+| [R/extract\_rhs.R](https://github.com/datalorax/equatiomatic/tree/new-models/R/extract_rhs.R) |     100      |
+| [R/print.R](https://github.com/datalorax/equatiomatic/tree/new-models/R/print.R)              |     100      |
+| [R/utils.R](https://github.com/datalorax/equatiomatic/tree/new-models/R/utils.R)              |     100      |
 
 <br>
 
@@ -47,12 +47,13 @@ Unit Test summary is created using the
 
 | file                                                              |  n |  time | error | failed | skipped | warning |
 | :---------------------------------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R)                                 |  2 | 0.066 |     0 |      0 |       0 |       0 |
-| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R)                                   |  7 | 0.042 |     0 |      0 |       0 |       0 |
-| [test-polr.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-polr.R)                               |  3 | 0.033 |     0 |      0 |       0 |       0 |
-| [test-print.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-print.R)                             |  2 | 0.006 |     0 |      0 |       0 |       0 |
-| [test-utils.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-utils.R)                             |  8 | 0.031 |     0 |      0 |       0 |       0 |
-| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R) | 10 | 0.048 |     0 |      0 |       0 |       0 |
+| [test-clm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-clm.R)                                 |  6 | 0.157 |     0 |      0 |       0 |       0 |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-glm.R)                                 |  3 | 0.033 |     0 |      0 |       0 |       0 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-lm.R)                                   |  7 | 0.046 |     0 |      0 |       0 |       0 |
+| [test-polr.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-polr.R)                               |  5 | 0.115 |     0 |      0 |       0 |       0 |
+| [test-print.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-print.R)                             |  2 | 0.011 |     0 |      0 |       0 |       0 |
+| [test-utils.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-utils.R)                             |  8 | 0.175 |     0 |      0 |       0 |       0 |
+| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-wrapping-formatting.R) | 10 | 0.099 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -60,16 +61,19 @@ Unit Test summary is created using the
 
 | file                                                                      | context                 | test                              | status | n |  time |
 | :------------------------------------------------------------------------ | :---------------------- | :-------------------------------- | :----- | -: | ----: |
-| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R#L16_L17)                                 | GLMs                    | Logistic regression works         | PASS   | 1 | 0.059 |
-| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-glm.R#L24)                                     | GLMs                    | Unsupported GLMs create a message | PASS   | 1 | 0.007 |
-| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L11_L12)                                   | Linear models           | Simple lm models work             | PASS   | 3 | 0.017 |
-| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L32_L33)                                   | Linear models           | Interactions work                 | PASS   | 2 | 0.014 |
-| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-lm.R#L48_L49)                                   | Linear models           | Custom Greek works                | PASS   | 2 | 0.011 |
-| [test-polr.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-polr.R#L24_L25)                               | polr                    | Ordered logistic regression works | PASS   | 3 | 0.033 |
-| [test-print.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-print.R#L11_L12)                             | Printing                | Equation is printed correctly     | PASS   | 2 | 0.006 |
-| [test-utils.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-utils.R#L9_L11)                              | Utility functions       | Strict mapply\_\* functions work  | PASS   | 8 | 0.031 |
-| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R#L8_L9)   | Wrapping and formatting | Coefficient digits work correctly | PASS   | 2 | 0.010 |
-| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/dev/tests/testthat/test-wrapping-formatting.R#L26_L27) | Wrapping and formatting | Wrapping works correctly          | PASS   | 8 | 0.038 |
+| [test-clm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-clm.R#L38_L39)                                 | CLMs                    | Ordered models with clm work      | PASS   | 5 | 0.136 |
+| [test-clm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-clm.R#L69)                                     | CLMs                    | Unsupported CLMs create a message | PASS   | 1 | 0.021 |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-glm.R#L16_L17)                                 | GLMs                    | Logistic regression works         | PASS   | 1 | 0.015 |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-glm.R#L33_L34)                                 | GLMs                    | Probit regression works           | PASS   | 1 | 0.010 |
+| [test-glm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-glm.R#L41)                                     | GLMs                    | Unsupported GLMs create a message | PASS   | 1 | 0.008 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-lm.R#L11_L12)                                   | Linear models           | Simple lm models work             | PASS   | 3 | 0.019 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-lm.R#L32_L33)                                   | Linear models           | Interactions work                 | PASS   | 2 | 0.016 |
+| [test-lm.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-lm.R#L48_L49)                                   | Linear models           | Custom Greek works                | PASS   | 2 | 0.011 |
+| [test-polr.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-polr.R#L36_L37)                               | polr                    | Ordered logistic regression works | PASS   | 5 | 0.115 |
+| [test-print.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-print.R#L11_L12)                             | Printing                | Equation is printed correctly     | PASS   | 2 | 0.011 |
+| [test-utils.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-utils.R#L9_L11)                              | Utility functions       | Strict mapply\_\* functions work  | PASS   | 8 | 0.175 |
+| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-wrapping-formatting.R#L8_L9)   | Wrapping and formatting | Coefficient digits work correctly | PASS   | 2 | 0.020 |
+| [test-wrapping-formatting.R](https://github.com/datalorax/equatiomatic/tree/new-models/tests/testthat/test-wrapping-formatting.R#L26_L27) | Wrapping and formatting | Wrapping works correctly          | PASS   | 8 | 0.079 |
 
 </details>
 
