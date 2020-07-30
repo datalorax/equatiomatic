@@ -242,27 +242,110 @@
 <h2 class="hasAnchor">
 <a href="#beyond-lm" class="anchor"></a>Beyond <code>lm()</code>
 </h2>
-<p>You’re not limited to just <code>lm</code> models! Try out logistic regression with <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>:</p>
-<div class="sourceCode" id="cb15"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">8675309</span>)
-<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">out</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">0</span>:<span class="fl">1</span>, <span class="fl">100</span>, <span class="kw">replace</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
-                <span class="kw">cat1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">letters</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="fl">100</span>),
-                <span class="kw">cat2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="kw">each</span> <span class="kw">=</span> <span class="fl">100</span>),
-                <span class="kw">cont1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span>),
-                <span class="kw">cont2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span>))
-<span class="no">mod5</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">out</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>))
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod5</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<p>You’re not limited to just <code>lm</code> models! <strong>equatiomatic</strong> supports many other models, including logistic regression, probit regression, and ordered logistic regression (with <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr()</a></code>).</p>
+<div id="logistic-regression-with-glm" class="section level3">
+<h3 class="hasAnchor">
+<a href="#logistic-regression-with-glm" class="anchor"></a>Logistic regression with <code>glm()</code>
+</h3>
+<div class="sourceCode" id="cb15"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">palmerpenguins</span>)
+
+<span class="no">model_logit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>,
+                   <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>))
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_logit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\</span>
-<span class="co">#&gt; &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon</span>
+<span class="co">#&gt; \log\left[ \frac { P( \operatorname{sex} = \operatorname{male} ) }{ 1 - P( \operatorname{sex} = \operatorname{male} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span>
+<span class="co">#&gt; &amp;\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-logit-preview-1.png" width="100%"></p>
 </div>
+<div id="probit-regression-with-glm" class="section level3">
+<h3 class="hasAnchor">
+<a href="#probit-regression-with-glm" class="anchor"></a>Probit regression with <code>glm()</code>
+</h3>
+<div class="sourceCode" id="cb16"><pre class="r"><span class="no">model_probit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>,
+                    <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>))
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_probit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">3</span>)
+<span class="co">#&gt; $$</span>
+<span class="co">#&gt; \begin{aligned}</span>
+<span class="co">#&gt; P(\operatorname{sex} = \operatorname{male} | X) &amp;= \phi(\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span>
+<span class="co">#&gt; &amp;\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon)</span>
+<span class="co">#&gt; \end{aligned}</span>
+<span class="co">#&gt; $$</span></pre></div>
+<p><img src="reference/figures/README-example-probit-preview-1.png" width="100%"></p>
+</div>
+<div id="ordered-logistic-regression-with-masspolr" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ordered-logistic-regression-with-masspolr" class="anchor"></a>Ordered logistic regression with <code>MASS::polr()</code>
+</h3>
+<div class="sourceCode" id="cb17"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
+<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">outcome</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="fl">100</span>),
+                                  <span class="kw">levels</span> <span class="kw">=</span> <span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>],
+                                  <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
+                 <span class="kw">continuous_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span>),
+                 <span class="kw">continuous_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span>))
+
+<span class="no">model_ologit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
+                           <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">Hess</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"logistic"</span>)
+<span class="no">model_oprobit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
+                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">Hess</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; $$</span>
+<span class="co">#&gt; \begin{aligned}</span>
+<span class="co">#&gt; \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon \\</span>
+<span class="co">#&gt; \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon</span>
+<span class="co">#&gt; \end{aligned}</span>
+<span class="co">#&gt; $$</span></pre></div>
+<p><img src="reference/figures/README-example-ologit-preview-1.png" width="100%"></p>
+<div class="sourceCode" id="cb18"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; $$</span>
+<span class="co">#&gt; \begin{aligned}</span>
+<span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B} | X) &amp;= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\</span>
+<span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C} | X) &amp;= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)</span>
+<span class="co">#&gt; \end{aligned}</span>
+<span class="co">#&gt; $$</span></pre></div>
+<p><img src="reference/figures/README-example-polr-probit-preview-1.png" width="100%"></p>
+</div>
+<div id="ordered-regression-logit-and-probit-with-ordinalclm" class="section level3">
+<h3 class="hasAnchor">
+<a href="#ordered-regression-logit-and-probit-with-ordinalclm" class="anchor"></a>Ordered regression (logit and probit) with <code>ordinal::clm()</code>
+</h3>
+<div class="sourceCode" id="cb19"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
+<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">outcome</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="fl">100</span>),
+                                  <span class="kw">levels</span> <span class="kw">=</span> <span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>],
+                                  <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
+                 <span class="kw">continuous_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">1</span>, <span class="fl">1</span>),
+                 <span class="kw">continuous_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">5</span>, <span class="fl">5</span>))
+
+<span class="no">model_ologit</span> <span class="kw">&lt;-</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
+                             <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>)
+<span class="no">model_oprobit</span> <span class="kw">&lt;-</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
+                              <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; $$</span>
+<span class="co">#&gt; \begin{aligned}</span>
+<span class="co">#&gt; \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon \\</span>
+<span class="co">#&gt; \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon</span>
+<span class="co">#&gt; \end{aligned}</span>
+<span class="co">#&gt; $$</span></pre></div>
+<p><img src="reference/figures/README-example-clm-ologit-preview-1.png" width="100%"></p>
+<div class="sourceCode" id="cb20"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="co">#&gt; $$</span>
+<span class="co">#&gt; \begin{aligned}</span>
+<span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B} | X) &amp;= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\</span>
+<span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C} | X) &amp;= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)</span>
+<span class="co">#&gt; \end{aligned}</span>
+<span class="co">#&gt; $$</span></pre></div>
+<p><img src="reference/figures/README-example-clm-oprobit-preview-1.png" width="100%"></p>
+</div>
+</div>
 <div id="extension" class="section level2">
 <h2 class="hasAnchor">
 <a href="#extension" class="anchor"></a>Extension</h2>
-<p>This project is brand new. If you would like to contribute, we’d love your help! We are particularly interested in extending to more models. At present, we have only tested <code>lm</code> and <code>glm</code>, but hope to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a> in the future.</p>
+<p>This project is brand new. If you would like to contribute, we’d love your help! We are particularly interested in extending to more models. We hope to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a> in the future.</p>
 </div>
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
