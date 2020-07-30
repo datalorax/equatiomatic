@@ -188,3 +188,33 @@ extract_subscripts <- function(primary, full_term_v) {
   )
   out
 }
+
+#' Generic function for wrapping the RHS of a model equation in something, like
+#' how the RHS of probit is wrapped in φ()
+#'
+#' @keywords internal
+#'
+#' @param model A fitted model
+#' @param tex The TeX version of the RHS of the model (as character), built as
+#'   \code{rhs_combined} or \code{eq_raw$rhs} in \code{extract_eq()}
+#' @param \dots additional arguments passed to the specific extractor
+
+wrap_rhs <- function(model, tex, ...) {
+  UseMethod("wrap_rhs", model)
+}
+
+#' @keywords internal
+wrap_rhs.default <- function(model, tex, ...) {
+  return(tex)
+}
+
+#' @keywords internal
+wrap_rhs.glm <- function(model, tex, ...) {
+  if (model$family$link == "probit") {
+    rhs <- paste0("\\phi(", tex, ")")
+  } else {
+    rhs <- tex
+  }
+
+  return(rhs)
+}

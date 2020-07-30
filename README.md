@@ -248,35 +248,74 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
 
 ## Beyond `lm()`
 
-You’re not limited to just `lm` models\! Try out logistic regression
-with `glm()`:
+You’re not limited to just `lm` models\! **equatiomatic** supports many
+other models, including logistic regression, probit regression, and
+ordered logistic regression (with `MASS::polr()`).
+
+### Logistic regression with `glm()`
 
 ``` r
-set.seed(8675309)
-d <- data.frame(out = sample(0:1, 100, replace = TRUE),
-                cat1 = rep(letters[1:3], 100),
-                cat2 = rep(LETTERS[1:3], each = 100),
-                cont1 = rnorm(300, 100, 1),
-                cont2 = rnorm(300, 50, 5))
-mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
-extract_eq(mod5, wrap = TRUE)
+library(palmerpenguins)
+
+model_logit <- glm(sex ~ bill_length_mm + species, 
+                   data = penguins, family = binomial(link = "logit"))
+extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 #> $$
 #> \begin{aligned}
-#> \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\
-#> &\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon
+#> \log\left[ \frac { P( \operatorname{sex} = \operatorname{male} ) }{ 1 - P( \operatorname{sex} = \operatorname{male} ) } \right] &= \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
+#> &\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
 #> \end{aligned}
 #> $$
 ```
 
 <img src="man/figures/README-example-logit-preview-1.png" width="100%" />
 
+### Probit regression with `glm()`
+
+``` r
+model_probit <- glm(sex ~ bill_length_mm + species, 
+                    data = penguins, family = binomial(link = "probit"))
+extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
+#> $$
+#> \begin{aligned}
+#> P(\operatorname{sex} = \operatorname{male} | X) &= \phi(\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
+#> &\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon)
+#> \end{aligned}
+#> $$
+```
+
+<img src="man/figures/README-example-probit-preview-1.png" width="100%" />
+
+### Ordered logistic regression with `MASS::polr()`
+
+``` r
+set.seed(1234)
+df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
+                                  levels = LETTERS[1:3],
+                                  ordered = TRUE),
+                 continuous_1 = rnorm(300, 100, 1),
+                 continuous_2 = rnorm(300, 50, 5))
+
+model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+                           data = df, Hess = TRUE)
+
+extract_eq(model_ologit, wrap = TRUE)
+#> $$
+#> \begin{aligned}
+#> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon \\
+#> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon
+#> \end{aligned}
+#> $$
+```
+
+<img src="man/figures/README-example-ologit-preview-1.png" width="100%" />
+
 ## Extension
 
 This project is brand new. If you would like to contribute, we’d love
 your help\! We are particularly interested in extending to more models.
-At present, we have only tested `lm` and `glm`, but hope to support any
-model supported by [**broom**](https://cran.r-project.org/package=broom)
-in the future.
+We hope to support any model supported by
+[**broom**](https://cran.r-project.org/package=broom) in the future.
 
 ## Code of Conduct
 

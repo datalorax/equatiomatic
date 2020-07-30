@@ -33,7 +33,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 }
 
 create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, model, ...) {
+                           fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {

@@ -238,21 +238,54 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
 
 ## Beyond `lm()`
 
-You're not limited to just `lm` models! Try out logistic regression with `glm()`:
+You're not limited to just `lm` models! **equatiomatic** supports many other models, including logistic regression, probit regression, and ordered logistic regression (with `MASS::polr()`).
+
+### Logistic regression with `glm()`
 
 ```{r example-logit}
-set.seed(8675309)
-d <- data.frame(out = sample(0:1, 100, replace = TRUE),
-                cat1 = rep(letters[1:3], 100),
-                cat2 = rep(LETTERS[1:3], each = 100),
-                cont1 = rnorm(300, 100, 1),
-                cont2 = rnorm(300, 50, 5))
-mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
-extract_eq(mod5, wrap = TRUE)
+library(palmerpenguins)
+
+model_logit <- glm(sex ~ bill_length_mm + species, 
+                   data = penguins, family = binomial(link = "logit"))
+extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ```
 
 ```{r example-logit-preview, echo=FALSE}
-extract_eq(mod5, wrap = TRUE) %>% 
+extract_eq(model_logit, wrap = TRUE, terms_per_line = 3) %>% 
+  tex_preview(usrPackages = usrPackages)
+```
+
+### Probit regression with `glm()`
+
+```{r example-probit}
+model_probit <- glm(sex ~ bill_length_mm + species, 
+                    data = penguins, family = binomial(link = "probit"))
+extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
+```
+
+```{r example-probit-preview, echo=FALSE}
+extract_eq(model_probit, wrap = TRUE, terms_per_line = 3) %>% 
+  tex_preview(usrPackages = usrPackages)
+```
+
+### Ordered logistic regression with `MASS::polr()`
+
+```{r example-polr}
+set.seed(1234)
+df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
+                                  levels = LETTERS[1:3],
+                                  ordered = TRUE),
+                 continuous_1 = rnorm(300, 100, 1),
+                 continuous_2 = rnorm(300, 50, 5))
+
+model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+                           data = df, Hess = TRUE)
+
+extract_eq(model_ologit, wrap = TRUE)
+```
+
+```{r example-ologit-preview, echo=FALSE}
+extract_eq(model_ologit, wrap = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
@@ -260,9 +293,9 @@ extract_eq(mod5, wrap = TRUE) %>%
 ## Extension
 
 This project is brand new. If you would like to contribute, we'd love your help!
-We are particularly interested in extending to more models. At present, we have
-only tested `lm` and `glm`, but hope to support any model supported by
-[**broom**](https://cran.r-project.org/package=broom) in the future.
+We are particularly interested in extending to more models. We hope to support
+any model supported by [**broom**](https://cran.r-project.org/package=broom) in
+the future.
 
 
 ## Code of Conduct

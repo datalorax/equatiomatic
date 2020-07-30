@@ -140,12 +140,12 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                   sep = " &= ")
           },
           .lhs = eq_raw$lhs,
-          .rhs = rhs_combined)
+          .rhs = wrap_rhs(model, rhs_combined))
 
   } else {
     eq <- Map(function(.lhs, .rhs) {
             paste(.lhs,
-                  paste(.rhs, collapse = " + "),
+                  wrap_rhs(model, paste(.rhs, collapse = " + ")),
                   sep = " = ")
           },
           .lhs = eq_raw$lhs,

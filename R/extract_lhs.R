@@ -42,8 +42,12 @@ extract_lhs.lm <- function(model, ital_vars) {
 
 extract_lhs.glm <- function(model, ital_vars) {
   lhs <- all.vars(formula(model))[1]
+
+  # This returns a 1x1 data.frame
   ss <- model$data[which(model$y == 1)[1], lhs]
-  ss <- as.character(ss)
+
+  # Convert to single character
+  ss <- as.character(unlist(ss))
 
   lhs_escaped <- escape_tex(lhs)
   ss_escaped <- escape_tex(ss)
@@ -111,6 +115,7 @@ modify_lhs_for_link.polr <- function(model, lhs) {
 # link-functions.R
 
 link_name <- c("logit, logistic",
+               "probit",
                'inverse',
                # '1/mu^2', # inverse gaussian; removed until we're certain
                'log',
@@ -119,6 +124,7 @@ link_name <- c("logit, logistic",
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
 link_formula <- c("\\log\\left[ \\frac { P( y ) }{ 1 - P( y ) } \\right]",
+                  "P(y | X)",
                   "\\frac { 1 }{ P( y ) }",
                   # "\\frac { 1 }{ 1/{ y }^{ 2 } } ", # inverse gaussian - correct?
                   "\\log ( { y )} ",
