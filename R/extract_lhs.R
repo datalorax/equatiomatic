@@ -21,7 +21,6 @@ extract_lhs <- function(model, ...) {
 #' @return A character string
 
 extract_lhs.lm <- function(model, ital_vars) {
-
   lhs <- all.vars(formula(model))[1]
 
   lhs_escaped <- escape_tex(lhs)
@@ -85,6 +84,33 @@ extract_lhs.polr <- function(model, ital_vars) {
   full_lhs
 }
 
+
+#' Extract left-hand side of a clm object
+#'
+#' Extract a string of the outcome/dependent/y variable with the appropriate
+#' link function.
+#'
+#' @keywords internal
+#'
+#' @inheritParams extract_eq
+#'
+#' @return A character string
+
+extract_lhs.clm <- function(model, ital_vars) {
+  tidied <- broom::tidy(model)
+  lhs <- tidied$term[tidied$coef.type == "intercept"]
+  lhs_escaped <- mapply_chr(escape_tex, lhs)
+
+  lhs <- lapply(strsplit(lhs_escaped, "\\|"), add_tex_ital_v, ital_vars)
+  lhs <- lapply(lhs, paste, collapse = " \\geq ")
+
+  full_lhs <- lapply(lhs, function(.x) modify_lhs_for_link(model, .x))
+
+  class(full_lhs) <- c("list", class(model))
+  full_lhs
+}
+
+
 #' modifies lhs of equations that include a link function
 #' @keywords internal
 modify_lhs_for_link <- function(model, ...) {
@@ -109,6 +135,18 @@ modify_lhs_for_link.polr <- function(model, lhs) {
   filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
 
   gsub("y", lhs, filtered_link_formula, fixed = TRUE)
+}
+
+#' @keywords internal
+modify_lhs_for_link.clm <- function(model, lhs) {
+  if (!(any(grepl(model$info$link, link_function_df$link_name)))) {
+    message("This link function is not presently supported; using an identity
+              function instead") # this is implicit; it's just using the lhs as-is
+  } else {
+    matched_row_bool <- grepl(model$info$link, link_function_df$link_name)
+    filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
+    gsub("y", lhs, filtered_link_formula, fixed = TRUE)
+  }
 }
 
 

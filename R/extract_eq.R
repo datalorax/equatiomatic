@@ -133,7 +133,7 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 
     # Combine RHS and LHS using anchors (&=)
     # This is a list of equations, typically of length 1 unless there are
-    # multiple equations like ordered logistic regression from polr()
+    # multiple equations like ordered logistic regression from polr() and clm()
     eq <- Map(function(.lhs, .rhs) {
             paste(.lhs,
                   paste(.rhs, collapse = " + "),
@@ -150,7 +150,6 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
           },
           .lhs = eq_raw$lhs,
           .rhs = eq_raw$rhs)
-
   }
 
   if (use_coefs && fix_signs) {

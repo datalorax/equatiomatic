@@ -38,6 +38,7 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     MASS,
+    ordinal,
     rmarkdown,
     covr
 URL: https://github.com/datalorax/equatiomatic

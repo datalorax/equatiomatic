@@ -290,6 +290,39 @@ extract_eq(model_ologit, wrap = TRUE) %>%
 ```
 
 
+### Ordered regression (logit and probit) with `ordinal::clm()`
+
+```{r example-clm}
+set.seed(1234)
+df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
+                                  levels = LETTERS[1:3],
+                                  ordered = TRUE),
+                 continuous_1 = rnorm(300, 1, 1),
+                 continuous_2 = rnorm(300, 5, 5))
+
+model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+                             data = df, link = "logit")
+model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+                              data = df, link = "probit")
+
+extract_eq(model_ologit, wrap = TRUE)
+```
+
+```{r example-clm-ologit-preview, echo=FALSE}
+extract_eq(model_ologit, wrap = TRUE) %>% 
+  tex_preview(usrPackages = usrPackages)
+```
+
+```{r example-clm-probit}
+extract_eq(model_oprobit, wrap = TRUE)
+```
+
+```{r example-clm-oprobit-preview, echo=FALSE}
+extract_eq(model_oprobit, wrap = TRUE) %>% 
+  tex_preview(usrPackages = usrPackages)
+```
+
+
 ## Extension
 
 This project is brand new. If you would like to contribute, we'd love your help!
