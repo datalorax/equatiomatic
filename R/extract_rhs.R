@@ -220,6 +220,17 @@ wrap_rhs.glm <- function(model, tex, ...) {
 }
 
 #' @keywords internal
+wrap_rhs.polr <- function(model, tex, ...) {
+  if (model$method == "probit") {
+    rhs <- paste0("\\phi(", tex, ")")
+  } else {
+    rhs <- tex
+  }
+
+  return(rhs)
+}
+
+#' @keywords internal
 wrap_rhs.clm <- function(model, tex, ...) {
   if (model$info$link == "probit") {
     rhs <- paste0("\\phi(", tex, ")")

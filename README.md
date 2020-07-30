@@ -297,7 +297,9 @@ df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                  continuous_2 = rnorm(300, 50, 5))
 
 model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
-                           data = df, Hess = TRUE)
+                           data = df, Hess = TRUE, method = "logistic")
+model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+                            data = df, Hess = TRUE, method = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
 #> $$
@@ -309,6 +311,18 @@ extract_eq(model_ologit, wrap = TRUE)
 ```
 
 <img src="man/figures/README-example-ologit-preview-1.png" width="100%" />
+
+``` r
+extract_eq(model_oprobit, wrap = TRUE)
+#> $$
+#> \begin{aligned}
+#> P(\operatorname{A} \geq \operatorname{B} | X) &= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\
+#> P(\operatorname{B} \geq \operatorname{C} | X) &= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)
+#> \end{aligned}
+#> $$
+```
+
+<img src="man/figures/README-example-polr-probit-preview-1.png" width="100%" />
 
 ### Ordered regression (logit and probit) with `ordinal::clm()`
 
