@@ -98,6 +98,9 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
+  if(show_distribution) {
+    wrap <- TRUE
+  }
 
   lhs <- extract_lhs(model, ital_vars, show_distribution)
   rhs <- extract_rhs(model)
