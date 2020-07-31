@@ -25,12 +25,12 @@ test_that("Ordered logistic regression works", {
 \\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= \\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon
 \\end{aligned}"
 
-  actual_nowrap_probit <- "P(\\operatorname{A} \\geq \\operatorname{B} | X) = \\phi(\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon) \\\\
-P(\\operatorname{B} \\geq \\operatorname{C} | X) = \\phi(\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon)"
+  actual_nowrap_probit <- "P(\\operatorname{A} \\geq \\operatorname{B}) = \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon] \\\\
+P(\\operatorname{B} \\geq \\operatorname{C}) = \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon]"
 
   actual_wrap_probit <- "\\begin{aligned}
-P(\\operatorname{A} \\geq \\operatorname{B} | X) &= \\phi(\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon) \\\\
-P(\\operatorname{B} \\geq \\operatorname{C} | X) &= \\phi(\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon)
+P(\\operatorname{A} \\geq \\operatorname{B}) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon] \\\\
+P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon]
 \\end{aligned}"
 
   expect_equal(tex_nowrap, equation_class(actual_nowrap),
