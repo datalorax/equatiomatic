@@ -128,7 +128,7 @@ extract_primary_term <- function(primary_term_v, all_terms) {
 
 detect_primary <- function(full_term, primary_term_v) {
   vapply(primary_term_v, function(indiv_term) {
-    grepl(indiv_term, full_term)
+    grepl(indiv_term, full_term, fixed = TRUE)
   },
   logical(1)
   )
@@ -181,8 +181,8 @@ extract_all_subscripts <- function(primary_list, full_term_list) {
 extract_subscripts <- function(primary, full_term_v) {
   out <- switch(as.character(length(primary)),
                 "0" = "",
-                "1" = gsub(primary, "", full_term_v),
-                mapply_chr(function(x, y) gsub(x, "", y),
+                "1" = gsub(primary, "", full_term_v, fixed = TRUE),
+                mapply_chr(function(x, y) gsub(x, "", y, fixed = TRUE),
                            x = primary,
                            y = full_term_v)
   )
