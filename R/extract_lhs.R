@@ -162,7 +162,7 @@ link_name <- c("logit, logistic",
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
 link_formula <- c("\\log\\left[ \\frac { P( y ) }{ 1 - P( y ) } \\right]",
-                  "P(y | X)",
+                  "P(y)",
                   "\\frac { 1 }{ P( y ) }",
                   # "\\frac { 1 }{ 1/{ y }^{ 2 } } ", # inverse gaussian - correct?
                   "\\log ( { y )} ",

@@ -28,7 +28,7 @@ test_that("Probit regression works", {
                       family = binomial(link = "probit"))
 
   tex <- extract_eq(model_probit)
-  actual <- "P(\\operatorname{outcome} = \\operatorname{1} | X) = \\phi(\\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon)"
+  actual <- "P(\\operatorname{outcome} = \\operatorname{1}) = \\Phi[\\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon]"
 
   expect_equal(tex, equation_class(actual),
                label = "basic equation builds correctly")

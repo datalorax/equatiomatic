@@ -111,8 +111,8 @@ create_term <- function(rhs, ital_vars) {
 #' @return A character string
 
 escape_tex <- function(term) {
-  unescaped <- c("&", "%", "$", "#", "_", "{", "}", "~", "^", "\\")
-  escaped <- c("\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}",
+  unescaped <- c(" ", "&", "%", "$", "#", "_", "{", "}", "~", "^", "\\")
+  escaped <- c("\\ ", "\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}",
                "\\char`\\~", "\\char`\\^", "\\backslash ")
 
   # Split term into a vector of single characters
