@@ -20,7 +20,7 @@ extract_lhs <- function(model, ...) {
 #'
 #' @return A character string
 
-extract_lhs.lm <- function(model, ital_vars) {
+extract_lhs.lm <- function(model, ital_vars, ...) {
   lhs <- all.vars(formula(model))[1]
 
   lhs_escaped <- escape_tex(lhs)
@@ -39,7 +39,7 @@ extract_lhs.lm <- function(model, ital_vars) {
 #'
 #' @return A character string
 
-extract_lhs.glm <- function(model, ital_vars, show_distribution) {
+extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   if(show_distribution) {
     return(extract_lhs2.glm(model, ital_vars))
   }
@@ -61,9 +61,18 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution) {
   modify_lhs_for_link(model, full_lhs)
 }
 
-extract_lhs2.glm <- function(model, ital_vars) {
+extract_lhs2.glm <- function(model, ital_vars, ...) {
   outcome <- all.vars(formula(model))[1]
-  n <- nrow(model$data)
+  n <- unique(model$model$`(weights)`)
+  if(is.null(n)) {
+    n <- nrow(model$data)
+  }
+  if(length(n) > 1) {
+    warning(paste("Unsure of how to handle a vector of weights in creation",
+                  "of the distrubtion portion of the equation. Please inspect",
+                  "carefully and modify by hand if neccessary.")
+    )
+  }
 
   # This returns a 1x1 data.frame
   ss <- model$data[which(model$y == 1)[1], outcome]
@@ -74,14 +83,19 @@ extract_lhs2.glm <- function(model, ital_vars) {
   outcome_escaped <- escape_tex(outcome)
   ss_escaped <- escape_tex(ss)
 
-  lhs <- paste0(add_tex_ital_v(outcome_escaped, ital_vars),
-                add_tex_subscripts(
-                  add_tex_ital_v(ss_escaped, ital_vars)
+  if(is.na(ss)) {
+    lhs <- add_tex_ital_v(outcome_escaped, ital_vars)
+  } else {
+    lhs <- paste0(add_tex_ital_v(outcome_escaped, ital_vars),
+                  add_tex_subscripts(
+                    add_tex_ital_v(ss_escaped, ital_vars)
                   )
-                )
+    )
+  }
 
-  rhs <- paste0("B\\left(\\operatorname{prob} = \\hat{P}, size = ",
-                n,
+  rhs <- paste0("B\\left(",
+                "\\operatorname{prob} = \\hat{P},",
+                "\\operatorname{size} = ", n,
                 "\\right)")
 
   topline <- paste(lhs, "&\\sim", rhs)
@@ -104,7 +118,7 @@ extract_lhs2.glm <- function(model, ital_vars) {
 #' @return A character string
 #'
 
-extract_lhs.polr <- function(model, ital_vars) {
+extract_lhs.polr <- function(model, ital_vars, ...) {
   tidied <- broom::tidy(model)
   lhs <- tidied$term[tidied$coef.type == "scale"]
   lhs_escaped <- mapply_chr(escape_tex, lhs)
@@ -130,7 +144,7 @@ extract_lhs.polr <- function(model, ital_vars) {
 #'
 #' @return A character string
 
-extract_lhs.clm <- function(model, ital_vars) {
+extract_lhs.clm <- function(model, ital_vars, ...) {
   tidied <- broom::tidy(model)
   lhs <- tidied$term[tidied$coef.type == "intercept"]
   lhs_escaped <- mapply_chr(escape_tex, lhs)

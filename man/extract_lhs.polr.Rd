@@ -4,7 +4,7 @@
 \alias{extract_lhs.polr}
 \title{Extract left-hand side of a polr object}
 \usage{
-\method{extract_lhs}{polr}(model, ital_vars)
+\method{extract_lhs}{polr}(model, ital_vars, ...)
 }
 \arguments{
 \item{model}{A fitted model}

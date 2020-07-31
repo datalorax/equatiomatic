@@ -4,7 +4,7 @@
 \alias{extract_lhs.clm}
 \title{Extract left-hand side of a clm object}
 \usage{
-\method{extract_lhs}{clm}(model, ital_vars)
+\method{extract_lhs}{clm}(model, ital_vars, ...)
 }
 \arguments{
 \item{model}{A fitted model}
