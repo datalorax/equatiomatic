@@ -39,7 +39,10 @@ extract_lhs.lm <- function(model, ital_vars) {
 #'
 #' @return A character string
 
-extract_lhs.glm <- function(model, ital_vars) {
+extract_lhs.glm <- function(model, ital_vars, show_distribution) {
+  if(show_distribution) {
+    return(extract_lhs2.glm(model, ital_vars))
+  }
   lhs <- all.vars(formula(model))[1]
 
   # This returns a 1x1 data.frame
@@ -57,6 +60,37 @@ extract_lhs.glm <- function(model, ital_vars) {
 
   modify_lhs_for_link(model, full_lhs)
 }
+
+extract_lhs2.glm <- function(model, ital_vars) {
+  outcome <- all.vars(formula(model))[1]
+  n <- nrow(model$data)
+
+  # This returns a 1x1 data.frame
+  ss <- model$data[which(model$y == 1)[1], outcome]
+
+  # Convert to single character
+  ss <- as.character(unlist(ss))
+
+  outcome_escaped <- escape_tex(outcome)
+  ss_escaped <- escape_tex(ss)
+
+  lhs <- paste0(add_tex_ital_v(outcome_escaped, ital_vars),
+                add_tex_subscripts(
+                  add_tex_ital_v(ss_escaped, ital_vars)
+                  )
+                )
+
+  rhs <- paste0("B\\left(\\operatorname{prob} = \\hat{P}, size = ",
+                n,
+                "\\right)")
+
+  topline <- paste(lhs, "&\\sim", rhs)
+  second_line <- "\\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right]"
+
+  paste(topline, "\\\\\n", second_line, "\n")
+}
+
+
 
 #' Extract left-hand side of a polr object
 #'

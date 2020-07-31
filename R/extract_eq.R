@@ -16,6 +16,9 @@
 #' raw tex code?
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\operatorname{}} command?
+#' @param show_distribution Logical. When fitting a logistic or probit
+#'   regression, should the binomial distribution be displayed? Defaults to
+#'   \code{FALSE}.
 #' @param wrap Logical, defaults to \code{FALSE}. Should the terms on the
 #'   right-hand side of the equation be split into multiple lines? This is
 #'   helpful with models with many terms.
@@ -91,11 +94,12 @@
 
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        raw_tex = FALSE, ital_vars = FALSE,
+                       show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
 
-  lhs <- extract_lhs(model, ital_vars)
+  lhs <- extract_lhs(model, ital_vars, show_distribution)
   rhs <- extract_rhs(model)
 
   eq_raw <- create_eq(lhs,

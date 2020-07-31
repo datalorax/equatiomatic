@@ -10,6 +10,7 @@ extract_eq(
   greek = "beta",
   raw_tex = FALSE,
   ital_vars = FALSE,
+  show_distribution = FALSE,
   wrap = FALSE,
   terms_per_line = 4,
   operator_location = "end",
@@ -36,6 +37,10 @@ raw tex code?}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\operatorname{}} command?}
+
+\item{show_distribution}{Logical. When fitting a logistic or probit
+regression, should the binomial distribution be displayed? Defaults to
+\code{FALSE}.}
 
 \item{wrap}{Logical, defaults to \code{FALSE}. Should the terms on the
 right-hand side of the equation be split into multiple lines? This is

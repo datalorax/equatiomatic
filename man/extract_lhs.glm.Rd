@@ -4,13 +4,17 @@
 \alias{extract_lhs.glm}
 \title{Extract left-hand side of a glm object}
 \usage{
-\method{extract_lhs}{glm}(model, ital_vars)
+\method{extract_lhs}{glm}(model, ital_vars, show_distribution)
 }
 \arguments{
 \item{model}{A fitted model}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\operatorname{}} command?}
+
+\item{show_distribution}{Logical. When fitting a logistic or probit
+regression, should the binomial distribution be displayed? Defaults to
+\code{FALSE}.}
 }
 \value{
 A character string
