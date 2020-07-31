@@ -137,27 +137,26 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
     rhs_combined <- lapply(rhs_groups_collapsed, function(x) {
       paste(x, collapse = line_end)
     })
-
-    # Combine RHS and LHS using anchors (&=)
-    # This is a list of equations, typically of length 1 unless there are
-    # multiple equations like ordered logistic regression from polr() and clm()
-    eq <- Map(function(.lhs, .rhs) {
-            paste(.lhs,
-                  paste(.rhs, collapse = " + "),
-                  sep = " &= ")
-          },
-          .lhs = eq_raw$lhs,
-          .rhs = wrap_rhs(model, rhs_combined))
-
   } else {
-    eq <- Map(function(.lhs, .rhs) {
-            paste(.lhs,
-                  wrap_rhs(model, paste(.rhs, collapse = " + ")),
-                  sep = " = ")
-          },
-          .lhs = eq_raw$lhs,
-          .rhs = eq_raw$rhs)
+    rhs_combined <- lapply(eq_raw$rhs, function(x) {
+      paste(x, collapse = " + ")
+    })
   }
+
+  # If wrapping is enabled or if there are multiple equations, use anchored &=,
+  # otherwise use just regular =
+  if (wrap | length(rhs_combined) > 1) {
+    equal_sign <- " &= "
+  } else {
+    equal_sign <- " = "
+  }
+
+  # Combine RHS and LHS
+  eq <- Map(function(.lhs, .rhs) {
+    paste(.lhs, .rhs, sep = equal_sign)
+  },
+  .lhs = eq_raw$lhs,
+  .rhs = wrap_rhs(model, rhs_combined))
 
   if (use_coefs && fix_signs) {
     eq <- lapply(eq, fix_coef_signs)
@@ -169,9 +168,9 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
     eq <- eq[[1]]
   }
 
-  # Add environment finally, if wrapping
+  # Add environment finally, if wrapping or if there are multiple equations
   # This comes later so that multiple equations don't get their own environments
-  if (wrap) {
+  if (wrap | length(rhs_combined) > 1) {
     eq <- paste0("\\begin{", align_env, "}\n",
                  eq,
                  "\n\\end{", align_env, "}")
