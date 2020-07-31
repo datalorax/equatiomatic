@@ -21,7 +21,7 @@ extract_lhs <- function(model, ...) {
 #' @return A character string
 
 extract_lhs.lm <- function(model, ital_vars, ...) {
-  lhs <- all.vars(formula(model))[1]
+  lhs <- rownames(attr(model$terms, "factors"))[1]
 
   lhs_escaped <- escape_tex(lhs)
   add_tex_ital_v(lhs_escaped, ital_vars)
