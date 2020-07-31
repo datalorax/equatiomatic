@@ -54,9 +54,13 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   lhs_escaped <- escape_tex(lhs)
   ss_escaped <- escape_tex(ss)
 
-  full_lhs <- paste(add_tex_ital_v(lhs_escaped, ital_vars),
-                    "=",
-                    add_tex_ital_v(ss_escaped, ital_vars))
+  if(is.na(ss)) {
+    full_lhs <- add_tex_ital_v(lhs_escaped, ital_vars)
+  } else {
+    full_lhs <- paste(add_tex_ital_v(lhs_escaped, ital_vars),
+                      "=",
+                      add_tex_ital_v(ss_escaped, ital_vars))
+  }
 
   modify_lhs_for_link(model, full_lhs)
 }
