@@ -140,7 +140,7 @@ link function.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for glm</span>
-<span class='fu'><a href='extract_lhs.html'>extract_lhs</a></span>(<span class='no'>model</span>, <span class='no'>ital_vars</span>)</pre>
+<span class='fu'><a href='extract_lhs.html'>extract_lhs</a></span>(<span class='no'>model</span>, <span class='no'>ital_vars</span>, <span class='no'>show_distribution</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +153,12 @@ link function.</p>
       <th>ital_vars</th>
       <td><p>Logical, defaults to <code>FALSE</code>. Should the variable names
 not be wrapped in the <code>\operatorname{}</code> command?</p></td>
+    </tr>
+    <tr>
+      <th>show_distribution</th>
+      <td><p>Logical. When fitting a logistic or probit
+regression, should the binomial distribution be displayed? Defaults to
+<code>FALSE</code>.</p></td>
     </tr>
     </table>
 
