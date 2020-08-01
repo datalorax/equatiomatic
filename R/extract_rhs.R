@@ -213,7 +213,7 @@ wrap_rhs.default <- function(model, tex, ...) {
 #' @keywords internal
 wrap_rhs.glm <- function(model, tex, ...) {
   if (model$family$link == "probit") {
-    rhs <- paste0("\\Phi[", tex, "]")
+    rhs <- probitify(tex)
   } else {
     rhs <- tex
   }
@@ -225,7 +225,7 @@ wrap_rhs.glm <- function(model, tex, ...) {
 #' @keywords internal
 wrap_rhs.polr <- function(model, tex, ...) {
   if (model$method == "probit") {
-    rhs <- paste0("\\Phi[", tex, "]")
+    rhs <- probitify(tex)
   } else {
     rhs <- tex
   }
@@ -237,10 +237,21 @@ wrap_rhs.polr <- function(model, tex, ...) {
 #' @keywords internal
 wrap_rhs.clm <- function(model, tex, ...) {
   if (model$info$link == "probit") {
-    rhs <- paste0("\\Phi[", tex, "]")
+    rhs <- probitify(tex)
   } else {
     rhs <- tex
   }
 
   return(rhs)
+}
+
+#' @keywords internal
+probitify <- function(tex) {
+  # Replace existing beginning-of-line \quad space with `\\qquad\` to account for \Phi
+  tex <- gsub("&\\\\quad", "&\\\\qquad\\\\", tex)
+
+  # It would be cool to use \left[ and \right] someday, but they don't work when
+  # the equation is split across multiple lines (see
+  # https://tex.stackexchange.com/q/21290/11851)
+  paste0("\\Phi[", tex, "]")
 }
