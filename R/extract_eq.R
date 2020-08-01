@@ -98,9 +98,6 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
-  if(show_distribution) {
-    wrap <- TRUE
-  }
 
   lhs <- extract_lhs(model, ital_vars, show_distribution)
   rhs <- extract_rhs(model)
@@ -143,17 +140,16 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
     })
   }
 
-  # If wrapping is enabled or if there are multiple equations, use anchored &=,
-  # otherwise use just regular =
-  if (wrap | length(rhs_combined) > 1) {
-    equal_sign <- " &= "
+  if (wrap | length(rhs_combined) > 1 | show_distribution) {
+    needs_align <- TRUE
   } else {
-    equal_sign <- " = "
+    needs_align <- FALSE
   }
 
   # Combine RHS and LHS
   eq <- Map(function(.lhs, .rhs) {
-    paste(.lhs, .rhs, sep = equal_sign)
+    paste(.lhs, .rhs,
+          sep = ifelse(needs_align, " &= ", " = "))
   },
   .lhs = eq_raw$lhs,
   .rhs = wrap_rhs(model, rhs_combined))
@@ -170,7 +166,7 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 
   # Add environment finally, if wrapping or if there are multiple equations
   # This comes later so that multiple equations don't get their own environments
-  if (wrap | length(rhs_combined) > 1) {
+  if (needs_align) {
     eq <- paste0("\\begin{", align_env, "}\n",
                  eq,
                  "\n\\end{", align_env, "}")
