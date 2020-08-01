@@ -37,14 +37,14 @@ library(equatiomatic)
 extract_eq(lm(bill_length_mm ~ bill_depth_mm, penguins))
 ```
 
-The purpose of  [{equatiomatic}](https://datalorax.github.io/equatiomatic/) is to help you from model output, like the `lm()` output above,
+The purpose of  [{equatiomatic}](https://datalorax.github.io/equatiomatic/) is to help you go from model output, like the `lm()` output above,
 to the equation we just saw. 
 
 As we detail in this vignette, {equatiomatic} provides the underlying equation
 corresponding to the statistical model output. It does this through the use of
 the [TeX](https://en.wikipedia.org/wiki/TeX) equation formatting system, which
 can then be included in documents written in a number of formats, including 
-(importantly) RMarkdown documents rendered to either HTML or PDF formats.
+(importantly) R Markdown documents rendered to either HTML or PDF formats.
 
 # Example Usage
 
