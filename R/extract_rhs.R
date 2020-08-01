@@ -203,11 +203,13 @@ wrap_rhs <- function(model, tex, ...) {
   UseMethod("wrap_rhs", model)
 }
 
+#' @export
 #' @keywords internal
 wrap_rhs.default <- function(model, tex, ...) {
   return(tex)
 }
 
+#' @export
 #' @keywords internal
 wrap_rhs.glm <- function(model, tex, ...) {
   if (model$family$link == "probit") {
@@ -219,6 +221,7 @@ wrap_rhs.glm <- function(model, tex, ...) {
   return(rhs)
 }
 
+#' @export
 #' @keywords internal
 wrap_rhs.polr <- function(model, tex, ...) {
   if (model$method == "probit") {
@@ -230,6 +233,7 @@ wrap_rhs.polr <- function(model, tex, ...) {
   return(rhs)
 }
 
+#' @export
 #' @keywords internal
 wrap_rhs.clm <- function(model, tex, ...) {
   if (model$info$link == "probit") {

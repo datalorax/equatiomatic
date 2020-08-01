@@ -14,6 +14,7 @@ extract_lhs <- function(model, ...) {
 #'
 #' Extract a string of the outcome/dependent/y variable of a model
 #'
+#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -33,6 +34,7 @@ extract_lhs.lm <- function(model, ital_vars, ...) {
 #' Extract a string of the outcome/dependent/y variable with the appropriate
 #' link function.
 #'
+#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -40,7 +42,7 @@ extract_lhs.lm <- function(model, ital_vars, ...) {
 #' @return A character string
 
 extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
-  if(show_distribution) {
+  if (show_distribution) {
     return(extract_lhs2.glm(model, ital_vars))
   }
   lhs <- all.vars(formula(model))[1]
@@ -54,7 +56,7 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   lhs_escaped <- escape_tex(lhs)
   ss_escaped <- escape_tex(ss)
 
-  if(is.na(ss)) {
+  if (is.na(ss)) {
     full_lhs <- add_tex_ital_v(lhs_escaped, ital_vars)
   } else {
     full_lhs <- paste(add_tex_ital_v(lhs_escaped, ital_vars),
@@ -65,13 +67,15 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   modify_lhs_for_link(model, full_lhs)
 }
 
+#' @export
+#' @keywords internal
 extract_lhs2.glm <- function(model, ital_vars, ...) {
   outcome <- all.vars(formula(model))[1]
   n <- unique(model$model$`(weights)`)
-  if(is.null(n)) {
+  if (is.null(n)) {
     n <- nrow(model$data)
   }
-  if(length(n) > 1) {
+  if (length(n) > 1) {
     warning(paste("Unsure of how to handle a vector of weights in creation",
                   "of the distrubtion portion of the equation. Please inspect",
                   "carefully and modify by hand if neccessary.")
@@ -87,7 +91,7 @@ extract_lhs2.glm <- function(model, ital_vars, ...) {
   outcome_escaped <- escape_tex(outcome)
   ss_escaped <- escape_tex(ss)
 
-  if(is.na(ss)) {
+  if (is.na(ss)) {
     lhs <- add_tex_ital_v(outcome_escaped, ital_vars)
   } else {
     lhs <- paste0(add_tex_ital_v(outcome_escaped, ital_vars),
@@ -115,6 +119,7 @@ extract_lhs2.glm <- function(model, ital_vars, ...) {
 #' Extract a string of the outcome/dependent/y variable with the appropriate
 #' link function.
 #'
+#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -142,6 +147,7 @@ extract_lhs.polr <- function(model, ital_vars, ...) {
 #' Extract a string of the outcome/dependent/y variable with the appropriate
 #' link function.
 #'
+#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -169,6 +175,7 @@ modify_lhs_for_link <- function(model, ...) {
   UseMethod("modify_lhs_for_link", model)
 }
 
+#' @export
 #' @keywords internal
 modify_lhs_for_link.glm <- function(model, lhs) {
   if (!(any(grepl(model$family$link, link_function_df$link_name)))) { # is this logical operator not ideal?
@@ -181,6 +188,7 @@ modify_lhs_for_link.glm <- function(model, lhs) {
   }
 }
 
+#' @export
 #' @keywords internal
 modify_lhs_for_link.polr <- function(model, lhs) {
   matched_row_bool <- grepl(model$method, link_function_df$link_name)
@@ -189,6 +197,7 @@ modify_lhs_for_link.polr <- function(model, lhs) {
   gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
 
+#' @export
 #' @keywords internal
 modify_lhs_for_link.clm <- function(model, lhs) {
   if (!(any(grepl(model$info$link, link_function_df$link_name)))) {

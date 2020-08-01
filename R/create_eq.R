@@ -4,6 +4,7 @@ create_eq <- function(lhs,...) {
 
 #' Create the full equation
 #'
+#' @export
 #' @keywords internal
 #'
 #' @param lhs A character string of the left-hand side variable extracted with
@@ -32,6 +33,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   list(lhs = list(lhs), rhs = list(rhs$final_terms))
 }
 
+#' @export
 create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                            fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
@@ -50,6 +52,7 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   list(lhs = lhs, rhs = rhs_final)
 }
 
+#' @export
 create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                           fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
@@ -209,6 +212,7 @@ add_coefs <- function(rhs, ...) {
 
 #' Add coefficient values to the equation
 #'
+#' @export
 #' @keywords internal
 
 add_coefs.default <- function(rhs, term, coef_digits) {
@@ -220,6 +224,7 @@ add_coefs.default <- function(rhs, term, coef_digits) {
   )
 }
 
+#' @export
 #' @keywords internal
 
 add_coefs.polr <- function(rhs, term, coef_digits) {
@@ -231,6 +236,7 @@ add_coefs.polr <- function(rhs, term, coef_digits) {
   )
 }
 
+#' @export
 #' @keywords internal
 
 add_coefs.clm <- function(rhs, term, coef_digits) {
@@ -248,6 +254,7 @@ add_greek <- function(rhs, ...) {
 
 #' Adds greek symbols to the equation
 #'
+#' @export
 #' @keywords internal
 add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
                               raw_tex = FALSE) {
@@ -264,6 +271,7 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   )
 }
 
+#' @export
 #' @keywords internal
 
 add_greek.polr <- function(rhs, terms, ...) {
@@ -276,6 +284,7 @@ add_greek.polr <- function(rhs, terms, ...) {
          )
 }
 
+#' @export
 #' @keywords internal
 
 add_greek.clm <- function(rhs, terms, ...) {
