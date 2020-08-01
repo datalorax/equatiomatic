@@ -94,7 +94,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2020_07_29-brightgreen.svg" alt="Covrpage Summary"></a> <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) --> <a href="https://github.com/datalorax/equatiomatic/actions"><img src="https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://codecov.io/gh/datalorax/equatiomatic?branch=master"><img src="https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
+<p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2020_07_31-brightgreen.svg" alt="Covrpage Summary"></a> <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) --> <a href="https://github.com/datalorax/equatiomatic/actions"><img src="https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://codecov.io/gh/datalorax/equatiomatic?branch=master"><img src="https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
 <p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. In the future, the package aims to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a>; so far it has only been tested with <code>lm</code> and <code>glm</code> models and, at present, only supports binomial <code>glm</code> models (i.e., not ordinal or multinomial models).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -269,8 +269,8 @@
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_probit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; P(\operatorname{sex} = \operatorname{male} | X) &amp;= \phi(\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span>
-<span class="co">#&gt; &amp;\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon)</span>
+<span class="co">#&gt; P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span>
+<span class="co">#&gt; &amp;\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon]</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-probit-preview-1.png" width="100%"></p>
@@ -302,8 +302,8 @@
 <div class="sourceCode" id="cb18"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B} | X) &amp;= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\</span>
-<span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C} | X) &amp;= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)</span>
+<span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon] \\</span>
+<span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon]</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-polr-probit-preview-1.png" width="100%"></p>
@@ -335,8 +335,8 @@
 <div class="sourceCode" id="cb20"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \begin{aligned}</span>
-<span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B} | X) &amp;= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\</span>
-<span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C} | X) &amp;= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)</span>
+<span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon] \\</span>
+<span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon]</span>
 <span class="co">#&gt; \end{aligned}</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-clm-oprobit-preview-1.png" width="100%"></p>
