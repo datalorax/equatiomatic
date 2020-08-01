@@ -173,13 +173,13 @@ lr <- glm(sex ~ species*bill_length_mm,
           data = penguins, 
           family = binomial(link = "logit"))
 
-extract_eq(lr)
+extract_eq(lr, wrap = TRUE)
 ```
 
 You can also (optionally) show the how the data are assumed to be distributed.
 
 ```{r log-reg2}
-extract_eq(lr, show_distribution = TRUE)
+extract_eq(lr, wrap = TRUE, show_distribution = TRUE)
 ```
 
 ## Probit Regression
@@ -196,7 +196,7 @@ extract_eq(pr, wrap = TRUE)
 Again, you can (optionally) show the how the data are assumed distributed.
 
 ```{r prob-reg2}
-extract_eq(pr, show_distribution = TRUE)
+extract_eq(pr, wrap = TRUE, show_distribution = TRUE)
 ```
 
 ## Ordinal Regression w/{MASS}
