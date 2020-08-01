@@ -9,6 +9,17 @@ extract_lhs <- function(model, ...) {
   UseMethod("extract_lhs", model)
 }
 
+#' Generic function for extracting the distribution-based left hand side from a model
+#'
+#' @keywords internal
+#'
+#' @param model A fitted model
+#' @param \dots additional arguments passed to the specific extractor
+
+extract_lhs2 <- function(model, ...) {
+  UseMethod("extract_lhs2", model)
+}
+
 
 #' Extract left-hand side of an lm object
 #'
