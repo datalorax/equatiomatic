@@ -8,7 +8,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 [![Covrpage
-Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_07_29-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_07_31-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
 [![R build
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
@@ -278,8 +278,8 @@ model_probit <- glm(sex ~ bill_length_mm + species,
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 #> $$
 #> \begin{aligned}
-#> P(\operatorname{sex} = \operatorname{male} | X) &= \phi(\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
-#> &\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon)
+#> P(\operatorname{sex} = \operatorname{male}) &= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
+#> &\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon]
 #> \end{aligned}
 #> $$
 ```
@@ -316,8 +316,8 @@ extract_eq(model_ologit, wrap = TRUE)
 extract_eq(model_oprobit, wrap = TRUE)
 #> $$
 #> \begin{aligned}
-#> P(\operatorname{A} \geq \operatorname{B} | X) &= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\
-#> P(\operatorname{B} \geq \operatorname{C} | X) &= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)
+#> P(\operatorname{A} \geq \operatorname{B}) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon] \\
+#> P(\operatorname{B} \geq \operatorname{C}) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon]
 #> \end{aligned}
 #> $$
 ```
@@ -354,8 +354,8 @@ extract_eq(model_ologit, wrap = TRUE)
 extract_eq(model_oprobit, wrap = TRUE)
 #> $$
 #> \begin{aligned}
-#> P(\operatorname{A} \geq \operatorname{B} | X) &= \phi(\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon) \\
-#> P(\operatorname{B} \geq \operatorname{C} | X) &= \phi(\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon)
+#> P(\operatorname{A} \geq \operatorname{B}) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon] \\
+#> P(\operatorname{B} \geq \operatorname{C}) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) + \epsilon]
 #> \end{aligned}
 #> $$
 ```
