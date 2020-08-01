@@ -275,25 +275,27 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
 #' @keywords internal
 
 add_greek.polr <- function(rhs, terms, ...) {
+  rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
+    seq_along(x$coef.type)
+  }))
+
   ifelse(rhs$coef.type == "scale",
-         anno_greek("alpha",
-                    seq_along(grep("scale", rhs$coef.type))),
-         anno_greek("beta",
-                    seq_along(grep("coefficient", rhs$coef.type)),
-                    terms)
-         )
+         anno_greek("alpha", rhs$idx),
+         anno_greek("beta", rhs$idx, terms)
+  )
 }
 
 #' @export
 #' @keywords internal
 
 add_greek.clm <- function(rhs, terms, ...) {
+  rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
+    seq_along(x$coef.type)
+  }))
+
   ifelse(rhs$coef.type == "intercept",
-         anno_greek("alpha",
-                    seq_along(grep("intercept", rhs$coef.type))),
-         anno_greek("beta",
-                    seq_along(grep("location", rhs$coef.type)),
-                    terms)
+         anno_greek("alpha", rhs$idx),
+         anno_greek("beta", rhs$idx, terms)
   )
 }
 
