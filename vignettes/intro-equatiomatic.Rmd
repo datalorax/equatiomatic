@@ -47,7 +47,9 @@ the [TeX](https://en.wikipedia.org/wiki/TeX) equation formatting system, which
 can then be included in documents written in a number of formats, including 
 (importantly) RMarkdown documents.
 
-# Back Example
+# Example Usage
+
+## A basic example for a multiple linear regression
 
 Let's look at another basic example, again using the {palmerpenguins} data:
 
@@ -78,7 +80,8 @@ Just as a note, *the equation should render if you are rendering either an HTML 
 
 Let's dive into a more complex example next.
 
-## A bit more complicated model
+## An example with a slightly more complicated model
+
 The above was super simple, but---often---you have categorical variables with lots of
 levels and interactions, which can make the output of your models (and writing a 
 model equation for your models) a bit more complicated. {equatiomatic} is 
