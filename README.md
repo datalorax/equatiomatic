@@ -279,7 +279,7 @@ extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 #> $$
 #> \begin{aligned}
 #> P(\operatorname{sex} = \operatorname{male}) &= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
-#> &\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon]
+#> &\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon]
 #> \end{aligned}
 #> $$
 ```
