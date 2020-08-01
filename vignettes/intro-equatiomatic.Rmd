@@ -1,0 +1,166 @@
+---
+title: "Introduction to {equatiomatic}"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to {equatiomatic}}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  results = "asis"
+)
+```
+
+The purpose of the [{equatiomatic}](https://datalorax.github.io/equatiomatic/) package is to make your life a little bit easier when it comes to writing model equations. We hope it will also be a useful teaching tool.
+
+# Package basics
+The idea behind the package is to provide the underlying tex code corresponding to the statistical model you fit. Let's look at a very basic example with the [{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/) data.
+
+```{r fit-m1}
+library(equatiomatic)
+library(palmerpenguins) # data source
+
+# fit a basic linear regression model
+m <- lm(bill_length_mm ~ bill_depth_mm, penguins)
+```
+
+Now we can pull the tex code with `extract_eq`
+
+```{r extract_eq1, results = 'markup'}
+extract_eq(m)
+```
+
+This is moderately helpful, but if we set the code chunk to `results = "asis"`, as shown below, we get the actual equation when we knit the R Markdown document!
+
+![](results-asis.png)
+
+You can of course set `echo = FALSE as well, and then you'll get just the equation, which will look like the below.
+
+
+```{r extract_eq1-no-echo, results = "asis", echo = FALSE}
+extract_eq(m)
+```
+
+The equation should render seamlessly between HTML and PDF.
+
+## A bit more complicated model
+The above was super simple, but you have categorical variables with lots of levels, interactions, etc. But {equatiomatic} should handle each of these without any problems (and if you run into any, please file a bug report [at the GitHub repo](https://github.com/datalorax/equatiomatic/issues)).
+
+For example
+
+```{r eq2}
+m2 <- lm(bill_length_mm ~ bill_depth_mm*island, penguins)
+extract_eq(m2)
+```
+
+Sometimes the equations get overly long. That's where the `wrap` and `terms_per_line` arguments come in.
+
+```{r eq2-wrap}
+extract_eq(m2, wrap = TRUE) # default terms_per_line = 4
+extract_eq(m2, wrap = TRUE, terms_per_line = 2)
+```
+
+Maybe you want different intercept notation like $\beta_0$?
+
+```{r eq2-intercept-beta}
+extract_eq(m2, wrap = TRUE, intercept = "beta")
+```
+
+We also wrap all the variable names in `\operatorname` by default so they show up as plain text, but if you'd like your variable names to be italicized just set `ital_vars = TRUE`.
+
+```{r eq2-ital-vars}
+extract_eq(m2, wrap = TRUE, ital_vars = TRUE)
+```
+
+## Raw tex code
+Currently, the `intercept` argument defaults to `"alpha"` and only takes one additional argument, `"beta"`. However, the `raw_tex` and `greek` arguments allows you to specify whatever you want. For example
+
+```{r raw-tex}
+extract_eq(m2, 
+           wrap = TRUE, 
+           intercept = "\\hat{\\gamma_{0}}", 
+           greek = "\\hat{\\gamma}",
+           raw_tex = TRUE)
+```
+
+## Coefficients
+One of my favorite aspects of the package is the ability to easily swap between the coefficient estimates and the Greek symbols with the `use_coefs` argument. 
+
+```{r use_coefs}
+extract_eq(m2, 
+           wrap = TRUE, 
+           use_coefs = TRUE)
+```
+
+# Other models
+{equatiomatic} currently supports the following models
+
+```{r echo = FALSE}
+supported <- data.frame(
+  model = c("linear regression",
+            "logistic regression",
+            "probit regression",
+            "ordinal regression"),
+  packages = c("`stats::lm`",
+               "`stats::glm`, `family = binomial(link = 'logit')`",
+               "`stats::glm`, `family = binomial(link = 'probit')`",
+               "`MASS::polr`, `ordinal::clm`")
+  )
+knitr::kable(supported, col.names = c("Model", "Packages/Functions"))
+```
+
+Here are a few basic examples
+
+## Logistic Regression
+```{r log-reg1}
+lr <- glm(sex ~ species*bill_length_mm, 
+          data = penguins, 
+          family = binomial(link = "logit"))
+
+extract_eq(lr)
+```
+
+You can also optionally show the how the data are assumed distributed.
+
+```{r log-reg2}
+extract_eq(lr, show_distribution = TRUE)
+```
+
+## Probit Regression
+Probit regression works similarly to logistic regression
+```{r prob-reg1}
+pr <- glm(sex ~ species*bill_length_mm, 
+          data = penguins, 
+          family = binomial(link = "probit"))
+
+extract_eq(pr, wrap = TRUE)
+```
+
+You can also optionally show the how the data are assumed distributed.
+
+```{r prob-reg2}
+extract_eq(pr, show_distribution = TRUE)
+```
+
+## Ordinal Regression w/{MASS}
+
+## Ordinal Regression w/{ordinal}
+
+# Things the package does not yet do
+We are aware of a few things the package doesn't yet do, but we hope to incorporate later. These include
+* Math functions (e.g., `log`, `exp`, `sqrt`)
+* Polynomial (e.g., `lm(y ~ poly(x, 3))`)
+* A range of other models
+
+Regarding this last point, we are hopeful that we can incorporate essentially all the models covered by [broom](https://broom.tidymodels.org). Multilevel models are particularly high on our wish list. But we have not yet had the time to develop these.
+
+# Contributing
+We would LOVE to have you as a contributor! Is there a model that we don't currently fit that you want implemented? There are a few ways to go about this. You can either (a) fork the repo and implement the method on your own, then submit a PR, or (b) file an issue.
+
+If you file an issue it would be *really* helpful if you could provide an example of a fitted model and what the equation for that model should look like. We will try to get to these as soon as possible. 
+
+Also, the next planned vignette (at this particular moment) is on contributing to the package, with a step-by-step example of implementing a new method. So stay tuned for that, if you're interested in (a) but not yet sure how to get started.
