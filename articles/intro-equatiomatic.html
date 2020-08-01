@@ -336,16 +336,16 @@ P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\oper
 <span class="co">#&gt; Re-fitting to get Hessian</span></pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-\log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &amp;= \alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+\log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon \\
-\log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+\log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon \\
-\log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+\log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &amp;= \alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon \\
-\log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &amp;= \alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+\log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &amp;= \alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon
 \end{aligned}
@@ -366,16 +366,16 @@ P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\oper
 <span class="co">#&gt; Re-fitting to get Hessian</span></pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-P(\operatorname{1} \geq \operatorname{2}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+P(\operatorname{1} \geq \operatorname{2}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon] \\
-P(\operatorname{2} \geq \operatorname{3}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+P(\operatorname{2} \geq \operatorname{3}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon] \\
-P(\operatorname{3} \geq \operatorname{4}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+P(\operatorname{3} \geq \operatorname{4}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon] \\
-P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
 &amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon]
 \end{aligned}
@@ -396,17 +396,17 @@ P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\op
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">ordinal_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-\log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &amp;= \alpha_{1} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+\log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon \\
-\log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &amp;= \alpha_{2} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+\log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon \\
-\log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &amp;= \alpha_{3} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+\log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &amp;= \alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon \\
-\log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &amp;= \alpha_{4} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+\log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &amp;= \alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\quad \epsilon
 \end{aligned}
 \]</span></p>
@@ -421,17 +421,17 @@ P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\op
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">ordinal_probit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-P(\operatorname{1} \geq \operatorname{2}) &amp;= \Phi[\alpha_{1} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+P(\operatorname{1} \geq \operatorname{2}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon] \\
-P(\operatorname{2} \geq \operatorname{3}) &amp;= \Phi[\alpha_{2} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+P(\operatorname{2} \geq \operatorname{3}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon] \\
-P(\operatorname{3} \geq \operatorname{4}) &amp;= \Phi[\alpha_{3} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+P(\operatorname{3} \geq \operatorname{4}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon] \\
-P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{2}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{3}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{1}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
+P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
 &amp;\qquad\ \epsilon]
 \end{aligned}
 \]</span></p>
