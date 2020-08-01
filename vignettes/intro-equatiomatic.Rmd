@@ -58,7 +58,7 @@ library(equatiomatic)
 m <- lm(bill_length_mm ~ bill_depth_mm + flipper_length_mm, penguins)
 ```
 
-Now we can pull the tex code with `extract_eq`
+Now we can pull the TeX code with `extract_eq`
 
 ```{r extract_eq1, results = 'markup'}
 extract_eq(m)
@@ -117,7 +117,7 @@ set `ital_vars = TRUE`.
 extract_eq(m2, wrap = TRUE, ital_vars = TRUE)
 ```
 
-## Raw tex code
+## Raw TeX code
 
 Currently, the `intercept` argument defaults to `"alpha"` and only takes one
 additional argument, `"beta"`. However, the `raw_tex` and `greek` arguments
@@ -266,7 +266,7 @@ to develop these.
 
 We would LOVE to have you as a contributor! Is there a model that we don't
 currently fit that you want implemented? There are a few ways to go about this.
-You can either (a) fork the repo and implement the method on your own, then
+You can either (a) fork the repository and implement the method on your own, then
 submit a PR, or (b) file an issue.
 
 If you file an issue it would be *really* helpful if you could provide an
