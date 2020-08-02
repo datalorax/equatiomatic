@@ -206,8 +206,8 @@ install.packages("ordinal")
 
 The data look like this
 
-```{r wine-data}
-head(ordinal::wine)
+```{r wine-data, echo = FALSE}
+knitr::kable(head(ordinal::wine), align = "l")
 ```
 
 We'll fit a model from the documentation, with the ordinal rating response predicted by an interaction between the temperature and and contact. 
