@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 [![Covrpage
 Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_07_31-brightgreen.svg)](https://tinyurl.com/y43gpto4)
@@ -279,7 +279,7 @@ extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 #> $$
 #> \begin{aligned}
 #> P(\operatorname{sex} = \operatorname{male}) &= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
-#> &\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon]
+#> &\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon]
 #> \end{aligned}
 #> $$
 ```

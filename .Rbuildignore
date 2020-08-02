@@ -10,3 +10,6 @@
 ^pkgdown$
 ^\.github$
 ^codecov\.yml$
+^doc$
+^Meta$
+^cran-comments\.md$

@@ -198,7 +198,7 @@ extract_eq(pr, wrap = TRUE, show_distribution = TRUE)
 ```
 
 ## Ordinal Regression
-For these examples, we'll use wine tasting data from the [{ordinal}](https://github.com/runehaubo/ordinal) package. If you don't laready have this package, you can download it with
+For these examples, we'll use wine tasting data from the [{ordinal}](https://github.com/runehaubo/ordinal) package. If you don't already have this package, you can download it with
 
 ```{r install-ordinal, eval = FALSE}
 install.packages("ordinal")
@@ -206,13 +206,13 @@ install.packages("ordinal")
 
 The data look like this
 
-```{r wine-data}
-head(ordinal::wine)
+```{r wine-data, echo = FALSE}
+knitr::kable(head(ordinal::wine), align = "l")
 ```
 
 We'll fit a model from the documentation, with the ordinal rating response predicted by an interaction between the temperature and and contact. 
 
-You can fit ordinal response models with either `MASS::polr` or `ordinal::clm`, and {equatiomoatic} works with either, and with logistic or probit link functions.
+You can fit ordinal response models with either `MASS::polr` or `ordinal::clm`, and {equatiomatic} works with either, and with logistic or probit link functions.
 
 ### {MASS}
 #### Logit method
