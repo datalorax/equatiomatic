@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract all subscripts — extract_all_subscripts • equatiomatic</title>
+<title>Changelog • equatiomatic</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,7 @@
 
 
 
-<meta property="og:title" content="Extract all subscripts — extract_all_subscripts" />
-<meta property="og:description" content="Extract all subscripts" />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -67,7 +66,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -134,55 +133,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract all subscripts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/extract_rhs.R'><code>R/extract_rhs.R</code></a></small>
-    <div class="hidden name"><code>extract_all_subscripts.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>Extract all subscripts</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>extract_all_subscripts</span>(<span class='no'>primary_list</span>, <span class='no'>full_term_list</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>primary_list</th>
-      <td><p>A list of primary terms</p></td>
-    </tr>
-    <tr>
-      <th>full_term_list</th>
-      <td><p>A list of full terms</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list with the subscripts. If full term has no subscript,
-returns <code>""</code>.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>p_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"partyid"</span>,
-               <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partyid"</span>, <span class='st'>"age"</span>),
-               <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"race"</span>),
-               <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partyid"</span>, <span class='st'>"age"</span>, <span class='st'>"race"</span>))
-
-<span class='no'>ft_list</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"partyidNot str republican"</span>,
-                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partyidInd,near dem"</span>, <span class='st'>"age"</span>),
-                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"age"</span>, <span class='st'>"raceBlack"</span>),
-                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"partyidInd,near dem"</span>, <span class='st'>"age"</span>, <span class='st'>"raceBlack"</span>))
-
-<span class='fu'>extract_all_subscripts</span>(<span class='no'>p_list</span>, <span class='no'>ft_list</span>)
-}</div></pre>
+    <div id="equatiomatic-010" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.0">
+<a href="#equatiomatic-010" class="anchor"></a>equatiomatic 0.1.0</h1>
+<ul>
+<li>Initial CRAN Release</li>
+<li>Extracts equations for <code>lm</code> models</li>
+<li>Extracts equations for <code>glm</code> models with <code>family = binomial(link = "logit")</code> or <code>family = binomial(link = "probit")</code>
+</li>
+<li>Extracts equations form ordered regression models using <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr</a></code> or <code>ordered::clm</code> for logit and probit link functions</li>
+<li>
+<code>glm</code> models have an optional <code>show_distribution</code> argument to show the distributional assumptions</li>
+<li>All equations can be displayed using Greek notation or the estimated coefficients</li>
+<li>The <code>raw_tex</code> code can be used to supply custom TeX code for the intercept or the coefficients, through the <code>intercept</code> and <code>greek</code> arguments respectively</li>
+<li>Long equations can be wrapped to multiple lines with the optional <code>wrap</code> argument. The length of the wrapping is controlled by <code>terms_per_line</code>.</li>
+<li>Added a <code>NEWS.md</code> file to track subsequent changes to the package.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
