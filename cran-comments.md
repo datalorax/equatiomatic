@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. In this version I have
+
+* Changed the URI in README.md from referencing a file (CODE_OF_CONDUCT.md) to referencing a web link (https://github.com/datalorax/equatiomatic/blob/master/CODE_OF_CONDUCT.md).
+
 ## Test environments
 * local R installation, R 4.0.2
 * mac OS 10.15 (on github actions) 4.0.2
