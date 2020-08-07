@@ -39,6 +39,17 @@ jobs:
       - name: Install package
         run: R CMD INSTALL .
 
+      - name: covrpage
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          remotes::install_deps(dependencies = TRUE)
+          Rscript -e 'remotes::install_github("yonicd/covrpage@actions")' \
+                  -e 'covrpage::covrpage_ci()'
+          git commit tests/README.md -m 'Update tests/README.Rmd' || echo "No changes to commit"
+          git push https://${{github.actor}}:${{secrets.GH_PAT}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
+
       - name: Deploy package
         run: |
           git config --local user.email "actions@github.com"
