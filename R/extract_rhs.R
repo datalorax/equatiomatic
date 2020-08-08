@@ -60,7 +60,7 @@
 #' #>   ..$ : Named chr  "Gentoo" ""
 #' #>   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
 #' }
-#'
+#' @noRd
 
 extract_rhs <- function(model) {
   # Extract RHS from formula
@@ -101,6 +101,7 @@ extract_rhs <- function(model) {
 #'
 #' extract_primary_term(primaries, full_terms)
 #' }
+#' @noRd
 
 extract_primary_term <- function(primary_term_v, all_terms) {
   detected <- lapply(all_terms, detect_primary, primary_term_v)
@@ -125,6 +126,7 @@ extract_primary_term <- function(primary_term_v, all_terms) {
 #' detect_primary("age", c("partyid", "age", "race"))
 #' detect_primary("raceBlack", c("partyid", "age", "race"))
 #' }
+#' @noRd
 
 detect_primary <- function(full_term, primary_term_v) {
   vapply(primary_term_v, function(indiv_term) {
@@ -158,6 +160,7 @@ detect_primary <- function(full_term, primary_term_v) {
 #'
 #' extract_all_subscripts(p_list, ft_list)
 #' }
+#' @noRd
 
 extract_all_subscripts <- function(primary_list, full_term_list) {
   Map(extract_subscripts, primary_list, full_term_list)
@@ -177,6 +180,7 @@ extract_all_subscripts <- function(primary_list, full_term_list) {
 #'                    c("partyidDon't know", "partyidOther party",
 #'                      "partyidNot str democrat"))
 #' }
+#' @noRd
 
 extract_subscripts <- function(primary, full_term_v) {
   out <- switch(as.character(length(primary)),
@@ -198,6 +202,7 @@ extract_subscripts <- function(primary, full_term_v) {
 #' @param tex The TeX version of the RHS of the model (as character), built as
 #'   \code{rhs_combined} or \code{eq_raw$rhs} in \code{extract_eq()}
 #' @param \dots additional arguments passed to the specific extractor
+#' @noRd
 
 wrap_rhs <- function(model, tex, ...) {
   UseMethod("wrap_rhs", model)
@@ -205,12 +210,14 @@ wrap_rhs <- function(model, tex, ...) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 wrap_rhs.default <- function(model, tex, ...) {
   return(tex)
 }
 
 #' @export
 #' @keywords internal
+#' @noRd
 wrap_rhs.glm <- function(model, tex, ...) {
   if (model$family$link == "probit") {
     rhs <- probitify(tex)
@@ -223,6 +230,7 @@ wrap_rhs.glm <- function(model, tex, ...) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 wrap_rhs.polr <- function(model, tex, ...) {
   if (model$method == "probit") {
     rhs <- probitify(tex)
@@ -235,6 +243,7 @@ wrap_rhs.polr <- function(model, tex, ...) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 wrap_rhs.clm <- function(model, tex, ...) {
   if (model$info$link == "probit") {
     rhs <- probitify(tex)
@@ -246,6 +255,7 @@ wrap_rhs.clm <- function(model, tex, ...) {
 }
 
 #' @keywords internal
+#' @noRd
 probitify <- function(tex) {
   # Replace existing beginning-of-line \quad space with `\\qquad\` to account for \Phi
   tex <- gsub("&\\\\quad", "&\\\\qquad\\\\", tex)

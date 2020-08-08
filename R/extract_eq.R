@@ -54,7 +54,6 @@
 #' extract_eq(mod2)
 #'
 #' # Works for categorical variables too, putting levels as subscripts
-#' library(palmerpenguins)
 #' mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 #' extract_eq(mod3)
 #'

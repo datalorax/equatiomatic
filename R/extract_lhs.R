@@ -4,6 +4,7 @@
 #'
 #' @param model A fitted model
 #' @param \dots additional arguments passed to the specific extractor
+#' @noRd
 
 extract_lhs <- function(model, ...) {
   UseMethod("extract_lhs", model)
@@ -15,6 +16,7 @@ extract_lhs <- function(model, ...) {
 #'
 #' @param model A fitted model
 #' @param \dots additional arguments passed to the specific extractor
+#' @noRd
 
 extract_lhs2 <- function(model, ...) {
   UseMethod("extract_lhs2", model)
@@ -31,6 +33,7 @@ extract_lhs2 <- function(model, ...) {
 #' @inheritParams extract_eq
 #'
 #' @return A character string
+#' @noRd
 
 extract_lhs.lm <- function(model, ital_vars, ...) {
   lhs <- rownames(attr(model$terms, "factors"))[1]
@@ -51,6 +54,7 @@ extract_lhs.lm <- function(model, ital_vars, ...) {
 #' @inheritParams extract_eq
 #'
 #' @return A character string
+#' @noRd
 
 extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   if (show_distribution) {
@@ -80,6 +84,8 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
 
 #' @export
 #' @keywords internal
+#' @noRd
+
 extract_lhs2.glm <- function(model, ital_vars, ...) {
   outcome <- all.vars(formula(model))[1]
   n <- unique(model$model$`(weights)`)
@@ -136,7 +142,7 @@ extract_lhs2.glm <- function(model, ital_vars, ...) {
 #' @inheritParams extract_eq
 #'
 #' @return A character string
-#'
+#' @noRd
 
 extract_lhs.polr <- function(model, ital_vars, ...) {
   tidied <- broom::tidy(model)
@@ -164,6 +170,7 @@ extract_lhs.polr <- function(model, ital_vars, ...) {
 #' @inheritParams extract_eq
 #'
 #' @return A character string
+#' @noRd
 
 extract_lhs.clm <- function(model, ital_vars, ...) {
   tidied <- broom::tidy(model)
@@ -182,12 +189,14 @@ extract_lhs.clm <- function(model, ital_vars, ...) {
 
 #' modifies lhs of equations that include a link function
 #' @keywords internal
+#' @noRd
 modify_lhs_for_link <- function(model, ...) {
   UseMethod("modify_lhs_for_link", model)
 }
 
 #' @export
 #' @keywords internal
+#' @noRd
 modify_lhs_for_link.glm <- function(model, lhs) {
   if (!(any(grepl(model$family$link, link_function_df$link_name)))) { # is this logical operator not ideal?
     message("This link function is not presently supported; using an identity
@@ -201,6 +210,7 @@ modify_lhs_for_link.glm <- function(model, lhs) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 modify_lhs_for_link.polr <- function(model, lhs) {
   matched_row_bool <- grepl(model$method, link_function_df$link_name)
   filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
@@ -210,6 +220,7 @@ modify_lhs_for_link.polr <- function(model, lhs) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 modify_lhs_for_link.clm <- function(model, lhs) {
   if (!(any(grepl(model$info$link, link_function_df$link_name)))) {
     message("This link function is not presently supported; using an identity

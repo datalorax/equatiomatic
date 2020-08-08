@@ -13,6 +13,7 @@ create_eq <- function(lhs,...) {
 #'   \code{extract_rhs}.
 #'
 #' @inheritParams extract_eq
+#' @noRd
 
 create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                               fix_signs, model, intercept, greek, raw_tex) {
@@ -34,6 +35,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 }
 
 #' @export
+#' @noRd
 create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                            fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
@@ -53,6 +55,7 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 }
 
 #' @export
+#' @noRd
 create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                           fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
@@ -80,6 +83,7 @@ create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 #'   \code{extract_rhs}.
 #'
 #' @inheritParams extract_eq
+#' @noRd
 
 create_term <- function(rhs, ital_vars) {
   prim_escaped <- lapply(rhs$primary, function(x) {
@@ -112,6 +116,7 @@ create_term <- function(rhs, ital_vars) {
 #' @param term A character string to escape
 #'
 #' @return A character string
+#' @noRd
 
 escape_tex <- function(term) {
   unescaped <- c(" ", "&", "%", "$", "#", "_", "{", "}", "~", "^", "\\")
@@ -143,6 +148,7 @@ escape_tex <- function(term) {
 #' @param ital_vars Passed from \code{extract_eq}
 #'
 #' @return A character string
+#' @noRd
 
 add_tex_ital <- function(term, ital_vars) {
   if (any(nchar(term) == 0, ital_vars)) {
@@ -160,6 +166,7 @@ add_tex_ital <- function(term, ital_vars) {
 #' @keywords internal
 #'
 #' @return A vector of characters
+#' @noRd
 
 add_tex_ital_v <- function(term_v, ital_vars) {
   vapply(term_v, add_tex_ital, ital_vars, FUN.VALUE = character(1))
@@ -175,6 +182,7 @@ add_tex_ital_v <- function(term_v, ital_vars) {
 #' @param term A character string to TeXify
 #'
 #' @return A character string
+#' @noRd
 
 add_tex_subscripts <- function(term) {
   if (any(nchar(term) == 0)) {
@@ -191,6 +199,7 @@ add_tex_subscripts <- function(term) {
 #' @keywords internal
 #'
 #' @return A vector of characters
+#' @noRd
 
 add_tex_subscripts_v <- function(term_v) {
   vapply(term_v, add_tex_subscripts, FUN.VALUE = character(1))
@@ -200,6 +209,7 @@ add_tex_subscripts_v <- function(term_v) {
 #' Add multiplication symbol for interaction terms
 #'
 #' @keywords internal
+#' @noRd
 
 add_tex_mult <- function(term) {
   paste(term, collapse = " \\times ")
@@ -214,6 +224,7 @@ add_coefs <- function(rhs, ...) {
 #'
 #' @export
 #' @keywords internal
+#' @noRd
 
 add_coefs.default <- function(rhs, term, coef_digits) {
   ests <- round(rhs$estimate, coef_digits)
@@ -226,6 +237,7 @@ add_coefs.default <- function(rhs, term, coef_digits) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 
 add_coefs.polr <- function(rhs, term, coef_digits) {
   ests <- round(rhs$estimate, coef_digits)
@@ -238,6 +250,7 @@ add_coefs.polr <- function(rhs, term, coef_digits) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 
 add_coefs.clm <- function(rhs, term, coef_digits) {
   ests <- round(rhs$estimate, coef_digits)
@@ -256,6 +269,8 @@ add_greek <- function(rhs, ...) {
 #'
 #' @export
 #' @keywords internal
+#' @noRd
+
 add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
                               raw_tex = FALSE) {
   int <- switch(intercept,
@@ -273,6 +288,7 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
 
 #' @export
 #' @keywords internal
+#' @noRd
 
 add_greek.polr <- function(rhs, terms, ...) {
   rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
@@ -287,6 +303,7 @@ add_greek.polr <- function(rhs, terms, ...) {
 
 #' @export
 #' @keywords internal
+#' @noRd
 
 add_greek.clm <- function(rhs, terms, ...) {
   rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
@@ -302,6 +319,7 @@ add_greek.clm <- function(rhs, terms, ...) {
 #' Intermediary function to wrap text in `\\beta_{}`
 #'
 #' @keywords internal
+#' @noRd
 
 anno_greek <- function(greek, nums, terms = NULL, raw_tex = FALSE) {
   if (raw_tex) {
@@ -323,8 +341,8 @@ anno_greek <- function(greek, nums, terms = NULL, raw_tex = FALSE) {
 #' @keywords internal
 #'
 #' @param eq String containing a LaTeX equation
-#'
-#'
+#' @noRd
+
 fix_coef_signs <- function(eq) {
   # Side-by-side + -
   eq_clean <- gsub("\\+ -", "- ", eq)
