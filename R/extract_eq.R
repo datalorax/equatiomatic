@@ -1,6 +1,6 @@
-#' LaTeX code for R models
+#' 'LaTeX' code for R models
 #'
-#' Extract the variable names from a model to produce a LaTeX equation, which is
+#' Extract the variable names from a model to produce a 'LaTeX' equation, which is
 #' output to the screen. Supports any model supported by
 #' [broom::tidy][broom::tidy].
 #'
