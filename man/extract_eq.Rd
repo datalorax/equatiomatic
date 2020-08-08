@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract_eq.R
 \name{extract_eq}
 \alias{extract_eq}
-\title{LaTeX code for R models}
+\title{'LaTeX' code for R models}
 \usage{
 extract_eq(
   model,
@@ -74,7 +74,7 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 A character of class \dQuote{equation}.
 }
 \description{
-Extract the variable names from a model to produce a LaTeX equation, which is
+Extract the variable names from a model to produce a 'LaTeX' equation, which is
 output to the screen. Supports any model supported by
 \link[broom:reexports]{broom::tidy}.
 }

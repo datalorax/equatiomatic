@@ -2,15 +2,15 @@
 % Please edit documentation in R/print.R
 \name{print.equation}
 \alias{print.equation}
-\title{Print LaTeX equations}
+\title{Print 'LaTeX' equations}
 \usage{
 \method{print}{equation}(x, ...)
 }
 \arguments{
-\item{x}{LaTeX equation built with \code{\link{extract_eq}}}
+\item{x}{'LaTeX' equation built with \code{\link{extract_eq}}}
 
 \item{...}{not used}
 }
 \description{
-Print LaTeX equations built with \code{\link{extract_eq}}.
+Print 'LaTeX' equations built with \code{\link{extract_eq}}.
 }

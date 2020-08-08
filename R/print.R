@@ -1,10 +1,10 @@
-#' Print LaTeX equations
+#' Print 'LaTeX' equations
 #'
-#' Print LaTeX equations built with \code{\link{extract_eq}}.
+#' Print 'LaTeX' equations built with \code{\link{extract_eq}}.
 #'
 #' @export
 #'
-#' @param x LaTeX equation built with \code{\link{extract_eq}}
+#' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
 #'
 
