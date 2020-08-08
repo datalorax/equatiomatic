@@ -20,7 +20,7 @@
 <script src="pkgdown.js"></script><meta property="og:title" content="Transform Models into LaTeX Equations">
 <meta property="og:description" content="The goal of equatiomatic is to reduce the pain associated with
              writing LaTeX formulas from fitted models. The primary function of
-             the package, extract_eq, takes a fitted model object as its input
+             the package, extract_eq(), takes a fitted model object as its input
              and returns the corresponding LaTeX code for the model.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -101,7 +101,7 @@
 <!-- badges: start -->
 
 <p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2020_08_08-brightgreen.svg" alt="Covrpage Summary"></a> <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) --> <a href="https://github.com/datalorax/equatiomatic/actions"><img src="https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://codecov.io/gh/datalorax/equatiomatic?branch=master"><img src="https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
-<p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. In the future, the package aims to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a>; so far it has only been tested with <code>lm</code> and <code>glm</code> models and, at present, only supports binomial <code>glm</code> models (i.e., not ordinal or multinomial models).</p>
+<p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. In the future, the package aims to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a>. See the <a href="https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1">introduction to equatiomatic</a> for currently supported models.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -132,10 +132,8 @@
 <span class="co">#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span>
 <span class="co">#&gt; $$</span></pre></div>
 <p><img src="reference/figures/README-example-shortcut-preview-1.png" width="100%"></p>
-<p>When using categorical variables, it will include the levels of the variables as subscripts:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">palmerpenguins</span>)
-
-<span class="no">mod3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">body_mass_g</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>, <span class="no">penguins</span>)
+<p>When using categorical variables, it will include the levels of the variables as subscripts. Here, we use data from the <a href="https://allisonhorst.github.io/palmerpenguins/index.html">{palmerpenguins}</a> dataset.</p>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">mod3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">body_mass_g</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>, <span class="no">penguins</span>)
 <span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod3</span>)
 <span class="co">#&gt; $$</span>
 <span class="co">#&gt; \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon</span>
@@ -357,6 +355,12 @@
 <h2 class="hasAnchor">
 <a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
 <p>Please note that the ‘equatiomatic’ project is released with a <a href="https://github.com/datalorax/equatiomatic/blob/master/CODE_OF_CONDUCT.md">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
+<div id="a-note-of-appreciation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-note-of-appreciation" class="anchor"></a>A note of appreciation</h2>
+<p>We’d like to thank the authors of the <a href="https://allisonhorst.github.io/palmerpenguins/index.html">{palmerpenguin}</a> dataset for generously allowing us to incorporate the <code>penguins</code> dataset in our package for example usage.</p>
+<p>Horst AM, Hill AP, Gorman KB (2020). <em>palmerpenguins: Palmer Archipelago (Antarctica) penguin data</em>. R package version 0.1.0. <a href="https://allisonhorst.github.io/palmerpenguins/" class="uri">https://allisonhorst.github.io/palmerpenguins/</a></p>
 </div>
 </div>
   </div>

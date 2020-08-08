@@ -106,8 +106,7 @@
 <h1 class="hasAnchor">
 <a href="#background-and-motivation" class="anchor"></a>Background and Motivation</h1>
 <p>If you use R to statistically analyze your data, you might be used to seeing and interpreting the output from functions for models, like <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>. For example, here is the code and output for a single regression model, fit using the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function. We’ll examine how the depth of penguin’s bills relates to their bill length using data from the <a href="https://github.com/allisonhorst/palmerpenguins">{palmerpenguins}</a> package:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">palmerpenguins</span>) <span class="co"># data source</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">bill_length_mm</span> ~ <span class="no">bill_depth_mm</span>, <span class="no">penguins</span>)
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">bill_length_mm</span> ~ <span class="no">bill_depth_mm</span>, <span class="no">penguins</span>)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = bill_length_mm ~ bill_depth_mm, data = penguins)</span>

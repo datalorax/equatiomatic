@@ -259,7 +259,6 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 #&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Works for categorical variables too, putting levels as subscripts</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>palmerpenguins</span>)
 <span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>body_mass_g</span> ~ <span class='no'>bill_length_mm</span> + <span class='no'>species</span>, <span class='no'>penguins</span>)
 <span class='fu'>extract_eq</span>(<span class='no'>mod3</span>)</div><div class='output co'>#&gt; $$
 #&gt; \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
