@@ -8,7 +8,7 @@
 #'
 #' @return A vector of the corresponding type, \code{chr} = character,
 #'   \code{dbl} = double, \code{lgl} = logical, and \code{int} = logical
-#'
+#' @noRd
 mapply_chr <- function(...) {
 	out <- mapply(...)
 	stopifnot(is.character(out))

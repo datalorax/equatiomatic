@@ -8,6 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(equatiomatic)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -25,7 +26,6 @@ length using data from the [{palmerpenguins}](https://github.com/allisonhorst/pa
 package:
 
 ```{r, warning = FALSE, results = 'markup'}
-library(palmerpenguins) # data source
 lm(bill_length_mm ~ bill_depth_mm, penguins)
 ```
 

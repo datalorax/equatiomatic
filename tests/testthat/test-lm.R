@@ -25,7 +25,7 @@ test_that("Simple lm models work", {
 
 
 test_that("Interactions work", {
-  simple_int <- lm(body_mass_g ~ bill_length_mm*species, palmerpenguins::penguins)
+  simple_int <- lm(body_mass_g ~ bill_length_mm*species, penguins)
 
   tex <- extract_eq(simple_int)
   actual <- "\\operatorname{body\\_mass\\_g} = \\alpha + \\beta_{1}(\\operatorname{bill\\_length\\_mm}) + \\beta_{2}(\\operatorname{species}_{\\operatorname{Chinstrap}}) + \\beta_{3}(\\operatorname{species}_{\\operatorname{Gentoo}}) + \\beta_{4}(\\operatorname{bill\\_length\\_mm} \\times \\operatorname{species}_{\\operatorname{Chinstrap}}) + \\beta_{5}(\\operatorname{bill\\_length\\_mm} \\times \\operatorname{species}_{\\operatorname{Gentoo}}) + \\epsilon"

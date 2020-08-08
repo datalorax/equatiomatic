@@ -1,7 +1,12 @@
 ## Resubmission
-This is a resubmission. In this version I have
+This is a resubmission. In this version we have
 
-* Changed the URI in README.md from referencing a file (CODE_OF_CONDUCT.md) to referencing a web link (https://github.com/datalorax/equatiomatic/blob/master/CODE_OF_CONDUCT.md).
+* Fixed all of the broken links referencing a deleted branch in `inst/doc/tests_and_coverage.html`
+* Removed Rd documentation for all internal functions (which before had shown up with missing RD-tags). This also fixes the issue related to examples in unexported functions. 
+* Added single quotes around 'LaTeX' in the Title and Description
+* Added `()` to function names in the description text.
+
+In addition to these changes, we made one minor additional change by including and documenting a new data source in the package, removing the palmerpenguins package from `Imports`, and crediting its source in the README.
 
 ## Test environments
 * local R installation, R 4.0.2

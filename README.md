@@ -8,7 +8,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 [![Covrpage
-Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_07_31-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_07-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
 [![R build
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
@@ -19,10 +19,10 @@ coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge
 The goal of **equatiomatic** is to reduce the pain associated with
 writing LaTeX code from a fitted model. In the future, the package aims
 to support any model supported by
-[**broom**](https://cran.r-project.org/package=broom); so far it has
-only been tested with `lm` and `glm` models and, at present, only
-supports binomial `glm` models (i.e., not ordinal or multinomial
-models).
+[**broom**](https://cran.r-project.org/package=broom). See the
+[introduction to
+equatiomatic](https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1)
+for currently supported models.
 
 ## Installation
 
@@ -70,11 +70,11 @@ extract_eq(mod2)
 <img src="man/figures/README-example-shortcut-preview-1.png" width="100%" />
 
 When using categorical variables, it will include the levels of the
-variables as subscripts:
+variables as subscripts. Here, we use data from the
+[{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/index.html)
+dataset.
 
 ``` r
-library(palmerpenguins)
-
 mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 #> $$
@@ -375,3 +375,14 @@ Please note that the ‘equatiomatic’ project is released with a
 [Contributor Code of
 Conduct](https://github.com/datalorax/equatiomatic/blob/master/CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.
+
+## A note of appreciation
+
+We’d like to thank the authors of the
+[{palmerpenguin}](https://allisonhorst.github.io/palmerpenguins/index.html)
+dataset for generously allowing us to incorporate the `penguins` dataset
+in our package for example usage.
+
+Horst AM, Hill AP, Gorman KB (2020). *palmerpenguins: Palmer Archipelago
+(Antarctica) penguin data*. R package version 0.1.0.
+<https://allisonhorst.github.io/palmerpenguins/>

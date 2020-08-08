@@ -2,9 +2,6 @@ Tests and Coverage
 ================
 08 August, 2020 02:08:43
 
-  - [Coverage](#coverage)
-  - [Unit Tests](#unit-tests)
-
 This output is created by
 [covrpage](https://github.com/metrumresearchgroup/covrpage).
 
@@ -28,7 +25,8 @@ Coverage summary is created using the
 ## Unit Tests
 
 Unit Test summary is created using the
-[testthat](https://github.com/r-lib/testthat) package.
+[testthat](https://github.com/r-lib/testthat)
+package.
 
 | file                                                              |  n |  time | error | failed | skipped | warning |
 | :---------------------------------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
@@ -42,7 +40,8 @@ Unit Test summary is created using the
 
 <details closed>
 
-<summary> Show Detailed Test Results </summary>
+<summary> Show Detailed Test Results
+</summary>
 
 | file                                                                      | context                 | test                              | status | n |  time |
 | :------------------------------------------------------------------------ | :---------------------- | :-------------------------------- | :----- | -: | ----: |
