@@ -1,1 +1,6 @@
-destination: docs
+title: equatiomatic
+development:
+  mode: auto
+template:
+  params:
+    bootswatch: simplex
