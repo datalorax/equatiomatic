@@ -8,7 +8,7 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 [![Covrpage
-Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_07-brightgreen.svg)](https://tinyurl.com/y43gpto4)
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
 [![R build
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
