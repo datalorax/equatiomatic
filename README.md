@@ -10,8 +10,10 @@
 [![Covrpage
 Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
+
 [![R build
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
+
 [![Codecov test
 coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic?branch=master)
 <!-- badges: end -->
@@ -26,8 +28,13 @@ for currently supported models.
 
 ## Installation
 
-equatiomatic is not yet on CRAN. Install the development version from
-GitHub with
+Install from CRAN with
+
+``` r
+install.packages("equatiomatic")
+```
+
+Or get the development version from GitHub with
 
 ``` r
 remotes::install_github("datalorax/equatiomatic")
