@@ -18,27 +18,27 @@ test_that("Ordered logistic regression works", {
   tex_wrap_probit <- extract_eq(model_polr_probit, wrap = TRUE, terms_per_line = 2)
 
   actual_nowrap <- "\\begin{aligned}
-\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] &= \\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon \\\\
-\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= \\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon
+\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] &= \\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) \\\\
+\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= \\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})
 \\end{aligned}"
 
   actual_wrap <- "\\begin{aligned}
 \\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] &= \\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
-&\\quad \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon \\\\
+&\\quad \\beta_{2}(\\operatorname{continuous\\_2}) \\\\
 \\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= \\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
-&\\quad \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon
+&\\quad \\beta_{2}(\\operatorname{continuous\\_2})
 \\end{aligned}"
 
   actual_nowrap_probit <- "\\begin{aligned}
-P(\\operatorname{A} \\geq \\operatorname{B}) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon] \\\\
-P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon]
+P(\\operatorname{A} \\geq \\operatorname{B}) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})] \\\\
+P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})]
 \\end{aligned}"
 
   actual_wrap_probit <- "\\begin{aligned}
 P(\\operatorname{A} \\geq \\operatorname{B}) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
-&\\qquad\\ \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon] \\\\
+&\\qquad\\ \\beta_{2}(\\operatorname{continuous\\_2})] \\\\
 P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
-&\\qquad\\ \\beta_{2}(\\operatorname{continuous\\_2}) + \\epsilon]
+&\\qquad\\ \\beta_{2}(\\operatorname{continuous\\_2})]
 \\end{aligned}"
 
   expect_equal(tex_nowrap, equation_class(actual_nowrap),
@@ -56,9 +56,10 @@ P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\
   # Coefficients instead of letters
   tex <- extract_eq(model_polr, use_coefs = TRUE)
   actual <- "\\begin{aligned}
-\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] &= 1.09 + 0.03(\\operatorname{continuous\\_1}) - 0.03(\\operatorname{continuous\\_2}) + \\epsilon \\\\
-\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= 2.48 + 0.03(\\operatorname{continuous\\_1}) - 0.03(\\operatorname{continuous\\_2}) + \\epsilon
+\\log\\left[ \\frac { P( \\operatorname{A} \\geq \\operatorname{B} ) }{ 1 - P( \\operatorname{A} \\geq \\operatorname{B} ) } \\right] &= 1.09 + 0.03(\\operatorname{continuous\\_1}) - 0.03(\\operatorname{continuous\\_2}) \\\\
+\\log\\left[ \\frac { P( \\operatorname{B} \\geq \\operatorname{C} ) }{ 1 - P( \\operatorname{B} \\geq \\operatorname{C} ) } \\right] &= 2.48 + 0.03(\\operatorname{continuous\\_1}) - 0.03(\\operatorname{continuous\\_2})
 \\end{aligned}"
   expect_equal(tex, equation_class(actual),
                label = "ordered logit + coefs builds correctly")
 })
+

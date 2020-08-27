@@ -23,8 +23,8 @@ print.equation <- function(x, ...) {
 #' @param ... not used
 #'
 #' @method knit_print equation
-#'
-#' @importFrom knitr knit_print asis_output
+#' @noRd
+
 knit_print.equation <- function(x,...){
   knitr::asis_output(format(x))
 }
@@ -37,7 +37,7 @@ knit_print.equation <- function(x,...){
 #'
 #' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
-#'
+#' @noRd
 format.equation <- function(x, ...) {
   paste0(c("$$\n", x, "\n$$"), collapse = "")
 }

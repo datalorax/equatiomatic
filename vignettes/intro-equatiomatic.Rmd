@@ -11,8 +11,7 @@ vignette: >
 library(equatiomatic)
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  results = "asis"
+  comment = "#>"
 )
 ```
 
@@ -32,7 +31,7 @@ lm(bill_length_mm ~ bill_depth_mm, penguins)
 At the same time, you might have come across---or written!---equations that
 appear in books, journal articles, and reports. Equations that look like this:
 
-```{r, echo = FALSE, results = "asis"}
+```{r, echo = FALSE}
 library(equatiomatic)
 extract_eq(lm(bill_length_mm ~ bill_depth_mm, penguins))
 ```
@@ -61,17 +60,13 @@ m <- lm(bill_length_mm ~ bill_depth_mm + flipper_length_mm, penguins)
 
 Now we can pull the TeX code with `extract_eq`
 
-```{r extract_eq1, results = 'markup'}
+```{r extract_eq1}
 extract_eq(m)
 ```
 
-This is moderately helpful, but if we set the code chunk to `results = "asis"`, as shown below, we get the actual equation when we knit the R Markdown document!
-
-![](results-asis.png)
-
 You can of course set `echo = FALSE` as well, and then you'll get just the equation, which will look like the below.
 
-```{r extract_eq1-no-echo, results = "asis", echo = FALSE}
+```{r extract_eq1-no-echo, echo = FALSE}
 extract_eq(m)
 ```
 
