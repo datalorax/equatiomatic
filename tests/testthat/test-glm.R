@@ -11,7 +11,7 @@ test_that("Logistic regression works", {
                      family = binomial(link = "logit"))
 
   tex <- extract_eq(model_logit)
-  actual <- "\\log\\left[ \\frac { P( \\operatorname{outcome} = \\operatorname{1} ) }{ 1 - P( \\operatorname{outcome} = \\operatorname{1} ) } \\right] = \\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon"
+  actual <- "\\log\\left[ \\frac { P( \\operatorname{outcome} = \\operatorname{1} ) }{ 1 - P( \\operatorname{outcome} = \\operatorname{1} ) } \\right] = \\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2})"
 
   expect_equal(tex, equation_class(actual),
                label = "basic equation builds correctly")
@@ -28,7 +28,7 @@ test_that("Probit regression works", {
                       family = binomial(link = "probit"))
 
   tex <- extract_eq(model_probit)
-  actual <- "P(\\operatorname{outcome} = \\operatorname{1}) = \\Phi[\\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon]"
+  actual <- "P(\\operatorname{outcome} = \\operatorname{1}) = \\Phi[\\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2})]"
 
   expect_equal(tex, equation_class(actual),
                label = "basic equation builds correctly")
@@ -36,7 +36,7 @@ test_that("Probit regression works", {
   # Everything works when there are no categorical variables
   model_gaussian <- glm(mpg ~ cyl + disp, data = mtcars, family = gaussian())
   tex <- extract_eq(model_gaussian)
-  actual <- "\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp}) + \\epsilon"
+  actual <- "\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp})"
 
   expect_equal(tex, equation_class(actual),
                label = "equation sans categorical variables builds correctly")
@@ -67,12 +67,12 @@ test_that("Distribution-based equations work", {
 
   actual_logit <- "\\begin{aligned}
 \\operatorname{outcome}_{\\operatorname{1}} &\\sim B\\left(\\operatorname{prob} = \\hat{P},\\operatorname{size} = 300\\right) \\\\
- \\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right] \n &= \\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon
+ \\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right] \n &= \\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2})
 \\end{aligned}"
 
   actual_probit <- "\\begin{aligned}
 \\operatorname{outcome}_{\\operatorname{1}} &\\sim B\\left(\\operatorname{prob} = \\hat{P},\\operatorname{size} = 300\\right) \\\\
- \\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right] \n &= \\Phi[\\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2}) + \\epsilon]
+ \\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right] \n &= \\Phi[\\alpha + \\beta_{1}(\\operatorname{categorical}_{\\operatorname{b}}) + \\beta_{2}(\\operatorname{categorical}_{\\operatorname{c}}) + \\beta_{3}(\\operatorname{continuous\\_1}) + \\beta_{4}(\\operatorname{continuous\\_2})]
 \\end{aligned}"
 
   expect_equal(tex_logit, equation_class(actual_logit),
@@ -86,7 +86,7 @@ test_that("Distribution-based equations work", {
   tex <- extract_eq(model_gaussian, show_distribution = TRUE)
   actual <- "\\begin{aligned}
 \\operatorname{mpg} &\\sim B\\left(\\operatorname{prob} = \\hat{P},\\operatorname{size} = 32\\right) \\\\
- \\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right] \n &= \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp}) + \\epsilon
+ \\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right] \n &= \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp})
 \\end{aligned}"
 
   expect_equal(tex, equation_class(actual),
