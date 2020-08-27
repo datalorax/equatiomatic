@@ -133,10 +133,10 @@
 <span class="co"># fit a basic multiple linear regression model</span>
 <span class="no">m</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">bill_length_mm</span> ~ <span class="no">bill_depth_mm</span> + <span class="no">flipper_length_mm</span>, <span class="no">penguins</span>)</pre></body></html></div>
 <p>Now we can pull the TeX code with <code>extract_eq</code></p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">m</span>)
-<span class="co">#&gt; $$</span>
-<span class="co">#&gt; \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{flipper\_length\_mm}) + \epsilon</span>
-<span class="co">#&gt; $$</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">m</span>)</pre></body></html></div>
+<p><span class="math display">\[
+\operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{flipper\_length\_mm}) + \epsilon
+\]</span></p>
 <p>This is moderately helpful, but if we set the code chunk to <code>results = "asis"</code>, as shown below, we get the actual equation when we knit the R Markdown document!</p>
 <p><img src="results-asis.png"></p>
 <p>You can of course set <code>echo = FALSE</code> as well, and then you’ll get just the equation, which will look like the below.</p>
