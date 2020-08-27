@@ -21,7 +21,12 @@ Authors@R: c(
            family  = 'Sidi',
            role    =  'ctb',           
            email   = 'yonis@metrumrg.com',
-           comment = c(ORCID = "https://orcid.org/0000-0002-4222-1819"))
+           comment = c(ORCID = "https://orcid.org/0000-0002-4222-1819")),
+    person(given   = 'Ellis',
+           family  = 'Hughes',
+           role    =  'ctb',           
+           email   = 'ellishughes@live.com',
+           comment = c(ORCID = "http://orcid.org/0000-0003-0637-4436"))
     )
 Description: The goal of 'equatiomatic' is to reduce the pain associated with
              writing 'LaTeX' formulas from fitted models. The primary function of
