@@ -25,7 +25,7 @@ if (isTRUE(getOption('knitr.in.progress'))) {
   tex_opts$set(
     returnType = "html"
   )
-} 
+}
 
 # Don't use Helvetica in examples
 # This could go in tex_opts$set, but it doesn't seem to actually get used there
@@ -39,7 +39,9 @@ usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 
 [![Covrpage Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://tinyurl.com/y43gpto4)
 <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
+
 [![R build status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
+
 [![Codecov test coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic?branch=master)
 <!-- badges: end -->
 
@@ -49,7 +51,13 @@ supported by [**broom**](https://cran.r-project.org/package=broom). See the [int
 
 ## Installation
 
-equatiomatic is not yet on CRAN. Install the development version from GitHub with
+Install from CRAN with 
+
+```{r install-cran, eval = FALSE}
+install.packages("equatiomatic")
+```
+
+Or get the development version from GitHub with
 
 ```{r install-command, eval=FALSE}
 remotes::install_github("datalorax/equatiomatic")
@@ -64,48 +72,64 @@ The gif above shows the basic functionality.
 
 To convert a model to LaTeX, feed a model object to `extract_eq()`:
 
-```{r example-basic, warning=FALSE, message=FALSE}
+```{r example-basic, warning=FALSE, message=FALSE, eval = FALSE}
 library(equatiomatic)
 
 # Fit a simple model
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
 # Give the results to extract_eq
-extract_eq(mod1)
+extract_eq(mod1) 
 ```
 
 ```{r example-basic-preview, echo=FALSE}
+library(equatiomatic)
+mod1 <- lm(mpg ~ cyl + disp, mtcars)
+
+extract_eq(mod1) %>% 
+  print()
+
 extract_eq(mod1) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 The model can be built in any standard way—it can handle shortcut syntax: 
 
-```{r example-shortcut}
+```{r example-shortcut, eval = FALSE}
 mod2 <- lm(mpg ~ ., mtcars)
 extract_eq(mod2)
 ```
 
 ```{r example-shortcut-preview, echo=FALSE}
+mod2 <- lm(mpg ~ ., mtcars)
+
+extract_eq(mod2) %>% 
+  print()
+
 extract_eq(mod2) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 When using categorical variables, it will include the levels of the variables as subscripts. Here, we use data from the [{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/index.html) dataset.
 
-```{r example-categorical}
+```{r example-categorical, eval = FALSE}
 mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 ```
 
 ```{r example-categorical-preview, echo=FALSE}
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
+
+extract_eq(mod3) %>% 
+  print()
+
 extract_eq(mod3) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 It helpfully preserves the order the variables are supplied in the formula:
 
-```{r example-preserve-order}
+```{r example-preserve-order, eval = FALSE}
 set.seed(8675309)
 d <- data.frame(cat1 = rep(letters[1:3], 100),
                 cat2 = rep(LETTERS[1:3], each = 100),
@@ -117,6 +141,17 @@ extract_eq(mod4)
 ```
 
 ```{r example-preserve-order-preview, echo=FALSE}
+set.seed(8675309)
+d <- data.frame(cat1 = rep(letters[1:3], 100),
+                cat2 = rep(LETTERS[1:3], each = 100),
+                cont1 = rnorm(300, 100, 1),
+                cont2 = rnorm(300, 50, 5),
+                out   = rnorm(300, 10, 0.5))
+mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
+
+extract_eq(mod4) %>% 
+  print()
+
 extract_eq(mod4) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
@@ -125,54 +160,64 @@ extract_eq(mod4) %>%
 
 You can wrap the equations so that a specified number of terms appear on the right-hand side of the equation using `terms_per_line` (defaults to 4):
 
-```{r example-wrap}
+```{r example-wrap, eval = FALSE}
 extract_eq(mod2, wrap = TRUE)
 ```
 
 ```{r example-wrap-preview, echo=FALSE}
 extract_eq(mod2, wrap = TRUE) %>% 
+  print()
+
+extract_eq(mod2, wrap = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
-```{r example-wrap-longer}
+```{r example-wrap-longer, eval = FALSE}
 extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
 ```
 
 ```{r example-wrap-longer-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 6) %>% 
+  print()
+
 extract_eq(mod2, wrap = TRUE, terms_per_line = 6) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 When wrapping, you can change whether the lines end with trailing math operators like `+` (the default), or if they should begin with them using `operator_location = "end"` or `operator_location = "start"`:
 
-```{r example-wrap-longer-location}
+```{r example-wrap-longer-location, eval = FALSE}
 extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
 ```
 
 ```{r example-wrap-longer-location-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start") %>% 
+  print()
+
 extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start") %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 By default, all text in the equation is wrapped in `\operatorname{}`. You can optionally have the variables themselves be italicized (i.e. not be wrapped in `\operatorname{}`) with `ital_vars = TRUE`:
 
-```{r example-italics}
+```{r example-italics, eval = FALSE}
 extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 ```
 
 ```{r example-italics-preview, echo=FALSE}
-extract_eq(mod4, wrap = TRUE, ital_vars = TRUE) %>% 
+extract_eq(mod2, wrap = TRUE, ital_vars = TRUE) %>% 
+  print()
+
+extract_eq(mod2, wrap = TRUE, ital_vars = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 
 ## R Markdown and previewing
 
-If you include `extract_eq()` in an R Markdown chunk with `results="asis"`, **knitr** will render the equation.
+If you include `extract_eq()` in an R Markdown chunk, **knitr** will render the equation. If you'd like to see the LaTeX code wrap the call in `print()`.
 
-Alternatively, you can run the code interactively, copy/paste the equation to where you want it in your document, and make any edits you'd like. 
-
-You can use the `tex_preview()` function from the [**texPreview**](https://cran.r-project.org/package=texPreview) package to preview the equation in RStudio:
+You can also use the `tex_preview()` function from the [**texPreview**](https://cran.r-project.org/package=texPreview) package to preview the equation in RStudio:
 
 ```{r example-preview, eval=FALSE}
 tex_preview(extract_eq(mod1))
@@ -198,34 +243,44 @@ There are several extra options you can enable with additional arguments to `ext
 
 You can return actual numeric coefficients instead of Greek letters with `use_coefs = TRUE`:
 
-```{r use-coefs}
+```{r use-coefs, eval = FALSE}
 extract_eq(mod1, use_coefs = TRUE)
 ```
 
 ```{r use-coefs-preview, echo=FALSE}
+extract_eq(mod1, use_coefs = TRUE) %>% 
+  print()
+
 extract_eq(mod1, use_coefs = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 By default, it will remove doubled operators like "+ -", but you can keep those in (which is often useful for teaching) with `fix_signs = FALSE`:
 
-```{r fix-signs}
+```{r fix-signs, eval = FALSE}
 extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
 ```
 
 ```{r fix-signs-preview, echo=FALSE}
+extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE) %>% 
+  print()
+
 extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 This works in longer wrapped equations:
 
-```{r fix-signs-long}
+```{r fix-signs-long, eval = FALSE}
 extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
            use_coefs = TRUE, fix_signs = FALSE)
 ```
 
 ```{r fix-signs-long-preview, echo=FALSE}
+extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
+           use_coefs = TRUE, fix_signs = FALSE) %>% 
+  print()
+
 extract_eq(mod2, wrap = TRUE, terms_per_line = 3, 
            use_coefs = TRUE, fix_signs = FALSE) %>% 
   tex_preview(usrPackages = usrPackages)
@@ -238,35 +293,45 @@ You're not limited to just `lm` models! **equatiomatic** supports many other mod
 
 ### Logistic regression with `glm()`
 
-```{r example-logit}
-library(palmerpenguins)
-
+```{r example-logit, eval = FALSE}
 model_logit <- glm(sex ~ bill_length_mm + species, 
                    data = penguins, family = binomial(link = "logit"))
 extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ```
 
 ```{r example-logit-preview, echo=FALSE}
+model_logit <- glm(sex ~ bill_length_mm + species, 
+                   data = penguins, family = binomial(link = "logit"))
+
+extract_eq(model_logit, wrap = TRUE, terms_per_line = 3) %>% 
+  print()
+
 extract_eq(model_logit, wrap = TRUE, terms_per_line = 3) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 ### Probit regression with `glm()`
 
-```{r example-probit}
+```{r example-probit, eval = FALSE}
 model_probit <- glm(sex ~ bill_length_mm + species, 
                     data = penguins, family = binomial(link = "probit"))
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 ```
 
 ```{r example-probit-preview, echo=FALSE}
+model_probit <- glm(sex ~ bill_length_mm + species, 
+                    data = penguins, family = binomial(link = "probit"))
+
+extract_eq(model_probit, wrap = TRUE, terms_per_line = 3) %>% 
+  print()
+
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
 ### Ordered logistic regression with `MASS::polr()`
 
-```{r example-polr}
+```{r example-polr, eval = FALSE}
 set.seed(1234)
 df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                                   levels = LETTERS[1:3],
@@ -283,15 +348,32 @@ extract_eq(model_ologit, wrap = TRUE)
 ```
 
 ```{r example-ologit-preview, echo=FALSE}
+set.seed(1234)
+df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
+                                  levels = LETTERS[1:3],
+                                  ordered = TRUE),
+                 continuous_1 = rnorm(300, 100, 1),
+                 continuous_2 = rnorm(300, 50, 5))
+
+model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+                           data = df, Hess = TRUE, method = "logistic")
+model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+                            data = df, Hess = TRUE, method = "probit")
+
+extract_eq(model_ologit, wrap = TRUE) %>% 
+  print()
 extract_eq(model_ologit, wrap = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
-```{r example-polr-probit}
+```{r example-polr-probit, eval = FALSE}
 extract_eq(model_oprobit, wrap = TRUE)
 ```
 
 ```{r example-polr-probit-preview, echo=FALSE}
+extract_eq(model_oprobit, wrap = TRUE) %>% 
+  print()
+
 extract_eq(model_oprobit, wrap = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
@@ -299,7 +381,7 @@ extract_eq(model_oprobit, wrap = TRUE) %>%
 
 ### Ordered regression (logit and probit) with `ordinal::clm()`
 
-```{r example-clm}
+```{r example-clm, eval = FALSE}
 set.seed(1234)
 df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                                   levels = LETTERS[1:3],
@@ -316,15 +398,33 @@ extract_eq(model_ologit, wrap = TRUE)
 ```
 
 ```{r example-clm-ologit-preview, echo=FALSE}
+set.seed(1234)
+df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
+                                  levels = LETTERS[1:3],
+                                  ordered = TRUE),
+                 continuous_1 = rnorm(300, 1, 1),
+                 continuous_2 = rnorm(300, 5, 5))
+
+model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+                             data = df, link = "logit")
+model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+                              data = df, link = "probit")
+
+extract_eq(model_ologit, wrap = TRUE) %>% 
+  print()
+
 extract_eq(model_ologit, wrap = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```
 
-```{r example-clm-probit}
+```{r example-clm-probit, eval = FALSE}
 extract_eq(model_oprobit, wrap = TRUE)
 ```
 
 ```{r example-clm-oprobit-preview, echo=FALSE}
+extract_eq(model_oprobit, wrap = TRUE) %>% 
+  print()
+
 extract_eq(model_oprobit, wrap = TRUE) %>% 
   tex_preview(usrPackages = usrPackages)
 ```

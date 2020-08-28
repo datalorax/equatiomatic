@@ -36,6 +36,22 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 
 #' @export
 #' @noRd
+#' @inheritParams extract_eq
+create_eq.glm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
+                              fix_signs, model, intercept, greek, raw_tex) {
+  rhs$final_terms <- create_term(rhs, ital_vars)
+
+  if (use_coefs) {
+    rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else {
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+  }
+
+  list(lhs = list(lhs), rhs = list(rhs$final_terms))
+}
+
+#' @export
+#' @noRd
 create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                            fix_signs, model, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
@@ -48,7 +64,7 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 
   splt <- split(rhs, rhs$coef.type)
   rhs_final <- lapply(splt$scale$final_terms, function(x) {
-    c(x, splt$coefficient$final_terms, "\\epsilon")
+    c(x, splt$coefficient$final_terms)
   })
   attributes(lhs) <- NULL
   list(lhs = lhs, rhs = rhs_final)
@@ -68,7 +84,7 @@ create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 
   splt <- split(rhs, rhs$coef.type)
   rhs_final <- lapply(splt$intercept$final_terms, function(x) {
-    c(x, splt$location$final_terms, "\\epsilon")
+    c(x, splt$location$final_terms)
   })
   attributes(lhs) <- NULL
   list(lhs = lhs, rhs = rhs_final)

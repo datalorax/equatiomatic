@@ -26,6 +26,8 @@ print.equation <- function(x, ...) {
 #'
 #' @importFrom knitr knit_print asis_output
 #' @importFrom texPreview tex_preview
+#' @noRd
+#'
 knit_print.equation <- function(x,...,tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}"){
   eq <- format(x)
   if(isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") == "gfm")){
@@ -43,7 +45,7 @@ knit_print.equation <- function(x,...,tex_packages = "\\renewcommand*\\familydef
 #'
 #' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
-#'
+#' @noRd
 format.equation <- function(x, ...) {
   paste0(c("$$\n", x, "\n$$"), collapse = "")
 }

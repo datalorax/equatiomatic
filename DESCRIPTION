@@ -1,6 +1,6 @@
 Package: equatiomatic
 Title: Transform Models into 'LaTeX' Equations
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: c(
     person(given = "Daniel",
            family = "Anderson",
@@ -35,12 +35,12 @@ Description: The goal of 'equatiomatic' is to reduce the pain associated with
 License: MIT + file LICENSE
 Depends: R (>= 3.3.0)
 Imports: 
-    broom (>= 0.7.0), 
-    stats
+    broom (>= 0.7.0),
+    stats,
+    knitr
 Suggests: 
     texPreview,
     testthat (>= 2.1.0),
-    knitr,
     MASS,
     ordinal,
     rmarkdown,

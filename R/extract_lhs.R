@@ -79,7 +79,9 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
                       add_tex_ital_v(ss_escaped, ital_vars))
   }
 
-  modify_lhs_for_link(model, full_lhs)
+  full_lhs <- modify_lhs_for_link(model, full_lhs)
+  class(full_lhs) <- c("character", class(model))
+  full_lhs
 }
 
 #' @export
@@ -126,7 +128,10 @@ extract_lhs2.glm <- function(model, ital_vars, ...) {
   topline <- paste(lhs, "&\\sim", rhs)
   second_line <- "\\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right]"
 
-  paste(topline, "\\\\\n", second_line, "\n")
+  full_lhs <- paste(topline, "\\\\\n", second_line, "\n")
+
+  class(full_lhs) <- c("character", class(model))
+  full_lhs
 }
 
 
@@ -198,14 +203,14 @@ modify_lhs_for_link <- function(model, ...) {
 #' @keywords internal
 #' @noRd
 modify_lhs_for_link.glm <- function(model, lhs) {
-  if (!(any(grepl(model$family$link, link_function_df$link_name)))) { # is this logical operator not ideal?
+  if (!(any(grepl(model$family$link, link_function_df$link_name)))) {
     message("This link function is not presently supported; using an identity
-              function instead") # this is implicit; it's just using the lhs as-is
-  } else {
-    matched_row_bool <- grepl(model$family$link, link_function_df$link_name)
-    filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
-    gsub("y", lhs, filtered_link_formula, fixed = TRUE)
+              function instead")
+    model$family$link <- "identity"
   }
+  matched_row_bool <- grepl(model$family$link, link_function_df$link_name)
+  filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
+  gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
 
 #' @export
@@ -224,12 +229,12 @@ modify_lhs_for_link.polr <- function(model, lhs) {
 modify_lhs_for_link.clm <- function(model, lhs) {
   if (!(any(grepl(model$info$link, link_function_df$link_name)))) {
     message("This link function is not presently supported; using an identity
-              function instead") # this is implicit; it's just using the lhs as-is
-  } else {
-    matched_row_bool <- grepl(model$info$link, link_function_df$link_name)
-    filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
-    gsub("y", lhs, filtered_link_formula, fixed = TRUE)
+              function instead")
+    model$family$link <- "identity"
   }
+  matched_row_bool <- grepl(model$info$link, link_function_df$link_name)
+  filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
+  gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
 
 
