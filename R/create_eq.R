@@ -40,7 +40,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, model, intercept, greek, use_error, raw_tex) {
+                              fix_signs, model, intercept, greek, raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
