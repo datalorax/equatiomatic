@@ -4,12 +4,12 @@ test_that("Coefficient digits work correctly", {
   model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 
   tex <- extract_eq(model_simple, use_coefs = TRUE, coef_digits = 4)
-  actual <- "\\operatorname{mpg} = 34.661 - 1.5873(\\operatorname{cyl}) - 0.0206(\\operatorname{disp}) + \\epsilon"
+  actual <- "\\operatorname{\\widehat{mpg}} = 34.661 - 1.5873(\\operatorname{cyl}) - 0.0206(\\operatorname{disp})"
   expect_equal(tex, equation_class(actual),
                label = "coefficient rounding works")
 
   tex <- extract_eq(model_simple, use_coefs = TRUE, fix_signs = FALSE)
-  actual <- "\\operatorname{mpg} = 34.66 + -1.59(\\operatorname{cyl}) + -0.02(\\operatorname{disp}) + \\epsilon"
+  actual <- "\\operatorname{\\widehat{mpg}} = 34.66 + -1.59(\\operatorname{cyl}) + -0.02(\\operatorname{disp})"
   expect_equal(tex, equation_class(actual),
                label = "signs are doubled when fix_signs = FALSE")
 })
