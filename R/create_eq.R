@@ -16,7 +16,8 @@ create_eq <- function(lhs,...) {
 #' @noRd
 
 create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, model, intercept, greek, raw_tex) {
+                              fix_signs, model, intercept, greek,
+                              use_error, raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -25,11 +26,12 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
     rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
 
-  # Add error row
+  # Add error row or not in lm
+  if (use_error){
   error_row <- rhs[nrow(rhs) + 1,]
   error_row$term <- "error"
   error_row$final_terms <- "\\epsilon"
-  rhs <- rbind(rhs, error_row)
+  rhs <- rbind(rhs, error_row)}
 
   list(lhs = list(lhs), rhs = list(rhs$final_terms))
 }
@@ -38,7 +40,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, model, intercept, greek, raw_tex) {
+                              fix_signs, model, intercept, greek, use_error, raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
