@@ -25,8 +25,14 @@ print.equation <- function(x, ...) {
 #' @method knit_print equation
 #'
 #' @importFrom knitr knit_print asis_output
-knit_print.equation <- function(x,...){
-  knitr::asis_output(format(x))
+#' @importFrom texPreview tex_preview
+knit_print.equation <- function(x,...,tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}"){
+  eq <- format(x)
+  if(isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") == "gfm")){
+    knit_print(tex_preview(eq, usrPackages = tex_packages))
+  }else{
+    return(knitr::asis_output(eq))
+  }
 }
 
 #' format 'LaTeX' equations

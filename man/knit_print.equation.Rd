@@ -4,7 +4,11 @@
 \alias{knit_print.equation}
 \title{Print 'LaTeX' equations in Rmarkdown environments}
 \usage{
-\method{knit_print}{equation}(x, ...)
+\method{knit_print}{equation}(
+  x,
+  ...,
+  tex_packages = "\\\\renewcommand*\\\\familydefault{\\\\rmdefault}"
+)
 }
 \arguments{
 \item{x}{'LaTeX' equation built with \code{\link{extract_eq}}}
