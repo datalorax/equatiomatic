@@ -17,7 +17,7 @@ create_eq <- function(lhs,...) {
 
 create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
                               fix_signs, model, intercept, greek,
-                              use_error, raw_tex) {
+                              raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -27,7 +27,7 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   }
 
   # Add error row or not in lm
-  if (use_error){
+  if (!use_coefs){
   error_row <- rhs[nrow(rhs) + 1,]
   error_row$term <- "error"
   error_row$final_terms <- "\\epsilon"
@@ -232,6 +232,16 @@ add_tex_subscripts_v <- function(term_v) {
 add_tex_mult <- function(term) {
   paste(term, collapse = " \\times ")
 }
+
+#' Add a hat sign to the response variable in lm
+#'
+#' @keywords internal
+#' @noRd
+
+add_hat <- function(term) {
+  paste0("\\widehat{", term, "}")
+}
+
 
 
 add_coefs <- function(rhs, ...) {
