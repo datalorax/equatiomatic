@@ -42,7 +42,8 @@ Depends: R (>= 3.3.0)
 Imports: 
     broom (>= 0.7.0),
     stats,
-    knitr
+    knitr,
+    utils
 Suggests: 
     texPreview,
     testthat (>= 2.1.0),

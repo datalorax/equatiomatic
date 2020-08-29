@@ -60,10 +60,42 @@ extract_lhs.lm <- function(model, ital_vars,
 #' @return A character string
 #' @noRd
 
-extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
+extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs, ...) {
   if (show_distribution) {
-    return(extract_lhs2.glm(model, ital_vars))
+    if (model$family$family == "binomial"){
+      return(extract_lhs2_binomial(model, ital_vars, use_coefs))
+    } else {
+      message("This distribution is not presently supported; the distribution assumption
+      will not be displayed")
+      lhs <- all.vars(formula(model))[1]
+      full_lhs <- paste("E(", add_tex_ital_v(lhs, ital_vars), ")")
+      if (use_coefs){
+        full_lhs <- add_hat(full_lhs)
+      }
+      full_lhs <- modify_lhs_for_link(model, full_lhs)
+      class(full_lhs) <- c("character", class(model))
+      return(full_lhs)
+      }
   }
+  if (model$family$family == "binomial"){
+    return(extract_lhs_binomial(model, ital_vars, use_coefs))
+    } else {
+      lhs <- all.vars(formula(model))[1]
+      full_lhs <- paste("E(", add_tex_ital(lhs, ital_vars), ")")
+      if (use_coefs){
+        full_lhs <- add_hat(full_lhs)
+      }
+      full_lhs <- modify_lhs_for_link(model, full_lhs)
+      class(full_lhs) <- c("character", class(model))
+      return(full_lhs)
+    }
+}
+
+#' @return A character string
+#' @keywords internal
+#' @noRd
+
+extract_lhs_binomial <- function(model, ital_vars, use_coefs){
   lhs <- all.vars(formula(model))[1]
 
   # This returns a 1x1 data.frame
@@ -76,11 +108,14 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   ss_escaped <- escape_tex(ss)
 
   if (is.na(ss)) {
-    full_lhs <- add_tex_ital_v(lhs_escaped, ital_vars)
+    full_lhs <- paste("P(", add_tex_ital_v(lhs_escaped, ital_vars), ")")
   } else {
-    full_lhs <- paste(add_tex_ital_v(lhs_escaped, ital_vars),
+    full_lhs <- paste("P(", add_tex_ital_v(lhs_escaped, ital_vars),
                       "=",
-                      add_tex_ital_v(ss_escaped, ital_vars))
+                      add_tex_ital_v(ss_escaped, ital_vars), ")")
+  }
+  if (use_coefs){
+    full_lhs <- add_hat(full_lhs)
   }
 
   full_lhs <- modify_lhs_for_link(model, full_lhs)
@@ -88,11 +123,9 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, ...) {
   full_lhs
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
-
-extract_lhs2.glm <- function(model, ital_vars, ...) {
+extract_lhs2_binomial <- function(model, ital_vars, ...){
   outcome <- all.vars(formula(model))[1]
   n <- unique(model$model$`(weights)`)
   if (is.null(n)) {
@@ -114,30 +147,25 @@ extract_lhs2.glm <- function(model, ital_vars, ...) {
   outcome_escaped <- escape_tex(outcome)
   ss_escaped <- escape_tex(ss)
 
-  if (is.na(ss)) {
-    lhs <- add_tex_ital_v(outcome_escaped, ital_vars)
-  } else {
-    lhs <- paste0(add_tex_ital_v(outcome_escaped, ital_vars),
-                  add_tex_subscripts(
-                    add_tex_ital_v(ss_escaped, ital_vars)
-                  )
-    )
-  }
+  lhs <- add_tex_ital_v(outcome_escaped, ital_vars)
+  p <- paste0("\\operatorname{prob}",
+              add_tex_subscripts(
+                paste0(
+                add_tex_ital_v(outcome_escaped, ital_vars), " = ",
+                  add_tex_ital_v(ss_escaped, ital_vars)
+                  )))
 
-  rhs <- paste0("B\\left(",
-                "\\operatorname{prob} = \\hat{P},",
-                "\\operatorname{size} = ", n,
+  rhs <- paste0("Bernoulli\\left(", p,
+                 "= \\hat{P}",
                 "\\right)")
 
   topline <- paste(lhs, "&\\sim", rhs)
-  second_line <- "\\log\\left[ \\frac {\\hat{P}}{1 - \\hat{P}} \\right]"
+
+  second_line <- modify_lhs_for_link(model, "\\hat{P}")
 
   full_lhs <- paste(topline, "\\\\\n", second_line, "\n")
-
-  class(full_lhs) <- c("character", class(model))
   full_lhs
 }
-
 
 
 #' Extract left-hand side of a polr object
@@ -160,7 +188,7 @@ extract_lhs.polr <- function(model, ital_vars, ...) {
 
   lhs <- lapply(strsplit(lhs_escaped, "\\|"), add_tex_ital_v, ital_vars)
   lhs <- lapply(lhs, paste, collapse = " \\geq ")
-
+  lhs <- lapply(lhs, function(.x) paste0("P( ", .x , " )"))
   full_lhs <- lapply(lhs, function(.x) modify_lhs_for_link(model, .x))
 
   class(full_lhs) <- c("list", class(model))
@@ -188,7 +216,7 @@ extract_lhs.clm <- function(model, ital_vars, ...) {
 
   lhs <- lapply(strsplit(lhs_escaped, "\\|"), add_tex_ital_v, ital_vars)
   lhs <- lapply(lhs, paste, collapse = " \\geq ")
-
+  lhs <- lapply(lhs, function(.x) paste("P(", .x , ")"))
   full_lhs <- lapply(lhs, function(.x) modify_lhs_for_link(model, .x))
 
   class(full_lhs) <- c("list", class(model))
@@ -213,6 +241,9 @@ modify_lhs_for_link.glm <- function(model, lhs) {
     model$family$link <- "identity"
   }
   matched_row_bool <- grepl(model$family$link, link_function_df$link_name)
+  if (sum(matched_row_bool)>1){
+    matched_row_bool[1] <- FALSE
+  }
   filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
   gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
@@ -234,9 +265,12 @@ modify_lhs_for_link.clm <- function(model, lhs) {
   if (!(any(grepl(model$info$link, link_function_df$link_name)))) {
     message("This link function is not presently supported; using an identity
               function instead")
-    model$family$link <- "identity"
+    model$info$link <- "identity"
   }
   matched_row_bool <- grepl(model$info$link, link_function_df$link_name)
+  if (sum(matched_row_bool) > 1){
+    matched_row_bool[1] <- FALSE
+  }
   filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
   gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
@@ -253,11 +287,11 @@ link_name <- c("logit, logistic",
 
 # not sure how to address this one: quasi(link = "identity", variance = "constant")
 
-link_formula <- c("\\log\\left[ \\frac { P( y ) }{ 1 - P( y ) } \\right]",
-                  "P(y)",
-                  "\\frac { 1 }{ P( y ) }",
+link_formula <- c("\\log\\left[ \\frac { y }{ 1 - y } \\right]",
+                  "y",
+                  "\\frac { 1 }{ y }",
                   # "\\frac { 1 }{ 1/{ y }^{ 2 } } ", # inverse gaussian - correct?
-                  "\\log ( { y )} ",
+                  "\\log ({ y }) ",
                   "y") # are the parentheses italicized here?
 
 link_function_df <- data.frame(link_name, link_formula,

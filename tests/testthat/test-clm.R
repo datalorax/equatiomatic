@@ -32,14 +32,14 @@ test_that("Ordered models with clm work", {
 \\end{aligned}"
 
   actual_nowrap_probit <- "\\begin{aligned}
-P(\\operatorname{A} \\geq \\operatorname{B}) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})] \\\\
-P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})]
+P( \\operatorname{A} \\geq \\operatorname{B} ) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})] \\\\
+P( \\operatorname{B} \\geq \\operatorname{C} ) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1}) + \\beta_{2}(\\operatorname{continuous\\_2})]
 \\end{aligned}"
 
   actual_wrap_probit <- "\\begin{aligned}
-P(\\operatorname{A} \\geq \\operatorname{B}) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
+P( \\operatorname{A} \\geq \\operatorname{B} ) &= \\Phi[\\alpha_{1} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
 &\\qquad\\ \\beta_{2}(\\operatorname{continuous\\_2})] \\\\
-P(\\operatorname{B} \\geq \\operatorname{C}) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
+P( \\operatorname{B} \\geq \\operatorname{C} ) &= \\Phi[\\alpha_{2} + \\beta_{1}(\\operatorname{continuous\\_1})\\ + \\\\
 &\\qquad\\ \\beta_{2}(\\operatorname{continuous\\_2})]
 \\end{aligned}"
 
