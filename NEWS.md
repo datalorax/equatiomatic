@@ -1,5 +1,6 @@
 # equatiomatic (development version)
 * Fixed error in rendering logistic/probit regression equations by removing the epsilon (error term) at the end of the left-hand side
+* The epsilon (error term) is no longer being shown when rendering the fitted model equation, i.e. `use_coefs = TRUE`, for `lm` models. The hat sign is also added to the response variable. 
 
 # equatiomatic 0.1.0
 * Initial CRAN Release
