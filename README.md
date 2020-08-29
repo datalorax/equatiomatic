@@ -185,14 +185,11 @@ extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
 
 ## R Markdown and previewing
 
-If you include `extract_eq()` in an R Markdown chunk with
-`results="asis"`, **knitr** will render the equation.
+If you include `extract_eq()` in an R Markdown chunk, **knitr** will
+render the equation. If you’d like to see the LaTeX code wrap the call
+in `print()`.
 
-Alternatively, you can run the code interactively, copy/paste the
-equation to where you want it in your document, and make any edits you’d
-like.
-
-You can use the `tex_preview()` function from the
+You can also use the `tex_preview()` function from the
 [**texPreview**](https://cran.r-project.org/package=texPreview) package
 to preview the equation in RStudio:
 
@@ -227,7 +224,7 @@ extract_eq(mod1, use_coefs = TRUE)
 ```
 
     #> $$
-    #> \operatorname{mpg} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp}) + \epsilon
+    #> \operatorname{\widehat{mpg}} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp})
     #> $$
 
 <img src="man/figures/README-use-coefs-preview-1.png" width="100%" />
@@ -241,7 +238,7 @@ extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
 ```
 
     #> $$
-    #> \operatorname{mpg} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp}) + \epsilon
+    #> \operatorname{\widehat{mpg}} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp})
     #> $$
 
 <img src="man/figures/README-fix-signs-preview-1.png" width="100%" />
@@ -255,10 +252,10 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
 
     #> $$
     #> \begin{aligned}
-    #> \operatorname{mpg} &= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\
+    #> \operatorname{\widehat{mpg}} &= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\
     #> &\quad -0.02(\operatorname{hp}) + 0.79(\operatorname{drat}) + -3.72(\operatorname{wt})\ + \\
     #> &\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs}) + 2.52(\operatorname{am})\ + \\
-    #> &\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb}) + \epsilon
+    #> &\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb})
     #> \end{aligned}
     #> $$
 
@@ -297,7 +294,7 @@ extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 
     #> $$
     #> \begin{aligned}
-    #> P(\operatorname{sex} = \operatorname{male}) &= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
+    #> P( \operatorname{sex} = \operatorname{male} ) &= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
     #> &\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}})]
     #> \end{aligned}
     #> $$
@@ -337,8 +334,8 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P(\operatorname{A} \geq \operatorname{B}) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P(\operatorname{B} \geq \operatorname{C}) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
@@ -377,8 +374,8 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P(\operatorname{A} \geq \operatorname{B}) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P(\operatorname{B} \geq \operatorname{C}) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
