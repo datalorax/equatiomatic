@@ -1,4 +1,5 @@
 # equatiomatic (development version)
+* Uses new print method so users no longer have to specify `results = "asis"` in the R Markdown chunk option
 * Fixed error in rendering logistic/probit regression equations by removing the epsilon (error term) at the end of the left-hand side
 
 # equatiomatic 0.1.0
