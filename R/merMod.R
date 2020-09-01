@@ -26,6 +26,7 @@ create_intercept_merMod <- function(rhs) {
 
 create_betas_merMod <- function(rhs, ital_vars) {
   rhs <- assign_re_subscripts(rhs)
+  rhs$original_order <- seq_len(nrow(rhs))
   fixed <- rhs[rhs$effect == "fixed" & rhs$term != "(Intercept)", ]
   if(nrow(fixed) == 0) {
     return()
@@ -47,6 +48,7 @@ create_betas_merMod <- function(rhs, ital_vars) {
     betas <- fixed
     betas$random_indicator <- ""
   }
+  betas <- betas[order(betas$original_order), ]
   betas$betas <- paste0("\\beta_{", seq_len(nrow(betas)), betas$random_indicator, "}", "(", create_term(betas, ital_vars), ")")
 
   paste(betas$betas, collapse = " + ")
