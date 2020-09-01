@@ -74,7 +74,6 @@ extract_rhs <- function(model, ...) {
 #' #>   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
 #' }
 
-
 extract_rhs.default <- function(model) {
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))
@@ -83,7 +82,31 @@ extract_rhs.default <- function(model) {
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
 
   # Extract coefficient names and values from model
-  full_rhs <- tidy(model)
+  full_rhs <- broom::tidy(model)
+
+  # Split interactions split into character vectors
+  full_rhs$split <- strsplit(full_rhs$term, ":")
+
+  full_rhs$primary <- extract_primary_term(formula_rhs_terms,
+                                           full_rhs$term)
+
+  full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
+                                                full_rhs$split)
+  class(full_rhs) <- c("data.frame", class(model))
+  full_rhs
+}
+
+#' @noRd
+#' @export
+extract_rhs.lmerMod <- function(model) {
+  # Extract RHS from formula
+  formula_rhs <- labels(terms(formula(model)))
+
+  # Extract unique (primary) terms from formula (no interactions)
+  formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
+
+  # Extract coefficient names and values from model
+  full_rhs <- broom.mixed::tidy(model)
 
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
