@@ -1,3 +1,15 @@
+#' Generic function for extracting the right-hand side from a model
+#'
+#' @keywords internal
+#'
+#' @param model A fitted model
+#' @param \dots additional arguments passed to the specific extractor
+#' @noRd
+
+extract_rhs <- function(model, ...) {
+  UseMethod("extract_rhs", model)
+}
+
 #' Extract right-hand side
 #'
 #' Extract a data frame with list columns for the primary terms and subscripts
@@ -10,7 +22,8 @@
 #' @return A list with one element per future equation term. Term components
 #'   like subscripts are nested inside each list element. List elements with two
 #'   or more terms are interactions.
-#'
+#' @noRd
+#' @export
 #' @examples \dontrun{
 #' library(palmerpenguins)
 #' mod1 <- lm(body_mass_g ~ bill_length_mm + species * flipper_length_mm, penguins)
@@ -60,9 +73,9 @@
 #' #>   ..$ : Named chr  "Gentoo" ""
 #' #>   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
 #' }
-#' @noRd
 
-extract_rhs <- function(model) {
+
+extract_rhs.default <- function(model) {
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))
 
@@ -70,7 +83,7 @@ extract_rhs <- function(model) {
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
 
   # Extract coefficient names and values from model
-  full_rhs <- broom::tidy(model)
+  full_rhs <- tidy(model)
 
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
@@ -83,7 +96,6 @@ extract_rhs <- function(model) {
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
 }
-
 
 #' Extract the primary terms from all terms
 #'
