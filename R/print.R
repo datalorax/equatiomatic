@@ -25,17 +25,28 @@ print.equation <- function(x, ...) {
 #' @method knit_print equation
 #'
 #' @importFrom knitr knit_print asis_output
-#' @importFrom texPreview tex_preview
 #' @noRd
 #'
 knit_print.equation <- function(x,...,tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}"){
   eq <- format(x)
   if(isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") == "gfm")){
-    knit_print(tex_preview(eq, usrPackages = tex_packages))
+    if (!is_texPreview_installed()) {
+      message("Please install \"{texPreview}\" with `install.packages(\"texPreview\")` for equations to render with GitHub flavored markdown. Defaulting to raw TeX code.", call. = FALSE)
+      print(eq)
+    } else {
+      knit_print(texPreview::tex_preview(eq, usrPackages = tex_packages))
+    }
   }else{
     return(knitr::asis_output(eq))
   }
 }
+
+#' @keywords internal
+#' @noRd
+is_texPreview_installed <- function() {
+  requireNamespace("texPreview", quietly = TRUE)
+}
+
 
 #' format 'LaTeX' equations
 #'
