@@ -259,10 +259,10 @@ create_matrix <- function(rhs) {
 
 create_vcov_structure_merMod <- function(model) {
   rhs <- extract_rhs(model)
-  lhs <- create_lhs_merMod(rhs)
-
   order <- rhs[rhs$group != "Residual", ]
   order <- sort(tapply(order$original_order, order$group, min))
+
+  lhs <- create_lhs_merMod(rhs)[names(order)]
 
   means <- create_mean_structure_merMod(rhs)[names(order)]
   error_structure <- create_matrix(rhs)[names(order)]
