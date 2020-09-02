@@ -1,6 +1,7 @@
 #' @keywords internal
 #' @importFrom stats terms formula coef
 #' @importFrom knitr knit_print asis_output
+#' @importFrom stats setNames
 
 
 "_PACKAGE"

@@ -1,17 +1,3 @@
-#' Generic function for extracting an equation from a model object
-#'
-#' @keywords internal
-#'
-#' @param model A fitted model
-#' @param \dots additional arguments passed to the specific extractor
-#' @export
-#' @noRd
-
-extract_eq <- function(model, ...) {
-  UseMethod("extract_eq", model)
-}
-
-
 #' 'LaTeX' code for R models
 #'
 #' Extract the variable names from a model to produce a 'LaTeX' equation, which is
@@ -54,6 +40,7 @@ extract_eq <- function(model, ...) {
 #'   coefficient estimates that are negative are preceded with a "+" (e.g.
 #'   `5(x) + -3(z)`). If enabled, the "+ -" is replaced with a "-" (e.g.
 #'   `5(x) - 3(z)`).
+#' @param ... Additional arguments (for futuer development; not currently used).
 #' @export
 #'
 #' @return A character of class \dQuote{equation}.
@@ -105,12 +92,29 @@ extract_eq <- function(model, ...) {
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 
-extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
+extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        raw_tex = FALSE, ital_vars = FALSE,
                        show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
-                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
+                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
+                       ...) {
+  UseMethod("extract_eq", model)
+}
+
+#' Default function for extracting an equation from a model object
+#'
+#' @keywords internal
+#' @export
+#' @noRd
+
+extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
+                               raw_tex = FALSE, ital_vars = FALSE,
+                               show_distribution = FALSE,
+                               wrap = FALSE, terms_per_line = 4,
+                               operator_location = "end", align_env = "aligned",
+                               use_coefs = FALSE, coef_digits = 2,
+                               fix_signs = TRUE, ...) {
 
   lhs <- extract_lhs(model, ital_vars, show_distribution)
   rhs <- extract_rhs(model)
@@ -195,10 +199,17 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 # I haven't incorporated wrap yet either and we should think about if we want to
 # It might be better to have an alternative for matrix notation
 
-
+#' Equation generator for lme4::lmer models
 #' @export
-#' @noRD
-extract_eq.lmerMod <- function(model, ital_vars = FALSE, align_env = "aligned") {
+#' @noRd
+extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
+                               raw_tex = FALSE, ital_vars = FALSE,
+                               show_distribution = FALSE,
+                               wrap = FALSE, terms_per_line = 4,
+                               operator_location = "end",
+                               align_env = "aligned",
+                               use_coefs = FALSE, coef_digits = 2,
+                               fix_signs = TRUE, ...) {
   distributed <- create_distributed_as_merMod(model, ital_vars)
   vcv <- create_vcov_structure_merMod(model)
   eq <- gsub("\\sim", " &\\sim", c(distributed, vcv), fixed = TRUE)
