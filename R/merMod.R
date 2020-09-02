@@ -216,7 +216,7 @@ convert_matrix <- function(mat) {
 }
 
 flip_order <- function(text) {
-  splt <- str_split(text, " ")[[1]]
+  splt <- strsplit(text, " ")[[1]]
   paste(splt[c(1, 3, 2)], collapse = " ")
 }
 
