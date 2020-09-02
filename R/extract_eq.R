@@ -1,3 +1,17 @@
+#' Generic function for extracting an equation from a model object
+#'
+#' @keywords internal
+#'
+#' @param model A fitted model
+#' @param \dots additional arguments passed to the specific extractor
+#' @export
+#' @noRd
+
+extract_eq <- function(model, ...) {
+  UseMethod("extract_eq", model)
+}
+
+
 #' 'LaTeX' code for R models
 #'
 #' Extract the variable names from a model to produce a 'LaTeX' equation, which is
@@ -91,7 +105,7 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 
-extract_eq <- function(model, intercept = "alpha", greek = "beta",
+extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                        raw_tex = FALSE, ital_vars = FALSE,
                        show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
@@ -174,4 +188,25 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
   class(eq) <- c('equation', 'character')
 
   return(eq)
+}
+
+# These args still need to be incorporated
+# intercept, greek, raw_tex, use_coefs, coef_digits, fix_signs
+# I haven't incorporated wrap yet either and we should think about if we want to
+# It might be better to have an alternative for matrix notation
+
+
+#' @export
+#' @noRD
+extract_eq.lmerMod <- function(model, ital_vars = FALSE, align_env = "aligned") {
+  distributed <- create_distributed_as_merMod(model, ital_vars)
+  vcv <- create_vcov_structure_merMod(model)
+  eq <- gsub("\\sim", " &\\sim", c(distributed, vcv), fixed = TRUE)
+  eq <- paste(eq, collapse = " \\\\ ")
+  eq <- paste0("\\begin{", align_env, "}\n",
+               eq,
+               "\n\\end{", align_env, "}")
+  class(eq) <- c('equation', 'character')
+
+  eq
 }

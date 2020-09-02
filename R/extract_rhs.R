@@ -116,6 +116,8 @@ extract_rhs.lmerMod <- function(model) {
 
   full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
                                                 full_rhs$split)
+  full_rhs$original_order <- seq_len(nrow(full_rhs))
+
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
 }
