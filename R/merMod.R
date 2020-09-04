@@ -33,105 +33,105 @@ sub_vectorized <- function(text_vec, pattern_vec, replacement_vec) {
 
 
 #################### Fixed Effects Portion Generator ####################
-
-#' Create randomly varying subscripts
-#'
-#' Adds a column to rhs that indexes j/k/l etc. for each level (starting at j)
-#' @param rhs output from \code{extract_rhs}
-#' @keywords internal
-#' @noRd
-assign_re_subscripts <- function(rhs) {
-  # Figure out number of levels (randomly varying coefs)
-  re_levs <- unique(rhs$group)
-  n_levels <- sum(re_levs != "Residual", na.rm = TRUE)
-
-  # Pull actual levels
-  re_levs <- re_levs[!is.na(re_levs) & re_levs != "Residual"]
-
-  # Assign them subscripts, starting with j
-  re_subscripts <- letters[10:(10 + (n_levels - 1))]
-
-  # Store subscripts as a column in rhs
-  rhs$re_subscripts <- as.character(factor(rhs$group,
-                                           levels = re_levs,
-                                           labels = re_subscripts))
-  # Add [i]
-  rhs$re_subscripts <- paste0(rhs$re_subscripts, "[i]")
-  rhs
-}
+# #' Create randomly varying subscripts
+# #'
+# #' Adds a column to rhs that indexes j/k/l etc. for each level (starting at j)
+# #' @param rhs output from \code{extract_rhs}
+# #' @keywords internal
+# #' @noRd
+# assign_re_subscripts <- function(rhs) {
+#   # Figure out number of levels (randomly varying coefs)
+#   re_levs <- unique(rhs$group)
+#   n_levels <- sum(re_levs != "Residual", na.rm = TRUE)
+#
+#   # Pull actual levels
+#   re_levs <- re_levs[!is.na(re_levs) & re_levs != "Residual"]
+#
+#   # Assign them subscripts, starting with j
+#   re_subscripts <- letters[10:(10 + (n_levels - 1))]
+#
+#   # Store subscripts as a column in rhs
+#   rhs$re_subscripts <- as.character(factor(rhs$group,
+#                                            levels = re_levs,
+#                                            labels = re_subscripts))
+#   # Add [i]
+#   rhs$re_subscripts <- paste0(rhs$re_subscripts, "[i]")
+#   rhs
+# }
 
 ## Create fixed effects portion
 ### with appropriate subscripts denoting which vary randomly
 
-#' Create the intercept term
-#'
-#' Will  figure out if it's randomly varying (and at what levels) and apply
-#' the corresponding subscript(s)
-#' @param rhs output from \code{extract_rhs}
-#' @keywords internal
-#' @noRd
-create_intercept_merMod <- function(rhs) {
-  rhs <- assign_re_subscripts(rhs)
-  rhs <- rhs[!is.na(rhs$re_subscripts) &
-               grepl("sd__(Intercept)", rhs$term, fixed = TRUE), ]
-
-  paste0("\\alpha_{", paste(rhs$re_subscripts, collapse = ","), "}")
+extract_fixef_merMod <- function(rhs) {
+  rhs$term[rhs$effect == "fixed"]
 }
 
-#' Create the beta term(s)
-#'
-#' Works just like \code{\link{create_intercept_merMod}} but for all the
-#' coefficients. Creates the fixed effects with the corresponding subscripts
-#' denoting whether they are varying at higher levels or not.
+#' Pull just the random variables
 #' @param rhs output from \code{extract_rhs}
 #' @keywords internal
 #' @noRd
-create_betas_merMod <- function(rhs, ital_vars) {
-  rhs <- assign_re_subscripts(rhs)
-  fixed <- rhs[rhs$effect == "fixed" & rhs$term != "(Intercept)", ]
+extract_random_vars <- function(rhs) {
+  order <- rhs[rhs$group != "Residual", ]
+  order <- sort(tapply(order$original_order, order$group, min))
 
-  # return NULL if there are no predictors (i.e., an unconditional model)
-  if(nrow(fixed) == 0) {
-    return()
+  vc <- rhs[rhs$group != "Residual" & rhs$effect == "ran_pars", ]
+  splt <- split(vc, vc$group)[names(order)]
+
+  lapply(splt, function(x) {
+    vars <- x[!grepl("cor__", x$term), ]
+    gsub("sd__(.+)", "\\1", vars$term)
+  })
+}
+
+create_greek_merMod <- function(rhs) {
+  fixed <- extract_fixef_merMod(rhs)
+  random <- extract_random_vars(rhs)
+  lev_indexes <- letters[10:(10 + (length(random) - 1))]
+
+  # fixed effects
+  if("(Intercept)" %in% unlist(random)) {
+    names(fixed) <- ifelse(fixed == "(Intercept)", "\\alpha_{", paste0("\\beta_{", seq_along(fixed) - 1))
+  } else {
+    names(fixed) <- c("\\alpha", (paste0("\\beta_{", seq_along(fixed)[-length(fixed)])))
   }
-  random <- rhs[rhs$effect == "ran_pars" &
-                  rhs$group != "Residual" &
-                  !grepl("cor__", rhs$term, fixed = TRUE) &
-                  !grepl("(Intercept)", rhs$term, fixed = TRUE), ]
-  if(nrow(random) > 0) {
-    # split the df by random effect
-    random_splt <- split(random, random$term)
-
-    # for each df, return just the subscripts, collapsed (e.g., "j[i],k[i]")
-    random_splt <- lapply(random_splt, function(x) {
-      paste0(x$re_subscripts, collapse = ",")
-    })
-
-    # create a df to merge back into the rhs df
-    to_merge <- data.frame(term = gsub("sd__", "", names(random_splt)),
-                           random_indicator = unlist(random_splt))
-
-    # merge in - betas will now have the correct subscripts
-    betas <- merge(fixed, to_merge, by = "term", all = TRUE)
-
-    # recode missing data to an empty string for easy `paste`ing
-    betas$random_indicator <- ifelse(is.na(betas$random_indicator),
-                                     "",
-                                     betas$random_indicator)
-  } else { # if no betas are random
-    betas <- fixed
-    betas$random_indicator <- ""
+  for(i in seq_along(random)) {
+    names(fixed) <- ifelse(
+      fixed %in% random[[i]], # check to see if it's random
+      ifelse(
+        grepl("\\]$", names(fixed)), # check if a previous level has been assigned
+        paste0(names(fixed), ",", lev_indexes[i], "[i]"), # add comma if so
+        paste0(names(fixed), lev_indexes[i], "[i]")# otherwise just add the level index
+      ),
+      names(fixed)
+    )
   }
-  # put the betas back in the original order of the formula
-  betas <- betas[order(betas$original_order), ]
+  names(fixed) <- paste0(names(fixed), "}")
 
-  # put it all together
-  betas$betas <- paste0("\\beta_{",
-                        seq_len(nrow(betas)),
-                        betas$random_indicator, "}",
-                        "(", create_term(betas, ital_vars), ")")
+  # random effects
 
-  paste(betas$betas, collapse = " + ")
+  # create beta indexes (drop intercept)
+  indexes <- lapply(random, function(x) x[!grepl("Intercept", x)])
+  indexes <- lapply(indexes, function(x) seq_along(fixed)[fixed %in% x] - 1)
+  random <- Map(function(r, lev) {
+    names(r) <- gsub("(Intercept)",
+                     paste0("\\alpha_{", lev, "}"),
+                     r,
+                     fixed = TRUE)
+    r
+  },
+  r = random,
+  lev = lev_indexes
+  )
+
+  random <- Map(function(r, index, lev) {
+    names(r)[grepl("[^\\(Intercept\\)]", r)] <- paste0("\\beta_{", index, lev, "}")
+    r
+  },
+  r = random,
+  index = indexes,
+  lev = lev_indexes
+  )
+  list(fixed = fixed, random = random)
 }
 
 #' Create the full fixed-effects portion of an lmerMod
@@ -149,53 +149,112 @@ create_betas_merMod <- function(rhs, ital_vars) {
 # #> "\\operatorname{Reaction} \\sim N \\left(\\alpha_{j[i]} +
 # #>  \\beta_{1j[i]}(\\operatorname{Days}),\\sigma^2 \\right)"
 #' }
-create_fixed_merMod <- function(model, ital_vars, sigma = "\\sigma^2") {
+create_fixed_merMod <- function(model, mean_separate,
+                                ital_vars, wrap, terms_per_line,
+                                operator_location, sigma = "\\sigma^2") {
   rhs <- extract_rhs(model)
   lhs <- extract_lhs(model, ital_vars)
-  int <- create_intercept_merMod(rhs)
-  betas <- create_betas_merMod(rhs, ital_vars)
-  if(!is.null(betas)) {
-    normal_dist <- wrap_normal_dist(paste(int, "+", betas), sigma)
+  greek <- create_greek_merMod(rhs)
+  terms <- create_term(rhs[rhs$effect == "fixed", ], ital_vars)
+  terms <- vapply(terms, function(x) {
+    if(nchar(x) == 0) {
+      return("")
+    }
+    paste0("(", x, ")")
+  }, character(1))
+
+  fixed <- paste0(names(greek$fixed), terms)
+  if(wrap) {
+    if (operator_location == "start") {
+      line_end <- "\\\\\n&\\quad + "
+    } else {
+      line_end <- "\\ + \\\\\n&\\quad "
+    }
+    fixed <- split(fixed, ceiling(seq_along(fixed) / terms_per_line))
+
+    if(isFALSE(mean_separate)) {
+      fixed <- lapply(fixed, function(x) {
+        terms_added <- paste0(x, collapse = " + ")
+        paste0("&", terms_added)
+        })
+      fixed <- paste0("\\begin{aligned}\n", paste0(fixed, collapse = "\\\\"), "\\end{aligned}")
+    } else {
+      fixed <- lapply(fixed, paste0, collapse = " + ")
+      fixed <- paste0(fixed, collapse = line_end)
+    }
   } else {
-    normal_dist <- wrap_normal_dist(int, sigma)
+    fixed <- paste0(fixed, collapse = " + ")
   }
 
-  paste(lhs, "\\sim", normal_dist)
+  if(is.null(mean_separate)) {
+    mean_separate <- length(terms) > 3
+  }
+  if(mean_separate) {
+    paste0(lhs, " \\sim ", wrap_normal_dist("\\mu", sigma),
+           " \\\\ \\mu &=", fixed)
+  }  else {
+    paste(lhs, "\\sim", wrap_normal_dist(fixed, sigma))
+  }
 }
-
 
 #################### Random Effects VCV Generator ####################
 
-#' Create greek terms for a vector
-#'
-#' Subscript generator for random effects. Sometimes you want just, e.g.,
-#'   "\\alpha", other times "\\alpha_{j}".
-#' @param v Character vector of terms in the model
-#' @param index Optional vector of indices to associate with the greek terms.
-#'   Should be the same length as v.
-#' @keywords internal
-#' @noRd
-assign_ranef_greek <- function(v, index = NULL) {
-  slopes <- v[!grepl("(Intercept)", v)]
-
-  if(!is.null(index)) {
-    int <- paste0("\\alpha_{", index, "}")
-    if(length(slopes) > 0) {
-      betas <- paste0("\\beta_{", seq_along(slopes), index, "}")
-    } else {
-      return(int) # if no slopes - return just the intercept
-    }
-  } else { # if no index
-    int <- "\\alpha"
-    if(length(slopes) > 0) {
-      betas <- paste0("\\beta_{", seq_along(slopes), "}")
-    } else {
-      return(int)
-    }
-  }
-
-  c(int, betas)
-}
+# #' Create greek terms for a vector
+# #'
+# #' Subscript generator for random effects. Sometimes you want just, e.g.,
+# #'   "\\alpha", other times "\\alpha_{j}".
+# #' @param v Character vector of terms in the model
+# #' @param index Logical. Should the indices (j, k, etc.) be included.
+# #'   Defaults to \code{TRUE}.
+# #' @keywords internal
+# #' @noRd
+# assign_ranef_greek <- function(rhs, index = TRUE) {
+#   random_vars <- extract_random_vars(rhs)
+#
+#   int <- create_intercept_merMod(rhs)
+#   betas <- create_betas_merMod(rhs, ital_vars)
+#
+#   coefs <- strsplit(c(int = int, betas = betas), "\\+")
+#
+#   # pull which coefficients vary at which levels
+#   lev_vary <- lapply(coefs, function(x) {
+#       drop_vars <- gsub("\\(.+", "", x)
+#       names(drop_vars) <- seq_along(drop_vars)
+#       subscripts <- gsub(".+\\{(.+)\\}", "\\1", drop_vars)
+#       gsub("\\[i\\]", "", subscripts)
+#     })
+#
+#   lev_vary$betas <- gsub("\\d", "", lev_vary$betas)
+#   lev_vary <- lapply(lev_vary, strsplit, ",")
+#
+#   lev_vary$int <- with(lev_vary, int[vapply(int, length, numeric(1)) > 0])
+#   lev_vary$betas <- with(lev_vary, betas[vapply(betas, length, numeric(1)) > 0])
+#
+#   if(index) {
+#     int <- paste0("\\alpha_{", unlist(lev_vary$int), "}")
+#     if(length(lev_vary$betas) > 0) {
+#       betas <- Map(function(index, level) {
+#         paste0("\\beta_{", index, level, "}")
+#       },
+#       index = names(lev_vary$betas),
+#       level = lev_vary$betas)
+#       betas <- unlist(betas)
+#     } else {
+#       return(int) # if no slopes - return just the intercept
+#     }
+#   } else { # if no index
+#     int <- "\\alpha"
+#     if(length(lev_vary$betas) > 0) {
+#       betas <- lapply(lev_vary$betas, function(level) {
+#         paste0("\\beta_{", level, "}")
+#         })
+#       betas <- unlist(betas)
+#     } else {
+#       return(int)
+#     }
+#   }
+#   c(int, betas)
+# }
 
 #### Create array functions ####
 
@@ -254,31 +313,20 @@ convert_matrix <- function(mat) {
   )
 }
 
-#' Pull just the random variables
-#' @param rhs output from \code{extract_rhs}
-#' @keywords internal
-#' @noRd
-extract_random_vars <- function(rhs) {
-  vc <- rhs[rhs$group != "Residual" & rhs$effect == "ran_pars", ]
-  splt <- split(vc, vc$group)
-
-  lapply(splt, function(x) {
-    vars <- x[!grepl("cor__", x$term), ]
-    gsub(".+__(.+)", "\\1", vars$term)
-  })
-}
-
 #' Pull just the covariances
 #' @param rhs output from \code{extract_rhs}
 #' @keywords internal
 #' @noRd
 extract_random_covars <- function(rhs) {
+  order <- rhs[rhs$group != "Residual", ]
+  order <- sort(tapply(order$original_order, order$group, min))
+
   vc <- rhs[rhs$group != "Residual" & rhs$effect == "ran_pars", ]
-  splt <- split(vc, vc$group)
+  splt <- split(vc, vc$group)[names(order)]
 
   lapply(splt, function(x) {
     vars <- x[grepl("cor__", x$term), ]
-    gsub(".+__(.+)", "\\1", vars$term)
+    gsub("cor__(.+)", "\\1", vars$term)
   })
 }
 
@@ -290,13 +338,8 @@ extract_random_covars <- function(rhs) {
 #' @keywords internal
 #' @noRd
 create_lhs_vcov_merMod <- function(rhs) {
-  random_vars <- extract_random_vars(rhs)
-  lev_index <- letters[10:(10 + (length(random_vars) - 1))]
-
-  random_vars <- Map(assign_ranef_greek,
-                     v = random_vars,
-                     index = lev_index)
-  lapply(random_vars, create_onecol_array)
+  greek <- create_greek_merMod(rhs)
+  lapply(greek$random, function(x) create_onecol_array(names(x)))
 }
 
 #' Create mean structure showing how the random effects are distributed
@@ -304,9 +347,8 @@ create_lhs_vcov_merMod <- function(rhs) {
 #' @keywords internal
 #' @noRd
 create_mean_structure_merMod <- function(rhs) {
-  random_vars <- extract_random_vars(rhs)
-  random_vars <- lapply(random_vars, assign_ranef_greek)
-  means <- lapply(random_vars, function(x) paste0("\\mu_{", x, "}"))
+  greek <- create_greek_merMod(rhs)
+  means <- lapply(greek$random, function(x) paste0("\\mu_{", names(x), "}"))
   lapply(means, create_onecol_array)
 }
 
@@ -314,22 +356,15 @@ create_mean_structure_merMod <- function(rhs) {
 
 # Create the variance terms (for the diagonals)
 create_vars_merMod <- function(rhs) {
-  random_vars <- extract_random_vars(rhs)
-  random_vars <- lapply(random_vars, assign_ranef_greek)
-  lapply(random_vars, function(x) paste0("\\sigma^2_{", x, "}"))
+  greek <- create_greek_merMod(rhs)
+  lapply(greek$random, function(x) paste0("\\sigma^2_{", names(x), "}"))
 }
 
 # Create the covariance terms (off-diagonals)
 create_covars_merMod <- function(rhs) {
-  random_vars <- extract_random_vars(rhs)
-  random_vars_greek <- lapply(random_vars, function(x) {
-    setNames(x, assign_ranef_greek(x))
-  })
-  random_vars_greek <- lapply(random_vars_greek, function(x) {
-    setNames(x, paste0("\\sigma_{", names(x), "}"))
-  })
-
+  greek <- create_greek_merMod(rhs)
   random_covars <- extract_random_covars(rhs)
+
   if(all(unlist(lapply(random_covars, function(x) length(x) == 0)))) {
     return()
   }
@@ -338,7 +373,7 @@ create_covars_merMod <- function(rhs) {
     sub_vectorized(x, y, names(y))
   },
   x = lapply(random_covars, function(x) x[!grepl(":", x)]),
-  y = lapply(random_vars_greek, function(x) x[!grepl(":", x)])
+  y = lapply(greek$random, function(x) x[!grepl(":", x)])
   )
 
   # Then replace interaction terms
@@ -346,7 +381,7 @@ create_covars_merMod <- function(rhs) {
     sub_vectorized(x, y, names(y))
   },
   x = lapply(random_covars, function(x) x[grepl(":", x)]),
-  y = lapply(random_vars_greek, function(x) x[grepl(":", x)])
+  y = lapply(greek$random, function(x) x[grepl(":", x)])
   )
 
   # Replace non-interaction terms in the interaction vector
@@ -354,7 +389,7 @@ create_covars_merMod <- function(rhs) {
     sub_vectorized(x, y, names(y))
   },
   x = random_covars_greek2,
-  y = lapply(random_vars_greek, function(x) x[!grepl(":", x)])
+  y = lapply(greek$random, function(x) x[!grepl(":", x)])
   )
 
   # Now put them together
@@ -462,15 +497,13 @@ create_vcov_matrix_merMod <- function(rhs) {
 # #>       \\right) \\right) , \\text{ for  island } k  = 1, \\dots ,  K"
 #' }
 #' # Note line breaks are not actually produced
+#'
 create_ranef_structure_merMod <- function(model) {
   rhs <- extract_rhs(model)
-  order <- rhs[rhs$group != "Residual", ]
-  order <- sort(tapply(order$original_order, order$group, min))
+  lhs <- create_lhs_vcov_merMod(rhs)
 
-  lhs <- create_lhs_vcov_merMod(rhs)[names(order)]
-
-  means <- create_mean_structure_merMod(rhs)[names(order)]
-  error_structure <- create_vcov_matrix_merMod(rhs)[names(order)]
+  means <- create_mean_structure_merMod(rhs)
+  error_structure <- create_vcov_matrix_merMod(rhs)
 
   norm <- wrap_normal_dist(means, error_structure)
   levs <- names(means)
