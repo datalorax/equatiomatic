@@ -210,8 +210,8 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, ...) {
-  distributed <- create_distributed_as_merMod(model, ital_vars)
-  vcv <- create_vcov_structure_merMod(model)
+  distributed <- create_fixed_merMod(model, ital_vars)
+  vcv <- create_ranef_structure_merMod(model)
   eq <- gsub("\\sim", " &\\sim", c(distributed, vcv), fixed = TRUE)
   eq <- paste(eq, collapse = " \\\\ ")
   eq <- paste0("\\begin{", align_env, "}\n",
