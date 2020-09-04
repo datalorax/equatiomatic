@@ -40,7 +40,14 @@
 #'   coefficient estimates that are negative are preceded with a "+" (e.g.
 #'   `5(x) + -3(z)`). If enabled, the "+ -" is replaced with a "-" (e.g.
 #'   `5(x) - 3(z)`).
-#' @param ... Additional arguments (for futuer development; not currently used).
+#' @param mean_separate Currently only support for \code{\link[lme4]{lmer}}
+#'   models. Should the mean structure be inside or separated from the
+#'   normal distribution? Defaults to \code{NULL}, in which case it will become
+#'   \code{TRUE} if there are more than three fixed-effect parameters. If
+#'   \code{TRUE}, the equation will be displayed as, for example,
+#'   outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If \code{FALSE}, this
+#'   same equation would be outcome ~ N(alpha + beta, sigma).
+#' @param ... Additional arguments (for future development; not currently used).
 #' @export
 #'
 #' @return A character of class \dQuote{equation}.
@@ -98,7 +105,7 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
-                       ...) {
+                       mean_separate,...) {
   UseMethod("extract_eq", model)
 }
 
@@ -114,7 +121,7 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
-                               fix_signs = TRUE, ...) {
+                               fix_signs = TRUE, mean_separate,...) {
 
   lhs <- extract_lhs(model, ital_vars, show_distribution)
   rhs <- extract_rhs(model)
