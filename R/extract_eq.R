@@ -96,18 +96,19 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
-                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE) {
+                       use_coefs = FALSE, coef_digits = 2,
+                       fix_signs = TRUE) {
 
-  lhs <- extract_lhs(model, ital_vars, show_distribution)
+  lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
 
-  eq_raw <- create_eq(lhs,
+  eq_raw <- create_eq(model,
+                      lhs,
                       rhs,
                       ital_vars,
                       use_coefs,
                       coef_digits,
                       fix_signs,
-                      model,
                       intercept,
                       greek,
                       raw_tex)

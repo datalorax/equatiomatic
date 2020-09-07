@@ -12,7 +12,7 @@ test_that("Simple lm models work", {
                label = "basic equation builds correctly")
 
   tex <- extract_eq(model_simple, use_coefs = TRUE)
-  actual <- "\\operatorname{mpg} = 34.66 - 1.59(\\operatorname{cyl}) - 0.02(\\operatorname{disp}) + \\epsilon"
+  actual <- "\\operatorname{\\widehat{mpg}} = 34.66 - 1.59(\\operatorname{cyl}) - 0.02(\\operatorname{disp})"
   expect_equal(tex, equation_class(actual),
                label = "basic equation + coefs builds correctly")
 

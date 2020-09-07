@@ -15,8 +15,9 @@ create_eq <- function(lhs,...) {
 #' @inheritParams extract_eq
 #' @noRd
 
-create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, model, intercept, greek, raw_tex) {
+create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
+                              fix_signs, intercept, greek,
+                              raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -25,11 +26,12 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
     rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
 
-  # Add error row
+  # Add error row or not in lm
+  if (!use_coefs){
   error_row <- rhs[nrow(rhs) + 1,]
   error_row$term <- "error"
   error_row$final_terms <- "\\epsilon"
-  rhs <- rbind(rhs, error_row)
+  rhs <- rbind(rhs, error_row)}
 
   list(lhs = list(lhs), rhs = list(rhs$final_terms))
 }
@@ -37,8 +39,8 @@ create_eq.default <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 #' @inheritParams extract_eq
-create_eq.glm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, model, intercept, greek, raw_tex) {
+create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
+                              fix_signs, intercept, greek, raw_tex) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -46,14 +48,18 @@ create_eq.glm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
+  if (!is.null(model$offset)){
+    rhs <- rbind(rhs, c(rep(NA, (dim(rhs)[2]-1)),
+                        add_tex_ital(utils::tail(names(attr(model$terms, "dataClasses")),1), ital_vars)))
+  }
 
   list(lhs = list(lhs), rhs = list(rhs$final_terms))
 }
 
 #' @export
 #' @noRd
-create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                           fix_signs, model, ...) {
+create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
+                           fix_signs, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -72,8 +78,8 @@ create_eq.polr <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
 
 #' @export
 #' @noRd
-create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, model, ...) {
+create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
+                          fix_signs, ...) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
@@ -86,6 +92,7 @@ create_eq.clm <- function(lhs, rhs, ital_vars, use_coefs, coef_digits,
   rhs_final <- lapply(splt$intercept$final_terms, function(x) {
     c(x, splt$location$final_terms)
   })
+
   attributes(lhs) <- NULL
   list(lhs = lhs, rhs = rhs_final)
 }
@@ -230,6 +237,16 @@ add_tex_subscripts_v <- function(term_v) {
 add_tex_mult <- function(term) {
   paste(term, collapse = " \\times ")
 }
+
+#' Add a hat sign to the response variable in lm
+#'
+#' @keywords internal
+#' @noRd
+
+add_hat <- function(term) {
+  paste0("\\widehat{", term, "}")
+}
+
 
 
 add_coefs <- function(rhs, ...) {
