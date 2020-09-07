@@ -160,7 +160,9 @@ broom::tidy.</p>
   align_env = <span class='st'>"aligned"</span>,
   use_coefs = <span class='fl'>FALSE</span>,
   coef_digits = <span class='fl'>2</span>,
-  fix_signs = <span class='fl'>TRUE</span>
+  fix_signs = <span class='fl'>TRUE</span>,
+  <span class='kw'>mean_separate</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -240,6 +242,20 @@ round to when displaying model estimates.</p></td>
 coefficient estimates that are negative are preceded with a "+" (e.g.
 <code>5(x) + -3(z)</code>). If enabled, the "+ -" is replaced with a "-" (e.g.
 <code>5(x) - 3(z)</code>).</p></td>
+    </tr>
+    <tr>
+      <th>mean_separate</th>
+      <td><p>Currently only support for <code>lmer</code>
+models. Should the mean structure be inside or separated from the
+normal distribution? Defaults to <code>NULL</code>, in which case it will become
+<code>TRUE</code> if there are more than three fixed-effect parameters. If
+<code>TRUE</code>, the equation will be displayed as, for example,
+outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If <code>FALSE</code>, this
+same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments (for future development; not currently used).</p></td>
     </tr>
     </table>
 
