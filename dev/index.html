@@ -101,7 +101,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2020_09_01-red.svg" alt="Covrpage Summary"></a> <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) --></p>
+<p><a href="https://tinyurl.com/y43gpto4"><img src="https://img.shields.io/badge/covrpage-Last_Build_2020_09_07-red.svg" alt="Covrpage Summary"></a> <!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) --></p>
 <p><a href="https://github.com/datalorax/equatiomatic/actions"><img src="https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg" alt="R build status"></a></p>
 <p><a href="https://codecov.io/gh/datalorax/equatiomatic?branch=master"><img src="https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <!-- badges: end --></p>
 <p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. In the future, the package aims to support any model supported by <a href="https://cran.r-project.org/package=broom"><strong>broom</strong></a>. See the <a href="https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1">introduction to equatiomatic</a> for currently supported models.</p>
@@ -109,9 +109,13 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install from CRAN with</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"equatiomatic"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"equatiomatic"</span>)
+</pre></div>
 <p>Or get the development version from GitHub with</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"datalorax/equatiomatic"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"datalorax/equatiomatic"</span>)
+</pre></div>
 </div>
 <div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
@@ -119,40 +123,48 @@
 <p><img src="https://github.com/datalorax/equatiomatic/raw/master/img/equatiomatic.gif"></p>
 <p>The gif above shows the basic functionality.</p>
 <p>To convert a model to LaTeX, feed a model object to <code><a href="reference/extract_eq.html">extract_eq()</a></code>:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">equatiomatic</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/datalorax/equatiomatic">equatiomatic</a></span>)
 
 <span class="co"># Fit a simple model</span>
-<span class="no">mod1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">mpg</span> ~ <span class="no">cyl</span> + <span class="no">disp</span>, <span class="no">mtcars</span>)
+<span class="kw">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">mpg</span> <span class="op">~</span> <span class="kw">cyl</span> <span class="op">+</span> <span class="kw">disp</span>, <span class="kw">mtcars</span>)
 
 <span class="co"># Give the results to extract_eq</span>
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>)</pre></div>
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod1</span>) 
+</pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-basic-preview-1.png" width="100%"></p>
 <p>The model can be built in any standard way—it can handle shortcut syntax:</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">mod2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">mpg</span> ~ <span class="no">.</span>, <span class="no">mtcars</span>)
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>)</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">mpg</span> <span class="op">~</span> <span class="kw">.</span>, <span class="kw">mtcars</span>)
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod2</span>)
+</pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-shortcut-preview-1.png" width="100%"></p>
 <p>When using categorical variables, it will include the levels of the variables as subscripts. Here, we use data from the <a href="https://allisonhorst.github.io/palmerpenguins/index.html">{palmerpenguins}</a> dataset.</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">mod3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">body_mass_g</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>, <span class="no">penguins</span>)
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod3</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">body_mass_g</span> <span class="op">~</span> <span class="kw">bill_length_mm</span> <span class="op">+</span> <span class="kw">species</span>, <span class="kw">penguins</span>)
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod3</span>)
+</pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-categorical-preview-1.png" width="100%"></p>
 <p>It helpfully preserves the order the variables are supplied in the formula:</p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">8675309</span>)
-<span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">cat1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">letters</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="fl">100</span>),
-                <span class="kw">cat2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="kw">each</span> <span class="kw">=</span> <span class="fl">100</span>),
-                <span class="kw">cont1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span>),
-                <span class="kw">cont2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span>),
-                <span class="kw">out</span>   <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">10</span>, <span class="fl">0.5</span>))
-<span class="no">mod4</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">out</span> ~ <span class="no">cont1</span> + <span class="no">cat2</span> + <span class="no">cont2</span> + <span class="no">cat1</span>, <span class="no">d</span>)
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod4</span>)</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">8675309</span>)
+<span class="kw">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(cat1 = <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw">letters</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>], <span class="fl">100</span>),
+                cat2 = <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>], each = <span class="fl">100</span>),
+                cont1 = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span>),
+                cont2 = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span>),
+                out   = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">10</span>, <span class="fl">0.5</span>))
+<span class="kw">mod4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">out</span> <span class="op">~</span> <span class="kw">cont1</span> <span class="op">+</span> <span class="kw">cat2</span> <span class="op">+</span> <span class="kw">cont2</span> <span class="op">+</span> <span class="kw">cat1</span>, <span class="kw">d</span>)
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod4</span>)
+</pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; \operatorname{out} = \alpha + \beta_{1}(\operatorname{cont1}) + \beta_{2}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{4}(\operatorname{cont2}) + \beta_{5}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{6}(\operatorname{cat1}_{\operatorname{c}}) + \epsilon</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; $$</span></span></code></pre></div>
@@ -162,7 +174,9 @@
 <h2 class="hasAnchor">
 <a href="#appearance" class="anchor"></a>Appearance</h2>
 <p>You can wrap the equations so that a specified number of terms appear on the right-hand side of the equation using <code>terms_per_line</code> (defaults to 4):</p>
-<div class="sourceCode" id="cb11"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod2</span>, wrap = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="co">#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\</span></span>
@@ -171,7 +185,9 @@
 <span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-wrap-preview-1.png" width="100%"></p>
-<div class="sourceCode" id="cb13"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">6</span>)</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod2</span>, wrap = <span class="fl">TRUE</span>, terms_per_line = <span class="fl">6</span>)
+</pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt})\ + \\</span></span>
@@ -180,7 +196,9 @@
 <span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-wrap-longer-preview-1.png" width="100%"></p>
 <p>When wrapping, you can change whether the lines end with trailing math operators like <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> (the default), or if they should begin with them using <code>operator_location = "end"</code> or <code>operator_location = "start"</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="kw">operator_location</span> <span class="kw">=</span> <span class="st">"start"</span>)</pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod2</span>, wrap = <span class="fl">TRUE</span>, terms_per_line = <span class="fl">4</span>, operator_location = <span class="st">"start"</span>)
+</pre></div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb16-3"><a href="#cb16-3"></a><span class="co">#&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\\</span></span>
@@ -190,7 +208,9 @@
 <span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-wrap-longer-location-preview-1.png" width="100%"></p>
 <p>By default, all text in the equation is wrapped in <code>\operatorname{}</code>. You can optionally have the variables themselves be italicized (i.e. not be wrapped in <code>\operatorname{}</code>) with <code>ital_vars = TRUE</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">ital_vars</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod2</span>, wrap = <span class="fl">TRUE</span>, ital_vars = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a><span class="co">#&gt; mpg &amp;= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\</span></span>
@@ -205,13 +225,17 @@
 <a href="#r-markdown-and-previewing" class="anchor"></a>R Markdown and previewing</h2>
 <p>If you include <code><a href="reference/extract_eq.html">extract_eq()</a></code> in an R Markdown chunk, <strong>knitr</strong> will render the equation. If you’d like to see the LaTeX code wrap the call in <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>.</p>
 <p>You can also use the <code>tex_preview()</code> function from the <a href="https://cran.r-project.org/package=texPreview"><strong>texPreview</strong></a> package to preview the equation in RStudio:</p>
-<div class="sourceCode" id="cb19"><pre class="r"><span class="fu">tex_preview</span>(<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>))</pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="fu">tex_preview</span>(<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod1</span>))
+</pre></div>
 <p><img src="reference/figures/preview1.png"></p>
 <p>Both <code><a href="reference/extract_eq.html">extract_eq()</a></code> and <code>tex_preview()</code> work with <strong>magrittr</strong> pipes, so you can do something like this:</p>
-<div class="sourceCode" id="cb20"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)  <span class="co"># or library(tidyverse) or any other package that exports %&gt;%</span>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">magrittr</span>)  <span class="co"># or library(tidyverse) or any other package that exports %&gt;%</span>
 
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">tex_preview</span>()</pre></div>
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod1</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">tex_preview</span>()
+</pre></div>
 </div>
 <div id="extra-options" class="section level2">
 <h2 class="hasAnchor">
@@ -221,26 +245,32 @@
 <h3 class="hasAnchor">
 <a href="#actual-coefficients" class="anchor"></a>Actual coefficients</h3>
 <p>You can return actual numeric coefficients instead of Greek letters with <code>use_coefs = TRUE</code>:</p>
-<div class="sourceCode" id="cb21"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>, <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod1</span>, use_coefs = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">#&gt; $$</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="co">#&gt; \operatorname{mpg} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp}) + \epsilon</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="co">#&gt; \operatorname{\widehat{mpg}} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp})</span></span>
 <span id="cb22-3"><a href="#cb22-3"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-use-coefs-preview-1.png" width="100%"></p>
 <p>By default, it will remove doubled operators like “+ -”, but you can keep those in (which is often useful for teaching) with <code>fix_signs = FALSE</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod1</span>, <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">fix_signs</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod1</span>, use_coefs = <span class="fl">TRUE</span>, fix_signs = <span class="fl">FALSE</span>)
+</pre></div>
 <div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">#&gt; $$</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co">#&gt; \operatorname{mpg} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp}) + \epsilon</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co">#&gt; \operatorname{\widehat{mpg}} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp})</span></span>
 <span id="cb24-3"><a href="#cb24-3"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-fix-signs-preview-1.png" width="100%"></p>
 <p>This works in longer wrapped equations:</p>
-<div class="sourceCode" id="cb25"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">mod2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">3</span>,
-           <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">fix_signs</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">mod2</span>, wrap = <span class="fl">TRUE</span>, terms_per_line = <span class="fl">3</span>,
+           use_coefs = <span class="fl">TRUE</span>, fix_signs = <span class="fl">FALSE</span>)
+</pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a><span class="co">#&gt; \operatorname{mpg} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="co">#&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\</span></span>
 <span id="cb26-4"><a href="#cb26-4"></a><span class="co">#&gt; &amp;\quad -0.02(\operatorname{hp}) + 0.79(\operatorname{drat}) + -3.72(\operatorname{wt})\ + \\</span></span>
 <span id="cb26-5"><a href="#cb26-5"></a><span class="co">#&gt; &amp;\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs}) + 2.52(\operatorname{am})\ + \\</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a><span class="co">#&gt; &amp;\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb}) + \epsilon</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="co">#&gt; &amp;\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb})</span></span>
 <span id="cb26-7"><a href="#cb26-7"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb26-8"><a href="#cb26-8"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-fix-signs-long-preview-1.png" width="100%"></p>
@@ -255,9 +285,11 @@
 <h3 class="hasAnchor">
 <a href="#logistic-regression-with-glm" class="anchor"></a>Logistic regression with <code>glm()</code>
 </h3>
-<div class="sourceCode" id="cb27"><pre class="r"><span class="no">model_logit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>,
-                   <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>))
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_logit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit">
+<span class="kw">model_logit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="kw">sex</span> <span class="op">~</span> <span class="kw">bill_length_mm</span> <span class="op">+</span> <span class="kw">species</span>, 
+                   data = <span class="kw">penguins</span>, family = <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(link = <span class="st">"logit"</span>))
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">model_logit</span>, wrap = <span class="fl">TRUE</span>, terms_per_line = <span class="fl">3</span>)
+</pre></div>
 <div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb28-2"><a href="#cb28-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb28-3"><a href="#cb28-3"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{sex} = \operatorname{male} ) }{ 1 - P( \operatorname{sex} = \operatorname{male} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span></span>
@@ -270,12 +302,14 @@
 <h3 class="hasAnchor">
 <a href="#probit-regression-with-glm" class="anchor"></a>Probit regression with <code>glm()</code>
 </h3>
-<div class="sourceCode" id="cb29"><pre class="r"><span class="no">model_probit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">bill_length_mm</span> + <span class="no">species</span>,
-                    <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>))
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_probit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit">
+<span class="kw">model_probit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="kw">sex</span> <span class="op">~</span> <span class="kw">bill_length_mm</span> <span class="op">+</span> <span class="kw">species</span>, 
+                    data = <span class="kw">penguins</span>, family = <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(link = <span class="st">"probit"</span>))
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">model_probit</span>, wrap = <span class="fl">TRUE</span>, terms_per_line = <span class="fl">3</span>)
+</pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb30-2"><a href="#cb30-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="co">#&gt; P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co">#&gt; P( \operatorname{sex} = \operatorname{male} ) &amp;= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\</span></span>
 <span id="cb30-4"><a href="#cb30-4"></a><span class="co">#&gt; &amp;\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}})]</span></span>
 <span id="cb30-5"><a href="#cb30-5"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb30-6"><a href="#cb30-6"></a><span class="co">#&gt; $$</span></span></code></pre></div>
@@ -285,19 +319,21 @@
 <h3 class="hasAnchor">
 <a href="#ordered-logistic-regression-with-masspolr" class="anchor"></a>Ordered logistic regression with <code>MASS::polr()</code>
 </h3>
-<div class="sourceCode" id="cb31"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
-<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">outcome</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="fl">100</span>),
-                                  <span class="kw">levels</span> <span class="kw">=</span> <span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>],
-                                  <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
-                 <span class="kw">continuous_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span>),
-                 <span class="kw">continuous_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span>))
+<div class="sourceCode" id="cb31"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
+<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(outcome = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>], <span class="fl">100</span>),
+                                  levels = <span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>],
+                                  ordered = <span class="fl">TRUE</span>),
+                 continuous_1 = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span>),
+                 continuous_2 = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span>))
 
-<span class="no">model_ologit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
-                           <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">Hess</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"logistic"</span>)
-<span class="no">model_oprobit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
-                            <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">Hess</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+<span class="kw">model_ologit</span> <span class="op">&lt;-</span> <span class="kw">MASS</span>::<span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="kw">outcome</span> <span class="op">~</span> <span class="kw">continuous_1</span> <span class="op">+</span> <span class="kw">continuous_2</span>, 
+                           data = <span class="kw">df</span>, Hess = <span class="fl">TRUE</span>, method = <span class="st">"logistic"</span>)
+<span class="kw">model_oprobit</span> <span class="op">&lt;-</span> <span class="kw">MASS</span>::<span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="kw">outcome</span> <span class="op">~</span> <span class="kw">continuous_1</span> <span class="op">+</span> <span class="kw">continuous_2</span>, 
+                            data = <span class="kw">df</span>, Hess = <span class="fl">TRUE</span>, method = <span class="st">"probit"</span>)
 
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">model_ologit</span>, wrap = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb32-2"><a href="#cb32-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb32-3"><a href="#cb32-3"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\</span></span>
@@ -305,11 +341,13 @@
 <span id="cb32-5"><a href="#cb32-5"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb32-6"><a href="#cb32-6"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-ologit-preview-1.png" width="100%"></p>
-<div class="sourceCode" id="cb33"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">model_oprobit</span>, wrap = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb34-2"><a href="#cb34-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a><span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
-<span id="cb34-4"><a href="#cb34-4"></a><span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="co">#&gt; P( \operatorname{A} \geq \operatorname{B} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="co">#&gt; P( \operatorname{B} \geq \operatorname{C} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
 <span id="cb34-5"><a href="#cb34-5"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb34-6"><a href="#cb34-6"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-polr-probit-preview-1.png" width="100%"></p>
@@ -318,19 +356,21 @@
 <h3 class="hasAnchor">
 <a href="#ordered-regression-logit-and-probit-with-ordinalclm" class="anchor"></a>Ordered regression (logit and probit) with <code>ordinal::clm()</code>
 </h3>
-<div class="sourceCode" id="cb35"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
-<span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">outcome</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="fl">100</span>),
-                                  <span class="kw">levels</span> <span class="kw">=</span> <span class="no">LETTERS</span>[<span class="fl">1</span>:<span class="fl">3</span>],
-                                  <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
-                 <span class="kw">continuous_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">1</span>, <span class="fl">1</span>),
-                 <span class="kw">continuous_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">5</span>, <span class="fl">5</span>))
+<div class="sourceCode" id="cb35"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1234</span>)
+<span class="kw">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(outcome = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>], <span class="fl">100</span>),
+                                  levels = <span class="kw">LETTERS</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>],
+                                  ordered = <span class="fl">TRUE</span>),
+                 continuous_1 = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">1</span>, <span class="fl">1</span>),
+                 continuous_2 = <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">300</span>, <span class="fl">5</span>, <span class="fl">5</span>))
 
-<span class="no">model_ologit</span> <span class="kw">&lt;-</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
-                             <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>)
-<span class="no">model_oprobit</span> <span class="kw">&lt;-</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="no">outcome</span> ~ <span class="no">continuous_1</span> + <span class="no">continuous_2</span>,
-                              <span class="kw">data</span> <span class="kw">=</span> <span class="no">df</span>, <span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+<span class="kw">model_ologit</span> <span class="op">&lt;-</span> <span class="kw">ordinal</span>::<span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="kw">outcome</span> <span class="op">~</span> <span class="kw">continuous_1</span> <span class="op">+</span> <span class="kw">continuous_2</span>, 
+                             data = <span class="kw">df</span>, link = <span class="st">"logit"</span>)
+<span class="kw">model_oprobit</span> <span class="op">&lt;-</span> <span class="kw">ordinal</span>::<span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="kw">outcome</span> <span class="op">~</span> <span class="kw">continuous_1</span> <span class="op">+</span> <span class="kw">continuous_2</span>, 
+                              data = <span class="kw">df</span>, link = <span class="st">"probit"</span>)
 
-<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">model_ologit</span>, wrap = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb36-2"><a href="#cb36-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb36-3"><a href="#cb36-3"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\</span></span>
@@ -338,11 +378,13 @@
 <span id="cb36-5"><a href="#cb36-5"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb36-6"><a href="#cb36-6"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-clm-ologit-preview-1.png" width="100%"></p>
-<div class="sourceCode" id="cb37"><pre class="r"><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="no">model_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit">
+<span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span>(<span class="kw">model_oprobit</span>, wrap = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="co">#&gt; P(\operatorname{A} \geq \operatorname{B}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="co">#&gt; P(\operatorname{B} \geq \operatorname{C}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="co">#&gt; P( \operatorname{A} \geq \operatorname{B} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="co">#&gt; P( \operatorname{B} \geq \operatorname{C} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
 <span id="cb38-5"><a href="#cb38-5"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb38-6"><a href="#cb38-6"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-clm-oprobit-preview-1.png" width="100%"></p>
@@ -416,7 +458,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

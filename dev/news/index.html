@@ -144,6 +144,7 @@
 <ul>
 <li>Uses new print method so users no longer have to specify <code>results = "asis"</code> in the R Markdown chunk option</li>
 <li>Fixed error in rendering logistic/probit regression equations by removing the epsilon (error term) at the end of the left-hand side</li>
+<li>The epsilon (error term) is no longer being shown when rendering the fitted model equation, i.e. <code>use_coefs = TRUE</code>, for <code>lm</code> models. The hat sign is also added to the response variable.</li>
 </ul>
 </div>
     <div id="equatiomatic-010" class="section level1">
@@ -181,7 +182,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
