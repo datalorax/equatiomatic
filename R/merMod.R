@@ -83,10 +83,33 @@ extract_random_vars <- function(rhs) {
   })
 }
 
-create_greek_merMod <- function(rhs) {
+# modify this function to include other levels?
+create_greek_merMod <- function(model) {
+  rhs <- extract_rhs(model)
   fixed <- extract_fixef_merMod(rhs)
   random <- extract_random_vars(rhs)
   lev_indexes <- letters[10:(10 + (length(random) - 1))]
+
+  order <- rhs[rhs$group != "Residual", ]
+  order <- sort(tapply(order$original_order, order$group, min))
+
+  # Detect if group-level pred
+  group_coefs <- detect_group_coef(model)
+
+  # all this higher_vars stuff could probs go in a separate function
+  higher_vars <- lapply(names(group_coefs), function(x) fixed[grepl(x, fixed)])
+  names(higher_vars) <- group_coefs
+
+  # split in case where multiple vars at a higher level
+  higher_vars <- split(higher_vars, names(higher_vars))
+
+  # put back into a single list (makes no difference if only one group var)
+  higher_vars <- lapply(higher_vars, function(x) Reduce(`c`, x))
+
+  higher_vars <- higher_vars[names(order)]
+
+  # Remove higher-level terms from lower level
+  fixed <- fixed[!(fixed %in% unlist(higher_vars))]
 
   # fixed effects
   if("(Intercept)" %in% unlist(random)) {
@@ -94,6 +117,39 @@ create_greek_merMod <- function(rhs) {
   } else {
     names(fixed) <- c("\\alpha", (paste0("\\beta_{", seq_along(fixed)[-length(fixed)])))
   }
+
+  # Detect cross-level interactions
+  crosslevel <- lapply(higher_vars, function(x) lapply(fixed, function(y) x[grepl(y, x)]))
+  # crosslevel <- lapply(crosslevel, function(x) {
+  #   names(x) <- gsub("(.+)\\_.+", "\\1", names(x))
+  #   x
+  # })
+  # Drop intercept term (only cross-level interactions)
+  cross_interactions <- lapply(crosslevel, function(x) {
+    x[-grepl("\\alpha", names(x), fixed = TRUE)]
+  })
+
+  # only non-cross-level interactions
+  higher_nocross <- Map(setdiff, higher_vars, lapply(cross_interactions, unlist))
+
+  # create intercept term
+  intercepts <- lapply(higher_nocross, function(x) list("\\alpha" = x))
+
+  # Put it together
+  # need to get rid of variable name in cross-level interactions still
+  higher_preds <- Map(function(x, y) c(x, y), intercepts, cross_interactions)
+
+  # Drop terms with no vars
+  higher_preds <- lapply(higher_preds, function(x) {
+    x[vapply(x, length, FUN.VALUE = numeric(1)) > 0]
+  })
+
+  # close off subscripts for list names
+  higher_preds <- lapply(higher_preds, function(x) {
+    names(x) <- gsub("(\\_\\{\\d)", "\\1\\}", names(x))
+    x
+  })
+
   for(i in seq_along(random)) {
     names(fixed) <- ifelse(
       fixed %in% random[[i]], # check to see if it's random
@@ -131,7 +187,26 @@ create_greek_merMod <- function(rhs) {
   index = indexes,
   lev = lev_indexes
   )
-  list(fixed = fixed, random = random)
+
+  # Group vars mean structure
+  group_preds <- lapply(higher_preds, function(x) {
+    coefs <- names(x)
+    slopes <- Map(function(term, greek) {
+      paste0("\\gamma^{", greek, "}_{", seq_along(term), "}")
+    },
+    term = x,
+    greek = coefs)
+  })
+
+  # Add intercept terms
+  group_preds <- lapply(group_preds, function(x) {
+    lapply(x, function(y) {
+      intercept <- gsub("_\\{\\d\\}$", "_\\{0}",  y[1])
+      c(intercept, y)
+    })
+  })
+
+  list(fixed = fixed, random = random, group_preds = group_preds)
 }
 
 #' Create the full fixed-effects portion of an lmerMod
@@ -154,8 +229,8 @@ create_fixed_merMod <- function(model, mean_separate,
                                 operator_location, sigma = "\\sigma^2") {
   rhs <- extract_rhs(model)
   lhs <- extract_lhs(model, ital_vars)
-  greek <- create_greek_merMod(rhs)
-  terms <- create_term(rhs[rhs$effect == "fixed", ], ital_vars)
+  greek <- create_greek_merMod(model)
+  terms <- create_term(rhs[rhs$term %in% greek$fixed, ], ital_vars)
   terms <- vapply(terms, function(x) {
     if(nchar(x) == 0) {
       return("")
@@ -337,8 +412,8 @@ extract_random_covars <- function(rhs) {
 #' @param rhs output from \code{extract_rhs}
 #' @keywords internal
 #' @noRd
-create_lhs_vcov_merMod <- function(rhs) {
-  greek <- create_greek_merMod(rhs)
+create_lhs_vcov_merMod <- function(model) {
+  greek <- create_greek_merMod(model)
   lapply(greek$random, function(x) create_onecol_array(names(x)))
 }
 
@@ -346,9 +421,17 @@ create_lhs_vcov_merMod <- function(rhs) {
 #' @param rhs output from \code{extract_rhs}
 #' @keywords internal
 #' @noRd
-create_mean_structure_merMod <- function(rhs) {
-  greek <- create_greek_merMod(rhs)
-  means <- lapply(greek$random, function(x) paste0("\\mu_{", names(x), "}"))
+create_mean_structure_merMod <- function(model) {
+  greek <- create_greek_merMod(model)
+
+  # Do commented out part if group_preds is NULL (or something?)
+  #means <- lapply(greek$random, function(x) paste0("\\mu_{", names(x), "}"))
+
+  # need to add terms in
+  means <- lapply(greek$group_preds, function(x) {
+    lapply(x, paste0, collapse = " + ")
+  })
+
   lapply(means, create_onecol_array)
 }
 
@@ -361,8 +444,8 @@ create_vars_merMod <- function(rhs) {
 }
 
 # Create the covariance terms (off-diagonals)
-create_covars_merMod <- function(rhs) {
-  greek <- create_greek_merMod(rhs)
+create_covars_merMod <- function(model) {
+  greek <- create_greek_merMod(model)
   random_covars <- extract_random_covars(rhs)
 
   if(all(unlist(lapply(random_covars, function(x) length(x) == 0)))) {
@@ -433,9 +516,10 @@ flip_order <- function(text) {
 # #>      \\sigma^2_{\\beta_{1}}\\end{array}\n \\right)"
 #' }
 # # Note that linebreaks are not actualy there
-create_vcov_matrix_merMod <- function(rhs) {
-  vars <- create_vars_merMod(rhs)
-  covars <- create_covars_merMod(rhs)
+create_vcov_matrix_merMod <- function(model) {
+  rhs <- extract_rhs(model)
+  vars <- create_vars_merMod(model)
+  covars <- create_covars_merMod(model)
 
   matrices <- lapply(vars, function(x) diag(length(x)))
 
@@ -500,10 +584,10 @@ create_vcov_matrix_merMod <- function(rhs) {
 #'
 create_ranef_structure_merMod <- function(model) {
   rhs <- extract_rhs(model)
-  lhs <- create_lhs_vcov_merMod(rhs)
+  lhs <- create_lhs_vcov_merMod(model)
 
-  means <- create_mean_structure_merMod(rhs)
-  error_structure <- create_vcov_matrix_merMod(rhs)
+  means <- create_mean_structure_merMod(model)
+  error_structure <- create_vcov_matrix_merMod(model)
 
   norm <- wrap_normal_dist(means, error_structure)
   levs <- names(means)
@@ -516,3 +600,44 @@ create_ranef_structure_merMod <- function(model) {
   paste0(norm, collapse = " \\\\ ")
 
 }
+
+detect_covar_level <- function(predictor, group) {
+  test <- tapply(predictor, group, function(x) length(unique(x)))
+
+  if(all(test == 1)) {
+    return(names(group))
+  }
+}
+
+detect_X_level <- function(X, group) {
+  lapply(X, detect_covar_level, group)
+}
+
+collapse_list <- function(x, y) {
+  null_x <- vapply(x, is.null, FUN.VALUE = logical(1))
+  null_y <- vapply(y, is.null, FUN.VALUE = logical(1))
+
+  y[!null_x & !null_y] <- x[!null_x & !null_y]
+
+  out <- unlist(c(x, y))
+  out[unique(names(out))]
+}
+
+detect_group_coef <- function(model) {
+  outcome <- all.vars(formula(model))[1]
+  rhs <- extract_rhs(model)
+  d <- model@frame
+
+  random_levs <- names(extract_random_vars(rhs))
+  random_lev_ids <- d[names(extract_random_vars(rhs))]
+  X <- d[!(names(d) %in% c(random_levs, outcome))]
+  detect_X_level(X, random_lev_ids[ ,2, drop = FALSE])
+
+  lev_assign <- vector("list", length(random_levs))
+  for(i in seq_along(random_lev_ids)) {
+    lev_assign[[i]] <- detect_X_level(X, random_lev_ids[ , i, drop = FALSE])
+  }
+
+  Reduce(collapse_list, rev(lev_assign))
+}
+
