@@ -43,6 +43,7 @@ Imports:
     broom (>= 0.7.0),
     stats,
     knitr,
+    broom.mixed
     utils
 Suggests: 
     texPreview,

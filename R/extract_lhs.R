@@ -46,6 +46,23 @@ extract_lhs.lm <- function(model, ital_vars,
   add_tex_ital_v(lhs_escaped, ital_vars)
 }
 
+#' Extract left-hand side of an lme4::lmer object
+#'
+#' Extract a string of the outcome/dependent/y variable of a model
+#'
+#' @export
+#' @keywords internal
+#'
+#' @inheritParams extract_eq
+#'
+#' @return A character string
+#' @noRd
+extract_lhs.lmerMod <- function(model, ital_vars, ...) {
+  lhs <- all.vars(formula(model))[1]
+
+  lhs_escaped <- escape_tex(lhs)
+  add_tex_ital_v(lhs_escaped, ital_vars)
+}
 
 #' Extract left-hand side of a glm object
 #'

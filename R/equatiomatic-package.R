@@ -1,7 +1,8 @@
 #' @keywords internal
-#' @importFrom broom tidy
 #' @importFrom stats terms formula coef
 #' @importFrom knitr knit_print asis_output
+#' @importFrom stats setNames
+
 
 "_PACKAGE"
 

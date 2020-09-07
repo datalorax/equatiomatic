@@ -17,7 +17,9 @@ extract_eq(
   align_env = "aligned",
   use_coefs = FALSE,
   coef_digits = 2,
-  fix_signs = TRUE
+  fix_signs = TRUE,
+  mean_separate,
+  ...
 )
 }
 \arguments{
@@ -69,6 +71,16 @@ round to when displaying model estimates.}
 coefficient estimates that are negative are preceded with a "+" (e.g.
 \code{5(x) + -3(z)}). If enabled, the "+ -" is replaced with a "-" (e.g.
 \code{5(x) - 3(z)}).}
+
+\item{mean_separate}{Currently only support for \code{\link[lme4]{lmer}}
+models. Should the mean structure be inside or separated from the
+normal distribution? Defaults to \code{NULL}, in which case it will become
+\code{TRUE} if there are more than three fixed-effect parameters. If
+\code{TRUE}, the equation will be displayed as, for example,
+outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If \code{FALSE}, this
+same equation would be outcome ~ N(alpha + beta, sigma).}
+
+\item{...}{Additional arguments (for future development; not currently used).}
 }
 \value{
 A character of class \dQuote{equation}.

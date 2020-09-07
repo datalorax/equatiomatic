@@ -40,6 +40,14 @@
 #'   coefficient estimates that are negative are preceded with a "+" (e.g.
 #'   `5(x) + -3(z)`). If enabled, the "+ -" is replaced with a "-" (e.g.
 #'   `5(x) - 3(z)`).
+#' @param mean_separate Currently only support for \code{\link[lme4]{lmer}}
+#'   models. Should the mean structure be inside or separated from the
+#'   normal distribution? Defaults to \code{NULL}, in which case it will become
+#'   \code{TRUE} if there are more than three fixed-effect parameters. If
+#'   \code{TRUE}, the equation will be displayed as, for example,
+#'   outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If \code{FALSE}, this
+#'   same equation would be outcome ~ N(alpha + beta, sigma).
+#' @param ... Additional arguments (for future development; not currently used).
 #' @export
 #'
 #' @return A character of class \dQuote{equation}.
@@ -96,8 +104,24 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
-                       use_coefs = FALSE, coef_digits = 2,
-                       fix_signs = TRUE) {
+                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
+                       mean_separate,...) {
+  UseMethod("extract_eq", model)
+}
+
+#' Default function for extracting an equation from a model object
+#'
+#' @keywords internal
+#' @export
+#' @noRd
+
+extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
+                               raw_tex = FALSE, ital_vars = FALSE,
+                               show_distribution = FALSE,
+                               wrap = FALSE, terms_per_line = 4,
+                               operator_location = "end", align_env = "aligned",
+                               use_coefs = FALSE, coef_digits = 2,
+                               fix_signs = TRUE, mean_separate,...) {
 
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
@@ -175,4 +199,36 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
   class(eq) <- c('equation', 'character')
 
   return(eq)
+}
+
+# These args still need to be incorporated
+# intercept, greek, raw_tex, use_coefs, coef_digits, fix_signs
+# I haven't incorporated wrap yet either and we should think about if we want to
+# It might be better to have an alternative for matrix notation
+
+#' Equation generator for lme4::lmer models
+#' @export
+#' @noRd
+extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
+                               raw_tex = FALSE, ital_vars = FALSE,
+                               show_distribution = FALSE,
+                               wrap = FALSE, terms_per_line = 4,
+                               operator_location = "end",
+                               align_env = "aligned",
+                               use_coefs = FALSE, coef_digits = 2,
+                               fix_signs = TRUE, mean_separate = NULL, ...) {
+
+  distributed <- create_fixed_merMod(model, mean_separate,
+                                     ital_vars, wrap, terms_per_line,
+                                     operator_location, sigma = "\\sigma^2")
+
+  vcv <- create_ranef_structure_merMod(model)
+  eq <- gsub("\\sim", " &\\sim", c(distributed, vcv), fixed = TRUE)
+  eq <- paste(eq, collapse = " \\\\ ")
+  eq <- paste0("\\begin{", align_env, "}\n",
+               eq,
+               "\n\\end{", align_env, "}")
+  class(eq) <- c('equation', 'character')
+
+  eq
 }
