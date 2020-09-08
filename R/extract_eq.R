@@ -220,9 +220,10 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 
   distributed <- create_fixed_merMod(model, mean_separate,
                                      ital_vars, wrap, terms_per_line,
-                                     operator_location, sigma = "\\sigma^2")
+                                     operator_location,
+                                     sigma = "\\sigma^2")
 
-  vcv <- create_ranef_structure_merMod(model)
+  vcv <- create_ranef_structure_merMod(model, ital_vars)
   eq <- gsub("\\sim", " &\\sim", c(distributed, vcv), fixed = TRUE)
   eq <- paste(eq, collapse = " \\\\ ")
   eq <- paste0("\\begin{", align_env, "}\n",
