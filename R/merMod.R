@@ -120,6 +120,8 @@ create_greek_merMod <- function(model) {
   }
 
   # Detect cross-level interactions
+  # This is actually just detecting cross-level for higher levels with l1
+  # Need to get it to work on all levels
   crosslevel <- lapply(higher_vars, function(x) lapply(fixed, function(y) x[grepl(y, x)]))
   
   # Drop intercept term (only cross-level interactions)
@@ -136,7 +138,7 @@ create_greek_merMod <- function(model) {
   # Put it together
   # need to get rid of variable name in cross-level interactions still
   higher_preds <- Map(function(x, y) c(x, y), intercepts, cross_interactions)
-
+  
   # Drop terms with no vars
   higher_preds <- lapply(higher_preds, function(x) {
     x[vapply(x, length, FUN.VALUE = numeric(1)) > 0]
@@ -207,7 +209,7 @@ create_greek_merMod <- function(model) {
 
   #l1
   l1 <- Map(function(ran, lev_i) {
-    ran[ran %in% fixed] <- names(fixed[ran %in% fixed])
+    ran[ran %in% fixed] <- names(fixed[fixed %in% ran])
     ss_rem <- gsub("(.+\\_\\{\\d?).+", "\\1", ran)
     
     # add on specific subscripts
@@ -225,7 +227,7 @@ create_greek_merMod <- function(model) {
   coefs <- gsub("\\[i\\]", "", coefs)
   
   for(i in seq_along(l1)) {
-    l1[[i]][l1[[i]] %in% ul] <- coefs[ul %in% l1[[i]]]
+    l1[[i]][ l1[[i]] %in% ul ] <- coefs[ul %in% l1[[i]]]
   }
   random_names <- Map(function(coef, lev) {
     multivary <- grepl(".+_\\{.+,", coef)
@@ -236,6 +238,7 @@ create_greek_merMod <- function(model) {
     },l1, lev_indexes)
   
   random <- Map(function(r, rn) setNames(r, rn), random, random_names)
+  random <- lapply(random, function(x) x[order(names(x))])
   
   # Add intercept terms for group preds
   group_preds <- lapply(group_preds, function(x) {
@@ -245,6 +248,26 @@ create_greek_merMod <- function(model) {
       c(intercept, y)
     })
   })
+  
+  # Note - below assumes the constant term in the interaction is always first
+  # not sure if that's actually true
+  group_preds <- lapply(group_preds, function(x) lapply(x, function(y) {
+    if(length(y) < 1) {
+      return()
+    }
+    check <- vapply(strsplit(y, ":"), "[", 1, FUN.VALUE = character(1))
+    if(length(unique(check[-grepl("(Intercept)", check)])) == 1) {
+      vapply(strsplit(y, ":"), function(x) {
+        if(length(x) == 2) {
+          return(x[2])
+        } else {
+          x[1]
+        }
+      }, FUN.VALUE = character(1))
+    } else {
+      y
+    }
+  }))
   
   list(fixed = fixed, random = random, group_preds = group_preds)
 }
@@ -466,7 +489,7 @@ create_lhs_vcov_merMod <- function(model) {
 create_mean_structure_merMod <- function(model, ital_vars) {
   rhs <- extract_rhs(model)
   greek <- create_greek_merMod(model)
-  means <- lapply(greek$random, function(x) paste0("\\mu_{", names(x), "}"))
+  #means <- lapply(greek$random, function(x) paste0("\\mu_{", names(x), "}"))
   
   # Find terms with group-level predictors
   group_pred_list <- lapply(greek$group_preds, names)
@@ -503,12 +526,16 @@ create_mean_structure_merMod <- function(model, ital_vars) {
   
   final <- lapply(final, function(x) lapply(x, function(y) {
     if(length(y) > 1) {
-      paste(names(y), create_term(rhs[rhs$term %in% y, ], ital_vars))
+      paste(names(y), "(", create_term(rhs[rhs$term %in% y, ], ital_vars), ")")
     } else {
       names(y) <- paste0("\\mu_{", names(y), "}")
     }
   }))
   
+  # remove empty parens around intercepts
+  final <- lapply(final, function(x) lapply(x, function(y) {
+    gsub("\\(  \\)", "", y)
+  }))
   means <- lapply(final, function(x) lapply(x, function(y) {
       paste0(y, collapse = " + ")
   }))
