@@ -118,7 +118,7 @@ create_greek_merMod <- function(model) {
   } else {
     names(fixed) <- c("\\alpha", (paste0("\\beta_{", seq_along(fixed)[-length(fixed)])))
   }
-
+  
   # Detect cross-level interactions
   # This is actually just detecting cross-level for higher levels with l1
   # Need to get it to work on all levels
@@ -713,10 +713,14 @@ create_ranef_structure_merMod <- function(model, ital_vars) {
 }
 
 detect_covar_level <- function(predictor, group) {
-  test <- tapply(predictor, group, function(x) length(unique(x)))
 
-  if(all(test == 1)) {
-    return(names(group))
+  nm <- names(group)
+  v <- paste(predictor, group[ ,1], sep = " _|_ ")
+  unique_v <- unique(v)
+  test <- gsub(".+\\s\\_\\|\\_\\s(.+)", "\\1", unique_v)
+  
+  if(all(!duplicated(test))) {
+    return(nm)
   }
 }
 
