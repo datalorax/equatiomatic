@@ -122,7 +122,7 @@ create_greek_merMod <- function(model) {
   # Detect cross-level interactions
   # This is actually just detecting cross-level for higher levels with l1
   # Need to get it to work on all levels
-  crosslevel <- lapply(higher_vars, function(x) lapply(fixed, function(y) x[grepl(y, x)]))
+  crosslevel <- lapply(higher_vars, function(x) lapply(fixed, function(y) x[grepl(y, x) & grepl(":", x)]))
   
   # Drop intercept term (only cross-level interactions)
   cross_interactions <- lapply(crosslevel, function(x) {
@@ -489,7 +489,6 @@ create_lhs_vcov_merMod <- function(model) {
 create_mean_structure_merMod <- function(model, ital_vars) {
   rhs <- extract_rhs(model)
   greek <- create_greek_merMod(model)
-  #means <- lapply(greek$random, function(x) paste0("\\mu_{", names(x), "}"))
   
   # Find terms with group-level predictors
   group_pred_list <- lapply(greek$group_preds, names)
