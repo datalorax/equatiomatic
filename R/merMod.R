@@ -703,7 +703,7 @@ create_ranef_structure_merMod <- function(model, ital_vars) {
   norm <- wrap_normal_dist(means, error_structure)
   levs <- names(means)
   indexes <- letters[10:(10 + (length(levs) - 1))]
-  norm <- paste(norm, ", \\text{ for ", levs, "}",
+  norm <- paste(norm, ", \\operatorname{ for ", escape_tex(levs), "}",
                 indexes, " = 1, \\dots , ", toupper(indexes))
 
   norm <- paste0(lhs, "\\sim ", norm)
@@ -754,7 +754,7 @@ detect_group_coef <- function(model) {
   d <- model@frame
   
   random_levs <- names(extract_random_vars(rhs))
-  random_lev_ids <- d[c(names(extract_random_vars(rhs)))]
+  random_lev_ids <- d[names(extract_random_vars(rhs))]
   X <- d[!(names(d) %in% c(random_levs, outcome))]
   
   lev_assign <- vector("list", length(random_levs))
