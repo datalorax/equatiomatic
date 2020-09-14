@@ -166,11 +166,15 @@ extract_primary_term <- function(primary_term_v, all_terms) {
 #' @noRd
 
 detect_primary <- function(full_term, primary_term_v) {
-  vapply(primary_term_v, function(indiv_term) {
-    grepl(indiv_term, full_term, fixed = TRUE)
-  },
-  logical(1)
-  )
+  if(full_term %in% primary_term_v) {
+    primary_term_v %in% full_term
+  } else {
+    vapply(primary_term_v, function(indiv_term) {
+      grepl(indiv_term, full_term, fixed = TRUE)
+    },
+    logical(1)
+    ) 
+  }
 }
 
 
