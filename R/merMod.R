@@ -5,6 +5,86 @@ wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
   paste0("N \\left(", mean, ",", sigma, " \\right)")
 }
 
+
+# Other utility functions for interactions and moving terms around
+is_interaction <- function(l) {
+  grepl(":", l$`\\alpha`)
+}
+
+pull_interactions <- function(l) {
+  l$`\\alpha`[is_interaction(l)]
+}
+
+sep_interactions <- function(l) {
+  ints <- pull_interactions(l)
+  strsplit(ints, ":")
+}
+
+pull_first_var_int <- function(l) {
+  vapply(sep_interactions(l), "[[", 1, FUN.VALUE = character(1))  
+}
+
+int_higher <- function(l) {
+  int_vars <- pull_first_var_int(l)
+  
+  vapply(int_vars, function(x) {
+    test <- vapply(l[-grep("^\\\\alpha", names(l))], function(y) {
+      x %in% y[1]
+    }, FUN.VALUE = logical(1))
+    any(test)
+  }, FUN.VALUE = logical(1))
+}
+
+drop_higher_interactions_alpha <- function(l) {
+  higher_ints <- int_higher(l)
+  if(length(names(higher_ints)[higher_ints]) == 0) {
+    return(l)
+  }
+  
+  drop <- !(names(l[[1]]) %in% names(higher_ints)[higher_ints])
+  l[[1]] <- l[[1]][drop]
+  l
+}
+
+drop_higher_interactions_across <- function(full_l) {
+  for(i in seq_along(full_l)) {
+    ints <- full_l[[i]][[1]][is_interaction(full_l[[i]])]
+    tests <- lapply(full_l[(i + 1):length(full_l)], function(x) {
+      tst <- ints %in% unlist(x)
+      names(tst) <- names(ints)[tst]
+      tst
+    })
+    if (any(unlist(tests))) {
+      pull <- names(Reduce(`|`, tests))
+      pull <- pull[!is.na(pull)]
+      
+      for(j in seq_along(pull)) {
+        full_l[[i]][[1]] <- full_l[[i]][[1]][-grep(pull[j], names(full_l[[i]][[1]]), fixed = TRUE)]  
+      }
+    }
+  }
+  full_l
+}
+
+match_fun <- function(text, text_to_match_vec) {
+  test <- lapply(text_to_match_vec, function(x) x %in% text[1])
+  test <- vapply(test, any, FUN.VALUE = logical(1))
+  if(any(test)) {
+    # Return the match, but only the second term (the one that doesn't match)
+    # and is actually predicting that term
+    return(c("(Intercept)", text_to_match_vec[test][[1]][2])) 
+  }
+  text
+}
+
+move_terms <- function(l) {
+  dropped <- drop_higher_interactions_alpha(l)
+  int_sep <- sep_interactions(l)
+  lapply(dropped, function(x) match_fun(x, int_sep))
+}
+
+
+
 #' Utility function to vectorize pattern replacement
 #'
 #' Searches \code{text_vec} for each element in \code{pattern_vec} and
@@ -83,35 +163,34 @@ extract_random_vars <- function(rhs) {
   })
 }
 
-# modify this function to include other levels?
 create_greek_merMod <- function(model) {
   rhs <- extract_rhs(model)
   fixed <- extract_fixef_merMod(rhs)
   random <- extract_random_vars(rhs)
   lev_indexes <- letters[10:(10 + (length(random) - 1))]
-
+  
   order <- rhs[rhs$group != "Residual", ]
   order <- sort(tapply(order$original_order, order$group, min))
-
+  
   # Detect if group-level pred
   group_coefs <- detect_group_coef(model)
-
+  
   # all this higher_vars stuff could probs go in a separate function
   higher_vars <- lapply(names(group_coefs), function(x) fixed[grepl(x, fixed)])
   names(higher_vars) <- group_coefs
-
+  
   # split in case where multiple vars at a higher level
   higher_vars <- split(higher_vars, names(higher_vars))
-
+  
   # put back into a single list (makes no difference if only one group var)
   higher_vars <- lapply(higher_vars, function(x) Reduce(`c`, x))
-
+  
   higher_vars <- higher_vars[names(order)]
   names(higher_vars) <- names(order)
   
   # Remove higher-level terms from lower level
   fixed <- fixed[!(fixed %in% unlist(higher_vars))]
-
+  
   # fixed effects
   if("(Intercept)" %in% unlist(random)) {
     names(fixed) <- ifelse(fixed == "(Intercept)", "\\alpha_{", paste0("\\beta_{", seq_along(fixed) - 1))
@@ -128,13 +207,13 @@ create_greek_merMod <- function(model) {
   cross_interactions <- lapply(crosslevel, function(x) {
     x[-grepl("\\alpha", names(x), fixed = TRUE)]
   })
-
+  
   # only non-cross-level interactions
   higher_nocross <- Map(setdiff, higher_vars, lapply(cross_interactions, unlist))
-
+  
   # create intercept term
   intercepts <- lapply(higher_nocross, function(x) list("\\alpha" = x))
-
+  
   # Put it together
   # need to get rid of variable name in cross-level interactions still
   higher_preds <- Map(function(x, y) c(x, y), intercepts, cross_interactions)
@@ -143,7 +222,7 @@ create_greek_merMod <- function(model) {
   higher_preds <- lapply(higher_preds, function(x) {
     x[vapply(x, length, FUN.VALUE = numeric(1)) > 0]
   })
-
+  
   # close off subscripts for list names
   higher_preds <- lapply(higher_preds, function(x) {
     names(x) <- gsub("(\\_\\{\\d)", "\\1\\}", names(x))
@@ -163,7 +242,7 @@ create_greek_merMod <- function(model) {
     )
   }
   names(fixed) <- paste0(names(fixed), "}")
-
+  
   # Create subscripts group predictors varying vary  higher levels
   higher_lev_vary <- vector("list", length(higher_preds))
   for(i in seq_along(higher_preds)) {
@@ -201,12 +280,12 @@ create_greek_merMod <- function(model) {
     Map(function(x, y) {
       names(x) <- y
       x
-      }, a, b)
-        }, higher_preds, full_coefs)
+    }, a, b)
+  }, higher_preds, full_coefs)
   
   
   # create random
-
+  
   #l1
   l1 <- Map(function(ran, lev_i) {
     ran[ran %in% fixed] <- names(fixed[fixed %in% ran])
@@ -235,7 +314,7 @@ create_greek_merMod <- function(model) {
                             paste0("\\1", lev, "}"), 
                             coef[multivary])
     coef
-    },l1, lev_indexes)
+  },l1, lev_indexes)
   
   random <- Map(function(r, rn) setNames(r, rn), random, random_names)
   random <- lapply(random, function(x) x[order(names(x))])
@@ -269,7 +348,47 @@ create_greek_merMod <- function(model) {
     }
   }))
   
-  list(fixed = fixed, random = random, group_preds = group_preds)
+  # Find terms with group-level predictors
+  group_pred_list <- lapply(group_preds, names)
+  
+  # drop final subscript from betas
+  group_pred_list <- lapply(group_pred_list, function(x) gsub("\\}$", "", x))
+  
+  # drop these terms from greek$random
+  drop_terms_v <- function(vector_to_subset, term_v) {
+    for(i in seq_along(term_v)) {
+      vector_to_subset <- vector_to_subset[
+        -grepl(term_v[i], names(vector_to_subset), fixed = TRUE)
+      ]
+    }
+    vector_to_subset
+  }
+  
+  rand_no_group_terms <- Map(function(rand, terms_to_drop) {
+    drop_terms_v(rand, terms_to_drop)
+  },random, group_pred_list)
+  
+  final_coefs <- Map(function(a, b) {
+    c(a, b)[order(names(c(a, b)))]
+  }, rand_no_group_terms, group_preds)
+  
+  final_coefs <- drop_higher_interactions_across(final_coefs)
+  final_coefs <- lapply(final_coefs, move_terms)
+  
+  final <- lapply(final_coefs, function(x) {
+    for(i in seq_along(x)) {
+      if(is.null(names(x[[i]]))) {
+        if(length(x[[i]]) > 1) {
+          names(x[[i]]) <- paste0("\\delta^{", names(x[i]), "}_{", seq_along(x[[i]]) - 1, "}")  
+        } else {
+          names(x[[i]]) <- names(x[i])
+        }
+      }
+    }
+    x
+  })
+  
+  list(fixed = fixed, random = random, final = final)
 }
 
 #' Create the full fixed-effects portion of an lmerMod
@@ -490,40 +609,7 @@ create_mean_structure_merMod <- function(model, ital_vars) {
   rhs <- extract_rhs(model)
   greek <- create_greek_merMod(model)
   
-  # Find terms with group-level predictors
-  group_pred_list <- lapply(greek$group_preds, names)
-  
-  # drop final subscript from betas
-  group_pred_list <- lapply(group_pred_list, function(x) gsub("\\}$", "", x))
-  
-  # drop these terms from greek$random
-  drop_terms_v <- function(vector_to_subset, term_v) {
-    for(i in seq_along(term_v)) {
-      vector_to_subset <- vector_to_subset[
-        -grepl(term_v[i], names(vector_to_subset), fixed = TRUE)
-        ]
-    }
-    vector_to_subset
-  }
-  
-  rand_no_group_terms <- Map(function(rand, terms_to_drop) {
-    drop_terms_v(rand, terms_to_drop)
-  },greek$random, group_pred_list)
-  
-  final_coefs <- Map(function(a, b) {
-    c(a, b)[order(names(c(a, b)))]
-  }, rand_no_group_terms, greek$group_preds)
-  
-  final <- lapply(final_coefs, function(x) {
-    for(i in seq_along(x)) {
-      if(is.null(names(x[[i]]))) {
-        names(x[[i]]) <- names(x[i])
-      }
-    }
-    x
-  })
-  
-  final <- lapply(final, function(x) lapply(x, function(y) {
+  final <- lapply(greek$final, function(x) lapply(x, function(y) {
     if(length(y) > 1) {
       paste(names(y), "(", create_term(rhs[rhs$term %in% y, ], ital_vars), ")")
     } else {
@@ -535,6 +621,7 @@ create_mean_structure_merMod <- function(model, ital_vars) {
   final <- lapply(final, function(x) lapply(x, function(y) {
     gsub("\\(  \\)", "", y)
   }))
+  
   means <- lapply(final, function(x) lapply(x, function(y) {
       paste0(y, collapse = " + ")
   }))
