@@ -1,6 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.0
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-09-07T21:32Z
+articles:
+  intro-equatiomatic: intro-equatiomatic.html
+  tests_and_coverage: tests_and_coverage.html
+last_built: 2020-09-14T22:40Z
 
