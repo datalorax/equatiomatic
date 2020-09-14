@@ -788,9 +788,10 @@ create_ranef_structure_merMod <- function(model, ital_vars) {
   error_structure <- create_vcov_matrix_merMod(model)
 
   norm <- wrap_normal_dist(means, error_structure)
-  levs <- names(means)
+  levs <- vapply(names(means), escape_tex, FUN.VALUE = character(1))
   indexes <- letters[10:(10 + (length(levs) - 1))]
-  norm <- paste(norm, ", \\operatorname{ for ", escape_tex(levs), "}",
+  
+  norm <- paste(norm, ", \\operatorname{ for ", levs, "}",
                 indexes, " = 1, \\dots , ", toupper(indexes))
 
   norm <- paste0(lhs, "\\sim ", norm)
