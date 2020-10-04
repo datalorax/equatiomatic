@@ -218,10 +218,10 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, mean_separate = NULL, ...) {
 
-  distributed <- create_fixed_merMod(model, mean_separate,
-                                     ital_vars, wrap, terms_per_line,
-                                     operator_location,
-                                     sigma = "\\sigma^2")
+  l1 <- create_l1_merMod(model, mean_separate,
+                         ital_vars, wrap, terms_per_line,
+                         operator_location,
+                         sigma = "\\sigma^2")
 
   vcv <- create_ranef_structure_merMod(model, ital_vars)
   eq <- gsub("\\sim", " &\\sim", c(distributed, vcv), fixed = TRUE)
