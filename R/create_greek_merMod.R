@@ -325,16 +325,72 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
   out[order(out$original_order), ]
 }
 
+assign_vcov_greek <- function(rand_lev, means_merMod) {
+  assign <- lapply(rand_lev$terms, function(x) {
+    means_merMod$greek_vary[match(x, means_merMod$term)]
+  })
+  lapply(assign, function(x) {
+    if(length(x) == 1) {
+      return(c(x, x))
+    } else {
+      x
+    }
+  })
+}
+
+create_greek_matrix <- function(v, mat, use_coef, est) {
+  if (isFALSE(use_coef)) {
+    if (length(unique(v)) == 1) {
+      greek_vcov <- paste0("\\sigma^2_{", v[1], "}")
+    } else {
+      greek_vcov <- paste0("\\rho", paste0(v, collapse = ""), collapse = "")
+    }
+  } else {
+    greek_vcov <- est
+  }
+  
+  mat[v[1], v[2]] <- greek_vcov
+  mat
+}
+
+create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
+
+  rand_lev <- rhs_random_lev[ ,c("group", "term", "estimate")]
+  rand_lev$terms <- gsub("sd__|cor__", "", rand_lev$term)
+  rand_lev$terms <- strsplit(rand_lev$terms, "\\.")
+  
+  # add extra row for reverse on correlation
+  cors <- rand_lev[grepl("^cor__", rand_lev$term), ]
+  cors$terms <- lapply(cors$terms, rev)
+  
+  rand_lev <- rbind(rand_lev, cors)
+  
+  rand_lev$vcov_greek <- assign_vcov_greek(rand_lev, means_merMod)
+  
+  # Create matrix
+  sd_rows <- grepl("^sd__", rand_lev$term)
+  
+  mat <- diag(sum(sd_rows))
+  dimnames(mat) <- list(unique(unlist(rand_lev$vcov_greek[sd_rows])),
+                        unique(unlist(rand_lev$vcov_greek[sd_rows])))
+  for(i in seq_along(rand_lev$vcov_greek)) {
+    mat <- create_greek_matrix(rand_lev$vcov_greek[[i]], mat, use_coef, 
+                               est = rand_lev$estimate[i])
+  }
+  mat
+}
+
+# 
 # rhs <- extract_rhs(model)
 # fixed_greek_mermod <- create_fixef_greek_merMod(model)
 # 
 # rhs_random <- rhs[rhs$effect == "ran_pars", ]
 # rhs_random_splt <- split(rhs_random, rhs_random$group)
+# rhs_random_splt <- rhs_random_splt[!grepl("Residual", names(rhs_random_splt))]
+# ital_vars <- FALSE
 # 
-# rhs_random_lev <- rhs_random_splt$sid
 # means_merMod <- create_means_merMod(rhs, fixed_greek_mermod, model, ital_vars)
-# create_vcov_merMod <- function(rhs_random, means_merMod) {
-# 
-# }
-
-
+# # the below creates all the vcovs
+# lapply(rhs_random_splt, function(x) {
+#   create_vcov_merMod(x, means_merMod, FALSE)
+# })
