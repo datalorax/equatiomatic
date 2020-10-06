@@ -104,26 +104,29 @@ extract_rhs.lmerMod <- function(model) {
 
   # Extract unique (primary) terms from formula (no interactions)
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
-
+  formula_rhs_terms <- gsub("^`?(.+)`$?", "\\1", formula_rhs_terms)
+  
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
   full_rhs$original_order <- seq_len(nrow(full_rhs))
+  full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
   
   # Figure out which predictors are at which level
   group_coefs <- detect_group_coef(model, full_rhs)
 
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
-
+  
   full_rhs$primary <- extract_primary_term(formula_rhs_terms,
                                            full_rhs$term)
-
+  
   full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
                                                 full_rhs$split)
   
   full_rhs$pred_level <- lapply(full_rhs$primary, function(x) {
     group_coefs[names(group_coefs) %in% x]
   })
+  
   full_rhs$l1 <- mapply_lgl(function(predlev, effect) {
     length(predlev) == 0 & effect == "fixed"
   }, 
@@ -142,6 +145,9 @@ extract_rhs.lmerMod <- function(model) {
   
   full_rhs$pred_level <- Map(`c`, l1_vars, full_rhs$pred_level)
   
+  # put each vector in order from low to high
+  full_rhs$split <- Map(order_split, full_rhs$split, full_rhs$pred_level)
+  full_rhs$primary <- Map(order_split, full_rhs$primary, full_rhs$pred_level)
   
   full_rhs$crosslevel <- detect_crosslevel(full_rhs$primary, 
                                            full_rhs$pred_level)
@@ -149,6 +155,34 @@ extract_rhs.lmerMod <- function(model) {
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
 }
+
+order_split <- function(split, pred_level) {
+  var_order <- vapply(names(pred_level), function(x) {
+    grep(x, split)
+  }, FUN.VALUE = integer(1))
+  
+  split[var_order]
+}
+
+
+
+#' Pull just the random variables
+#' @param rhs output from \code{extract_rhs}
+#' @keywords internal
+#' @noRd
+extract_random_vars <- function(rhs) {
+  order <- rhs[rhs$group != "Residual", ]
+  order <- sort(tapply(order$original_order, order$group, min))
+  
+  vc <- rhs[rhs$group != "Residual" & rhs$effect == "ran_pars", ]
+  splt <- split(vc, vc$group)[names(order)]
+  
+  lapply(splt, function(x) {
+    vars <- x[!grepl("cor__", x$term), ]
+    gsub("sd__(.+)", "\\1", vars$term)
+  })
+}
+
 
 detect_crosslevel <- function(primary, pred_level) {
   mapply_lgl(function(prim, predlev) {
@@ -219,7 +253,7 @@ detect_group_coef <- function(model, rhs) {
   }
   
   out <- Reduce(collapse_list, rev(lev_assign))
-  out[!is.na(out)]
+  unlist(out[!is.na(out)])
 }
 
 
