@@ -38,7 +38,8 @@ pred_level_split <- function(rhs_fixed, rhs_random) {
   vapply(rhs_fixed$pred_level, function(x) {
     if (length(x) == 0) out <- "l1"
     if (length(x) == 1) out <- x
-    if (length(x) > 1) {
+    if (length(unique(x)) == 1) out <- unique(x)
+    if (length(unique(x)) > 1) {
       out <- order[x]
       out <- names(out[which.max(out)])
     }
@@ -68,11 +69,6 @@ pull_term_subscript <- function(greek_coef, n = 1) {
   regex <- paste0("(.+\\{.{", n, "}).+(\\})")
   gsub(regex, "\\1\\2", greek_coef)
 }
-# 
-# one_crossdata <- cross_data[[1]]
-# one_detected <- detect_cross[[1]]
-# one_lev <- levs[[1]]
-# one_var <- vars[[1]]
 
 pull_min_level <- function(one_crossdata, one_detected, one_lev, one_var, 
                            order) {

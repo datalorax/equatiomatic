@@ -108,6 +108,7 @@ extract_rhs.lmerMod <- function(model) {
   
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
+  full_rhs$group <- collapse_groups(full_rhs$group)
   full_rhs$original_order <- seq_len(nrow(full_rhs))
   full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
   
@@ -135,13 +136,21 @@ extract_rhs.lmerMod <- function(model) {
   
   # recode the vectors so when they say "l1" when there is an interaction
   # with an l1 variable
-  
-  l1_vars <- unlist(full_rhs$primary[full_rhs$l1])
+  l1_vars <- unique(unlist(full_rhs$primary[full_rhs$l1]))
   l1_vars <- setNames(rep("l1", length(l1_vars)), l1_vars)
   
   l1_vars <- lapply(full_rhs$primary, function(prim) {
     l1_vars[names(l1_vars) %in% prim]
   })
+  # 
+  # l1_vars <- unlist(full_rhs$primary[full_rhs$l1])
+  # l1_vars <- setNames(rep("l1", length(l1_vars)), l1_vars)
+  # 
+  # l1_vars[names(l1_vars) %in% full_rhs$primary[[2]]]
+  # 
+  # l1_vars <- lapply(full_rhs$primary, function(prim) {
+  #   l1_vars[prim %in% names(l1_vars)]
+  # })
   
   full_rhs$pred_level <- Map(`c`, l1_vars, full_rhs$pred_level)
   
@@ -154,6 +163,10 @@ extract_rhs.lmerMod <- function(model) {
   
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
+}
+
+collapse_groups <- function(group) {
+  gsub("(.+)\\.\\d\\d?$", "\\1", group)
 }
 
 order_split <- function(split, pred_level) {
