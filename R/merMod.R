@@ -48,12 +48,13 @@ pred_level_split <- function(rhs_fixed, rhs_random) {
 }
 
 assign_l1_greek <- function(rhs_fixed, rhs_random) {
-  beta_indices <- seq_along(rhs_fixed$l1[rhs_fixed$l1 & 
-                              rhs_fixed$term != "(Intercept)"])
-  
+  beta_indices <- seq_along(rhs_fixed$l1[rhs_fixed$l1])
+  if(any(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1)) {
+    beta_indices <- beta_indices - 1
+  }
   l1 <- ifelse(rhs_fixed$term == "(Intercept)" & rhs_fixed$l1,
          "\\alpha_{",
-         ifelse(rhs_fixed$l1,
+         ifelse(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1,
                 paste0("\\beta_{", beta_indices),
                 NA_character_)
   )
