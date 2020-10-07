@@ -108,7 +108,22 @@ extract_rhs.lmerMod <- function(model) {
   
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
-  full_rhs$group <- collapse_groups(full_rhs$group)
+  
+  rhs_splt <- split(full_rhs, full_rhs$group)
+  rhs_splt <- rhs_splt[!grepl("Residual", names(rhs_splt))]
+  
+  # Move this into its own function and make it more precise
+  # right now it just is all or nothing. What if some groups have multiple
+  # with an intercept and other have multiple without?
+  # does each side group have an intercept
+  intercept_vary <- vapply(rhs_splt, function(x) {
+    any(grepl("sd__(Intercept)", x$term, fixed = TRUE))
+  }, FUN.VALUE = logical(1))
+  
+  if(!all(intercept_vary)) {
+    full_rhs$group <- collapse_groups(full_rhs$group)
+  }
+  
   full_rhs$original_order <- seq_len(nrow(full_rhs))
   full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
   
@@ -142,21 +157,17 @@ extract_rhs.lmerMod <- function(model) {
   l1_vars <- lapply(full_rhs$primary, function(prim) {
     l1_vars[names(l1_vars) %in% prim]
   })
-  # 
-  # l1_vars <- unlist(full_rhs$primary[full_rhs$l1])
-  # l1_vars <- setNames(rep("l1", length(l1_vars)), l1_vars)
-  # 
-  # l1_vars[names(l1_vars) %in% full_rhs$primary[[2]]]
-  # 
-  # l1_vars <- lapply(full_rhs$primary, function(prim) {
-  #   l1_vars[prim %in% names(l1_vars)]
-  # })
   
   full_rhs$pred_level <- Map(`c`, l1_vars, full_rhs$pred_level)
   
   # put each vector in order from low to high
-  full_rhs$split <- Map(order_split, full_rhs$split, full_rhs$pred_level)
-  full_rhs$primary <- Map(order_split, full_rhs$primary, full_rhs$pred_level)
+  full_rhs$split[full_rhs$l1] <- Map(order_split, 
+                                     full_rhs$split[full_rhs$l1], 
+                                     full_rhs$pred_level[full_rhs$l1])
+  
+  full_rhs$primary[full_rhs$l1] <- Map(order_split, 
+                                       full_rhs$primary[full_rhs$l1], 
+                                       full_rhs$pred_level[full_rhs$l1])
   
   full_rhs$crosslevel <- detect_crosslevel(full_rhs$primary, 
                                            full_rhs$pred_level)
@@ -170,14 +181,15 @@ collapse_groups <- function(group) {
 }
 
 order_split <- function(split, pred_level) {
+  if(length(pred_level) == 0) {
+    return(pred_level)
+  }
   var_order <- vapply(names(pred_level), function(x) {
     grep(x, split)
   }, FUN.VALUE = integer(1))
   
   split[var_order]
 }
-
-
 
 #' Pull just the random variables
 #' @param rhs output from \code{extract_rhs}
@@ -257,7 +269,8 @@ detect_group_coef <- function(model, rhs) {
   d <- model@frame
   
   random_levs <- names(extract_random_vars(rhs))
-  random_lev_ids <- d[names(extract_random_vars(rhs))]
+  random_levs <- unique(collapse_groups(random_levs))
+  random_lev_ids <- d[random_levs]
   X <- d[!(names(d) %in% c(random_levs, outcome))]
   
   lev_assign <- vector("list", length(random_levs))
