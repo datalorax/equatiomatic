@@ -198,11 +198,23 @@ order_split <- function(split, pred_level) {
     return(pred_level)
   }
   var_order <- vapply(names(pred_level), function(x) {
-    grep(x, split)
+    exact <- split %in% x
+    detect <- grepl(x, split)
+    
+    # take exact if it's there, if not take detect
+    if(any(exact)) {
+      out <- exact
+    } else {
+      out <- detect
+    }
+    
+    seq_along(out)[out]
   }, FUN.VALUE = integer(1))
   
   split[var_order]
 }
+
+
 
 #' Pull just the random variables
 #' @param rhs output from \code{extract_rhs}

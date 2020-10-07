@@ -204,12 +204,19 @@ remove_crosslevel_interaction_redundancy <- function(model, lev_data, term) {
     unlist(extract_primary_term(formula_rhs, x))
   }, FUN.VALUE = character(1))
   
-  lev_data$primary <- lapply(lev_data$primary, function(x) {
-    x[!grepl(paste0(terms, collapse = "|"), x)]
+  subset <- lapply(lev_data$primary, function(x) {
+    exact <- x %in% paste0(terms, collapse = "|")
+    detected <- grepl(paste0(terms, collapse = "|"), x)
+    
+    if(any(exact)) {
+      !exact
+    } else {
+      !detected
+    }
   })
-  lev_data$subscripts <- lapply(lev_data$subscripts, function(x) {
-    x[!grepl(paste0(terms, collapse = "|"), names(x))]
-  })
+  
+  lev_data$primary <- Map(function(x, ss) x[ss], lev_data$primary, subset)
+  lev_data$subscripts <- Map(function(x, ss) x[ss], lev_data$subscripts, subset)
   lev_data
 }
 
@@ -272,8 +279,8 @@ create_slope_intercept <- function(term) {
   gsub("(.+)(.{1})(\\}$)", "\\10\\3", term)
 }
 
-# splt_lev_fixed <- splt_fixed$Site
-# splt_lev_random <- splt_rand$Site
+# splt_lev_fixed <- splt_fixed$sch.id
+# splt_lev_random <- splt_rand$sch.id
 pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
                         order) {
   if(is.null(splt_lev_fixed)) {
