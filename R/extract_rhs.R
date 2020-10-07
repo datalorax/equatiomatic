@@ -108,21 +108,7 @@ extract_rhs.lmerMod <- function(model) {
   
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
-  
-  rhs_splt <- split(full_rhs, full_rhs$group)
-  rhs_splt <- rhs_splt[!grepl("Residual", names(rhs_splt))]
-  
-  # Move this into its own function and make it more precise
-  # right now it just is all or nothing. What if some groups have multiple
-  # with an intercept and other have multiple without?
-  # does each side group have an intercept
-  intercept_vary <- vapply(rhs_splt, function(x) {
-    any(grepl("sd__(Intercept)", x$term, fixed = TRUE))
-  }, FUN.VALUE = logical(1))
-  
-  if(!all(intercept_vary)) {
-    full_rhs$group <- collapse_groups(full_rhs$group)
-  }
+  full_rhs$group <- recode_groups(full_rhs)
   
   full_rhs$original_order <- seq_len(nrow(full_rhs))
   full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
@@ -174,6 +160,37 @@ extract_rhs.lmerMod <- function(model) {
   
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
+}
+
+# Make it more precise
+# right now it just is all or nothing. What if some groups have multiple
+# with an intercept and other have multiple without?
+# does each side group have an intercept
+recode_groups <- function(rhs) {
+  
+  rhs_splt <- split(rhs, rhs$group)
+  rhs_splt <- rhs_splt[!grepl("Residual", names(rhs_splt))]
+  
+  names_collapsed <- collapse_groups(names(rhs_splt))
+  
+  intercept_vary <- vapply(rhs_splt, function(x) {
+    any(grepl("sd__(Intercept)", x$term, fixed = TRUE))
+  }, FUN.VALUE = logical(1))
+  
+  check <- split(intercept_vary, names_collapsed)
+  
+  # collapse these groups
+  collapse <- vapply(check, all, FUN.VALUE = logical(1))
+  
+  collapse_term <- function(term, v) {
+    ifelse(grepl(term, v), collapse_groups(v), v)
+  }
+  
+  out <- rhs$group
+  for(i in seq_along(collapse[!collapse])) {
+    out <- collapse_term(names(collapse[!collapse])[i], out)  
+  }
+  out
 }
 
 collapse_groups <- function(group) {
