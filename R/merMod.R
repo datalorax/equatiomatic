@@ -2,7 +2,7 @@
 #' @keywords internal
 #' @noRd
 wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
-  paste0("N \\left(", mean, ",", sigma, " \\right)")
+  paste0("N \\left(", mean, ", ", sigma, " \\right)")
 }
 
 get_order <- function(rhs_random) {
@@ -512,9 +512,9 @@ create_ranef_structure_merMod <- function(model, ital_vars, use_coef) {
   distributed <- Map(wrap_normal_dist, means, vcovs)
   
   Map(function(lhs, dist, name, index) {
-    paste0(lhs, " \\sim ", dist,
-           "\\text{, for ", name, " ", tolower(index), " = 1,}",
-           "\\dots", "\\text{,", toupper(index), "}")
+    paste0("    ", lhs, " \\sim ", dist,
+           "\n      \\text{, for ", name, " ", tolower(index), " = 1,}",
+           " \\dots ", "\\text{,", toupper(index), "}")
   }, lhs, distributed, names(lhs), letters[seq_along(lhs) + 9])
 }
 
