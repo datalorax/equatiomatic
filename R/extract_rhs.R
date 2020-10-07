@@ -162,10 +162,6 @@ extract_rhs.lmerMod <- function(model) {
   full_rhs
 }
 
-# Make it more precise
-# right now it just is all or nothing. What if some groups have multiple
-# with an intercept and other have multiple without?
-# does each side group have an intercept
 recode_groups <- function(rhs) {
   
   rhs_splt <- split(rhs, rhs$group)
