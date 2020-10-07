@@ -104,23 +104,202 @@ extract_rhs.lmerMod <- function(model) {
 
   # Extract unique (primary) terms from formula (no interactions)
   formula_rhs_terms <- formula_rhs[!grepl(":", formula_rhs)]
-
+  formula_rhs_terms <- gsub("^`?(.+)`$?", "\\1", formula_rhs_terms)
+  
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
+  full_rhs$group <- recode_groups(full_rhs)
+  
+  full_rhs$original_order <- seq_len(nrow(full_rhs))
+  full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
+  
+  # Figure out which predictors are at which level
+  group_coefs <- detect_group_coef(model, full_rhs)
 
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
-
+  
   full_rhs$primary <- extract_primary_term(formula_rhs_terms,
                                            full_rhs$term)
-
+  
   full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
                                                 full_rhs$split)
-  full_rhs$original_order <- seq_len(nrow(full_rhs))
-
+  
+  full_rhs$pred_level <- lapply(full_rhs$primary, function(x) {
+    group_coefs[names(group_coefs) %in% x]
+  })
+  
+  full_rhs$l1 <- mapply_lgl(function(predlev, effect) {
+    length(predlev) == 0 & effect == "fixed"
+  }, 
+  predlev = full_rhs$pred_level, 
+  effect = full_rhs$effect)
+  
+  # recode the vectors so when they say "l1" when there is an interaction
+  # with an l1 variable
+  l1_vars <- unique(unlist(full_rhs$primary[full_rhs$l1]))
+  l1_vars <- setNames(rep("l1", length(l1_vars)), l1_vars)
+  
+  l1_vars <- lapply(full_rhs$primary, function(prim) {
+    l1_vars[names(l1_vars) %in% prim]
+  })
+  
+  full_rhs$pred_level <- Map(`c`, l1_vars, full_rhs$pred_level)
+  
+  # put each vector in order from low to high
+  full_rhs$split[full_rhs$l1] <- Map(order_split, 
+                                     full_rhs$split[full_rhs$l1], 
+                                     full_rhs$pred_level[full_rhs$l1])
+  
+  full_rhs$primary[full_rhs$l1] <- Map(order_split, 
+                                       full_rhs$primary[full_rhs$l1], 
+                                       full_rhs$pred_level[full_rhs$l1])
+  
+  full_rhs$crosslevel <- detect_crosslevel(full_rhs$primary, 
+                                           full_rhs$pred_level)
+  
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
 }
+
+recode_groups <- function(rhs) {
+  
+  rhs_splt <- split(rhs, rhs$group)
+  rhs_splt <- rhs_splt[!grepl("Residual", names(rhs_splt))]
+  
+  names_collapsed <- collapse_groups(names(rhs_splt))
+  
+  intercept_vary <- vapply(rhs_splt, function(x) {
+    any(grepl("sd__(Intercept)", x$term, fixed = TRUE))
+  }, FUN.VALUE = logical(1))
+  
+  check <- split(intercept_vary, names_collapsed)
+  
+  # collapse these groups
+  collapse <- vapply(check, all, FUN.VALUE = logical(1))
+  
+  collapse_term <- function(term, v) {
+    ifelse(grepl(term, v), collapse_groups(v), v)
+  }
+  
+  out <- rhs$group
+  for(i in seq_along(collapse[!collapse])) {
+    out <- collapse_term(names(collapse[!collapse])[i], out)  
+  }
+  out
+}
+
+collapse_groups <- function(group) {
+  gsub("(.+)\\.\\d\\d?$", "\\1", group)
+}
+
+order_split <- function(split, pred_level) {
+  if(length(pred_level) == 0) {
+    return(pred_level)
+  }
+  var_order <- vapply(names(pred_level), function(x) {
+    grep(x, split)
+  }, FUN.VALUE = integer(1))
+  
+  split[var_order]
+}
+
+#' Pull just the random variables
+#' @param rhs output from \code{extract_rhs}
+#' @keywords internal
+#' @noRd
+extract_random_vars <- function(rhs) {
+  order <- rhs[rhs$group != "Residual", ]
+  order <- sort(tapply(order$original_order, order$group, min))
+  
+  vc <- rhs[rhs$group != "Residual" & rhs$effect == "ran_pars", ]
+  splt <- split(vc, vc$group)[names(order)]
+  
+  lapply(splt, function(x) {
+    vars <- x[!grepl("cor__", x$term), ]
+    gsub("sd__(.+)", "\\1", vars$term)
+  })
+}
+
+
+detect_crosslevel <- function(primary, pred_level) {
+  mapply_lgl(function(prim, predlev) {
+    if (length(prim) > 1) {
+      if (length(prim) != length(predlev)) {
+        TRUE
+      } else if (length(unique(predlev)) != 1) {
+        TRUE
+      } else {
+        FALSE
+      }
+    } else {
+      FALSE
+    }
+  },
+  prim = primary, 
+  predlev = pred_level)
+}
+
+#### Consider refactoring the below too
+detect_covar_level <- function(predictor, group) {
+  
+  nm <- names(group)
+  v <- paste(predictor, group[ ,1], sep = " _|_ ")
+  unique_v <- unique(v)
+  test <- gsub(".+\\s\\_\\|\\_\\s(.+)", "\\1", unique_v)
+  
+  if(all(!duplicated(test))) {
+    return(nm)
+  }
+}
+
+detect_X_level <- function(X, group) {
+  lapply(X, detect_covar_level, group)
+}
+
+collapse_list <- function(x, y) {
+  null_x <- vapply(x, function(x) {
+    if(any(is.null(x))) {
+      return(is.null(x))
+    } else return(is.na(x))
+  }, FUN.VALUE = logical(1))
+  
+  null_y <- vapply(y, function(x) {
+    if(any(is.null(x))) {
+      return(is.null(x))
+    } else return(is.na(x))
+  }, FUN.VALUE = logical(1))
+  
+  y[null_x & !null_y] <- y[null_x & !null_y]
+  y[!null_x & null_y] <- x[!null_x & null_y]
+  y[!null_x & !null_y] <- x[!null_x & !null_y]
+  
+  unlist(lapply(y, function(x) ifelse(is.null(x), NA_character_, x)))
+}
+
+detect_group_coef <- function(model, rhs) {
+  outcome <- all.vars(formula(model))[1]
+  d <- model@frame
+  
+  random_levs <- names(extract_random_vars(rhs))
+  random_levs <- unique(collapse_groups(random_levs))
+  random_lev_ids <- d[random_levs]
+  X <- d[!(names(d) %in% c(random_levs, outcome))]
+  
+  lev_assign <- vector("list", length(random_levs))
+  for(i in seq_along(random_lev_ids)) {
+    lev_assign[[i]] <- detect_X_level(X, random_lev_ids[ , i, drop = FALSE])
+  }
+  
+  out <- Reduce(collapse_list, rev(lev_assign))
+  unlist(out[!is.na(out)])
+}
+
+
+
+
+
+
 
 #' Extract the primary terms from all terms
 #'
