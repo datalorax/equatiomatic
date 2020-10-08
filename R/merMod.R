@@ -440,6 +440,18 @@ create_greek_matrix <- function(v, mat, use_coef, est) {
   mat
 }
 
+pull_var <- function(term) {
+  if(grepl("^cor__", term)) {
+    ran_part <- gsub("(.+\\.).+", "\\1", term)
+    term <- gsub(ran_part, "", term, fixed = TRUE)
+  } else if (grepl("^sd__", term)){
+    ran_part <- "sd__"
+    term <- gsub(paste0("^", ran_part), "", term)
+  }
+  term
+}
+
+
 create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
 
   rand_lev <- rhs_random_lev[ ,c("group", "term", "estimate")]
@@ -454,6 +466,13 @@ create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
   
   means <- means_merMod[means_merMod$group == unique(rand_lev$group), ]
   rand_lev$vcov_greek <- assign_vcov_greek(rand_lev, means)
+  
+  rand_lev$terms_var <- vapply(rand_lev$term, pull_var, FUN.VALUE = character(1))
+  rand_lev <- merge(rand_lev, means[ ,c("term", "new_order")], 
+                    by.x = "terms_var", 
+                    by.y = "term", 
+                    all.x = TRUE)
+  rand_lev <- rand_lev[order(rand_lev$new_order), ]
   
   # Create matrix
   sd_rows <- grepl("^sd__", rand_lev$term)
