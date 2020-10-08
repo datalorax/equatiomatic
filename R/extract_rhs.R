@@ -108,6 +108,8 @@ extract_rhs.lmerMod <- function(model) {
   
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
+  full_rhs$term <- vapply(full_rhs$term, order_interaction,
+                          FUN.VALUE = character(1))
   full_rhs$group <- recode_groups(full_rhs)
   
   full_rhs$original_order <- seq_len(nrow(full_rhs))
@@ -119,11 +121,17 @@ extract_rhs.lmerMod <- function(model) {
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
   
-  full_rhs$primary <- extract_primary_term(formula_rhs_terms,
-                                           full_rhs$term)
+  full_rhs$primary <- lapply(full_rhs$term, function(x) "")
+  full_rhs$primary[full_rhs$effect == "fixed"] <- extract_primary_term(
+    formula_rhs_terms,
+    full_rhs$term[full_rhs$effect == "fixed"]
+  )
   
-  full_rhs$subscripts <- extract_all_subscripts(full_rhs$primary,
-                                                full_rhs$split)
+  full_rhs$subscripts <- lapply(full_rhs$term, function(x) "")
+  full_rhs$subscripts[full_rhs$effect == "fixed"] <- extract_all_subscripts(
+    full_rhs$primary[full_rhs$effect == "fixed"],
+    full_rhs$split[full_rhs$effect == "fixed"]
+  )
   
   full_rhs$pred_level <- lapply(full_rhs$primary, function(x) {
     group_coefs[names(group_coefs) %in% x]
@@ -160,6 +168,24 @@ extract_rhs.lmerMod <- function(model) {
   
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
+}
+
+order_interaction <- function(interaction_term) {
+  if(grepl("^cor__", interaction_term)) {
+    ran_part <- gsub("(.+\\.).+", "\\1", interaction_term)
+    interaction_term <- gsub(ran_part, "", interaction_term, fixed = TRUE)
+  } else if (grepl("^sd__", interaction_term)){
+    ran_part <- "sd__"
+    interaction_term <- gsub(paste0("^", ran_part), "", interaction_term)
+  }
+  terms <- strsplit(interaction_term, ":")[[1]]
+  terms_ordered <- sort(terms)
+  out <- paste0(terms_ordered, collapse = ":")
+  
+  if(exists("ran_part")) {
+    out <- paste0(ran_part, out)
+  }
+  out
 }
 
 recode_groups <- function(rhs) {
