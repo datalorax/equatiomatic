@@ -204,12 +204,19 @@ remove_crosslevel_interaction_redundancy <- function(model, lev_data, term) {
     unlist(extract_primary_term(formula_rhs, x))
   }, FUN.VALUE = character(1))
   
-  lev_data$primary <- lapply(lev_data$primary, function(x) {
-    x[!grepl(paste0(terms, collapse = "|"), x)]
+  subset <- lapply(lev_data$primary, function(x) {
+    exact <- x %in% paste0(terms, collapse = "|")
+    detected <- grepl(paste0(terms, collapse = "|"), x)
+    
+    if(any(exact)) {
+      !exact
+    } else {
+      !detected
+    }
   })
-  lev_data$subscripts <- lapply(lev_data$subscripts, function(x) {
-    x[!grepl(paste0(terms, collapse = "|"), names(x))]
-  })
+  
+  lev_data$primary <- Map(function(x, ss) x[ss], lev_data$primary, subset)
+  lev_data$subscripts <- Map(function(x, ss) x[ss], lev_data$subscripts, subset)
   lev_data
 }
 
@@ -272,8 +279,8 @@ create_slope_intercept <- function(term) {
   gsub("(.+)(.{1})(\\}$)", "\\10\\3", term)
 }
 
-# splt_lev_fixed <- splt_fixed$Site
-# splt_lev_random <- splt_rand$Site
+# splt_lev_fixed <- splt_fixed$sch.id
+# splt_lev_random <- splt_rand$sch.id
 pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
                         order) {
   if(is.null(splt_lev_fixed)) {
@@ -382,20 +389,27 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
                  all.x = TRUE, by = c("group", "term")) 
   }
   out <- out[order(out$original_order), c("group", "term", "greek", "original_order")]  
-  
   random_vary <- fixed_greek_mermod[fixed_greek_mermod$term %in% unique(out$term), ]
   random_vary$greek_vary <- gsub("(.+\\{\\d?).+", "\\1}", random_vary$greek)
+  random_vary$new_order <- random_vary$original_order
   
-  out <- merge(out, random_vary[ ,c("term", "greek_vary")], by = "term", all.x = TRUE)
+  out <- merge(out, random_vary[ ,c("term", "greek_vary", "new_order")], by = "term", all.x = TRUE)
   
   lev_indexes <- setNames(letters[seq_along(order) + 9], names(order))
   lev_indexes <- lev_indexes[match(out$group, names(lev_indexes))]
-  out$greek_vary <- paste0(gsub("(.+)\\}", "\\1", out$greek_vary), lev_indexes, "}")
-  
+  out$greek_vary <- ifelse(
+    is.na(out$greek_vary), 
+    "",
+    paste0(gsub("(.+)\\}", "\\1", out$greek_vary), lev_indexes, "}")
+  )
+  # 
+  # num <- gsub(".+\\{(.{1}\\d?).+", "\\1", out$greek_vary)
+  # num <- as.numeric(ifelse(num == lev_indexes, "0", num))
+  # 
   out$greek <- ifelse(is.na(out$greek), 
                       paste0("\\mu_{", out$greek_vary, "}"),
                       out$greek)
-  out[order(out$original_order), ]
+  out[order(out$new_order), ]
 }
 
 assign_vcov_greek <- function(rand_lev, means_merMod) {
@@ -426,6 +440,18 @@ create_greek_matrix <- function(v, mat, use_coef, est) {
   mat
 }
 
+pull_var <- function(term) {
+  if(grepl("^cor__", term)) {
+    ran_part <- gsub("(.+\\.).+", "\\1", term)
+    term <- gsub(ran_part, "", term, fixed = TRUE)
+  } else if (grepl("^sd__", term)){
+    ran_part <- "sd__"
+    term <- gsub(paste0("^", ran_part), "", term)
+  }
+  term
+}
+
+
 create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
 
   rand_lev <- rhs_random_lev[ ,c("group", "term", "estimate")]
@@ -440,6 +466,13 @@ create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
   
   means <- means_merMod[means_merMod$group == unique(rand_lev$group), ]
   rand_lev$vcov_greek <- assign_vcov_greek(rand_lev, means)
+  
+  rand_lev$terms_var <- vapply(rand_lev$term, pull_var, FUN.VALUE = character(1))
+  rand_lev <- merge(rand_lev, means[ ,c("term", "new_order")], 
+                    by.x = "terms_var", 
+                    by.y = "term", 
+                    all.x = TRUE)
+  rand_lev <- rand_lev[order(rand_lev$new_order), ]
   
   # Create matrix
   sd_rows <- grepl("^sd__", rand_lev$term)
