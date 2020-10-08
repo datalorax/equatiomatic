@@ -513,7 +513,7 @@ create_ranef_structure_merMod <- function(model, ital_vars, use_coef) {
   
   Map(function(lhs, dist, name, index) {
     paste0("    ", lhs, " \\sim ", dist,
-           "\n      \\text{, for ", name, " ", tolower(index), " = 1,}",
+           "\n    \\text{, for ", name, " ", tolower(index), " = 1,}",
            " \\dots ", "\\text{,", toupper(index), "}")
   }, lhs, distributed, names(lhs), letters[seq_along(lhs) + 9])
 }
@@ -534,13 +534,11 @@ create_onecol_array <- function(v) {
     return(v)
   }
   v <- paste0("&", v)
-  paste0(
-    "\\left(\n \\begin{array}{c} \n",
-    "\\begin{aligned}\n",
-    paste0(v, collapse = " \\\\ "),
+  paste0("\n\\left(\n  \\begin{array}{c} \n    \\begin{aligned}\n",
+    paste0("      ", v, collapse = " \\\\\n"),
     "\n",
-    "\\end{aligned}\n",
-    " \\end{array}\n \\right)"
+    "    \\end{aligned}\n",
+    "  \\end{array}\n\\right)\n"
   )
 }
 
@@ -566,12 +564,9 @@ convert_matrix <- function(mat) {
     return(mat)
   }
   cols <- paste(rep("c", ncol(mat)), collapse = "")
-  paste0(
-    "\\left(
-    \\begin{array}{", cols, "}",
-    paste(apply(mat, 1, paste, collapse = " & "), collapse = "\\\\"),
-    "\\end{array}
-    \\right)"
+  paste0("\n\\left(\n  \\begin{array}{", cols, "}\n",
+    paste("    ", apply(mat, 1, paste, collapse = " & "), collapse = " \\\\ \n"),
+    "\n  \\end{array}\n\\right)\n"
   )
 }
 

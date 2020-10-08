@@ -224,7 +224,7 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                          sigma = "\\sigma^2")
   vcv <- create_ranef_structure_merMod(model, ital_vars, use_coefs)
   
-  eq <- paste(c(l1, vcv), collapse = " \\\\ \n")
+  eq <- paste(c(l1, vcv), collapse = " \\\\")
   eq <- gsub("\\sim", " &\\sim", eq, fixed = TRUE)
   eq <- paste(eq, collapse = " \\\\ \n")
   eq <- paste0("\\begin{", align_env, "}\n",
