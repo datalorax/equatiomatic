@@ -108,6 +108,7 @@ extract_rhs.lmerMod <- function(model) {
   
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
+  
   full_rhs$term <- vapply(full_rhs$term, order_interaction,
                           FUN.VALUE = character(1))
   full_rhs$group <- recode_groups(full_rhs)
@@ -115,17 +116,31 @@ extract_rhs.lmerMod <- function(model) {
   full_rhs$original_order <- seq_len(nrow(full_rhs))
   full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
   
-  # Figure out which predictors are at which level
-  group_coefs <- detect_group_coef(model, full_rhs)
-
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
+  
+  # Figure out which predictors are at which level
+  # could probs put this in its own function
+  group_coefs <- detect_group_coef(model, full_rhs)
+  all_terms <- unique(unlist(full_rhs$split[full_rhs$effect == "fixed"]))
+  l1_terms <- setdiff(all_terms, names(group_coefs))
+  l1_terms <- setNames(rep("l1", length(l1_terms)), l1_terms)
+  
+  var_levs <- c(l1_terms, group_coefs)
   
   full_rhs$primary <- lapply(full_rhs$term, function(x) "")
   full_rhs$primary[full_rhs$effect == "fixed"] <- extract_primary_term(
     formula_rhs_terms,
     full_rhs$term[full_rhs$effect == "fixed"]
   )
+  
+  # make sure split and primary are in the same order
+  full_rhs$primary[full_rhs$effect == "fixed"] <- Map(function(prim, splt) {
+    ord <- vapply(prim, function(x) grep(x, splt), FUN.VALUE = integer(1))
+    names(sort(ord))
+  }, 
+  full_rhs$primary[full_rhs$effect == "fixed"], 
+  full_rhs$split[full_rhs$effect == "fixed"])
   
   full_rhs$subscripts <- lapply(full_rhs$term, function(x) "")
   full_rhs$subscripts[full_rhs$effect == "fixed"] <- extract_all_subscripts(
@@ -134,37 +149,36 @@ extract_rhs.lmerMod <- function(model) {
   )
   
   full_rhs$pred_level <- lapply(full_rhs$primary, function(x) {
-    group_coefs[names(group_coefs) %in% x]
+    var_levs[names(var_levs) %in% x]
   })
   
-  full_rhs$l1 <- mapply_lgl(function(predlev, effect) {
-    length(predlev) == 0 & effect == "fixed"
+  full_rhs$pred_level[full_rhs$effect == "fixed"] <- Map(function(predlev, splt) {
+    ord <- vapply(names(predlev), function(x) grep(x, splt), FUN.VALUE = integer(1))
+    ord <- names(sort(ord))
+    predlev[ord]
   }, 
-  predlev = full_rhs$pred_level, 
-  effect = full_rhs$effect)
+  full_rhs$pred_level[full_rhs$effect == "fixed"], 
+  full_rhs$split[full_rhs$effect == "fixed"])
   
-  # recode the vectors so when they say "l1" when there is an interaction
-  # with an l1 variable
-  l1_vars <- unique(unlist(full_rhs$primary[full_rhs$l1]))
-  l1_vars <- setNames(rep("l1", length(l1_vars)), l1_vars)
-  
-  l1_vars <- lapply(full_rhs$primary, function(prim) {
-    l1_vars[names(l1_vars) %in% prim]
-  })
-  
-  full_rhs$pred_level <- Map(`c`, l1_vars, full_rhs$pred_level)
+  full_rhs$l1 <- vapply(full_rhs$pred_level, function(x) {
+    (length(x) > 0 & all(x == "l1"))
+  }, FUN.VALUE = logical(1))
+  full_rhs$l1 <- ifelse(full_rhs$term == "(Intercept)", 
+                        TRUE,
+                        full_rhs$l1)
   
   # put each vector in order from low to high
-  full_rhs$split[full_rhs$l1] <- Map(order_split, 
-                                     full_rhs$split[full_rhs$l1], 
-                                     full_rhs$pred_level[full_rhs$l1])
-  
-  full_rhs$primary[full_rhs$l1] <- Map(order_split, 
-                                       full_rhs$primary[full_rhs$l1], 
-                                       full_rhs$pred_level[full_rhs$l1])
+  # full_rhs$split[full_rhs$l1] <- Map(order_split, 
+  #                                    full_rhs$split[full_rhs$l1], 
+  #                                    full_rhs$pred_level[full_rhs$l1])
+  # 
+  # full_rhs$primary[full_rhs$l1] <- Map(order_split, 
+  #                                      full_rhs$primary[full_rhs$l1], 
+  #                                      full_rhs$pred_level[full_rhs$l1])
   
   full_rhs$crosslevel <- detect_crosslevel(full_rhs$primary, 
                                            full_rhs$pred_level)
+  
   
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
@@ -183,7 +197,24 @@ order_interaction <- function(interaction_term) {
   out <- paste0(terms_ordered, collapse = ":")
   
   if(exists("ran_part")) {
-    out <- paste0(ran_part, out)
+    # check/handle if there's an interaction in the random part
+    # sd or cor
+    type <- gsub("(^.+__).+", "\\1", ran_part)
+    
+    # remove type and period at end
+    ran <- gsub(type, "", ran_part)
+    ran <- gsub("\\.$", "", ran)
+    
+    # handle interaction (if present)
+    ran <- strsplit(ran, ":")[[1]]
+    ran <- paste0(sort(ran), collapse = ":")
+    
+    # paste it all back together
+    if(grepl("^cor", ran_part)) {
+      out <- paste0(type, ran, ".", out)
+    } else {
+      out <- paste0(type, ran, out)
+    }
   }
   out
 }

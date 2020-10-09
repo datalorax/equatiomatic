@@ -50,6 +50,7 @@ Suggests:
     testthat (>= 2.1.0),
     MASS,
     ordinal,
+    lme4,
     rmarkdown,
     covr
 URL: https://github.com/datalorax/equatiomatic
