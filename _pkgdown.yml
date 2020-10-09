@@ -3,4 +3,4 @@ development:
   mode: auto
 template:
   params:
-    bootswatch: simplex
+    bootswatch: lumen
