@@ -42,6 +42,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown")
+          install.packages("textshaping")
         shell: Rscript {0}
 
       - name: Install package
