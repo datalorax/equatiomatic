@@ -108,6 +108,7 @@ extract_rhs.lmerMod <- function(model) {
   
   # Extract coefficient names and values from model
   full_rhs <- broom.mixed::tidy(model)
+  
   full_rhs$term <- vapply(full_rhs$term, order_interaction,
                           FUN.VALUE = character(1))
   full_rhs$group <- recode_groups(full_rhs)
@@ -196,7 +197,24 @@ order_interaction <- function(interaction_term) {
   out <- paste0(terms_ordered, collapse = ":")
   
   if(exists("ran_part")) {
-    out <- paste0(ran_part, out)
+    # check/handle if there's an interaction in the random part
+    # sd or cor
+    type <- gsub("(^.+__).+", "\\1", ran_part)
+    
+    # remove type and period at end
+    ran <- gsub(type, "", ran_part)
+    ran <- gsub("\\.$", "", ran)
+    
+    # handle interaction (if present)
+    ran <- strsplit(ran, ":")[[1]]
+    ran <- paste0(sort(ran), collapse = ":")
+    
+    # paste it all back together
+    if(grepl("^cor", ran_part)) {
+      out <- paste0(type, ran, ".", out)
+    } else {
+      out <- paste0(type, ran, out)
+    }
   }
   out
 }
