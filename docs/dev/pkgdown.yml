@@ -1,9 +1,0 @@
-pandoc: 2.9.2.1
-pkgdown: 1.5.1
-pkgdown_sha: ~
-articles:
-  intro-equatiomatic: intro-equatiomatic.html
-  lmer4-lmer: lmer4-lmer.html
-  tests_and_coverage: tests_and_coverage.html
-last_built: 2020-10-09T20:51Z
-
