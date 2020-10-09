@@ -74,8 +74,9 @@ pull_term_subscript <- function(greek_coef, n = 1) {
 pull_min_level <- function(one_crossdata, one_detected, one_lev, one_var, 
                            order) {
   all_vars <- mapply_chr(function(lev, var) {
-    d <- one_crossdata[one_detected]
-    d <- d[[lev]]
+    # d <- one_crossdata[one_detected]
+    # d <- d[[lev]]
+    d <- one_crossdata[[lev]]
     
     out <- d[d$term == var, ]$greek
     if(length(out) == 0) {
@@ -110,6 +111,8 @@ pull_superscript <- function(slp_preds, detect_cross, cross_data, order) {
   superscripts
 }
 
+# lev_data <- splt[[2]]
+# lev_data_name <- "sid"
 assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
   if(is.null(lev_data)) {
     return()
@@ -279,8 +282,8 @@ create_slope_intercept <- function(term) {
   gsub("(.+)(.{1})(\\}$)", "\\10\\3", term)
 }
 
-# splt_lev_fixed <- splt_fixed$sch.id
-# splt_lev_random <- splt_rand$sch.id
+# splt_lev_fixed <- splt_fixed[[1]]
+# splt_lev_random <- splt_rand[[1]]
 pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
                         order) {
   if(is.null(splt_lev_fixed)) {
@@ -402,10 +405,7 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
     "",
     paste0(gsub("(.+)\\}", "\\1", out$greek_vary), lev_indexes, "}")
   )
-  # 
-  # num <- gsub(".+\\{(.{1}\\d?).+", "\\1", out$greek_vary)
-  # num <- as.numeric(ifelse(num == lev_indexes, "0", num))
-  # 
+  
   out$greek <- ifelse(is.na(out$greek), 
                       paste0("\\mu_{", out$greek_vary, "}"),
                       out$greek)
@@ -512,7 +512,7 @@ create_ranef_structure_merMod <- function(model, ital_vars, use_coef) {
   distributed <- Map(wrap_normal_dist, means, vcovs)
   
   Map(function(lhs, dist, name, index) {
-    paste0("    ", lhs, " \\sim ", dist,
+    paste0("\n    ", lhs, " \\sim ", dist,
            "\n    \\text{, for ", name, " ", tolower(index), " = 1,}",
            " \\dots ", "\\text{,", toupper(index), "}")
   }, lhs, distributed, names(lhs), letters[seq_along(lhs) + 9])
@@ -601,7 +601,8 @@ create_l1_merMod <- function(model, mean_separate,
     paste0("(", x, ")")
   }, character(1))
   
-  l1 <- paste0(greek$greek[greek$predsplit == "l1"], terms[greek$predsplit == "l1"])
+  l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
+               terms[greek$predsplit == "l1"])
   if(wrap) {
     if (operator_location == "start") {
       line_end <- "\\\\\n&\\quad + "
@@ -629,7 +630,7 @@ create_l1_merMod <- function(model, mean_separate,
   }
   if(mean_separate) {
     paste0(lhs, " \\sim ", wrap_normal_dist("\\mu", sigma),
-           " \\\\ \\mu &=", l1)
+           " \\\\\n    \\mu &=", l1)
   }  else {
     paste(lhs, "\\sim", wrap_normal_dist(l1, sigma))
   }
