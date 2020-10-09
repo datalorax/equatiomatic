@@ -145,7 +145,7 @@ extract_eq(l2_hsb_int)
 But more complicated are cross level interactions. Here's a quick example.
 
 ```{r cross-level1}
-cl_long1 <- lmer(score ~ treatment*wave + (wave|sid) + (1|school) + 
+cl_long1 <- lmer(score ~ wave*treatment + (wave|sid) + (1|school) + 
                         (1|district),
                  data = sim_longitudinal)
 extract_eq(cl_long1)
@@ -154,7 +154,7 @@ extract_eq(cl_long1)
 Note that the `treatement` variable is shown as a predictor of the level 1 intercept and the level 1 slope. But if the slope is not randomly varying at this level, then the notation has to change.
 
 ```{r cross-level2}
-cl_long2 <- lmer(score ~ treatment*wave + (1|sid) + (1|school) + 
+cl_long2 <- lmer(score ~ wave*treatment + (1|sid) + (1|school) + 
                         (1|district),
                  data = sim_longitudinal)
 extract_eq(cl_long2)
@@ -163,7 +163,7 @@ extract_eq(cl_long2)
 This works even for really complicated models, including three-way interactions that contain a cross-level interaction. For example
 
 ```{r cross-level3}
-cl_long3 <- lmer(score ~ wave*group*treatment + prop_low*treatment*wave +
+cl_long3 <- lmer(score ~ wave*group*treatment + wave*prop_low*treatment +
                   (wave|sid) + (wave|school) +
                   (wave + treatment|district),
                 sim_longitudinal)
@@ -201,6 +201,7 @@ With that said, this is the part of the code that I would consider the most "exp
 
 ## Future developments
 There are still a few things I'm planning to implement that I haven't quite gotten around to yet. These include
+
 * Implementation of `use_coef`. This is relatively straightforward and should be implemented soon.
 * Implementation of other features currently included in the `lm` extraction, including `intercept`, and `raw_tex` 
 * Inevitable bug fixes
