@@ -40,10 +40,8 @@ jobs:
       
       - name: Install dependencies
         run: |
-          options(install.packages.compile.from.source = "both")
-          install.packages("textshaping")
           remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown")
+          remotes::install_github("r-lib/pkgdown@v1.5.0")
         shell: Rscript {0}
 
       - name: Install package
