@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -45,6 +45,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="'LaTeX' code for R models — extract_eq" />
 <meta property="og:description" content="Extract the variable names from a model to produce a 'LaTeX' equation, which is
@@ -108,6 +110,9 @@ broom::tidy." />
       <a href="../articles/intro-equatiomatic.html">Introduction to {equatiomatic}</a>
     </li>
     <li>
+      <a href="../articles/lmer4-lmer.html">lme4::lmer Models</a>
+    </li>
+    <li>
       <a href="../articles/tests_and_coverage.html">Tests and Coverage</a>
     </li>
   </ul>
@@ -144,26 +149,26 @@ broom::tidy." />
     <div class="ref-description">
     <p>Extract the variable names from a model to produce a 'LaTeX' equation, which is
 output to the screen. Supports any model supported by
-broom::tidy.</p>
+<a href='https://broom.tidymodels.org/reference/reexports.html'>broom::tidy</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>extract_eq</span><span class='op'>(</span>
-  <span class='va'>model</span>,
-  intercept <span class='op'>=</span> <span class='st'>"alpha"</span>,
-  greek <span class='op'>=</span> <span class='st'>"beta"</span>,
-  raw_tex <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ital_vars <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  show_distribution <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  wrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  terms_per_line <span class='op'>=</span> <span class='fl'>4</span>,
-  operator_location <span class='op'>=</span> <span class='st'>"end"</span>,
-  align_env <span class='op'>=</span> <span class='st'>"aligned"</span>,
-  use_coefs <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  coef_digits <span class='op'>=</span> <span class='fl'>2</span>,
-  fix_signs <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>mean_separate</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>extract_eq</span>(
+  <span class='no'>model</span>,
+  <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='st'>"alpha"</span>,
+  <span class='kw'>greek</span> <span class='kw'>=</span> <span class='st'>"beta"</span>,
+  <span class='kw'>raw_tex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>show_distribution</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>operator_location</span> <span class='kw'>=</span> <span class='st'>"end"</span>,
+  <span class='kw'>align_env</span> <span class='kw'>=</span> <span class='st'>"aligned"</span>,
+  <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>coef_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>mean_separate</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,8 +221,8 @@ terms to include per line. Used only when <code>wrap</code> is <code>TRUE</code>
       <th>operator_location</th>
       <td><p>Character, one of &#8220;end&#8221; (the default) or
 &#8220;start&#8221;. When terms are split across multiple lines, they are split
-at mathematical operators like <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code>. If set to &#8220;end&#8221;, each line will
-end with a trailing operator (<code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code> or <code><a href='https://rdrr.io/r/base/Arithmetic.html'>-</a></code>). If set to &#8220;start&#8221;, each
+at mathematical operators like <code>+</code>. If set to &#8220;end&#8221;, each line will
+end with a trailing operator (<code>+</code> or <code>-</code>). If set to &#8220;start&#8221;, each
 line will begin with an operator.</p></td>
     </tr>
     <tr>
@@ -245,7 +250,7 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
     </tr>
     <tr>
       <th>mean_separate</th>
-      <td><p>Currently only support for <code>lmer</code>
+      <td><p>Currently only support for <code><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></code>
 models. Should the mean structure be inside or separated from the
 normal distribution? Defaults to <code>NULL</code>, in which case it will become
 <code>TRUE</code> if there are more than three fixed-effect parameters. If
@@ -265,42 +270,36 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Simple model</span>
-<span class='va'>mod1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>disp</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='no'>mod1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
+<span class='fu'>extract_eq</span>(<span class='no'>mod1</span>)</div><div class='output co'>#&gt; $$
 #&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Include all variables</span>
-<span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>.</span>, <span class='no'>mtcars</span>)
+<span class='fu'>extract_eq</span>(<span class='no'>mod2</span>)</div><div class='output co'>#&gt; $$
 #&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Works for categorical variables too, putting levels as subscripts</span>
-<span class='va'>mod3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>bill_length_mm</span> <span class='op'>+</span> <span class='va'>species</span>, <span class='va'>penguins</span><span class='op'>)</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='no'>mod3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>body_mass_g</span> ~ <span class='no'>bill_length_mm</span> + <span class='no'>species</span>, <span class='no'>penguins</span>)
+<span class='fu'>extract_eq</span>(<span class='no'>mod3</span>)</div><div class='output co'>#&gt; $$
 #&gt; \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
 #&gt; $$</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>8675309</span><span class='op'>)</span>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>cat1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, <span class='fl'>100</span><span class='op'>)</span>,
-                cat2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, each <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,
-                cont1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span><span class='op'>)</span>,
-                cont2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span><span class='op'>)</span>,
-                out   <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='fl'>10</span>, <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mod4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>out</span> <span class='op'>~</span> <span class='va'>.</span>, <span class='va'>d</span><span class='op'>)</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>8675309</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
+                <span class='kw'>cat2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>100</span>),
+                <span class='kw'>cont1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
+                <span class='kw'>cont2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span>),
+                <span class='kw'>out</span>   <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>10</span>, <span class='fl'>0.5</span>))
+<span class='no'>mod4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='no'>d</span>)
+<span class='fu'>extract_eq</span>(<span class='no'>mod4</span>)</div><div class='output co'>#&gt; $$
 #&gt; \operatorname{out} = \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Don't italicize terms</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod1</span>, ital_vars <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'>extract_eq</span>(<span class='no'>mod1</span>, <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
 #&gt; $$</div><div class='input'>
 <span class='co'># Wrap equations in an "aligned" environment</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod2</span>, wrap <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\
 #&gt; &amp;\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\
@@ -308,8 +307,7 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Wider equation wrapping</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod2</span>, wrap <span class='op'>=</span> <span class='cn'>TRUE</span>, terms_per_line <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \operatorname{mpg} &amp;= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\
 #&gt; &amp;\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\
@@ -317,8 +315,7 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Include model estimates instead of Greek letters</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod2</span>, wrap <span class='op'>=</span> <span class='cn'>TRUE</span>, terms_per_line <span class='op'>=</span> <span class='fl'>2</span>, use_coefs <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 - 0.11(\operatorname{cyl})\ + \\
 #&gt; &amp;\quad 0.01(\operatorname{disp}) - 0.02(\operatorname{hp})\ + \\
@@ -329,8 +326,7 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Don't fix doubled-up "+ -" signs</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod2</span>, wrap <span class='op'>=</span> <span class='cn'>TRUE</span>, terms_per_line <span class='op'>=</span> <span class='fl'>4</span>, use_coefs <span class='op'>=</span> <span class='cn'>TRUE</span>, fix_signs <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp}) + -0.02(\operatorname{hp})\ + \\
 #&gt; &amp;\quad 0.79(\operatorname{drat}) + -3.72(\operatorname{wt}) + 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs})\ + \\
@@ -338,15 +334,14 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Use other model types, like glm</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>8675309</span><span class='op'>)</span>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fl'>100</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
-                cat1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, <span class='fl'>100</span><span class='op'>)</span>,
-                cat2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, each <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>,
-                cont1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span><span class='op'>)</span>,
-                cont2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mod5</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>out</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>d</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span>link <span class='op'>=</span> <span class='st'>"logit"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'>extract_eq</span><span class='op'>(</span><span class='va'>mod5</span>, wrap <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $$
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>8675309</span>)
+<span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>0</span>:<span class='fl'>1</span>, <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+                <span class='kw'>cat1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='fl'>100</span>),
+                <span class='kw'>cat2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>100</span>),
+                <span class='kw'>cont1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
+                <span class='kw'>cont2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>300</span>, <span class='fl'>50</span>, <span class='fl'>5</span>))
+<span class='no'>mod5</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span>(<span class='no'>out</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>d</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span>(<span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>))
+<span class='fu'>extract_eq</span>(<span class='no'>mod5</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\
 #&gt; &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2})
@@ -367,7 +362,7 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
