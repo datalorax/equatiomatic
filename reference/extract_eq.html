@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
@@ -45,6 +45,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="'LaTeX' code for R models — extract_eq" />
 <meta property="og:description" content="Extract the variable names from a model to produce a 'LaTeX' equation, which is
@@ -82,7 +84,7 @@ broom::tidy." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -106,6 +108,9 @@ broom::tidy." />
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/intro-equatiomatic.html">Introduction to {equatiomatic}</a>
+    </li>
+    <li>
+      <a href="../articles/lmer4-lmer.html">lme4::lmer Models</a>
     </li>
     <li>
       <a href="../articles/tests_and_coverage.html">Tests and Coverage</a>
@@ -160,7 +165,9 @@ output to the screen. Supports any model supported by
   <span class='kw'>align_env</span> <span class='kw'>=</span> <span class='st'>"aligned"</span>,
   <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>coef_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>mean_separate</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -241,6 +248,20 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 <code>5(x) + -3(z)</code>). If enabled, the "+ -" is replaced with a "-" (e.g.
 <code>5(x) - 3(z)</code>).</p></td>
     </tr>
+    <tr>
+      <th>mean_separate</th>
+      <td><p>Currently only support for <code><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></code>
+models. Should the mean structure be inside or separated from the
+normal distribution? Defaults to <code>NULL</code>, in which case it will become
+<code>TRUE</code> if there are more than three fixed-effect parameters. If
+<code>TRUE</code>, the equation will be displayed as, for example,
+outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If <code>FALSE</code>, this
+same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments (for future development; not currently used).</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -296,20 +317,20 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 <span class='co'># Include model estimates instead of Greek letters</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \operatorname{mpg} &amp;= 12.3 - 0.11(\operatorname{cyl})\ + \\
+#&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 - 0.11(\operatorname{cyl})\ + \\
 #&gt; &amp;\quad 0.01(\operatorname{disp}) - 0.02(\operatorname{hp})\ + \\
 #&gt; &amp;\quad 0.79(\operatorname{drat}) - 3.72(\operatorname{wt})\ + \\
 #&gt; &amp;\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs})\ + \\
 #&gt; &amp;\quad 2.52(\operatorname{am}) + 0.66(\operatorname{gear})\ - \\
-#&gt; &amp;\quad 0.2(\operatorname{carb}) + \epsilon
+#&gt; &amp;\quad 0.2(\operatorname{carb})
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Don't fix doubled-up "+ -" signs</span>
 <span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
-#&gt; \operatorname{mpg} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp}) + -0.02(\operatorname{hp})\ + \\
+#&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp}) + -0.02(\operatorname{hp})\ + \\
 #&gt; &amp;\quad 0.79(\operatorname{drat}) + -3.72(\operatorname{wt}) + 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs})\ + \\
-#&gt; &amp;\quad 2.52(\operatorname{am}) + 0.66(\operatorname{gear}) + -0.2(\operatorname{carb}) + \epsilon
+#&gt; &amp;\quad 2.52(\operatorname{am}) + 0.66(\operatorname{gear}) + -0.2(\operatorname{carb})
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Use other model types, like glm</span>
@@ -323,7 +344,7 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 <span class='fu'>extract_eq</span>(<span class='no'>mod5</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
 #&gt; \begin{aligned}
 #&gt; \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\
-#&gt; &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2}) + \epsilon
+#&gt; &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2})
 #&gt; \end{aligned}
 #&gt; $$</div></pre>
   </div>
@@ -341,7 +362,7 @@ coefficient estimates that are negative are preceded with a "+" (e.g.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

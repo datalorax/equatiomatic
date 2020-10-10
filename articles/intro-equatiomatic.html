@@ -12,12 +12,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to {equatiomatic}">
+<script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Introduction to {equatiomatic}">
 <meta property="og:description" content="equatiomatic">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -38,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
       </span>
     </div>
 
@@ -62,6 +63,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/intro-equatiomatic.html">Introduction to {equatiomatic}</a>
+    </li>
+    <li>
+      <a href="../articles/lmer4-lmer.html">lme4::lmer Models</a>
     </li>
     <li>
       <a href="../articles/tests_and_coverage.html">Tests and Coverage</a>
@@ -137,8 +141,6 @@
 <p><span class="math display">\[
 \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{flipper\_length\_mm}) + \epsilon
 \]</span></p>
-<p>This is moderately helpful, but if we set the code chunk to <code>results = "asis"</code>, as shown below, we get the actual equation when we knit the R Markdown document!</p>
-<p><img src="results-asis.png"></p>
 <p>You can of course set <code>echo = FALSE</code> as well, and then you’ll get just the equation, which will look like the below.</p>
 <p><span class="math display">\[
 \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{flipper\_length\_mm}) + \epsilon
@@ -213,8 +215,8 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">m2</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">use_coefs</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-\operatorname{bill\_length\_mm} &amp;= 63.72 - 1.16(\operatorname{bill\_depth\_mm}) - 54.12(\operatorname{island}_{\operatorname{Dream}}) - 35.13(\operatorname{island}_{\operatorname{Torgersen}})\ + \\
-&amp;\quad 3.05(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Dream}}) + 1.73(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Torgersen}}) + \epsilon
+\operatorname{\widehat{bill_length_mm}} &amp;= 63.72 - 1.16(\operatorname{bill\_depth\_mm}) - 54.12(\operatorname{island}_{\operatorname{Dream}}) - 35.13(\operatorname{island}_{\operatorname{Torgersen}})\ + \\
+&amp;\quad 3.05(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Dream}}) + 1.73(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Torgersen}})
 \end{aligned}
 \]</span></p>
 </div>
@@ -271,17 +273,17 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <p><span class="math display">\[
 \begin{aligned}
 \log\left[ \frac { P( \operatorname{sex} = \operatorname{male} ) }{ 1 - P( \operatorname{sex} = \operatorname{male} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{2}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{3}(\operatorname{bill\_length\_mm})\ + \\
-&amp;\quad \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm}) + \epsilon
+&amp;\quad \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm})
 \end{aligned}
 \]</span></p>
 <p>You can also (optionally) show the how the data are assumed to be distributed.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">lr</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">show_distribution</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-\operatorname{sex}_{\operatorname{male}} &amp;\sim B\left(\operatorname{prob} = \hat{P},\operatorname{size} = 344\right) \\
- \log\left[ \frac {\hat{P}}{1 - \hat{P}} \right] 
+\operatorname{sex} &amp;\sim Bernoulli\left(\operatorname{prob}_{\operatorname{sex} = \operatorname{male}}= \hat{P}\right) \\
+ \log\left[ \frac { \hat{P} }{ 1 - \hat{P} } \right] 
  &amp;= \alpha + \beta_{1}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{2}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{3}(\operatorname{bill\_length\_mm})\ + \\
-&amp;\quad \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm}) + \epsilon
+&amp;\quad \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm})
 \end{aligned}
 \]</span></p>
 </div>
@@ -296,18 +298,18 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">pr</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{2}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{3}(\operatorname{bill\_length\_mm})\ + \\
-&amp;\qquad\ \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm}) + \epsilon]
+P( \operatorname{sex} = \operatorname{male} ) &amp;= \Phi[\alpha + \beta_{1}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{2}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{3}(\operatorname{bill\_length\_mm})\ + \\
+&amp;\qquad\ \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm})]
 \end{aligned}
 \]</span></p>
 <p>Again, you can (optionally) show the how the data are assumed distributed.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">pr</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">show_distribution</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-\operatorname{sex}_{\operatorname{male}} &amp;\sim B\left(\operatorname{prob} = \hat{P},\operatorname{size} = 344\right) \\
- \log\left[ \frac {\hat{P}}{1 - \hat{P}} \right] 
+\operatorname{sex} &amp;\sim Bernoulli\left(\operatorname{prob}_{\operatorname{sex} = \operatorname{male}}= \hat{P}\right) \\
+ \hat{P} 
  &amp;= \Phi[\alpha + \beta_{1}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{2}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{3}(\operatorname{bill\_length\_mm})\ + \\
-&amp;\qquad\ \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm}) + \epsilon]
+&amp;\qquad\ \beta_{4}(\operatorname{species}_{\operatorname{Chinstrap}} \times \operatorname{bill\_length\_mm}) + \beta_{5}(\operatorname{species}_{\operatorname{Gentoo}} \times \operatorname{bill\_length\_mm})]
 \end{aligned}
 \]</span></p>
 </div>
@@ -397,17 +399,13 @@ P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\oper
 <p><span class="math display">\[
 \begin{aligned}
 \log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
 \log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
 \log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &amp;= \alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
 \log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &amp;= \alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})
 \end{aligned}
 \]</span></p>
 </div>
@@ -426,18 +424,14 @@ P(\operatorname{sex} = \operatorname{male}) &amp;= \Phi[\alpha + \beta_{1}(\oper
 <span class="co">#&gt; Re-fitting to get Hessian</span></pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-P(\operatorname{1} \geq \operatorname{2}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon] \\
-P(\operatorname{2} \geq \operatorname{3}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon] \\
-P(\operatorname{3} \geq \operatorname{4}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon] \\
-P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon]
+P( \operatorname{1} \geq \operatorname{2} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})] \\
+P( \operatorname{2} \geq \operatorname{3} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})] \\
+P( \operatorname{3} \geq \operatorname{4} ) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})] \\
+P( \operatorname{4} \geq \operatorname{5} ) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})]
 \end{aligned}
 \]</span></p>
 </div>
@@ -457,17 +451,13 @@ P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\op
 <p><span class="math display">\[
 \begin{aligned}
 \log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
 \log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
 \log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &amp;= \alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon \\
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
 \log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &amp;= \alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\quad \epsilon
+&amp;\quad \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})
 \end{aligned}
 \]</span></p>
 </div>
@@ -481,18 +471,14 @@ P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\op
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">ordinal_probit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-P(\operatorname{1} \geq \operatorname{2}) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon] \\
-P(\operatorname{2} \geq \operatorname{3}) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon] \\
-P(\operatorname{3} \geq \operatorname{4}) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon] \\
-P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
-&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})\ + \\
-&amp;\qquad\ \epsilon]
+P( \operatorname{1} \geq \operatorname{2} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})] \\
+P( \operatorname{2} \geq \operatorname{3} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})] \\
+P( \operatorname{3} \geq \operatorname{4} ) &amp;= \Phi[\alpha_{3} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})] \\
+P( \operatorname{4} \geq \operatorname{5} ) &amp;= \Phi[\alpha_{4} + \beta_{1}(\operatorname{temp}_{\operatorname{warm}})\ + \\
+&amp;\qquad\ \beta_{2}(\operatorname{contact}_{\operatorname{yes}}) + \beta_{3}(\operatorname{temp}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})]
 \end{aligned}
 \]</span></p>
 </div>
@@ -534,7 +520,7 @@ P(\operatorname{4} \geq \operatorname{5}) &amp;= \Phi[\alpha_{4} + \beta_{1}(\op
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • equatiomatic</title>
+<title>A subset of the full 1982 High School and Beyond Survey — hsb • equatiomatic</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="A subset of the full 1982 High School and Beyond Survey — hsb" />
+<meta property="og:description" content="This is the dataset used throughout Raudenbush &amp;amp; Bryk (2002)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -68,7 +69,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -138,22 +139,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>A subset of the full 1982 High School and Beyond Survey</h1>
+    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/hsb.R'><code>R/hsb.R</code></a></small>
+    <div class="hidden name"><code>hsb.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="intro-equatiomatic.html">Introduction to {equatiomatic}</a></dt>
-        <dd></dt>
-        <dt><a href="lmer4-lmer.html">lme4::lmer Models</a></dt>
-        <dd></dt>
-        <dt><a href="tests_and_coverage.html">Tests and Coverage</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>This is the dataset used throughout Raudenbush &amp; Bryk (2002).</p>
     </div>
+
+    <pre class="usage"><span class='no'>hsb</span></pre>
+
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A tibble with 7185 rows and 8 variables:</p><dl'>
+<dt>sch.id</dt><dd><p>An integer denoting the school identification number. There are 160 unique schools.</p></dd>
+<dt>math</dt><dd><p>Individual students' math score.</p></dd>
+<dt>size</dt><dd><p>The number of students in the school.</p></dd>
+<dt>sector</dt><dd><p>A dummy variable (integer) denoting whether the school is public (sector = 0) or catholic (sector = 1). There are 90 public schools and 70 catholic.</p></dd>
+<dt>meanses</dt><dd><p>A group-mean centered SES variable at the school level</p></dd>
+<dt>minority</dt><dd><p>A dummy variable indicating if the student was coded as white (minority = 0) or not (minority = 1).</p></dd>
+<dt>female</dt><dd><p>A dummy variable indicating if the student was coded as female (female = 1) or not (female = 0).</p></dd>
+<dt>ses</dt><dd><p>A student-level composite variable indicating the students' socio-economic status.</p></dd>
+
+</dl>
+
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

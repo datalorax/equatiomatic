@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • equatiomatic</title>
+<title>Simulated longitudinal data — sim_longitudinal • equatiomatic</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Simulated longitudinal data — sim_longitudinal" />
+<meta property="og:description" content="Data are simulated to be similar to longitudinal data collected within
+schools/districts." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -68,7 +70,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -138,22 +140,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Simulated longitudinal data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/sim_longitudinal.R'><code>R/sim_longitudinal.R</code></a></small>
+    <div class="hidden name"><code>sim_longitudinal.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="intro-equatiomatic.html">Introduction to {equatiomatic}</a></dt>
-        <dd></dt>
-        <dt><a href="lmer4-lmer.html">lme4::lmer Models</a></dt>
-        <dd></dt>
-        <dt><a href="tests_and_coverage.html">Tests and Coverage</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Data are simulated to be similar to longitudinal data collected within
+schools/districts.</p>
     </div>
+
+    <pre class="usage"><span class='no'>sim_longitudinal</span></pre>
+
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A tibble with 1000 rows and 8 variables:</p><dl'>
+<dt>sid</dt><dd><p>An integer denoting the individual student. There are 100 students.</p></dd>
+<dt>school</dt><dd><p>An integer denoting the school There are 15 schools.</p></dd>
+<dt>district</dt><dd><p>An integer denoting the school district. There are 5 districts.</p></dd>
+<dt>group</dt><dd><p>A character variable denoting the instructional level of the student, low, medium, or high.</p></dd>
+<dt>treatment</dt><dd><p>A factor indicating whether the student received the intervention treatment (0 = no treatment received; 1 = treatment received).</p></dd>
+<dt>prop_low</dt><dd><p>The proportion of student in the school in the low instructional group.</p></dd>
+<dt>wave</dt><dd><p>The assessment wave. Each student has nine waves of data collection</p></dd>
+<dt>score</dt><dd><p>The individual students' score at the given wave.</p></dd>
+
+</dl>
+
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
