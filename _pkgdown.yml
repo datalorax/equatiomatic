@@ -1,6 +1,7 @@
 title: equatiomatic
 development:
-  mode: auto
+  mode: release
+  version_label: danger
 template:
   params:
     bootswatch: lumen
