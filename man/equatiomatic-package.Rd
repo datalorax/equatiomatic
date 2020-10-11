@@ -35,6 +35,7 @@ Other contributors:
   \item Jonathan Sidi \email{yonis@metrumrg.com} (\href{https://orcid.org/0000-0002-4222-1819}{ORCID}) [contributor]
   \item Ellis Hughes \email{ellishughes@live.com} (\href{http://orcid.org/0000-0003-0637-4436}{ORCID}) [contributor]
   \item Thomas Fung \email{thomas.fung.dr@gmail.com} (\href{http://orcid.org/0000-0003-2601-0728}{ORCID}) [contributor]
+  \item Reza Norouzian \email{rnorouzian@gmail.com} [contributor]
 }
 
 }
