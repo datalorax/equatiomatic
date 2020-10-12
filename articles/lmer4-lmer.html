@@ -132,7 +132,7 @@
 <span class="co">#&gt;   tidy.gamlss broom</span></pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\alpha_{j[i]}, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\alpha_{j[i]}, \sigma^2 \right) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
     \text{, for sch.id j = 1,} \dots \text{,J}
 \end{aligned}
@@ -144,7 +144,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">um_long3</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]}, \sigma^2 \right) \\
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]}, \sigma^2 \right) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
     \text{, for sid j = 1,} \dots \text{,J} \\
     \alpha_{k}  &amp;\sim N \left(\mu_{\alpha_{k}}, \sigma^2_{\alpha_{k}} \right)
@@ -161,7 +161,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">lev1_hsb</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1}(\operatorname{female}) + \beta_{2}(\operatorname{ses}) + \beta_{3}(\operatorname{minority}) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
     \text{, for sch.id j = 1,} \dots \text{,J}
@@ -171,7 +171,7 @@
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">lev1_hsb</span>, <span class="kw">mean_separate</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\alpha_{j[i]} + \beta_{1}(\operatorname{female}) + \beta_{2}(\operatorname{ses}) + \beta_{3}(\operatorname{minority}), \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\alpha_{j[i]} + \beta_{1}(\operatorname{female}) + \beta_{2}(\operatorname{ses}) + \beta_{3}(\operatorname{minority}), \sigma^2 \right) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
     \text{, for sch.id j = 1,} \dots \text{,J}
 \end{aligned}
@@ -180,7 +180,7 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">lev1_hsb</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1}(\operatorname{female})\ + \\
 &amp;\quad \beta_{2}(\operatorname{ses}) + \beta_{3}(\operatorname{minority}) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
@@ -193,7 +193,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">lev1_long</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1}(\operatorname{wave}), \sigma^2 \right) \\
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1}(\operatorname{wave}), \sigma^2 \right) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
     \text{, for sid j = 1,} \dots \text{,J} \\
     \alpha_{k}  &amp;\sim N \left(\mu_{\alpha_{k}}, \sigma^2_{\alpha_{k}} \right)
@@ -212,7 +212,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">hsb1</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1}(\operatorname{female}) + \beta_{2}(\operatorname{ses}) + \beta_{3j[i]}(\operatorname{minority}) \\    
 \left(
   \begin{array}{c} 
@@ -248,7 +248,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">hsb2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1j[i]}(\operatorname{female}) + \beta_{2j[i]}(\operatorname{ses}) + \beta_{3}(\operatorname{minority}) \\    
 \left(
   \begin{array}{c} 
@@ -290,7 +290,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">hsb3</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1j[i]}(\operatorname{female}) + \beta_{2j[i]}(\operatorname{ses}) + \beta_{3j[i]}(\operatorname{minority}) + \beta_{4j[i]}(\operatorname{female} \times \operatorname{ses}) \\    
 \left(
   \begin{array}{c} 
@@ -353,7 +353,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">group_preds_m1</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{wave}), \sigma^2 \right) \\    
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -444,7 +444,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">l1_hsb_int</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1}(\operatorname{minority}) + \beta_{2}(\operatorname{female}) + \beta_{3}(\operatorname{female} \times \operatorname{minority}) \\
     \alpha_{j}  &amp;\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
     \text{, for sch.id j = 1,} \dots \text{,J}
@@ -456,7 +456,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">l2_hsb_int</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\alpha_{j[i]}, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\alpha_{j[i]}, \sigma^2 \right) \\
     \alpha_{j}  &amp;\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{meanses}) + \gamma_{2}^{\alpha}(\operatorname{sector}) + \gamma_{3}^{\alpha}(\operatorname{meanses} \times \operatorname{sector}), \sigma^2_{\alpha_{j}} \right)
     \text{, for sch.id j = 1,} \dots \text{,J}
 \end{aligned}
@@ -469,7 +469,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">cl_long1</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i]}(\operatorname{wave}), \sigma^2 \right) \\    
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -507,7 +507,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">cl_long2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1}(\operatorname{wave}), \sigma^2 \right) \\
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1}(\operatorname{wave}), \sigma^2 \right) \\
     \alpha_{j}  &amp;\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) + \gamma_{2}^{\alpha}(\operatorname{treatment}_{\operatorname{1}} \times \operatorname{wave}), \sigma^2_{\alpha_{j}} \right)
     \text{, for sid j = 1,} \dots \text{,J} \\
     \alpha_{k}  &amp;\sim N \left(\mu_{\alpha_{k}}, \sigma^2_{\alpha_{k}} \right)
@@ -525,7 +525,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">cl_long3</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{wave}), \sigma^2 \right) \\    
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -620,7 +620,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">hsb_varsonly</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i]} + \beta_{1j[i]}(\operatorname{minority}) + \beta_{2j[i]}(\operatorname{female}) + \beta_{3j[i]}(\operatorname{female} \times \operatorname{minority}) \\    
 \left(
   \begin{array}{c} 
@@ -665,7 +665,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">hsb_doublegroup</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{math}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
+  \operatorname{math}_{i}  &amp;\sim N \left(\mu, \sigma^2 \right) \\
     \mu &amp;=\alpha_{j[i],k[i]} + \beta_{1j[i]}(\operatorname{minority}) + \beta_{2k[i]}(\operatorname{female}) + \beta_{3}(\operatorname{female} \times \operatorname{minority}) \\    
 \left(
   \begin{array}{c} 
@@ -729,7 +729,7 @@
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">long_mixed_ranef</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
-  \operatorname{score}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i],m[i]} + \beta_{1j[i],k[i],m[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+  \operatorname{score}_{i}  &amp;\sim N \left(\alpha_{j[i],k[i],l[i],m[i]} + \beta_{1j[i],k[i],m[i]}(\operatorname{wave}), \sigma^2 \right) \\    
 \left(
   \begin{array}{c} 
     \begin{aligned}
