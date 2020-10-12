@@ -48,7 +48,7 @@ extract_lhs.lmerMod <- function(model, ital_vars, ...) {
   lhs <- all.vars(formula(model))[1]
 
   lhs_escaped <- escape_tex(lhs)
-  add_tex_ital_v(lhs_escaped, ital_vars)
+  paste0(add_tex_ital_v(lhs_escaped, ital_vars), "_{i}")
 }
 
 #' Extract left-hand side of a glm object
