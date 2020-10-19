@@ -430,7 +430,9 @@ create_greek_matrix <- function(v, mat, use_coef, est) {
     if (length(unique(v)) == 1) {
       greek_vcov <- paste0("\\sigma^2_{", v[1], "}")
     } else {
-      greek_vcov <- paste0("\\rho", paste0(v, collapse = ""), collapse = "")
+      greek_vcov <- paste0("\\rho", 
+                           paste0(paste0("\\sigma_{", v, "}"), collapse = ""), 
+                           collapse = "")
     }
   } else {
     greek_vcov <- est
