@@ -220,3 +220,21 @@ test_that("Alternate random effect VCV structures work", {
                label = "Mixed random effect structures at diff levels")
   
 })
+
+test_that("Nested model syntax works", {
+  expect_warning(
+    nested_m1 <- lmer(score ~ 1 + (1|sid/school), sim_longitudinal)
+  )
+  tex_nested_m1 <- rm_ws(extract_eq(nested_m1))
+  actual_nested_m1 <- rm_ws("\\begin{aligned}\\operatorname{score}_{i}&\\simN\\left(\\alpha_{j[i],k[i]},\\sigma^2\\right)\\\\\\alpha_{j}&\\simN\\left(\\mu_{\\alpha_{j}},\\sigma^2_{\\alpha_{j}}\\right)\\text{,forschool:sidj=1,}\\dots\\text{,J}\\\\\\alpha_{k}&\\simN\\left(\\mu_{\\alpha_{k}},\\sigma^2_{\\alpha_{k}}\\right)\\text{,forsidk=1,}\\dots\\text{,K}\\end{aligned}")
+  expect_equal(tex_nested_m1, equation_class(actual_nested_m1),
+               label = "Nested random effects 1")
+  
+  expect_warning(
+    nested_m2 <- lmer(score ~ 1 + (1|sid/school/district), sim_longitudinal)
+  )
+  tex_nested_m2 <- rm_ws(extract_eq(nested_m2))
+  actual_nested_m2 <- rm_ws("\\begin{aligned}\\operatorname{score}_{i}&\\simN\\left(\\alpha_{j[i],k[i],l[i]},\\sigma^2\\right)\\\\\\alpha_{j}&\\simN\\left(\\mu_{\\alpha_{j}},\\sigma^2_{\\alpha_{j}}\\right)\\text{,fordistrict:(school:sid)j=1,}\\dots\\text{,J}\\\\\\alpha_{k}&\\simN\\left(\\mu_{\\alpha_{k}},\\sigma^2_{\\alpha_{k}}\\right)\\text{,forschool:sidk=1,}\\dots\\text{,K}\\\\\\alpha_{l}&\\simN\\left(\\mu_{\\alpha_{l}},\\sigma^2_{\\alpha_{l}}\\right)\\text{,forsidl=1,}\\dots\\text{,L}\\end{aligned}")
+  expect_equal(tex_nested_m2, equation_class(actual_nested_m2),
+               label = "Nested random effects 2")
+})
