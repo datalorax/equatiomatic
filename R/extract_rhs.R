@@ -351,7 +351,10 @@ detect_group_coef <- function(model, rhs) {
   d <- model@frame
   
   random_levs <- names(extract_random_vars(rhs))
+  random_levs <- unlist(strsplit(random_levs, ":"))
+  random_levs <- gsub("^\\(|\\)$", "", random_levs)
   random_levs <- unique(collapse_groups(random_levs))
+  
   random_lev_ids <- d[random_levs]
   X <- d[!(names(d) %in% c(random_levs, outcome))]
   
