@@ -37,7 +37,17 @@ vary_higher_subscripts <- function(term, rhs_random, lev_omit = NULL) {
   paste0(out[!is.na(out)], collapse = ",")
 }
 
-# create a variable that denotes which level the term should be added to
+#' Create a vector to split by
+#' The vector denotes which level the term (for the given row) 
+#' should be added to in the equation (e.g., l1, l2, l3, etc.)
+#' @param rhs_fixed output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "fixed", ]}
+#' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "ran_pars", ]}
+#' @return A named vector where the names represent the term and the 
+#' values represent the level. For example, the output may look similar
+#' to \code{c("(Intercept)" = "l1", "wave" = "l1", 
+#'          "grouplow" = "sid", "groupmedium" = "sid")}
 pred_level_split <- function(rhs_fixed, rhs_random) {
 
   order <- get_order(rhs_random)
@@ -53,8 +63,6 @@ pred_level_split <- function(rhs_fixed, rhs_random) {
     out
   }, FUN.VALUE = character(1))
 }
-
-
 
 pull_term_subscript <- function(greek_coef, n = 1) {
   regex <- paste0("(.+\\{.{", n, "}).+(\\})")
@@ -384,7 +392,20 @@ rbind_named <- function(l) {
   Reduce(rbind, l)
 }
 
-# fixed_greek_mermod <- create_fixef_greek_merMod(model)
+#' Create the mean structure for the VCV matrix
+#' @param rhs Output from \code{extract_rhs}
+#' @param fixed_greek_mermod Output from \code{create_fixef_greek_merMod}.
+#' @param model The fitted \code{\link[lme4]{lmer}} model
+#' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable
+#'   names not be wrapped in the \code{\\operatorname{}} command?
+#' @return A data frame with each term that varies at each higher level (term), 
+#' the level at which it varies (group), the greek for the mean structure 
+#' (greek), and the greek for the term that is varying (greek_vary). The 
+#' \code{greek_vary} column defines the left hand side of ~. The greek for the 
+#' mean structure (greek) will include any group-level predictors. If there are 
+#' none, it will be replaced by \code{"\\mu_{greek_vary}"} where 
+#' \code{greek_vary} is actually substituted in.
+#' 
 create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   rhs_random <- rhs_random[rhs_random$group != "Residual" &
