@@ -350,8 +350,8 @@ detect_group_coef <- function(model, rhs) {
   outcome <- all.vars(formula(model))[1]
   d <- model@frame
   
-  random_levs <- names(extract_random_vars(rhs))
-  random_levs <- unlist(strsplit(random_levs, ":"))
+  random_lev_names <- names(extract_random_vars(rhs))
+  random_levs <- unlist(strsplit(random_lev_names, ":"))
   random_levs <- gsub("^\\(|\\)$", "", random_levs)
   random_levs <- unique(collapse_groups(random_levs))
   
@@ -363,7 +363,12 @@ detect_group_coef <- function(model, rhs) {
     lev_assign[[i]] <- detect_X_level(X, random_lev_ids[ , i, drop = FALSE])
   }
   
-  out <- Reduce(collapse_list, rev(lev_assign))
+  levs <- Reduce(collapse_list, rev(lev_assign))
+  
+  # reassign acutal names (in cases where ranef contains ":")
+  out <- random_lev_names[match(levs, random_levs)]
+  names(out) <- names(levs)
+  
   unlist(out[!is.na(out)])
 }
 

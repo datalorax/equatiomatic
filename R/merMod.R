@@ -17,8 +17,8 @@ vary_higher_subscripts <- function(term, rhs_random, lev_omit = NULL) {
   splt_random <- splt_random[names(order)]
   
   if(!is.null(lev_omit)) {
-    lev_indexes <- lev_indexes[-seq_len(grep(lev_omit, names(splt_random)))]
-    splt_random <- splt_random[-seq_len(grep(lev_omit, names(splt_random)))]
+    lev_indexes <- lev_indexes[-seq_along(grep(lev_omit, names(splt_random)))]
+    splt_random <- splt_random[-seq_along(grep(lev_omit, names(splt_random)))]
   }
   
   out <- rep(NA_character_, length(lev_indexes))
