@@ -237,4 +237,13 @@ test_that("Nested model syntax works", {
   actual_nested_m2 <- rm_ws("\\begin{aligned}\\operatorname{score}_{i}&\\simN\\left(\\alpha_{j[i],k[i],l[i]},\\sigma^2\\right)\\\\\\alpha_{j}&\\simN\\left(\\mu_{\\alpha_{j}},\\sigma^2_{\\alpha_{j}}\\right)\\text{,fordistrict:(school:sid)j=1,}\\dots\\text{,J}\\\\\\alpha_{k}&\\simN\\left(\\mu_{\\alpha_{k}},\\sigma^2_{\\alpha_{k}}\\right)\\text{,forschool:sidk=1,}\\dots\\text{,K}\\\\\\alpha_{l}&\\simN\\left(\\mu_{\\alpha_{l}},\\sigma^2_{\\alpha_{l}}\\right)\\text{,forsidl=1,}\\dots\\text{,L}\\end{aligned}")
   expect_equal(tex_nested_m2, equation_class(actual_nested_m2),
                label = "Nested random effects 2")
+  
+  expect_warning(
+    nested_m3 <- lmer(score ~ wave + group + prop_low + (1|sid/school/district), sim_longitudinal)
+  )
+  tex_nested_m3 <- rm_ws(extract_eq(nested_m3))
+  actual_nested_m3<- rm_ws("\\begin{aligned}\\operatorname{score}_{i}&\\simN\\left(\\alpha_{j[i],k[i],l[i]}+\\beta_{1}(\\operatorname{wave}),\\sigma^2\\right)\\\\\\alpha_{j}&\\simN\\left(\\mu_{\\alpha_{j}},\\sigma^2_{\\alpha_{j}}\\right)\\text{,fordistrict:(school:sid)j=1,}\\dots\\text{,J}\\\\\\alpha_{k}&\\simN\\left(\\gamma_{0}^{\\alpha}+\\gamma_{1}^{\\alpha}(\\operatorname{prop\\_low}),\\sigma^2_{\\alpha_{k}}\\right)\\text{,forschool:sidk=1,}\\dots\\text{,K}\\\\\\alpha_{l}&\\simN\\left(\\gamma_{0}^{\\alpha}+\\gamma_{1}^{\\alpha}(\\operatorname{group}_{\\operatorname{low}})+\\gamma_{2}^{\\alpha}(\\operatorname{group}_{\\operatorname{medium}}),\\sigma^2_{\\alpha_{l}}\\right)\\text{,forsidl=1,}\\dots\\text{,L}\\end{aligned}")
+  expect_equal(tex_nested_m3, equation_class(actual_nested_m3),
+               label = "Nested random effects 3")
 })
+
