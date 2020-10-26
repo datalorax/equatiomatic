@@ -167,15 +167,6 @@ extract_rhs.lmerMod <- function(model) {
                         TRUE,
                         full_rhs$l1)
   
-  # put each vector in order from low to high
-  # full_rhs$split[full_rhs$l1] <- Map(order_split, 
-  #                                    full_rhs$split[full_rhs$l1], 
-  #                                    full_rhs$pred_level[full_rhs$l1])
-  # 
-  # full_rhs$primary[full_rhs$l1] <- Map(order_split, 
-  #                                      full_rhs$primary[full_rhs$l1], 
-  #                                      full_rhs$pred_level[full_rhs$l1])
-  
   full_rhs$crosslevel <- detect_crosslevel(full_rhs$primary, 
                                            full_rhs$pred_level)
   
@@ -271,8 +262,6 @@ order_split <- function(split, pred_level) {
   split[var_order]
 }
 
-
-
 #' Pull just the random variables
 #' @param rhs output from \code{extract_rhs}
 #' @keywords internal
@@ -311,7 +300,6 @@ detect_crosslevel <- function(primary, pred_level) {
 
 #### Consider refactoring the below too
 detect_covar_level <- function(predictor, group) {
-  
   nm <- names(group)
   v <- paste(predictor, group[ ,1], sep = " _|_ ")
   unique_v <- unique(v)
@@ -356,6 +344,12 @@ detect_group_coef <- function(model, rhs) {
   random_levs <- unique(collapse_groups(random_levs))
   
   random_lev_ids <- d[random_levs]
+  ranef_order <- vapply(random_lev_ids, function(x) {
+    length(unique(x)) 
+  }, FUN.VALUE = numeric(1))
+  ranef_order <- rev(sort(ranef_order))
+  random_lev_ids <- random_lev_ids[ ,names(ranef_order), drop = FALSE]
+  
   X <- d[!(names(d) %in% c(random_levs, outcome))]
   
   lev_assign <- vector("list", length(random_levs))
