@@ -114,7 +114,6 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @keywords internal
 #' @export
 #' @noRd
-
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                raw_tex = FALSE, ital_vars = FALSE,
                                show_distribution = FALSE,
@@ -123,8 +122,6 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, mean_separate,...) {
 
-  print("This is the default")
-  print(class(model))
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
 
@@ -243,7 +240,6 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 
 #' Equation generator for forecast::Arima
 #' @export
-#' @noRd
 extract_eq.forecast_ARIMA <- function(model, raw_tex = FALSE, ital_vars = FALSE,
                                       use_coefs = FALSE, coef_digits = 2, ...){
   
