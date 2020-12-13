@@ -6,10 +6,10 @@ test_that("Arima only model works with greek",{
   set.seed(123)
   
   # Build Arima (no regression)
-  model <- Arima(ts(rnorm(1000),freq=4), 
-                 order=c(1,1,1),
-                 seasonal=c(1,0,1),
-                 include.constant = TRUE)
+  model <- forecast::Arima(ts(rnorm(1000),freq=4), 
+                           order=c(1,1,1),
+                           seasonal=c(1,0,1),
+                           include.constant = TRUE)
   
   # Test 1: Works with greek letters
   tex <- extract_eq(model)
@@ -34,11 +34,11 @@ test_that("Arima only model works with greek",{
                                 x2 = rnorm(1000) * 5))
   
   # Build Regression Model
-  model <- Arima(ts(rnorm(1000),freq=4), 
-                 order=c(1,1,1),
-                 seasonal=c(1,0,1),
-                 xreg = xregs,
-                 include.constant = TRUE)
+  model <- forecast::Arima(ts(rnorm(1000),freq=4), 
+                           order=c(1,1,1),
+                           seasonal=c(1,0,1),
+                           xreg = xregs,
+                           include.constant = TRUE)
 
   
   # Test 1: Works with greek letters
