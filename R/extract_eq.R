@@ -245,6 +245,7 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 extract_eq.forecast_ARIMA <- function(model, raw_tex = FALSE, ital_vars = FALSE,
                                       use_coefs = FALSE, coef_digits = 2, ...){
   
+  print("Starting Extract Equation ----------")
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
   
@@ -252,8 +253,14 @@ extract_eq.forecast_ARIMA <- function(model, raw_tex = FALSE, ital_vars = FALSE,
   lhs <- extract_lhs(model)
   rhs <- extract_rhs(model)
   
-  yt <- if(regression) helper_arima_extract_lm(model) else NULL
-  
+  if(regression){
+    yt <- helper_arima_extract_lm(model)
+  } else {
+    yt <- NULL
+  }
+
+  print("What is yt? -----------------------")
+  print(class(yt))
   # Extract the equation lists
   eq <- create_eq(model,
                   lhs,
