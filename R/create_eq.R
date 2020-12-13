@@ -112,14 +112,24 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @noRd
 create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, coef_digits, raw_tex, ...) {
   
+  print("Staring create_eq ------------------------------")
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
   
   # Convert sides into LATEX-like terms
-  lhs$final_terms <- create_term.forecast_ARIMA(lhs, ital_vars)
-  rhs$final_terms <- create_term.forecast_ARIMA(rhs, ital_vars)
+  print("Get Terms LHS ----------------------------------")
+  print(class(lhs))
+  lhs$final_terms <- create_term(lhs, ital_vars)
+  print("Get Terms RHS ----------------------------------")
+  print(class(rhs))
+  rhs$final_terms <- create_term(rhs, ital_vars)
   
   # Combine coefs or greek letters with the terms
+  print("Starting final_terms ---------------------------")
+  print("---- LHS ---------------------------------------")
+  print(lhs)
+  print("---- RHS ---------------------------------------")
+  print(rhs)
   if (use_coefs) {
     lhs$final_terms <- add_coefs(lhs, lhs$final_terms, coef_digits, side_sign = -1)
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits, side_sign = 1)
@@ -239,13 +249,17 @@ create_term <- function(rhs, ital_vars) {
 #' @inheritParams extract_eq
 #' @noRd
 create_term.forecast_ARIMA <- function(side, ital_vars) {
+  print("Starting create term -------------------------")
   # Get and format the primaries
   # Do not escape seasonal differecing primary
+  print("Side -----------------------------------------")
+  print(side)
+  print("----------------------------------------------")
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   
-  prim_escaped[side$term %in% c("zz_differencing", "zz_seas_Differencing")] <- side$primary[side$term %in% c("zz_differencing", "zz_seas_Differencing")]
+  prim_escaped[side$term %in% c("zz_differencing", "zz_seas_Differencing")] <- side[side$term %in% c("zz_differencing", "zz_seas_Differencing"), 'primary']
   
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
   
