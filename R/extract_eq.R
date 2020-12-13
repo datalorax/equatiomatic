@@ -240,8 +240,8 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 }
 
 #' Equation generator for forecast::Arima
-#' @rdname extract_eq
 #' @export
+#' @noRd
 extract_eq.forecast_ARIMA <- function(model, raw_tex = FALSE, ital_vars = FALSE,
                                       use_coefs = FALSE, coef_digits = 2, ...){
   
