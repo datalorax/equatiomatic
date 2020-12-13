@@ -112,18 +112,14 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @noRd
 create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, coef_digits, raw_tex, ...) {
   
-  print("Staring create_eq ------------------------------")
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
   
   # Convert sides into LATEX-like terms
-  print("Get Terms LHS ----------------------------------")
   lhs$final_terms <- create_term(lhs, ital_vars)
-  print("Get Terms RHS ----------------------------------")
   rhs$final_terms <- create_term(rhs, ital_vars)
   
   # Combine coefs or greek letters with the terms
-  print("Starting final_terms ---------------------------")
   if (use_coefs) {
     lhs$final_terms <- add_coefs(lhs, lhs$final_terms, coef_digits, side_sign = -1)
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits, side_sign = 1)
@@ -134,7 +130,6 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   
   # Convert the final terms into proper Backshift notation for L/RHS
   ## Setup the parsing functions
-  print("Starting Parsing -------------------------------")
   parsing_functions <- list("ar" = function(x) paste("(1", paste0(x, collapse = " "), ")\\"),
                             "diffs" = function(x) paste(x, collapse = "\\ "),
                             "error" = function(x) x)
@@ -180,8 +175,6 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   # If this is a linear model, also parse yt
   # Note that this is the same set of operations as earlier, but only with yt
   if(regression){
-    print("Starting LM Parsing ---------------------------")
-    print(class(yt))
     # Convert sides into LATEX-like terms
     yt$final_terms <- create_term(yt, ital_vars)
     
@@ -209,6 +202,7 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   return(eq_list)
 }
 
+
 #' Create a full term w/subscripts
 #'
 #' @keywords internal
@@ -218,14 +212,18 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
 #'
 #' @inheritParams extract_eq
 #' @noRd
+create_term <- function(side, ital_vars) {
+  UseMethod("create_term", side)
+}
 
-create_term <- function(rhs, ital_vars) {
-  prim_escaped <- lapply(rhs$primary, function(x) {
+
+create_term.default <- function(side, ital_vars) {
+  prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
 
-  subs_escaped <- lapply(rhs$subscripts, function(x) {
+  subs_escaped <- lapply(side$subscripts, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
@@ -246,12 +244,8 @@ create_term <- function(rhs, ital_vars) {
 #' @inheritParams extract_eq
 #' @noRd
 create_term.forecast_ARIMA <- function(side, ital_vars) {
-  print("Starting create term -------------------------")
   # Get and format the primaries
   # Do not escape seasonal differecing primary
-  print("Side -----------------------------------------")
-  print(side)
-  print("----------------------------------------------")
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
