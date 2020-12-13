@@ -245,17 +245,13 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 extract_eq.forecast_ARIMA <- function(model, raw_tex = FALSE, ital_vars = FALSE,
                                       use_coefs = FALSE, coef_digits = 2, ...){
   
-  print("Starting Extract Equation ----------------------------")
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
   
   # Get each of the sides
-  print("Extracting LHS ---------------------------------------")
   lhs <- extract_lhs(model)
-  print("Extracting RHS ---------------------------------------")
   rhs <- extract_rhs(model)
   
-  print("Extracting yt ----------------------------------------")
   yt <- if(regression) helper_arima_extract_lm(model) else NULL
   
   # Extract the equation lists
