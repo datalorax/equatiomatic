@@ -35,7 +35,7 @@ model <- forecast::Arima(ts(rnorm(1000),freq=4),
 
 #### Extracting the equation
 ```{r extract_arima}
-eq <- extract_eq(model)
+eq <- equatiomatic::extract_eq(model)
 ```
 
 #### Kniting the equation
@@ -63,7 +63,7 @@ eq
 
 #### Extracting the equation
 ```{r extract_arima_errors}
-eq <- extract_eq(model)
+eq <- equatiomatic::extract_eq(model)
 ```
 
 #### Kniting the equation
