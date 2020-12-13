@@ -238,7 +238,7 @@ extract_rhs.forecast_ARIMA <- function(model, ...) {
   full_rhs$subscripts <- ""
   
   # Set the class
-  class(full_rhs) <- c("data.frame", class(model))
+  class(full_rhs) <- c(class(model), "data.frame")
   
   # Explicit return
   return(full_rhs)
