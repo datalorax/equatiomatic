@@ -318,7 +318,7 @@ link_function_df <- data.frame(link_name, link_formula,
 #'
 #' @keywords internal
 #'
-#' @inheritParams extract_eq
+#' @param model A forecast::Arima object
 #'
 #' @return A dataframe
 #' @noRd
