@@ -175,6 +175,76 @@ extract_rhs.lmerMod <- function(model) {
   full_rhs
 }
 
+#' Extract right-hand side of an forecast::Arima object
+#'
+#' Extract a dataframe of S/MA components
+#'
+#' @keywords internal
+#'
+#' @inheritParams extract_eq
+#'
+#' @return A dataframe
+#' @noRd
+extract_rhs.forecast_ARIMA <- function(model) {
+  # RHS of ARIMA is the Moving Averageside
+  # Consists of a Non-Seasonal MA (p), Seasonal MA (P), Seasonal Differencing.
+  
+  # This is more than needed, but we"re being explicit for readability.
+  # Orders stucture in Arima model:
+  # c(p, q, P, Q, m, d, D)
+  ords <- model$arma
+  names(ords) <- c("p","q","P","Q","m","d","D")
+  
+  # Following the rest of the package.
+  # Pull the full model with broom::tidy
+  full_mdl <- broom::tidy(model)
+  
+  # Filter down to only the MA terms and seasonal drift
+  full_rhs <- full_mdl[grepl("^s?ma", full_mdl$term), ]
+  
+  # Add a Primary column and set it to the backshift operator.
+  full_rhs$primary <- "B"
+  
+  # Get the superscript for the backshift operator.
+  ## This is equal to the number on the term for MA
+  ## and the number on the term * the seasonal frequency for SMA.
+  ## Powers of 1 are replaced with an empty string.
+  rhs_super <- as.numeric(gsub("^s?ma", "", full_rhs$term))
+  rhs_super[grepl("^sma", full_rhs$term)] <- rhs_super[grepl("^sma", full_rhs$term)] * ords["m"]
+  
+  rhs_super <- as.character(rhs_super)
+  
+  full_rhs$superscript <- rhs_super
+  
+  # The RHS has only seasonal differencing.
+  # This is similar to the RHS, but here we only have 1 element.
+  # So we"ll use an if statement instead of vectorized filters.
+  if(ords["D"] > 0){
+    # Then there is a seasonal difference.
+    diff_df <- data.frame(term = "zz_seas_Differencing",
+                          estimate = NA,
+                          std.error = NA,
+                          primary = paste0("(1+B", "^{", ords["m"],"})"),
+                          superscript = ords["D"])
+    
+    # Add the differencing lines to the end of the S/MA lines.
+    full_rhs <- rbind(full_rhs, diff_df)
+  }
+  
+  # Reduce any "1" superscripts to not show the superscript
+  full_rhs[full_rhs$superscript == "1", "superscript"] <- ""
+  
+  # Set subscripts so that create_term works later
+  full_rhs$subscripts <- ""
+  
+  # Set the class
+  class(full_rhs) <- c("data.frame", class(model))
+  
+  # Explicit return
+  return(full_rhs)
+}
+
+
 order_interaction <- function(interaction_term) {
   if(grepl("^cor__", interaction_term)) {
     ran_part <- gsub("(.+\\.).+", "\\1", interaction_term)
