@@ -123,6 +123,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, mean_separate,...) {
 
+  print("This is the default")
+  print(class(model))
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
 
