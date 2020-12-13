@@ -185,7 +185,7 @@ extract_rhs.lmerMod <- function(model) {
 #'
 #' @return A dataframe
 #' @noRd
-extract_rhs.forecast_ARIMA <- function(model) {
+extract_rhs.forecast_ARIMA <- function(model, ...) {
   # RHS of ARIMA is the Moving Averageside
   # Consists of a Non-Seasonal MA (p), Seasonal MA (P), Seasonal Differencing.
   

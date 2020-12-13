@@ -322,7 +322,7 @@ link_function_df <- data.frame(link_name, link_formula,
 #'
 #' @return A dataframe
 #' @noRd
-extract_lhs.forecast_ARIMA <- function(model){
+extract_lhs.forecast_ARIMA <- function(model, ...){
   # LHS of ARIMA is the Auto Regressive side
   # Consists of Non-Seasonal AR (p), Seasonal AR (P), Non-Seasonal Differencing (d), Seasonal Differencing(D), Constant Terms.
   # Constants are dealt with here if they go here and in LM if they go there.
