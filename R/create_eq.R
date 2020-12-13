@@ -126,10 +126,6 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   
   # Combine coefs or greek letters with the terms
   print("Starting final_terms ---------------------------")
-  print("---- LHS ---------------------------------------")
-  print(lhs)
-  print("---- RHS ---------------------------------------")
-  print(rhs)
   if (use_coefs) {
     lhs$final_terms <- add_coefs(lhs, lhs$final_terms, coef_digits, side_sign = -1)
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits, side_sign = 1)
