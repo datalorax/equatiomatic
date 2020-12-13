@@ -81,7 +81,7 @@ helper_arima_extract_lm <- function(model){
   full_rhs$superscripts <- ""
   
   # Set the class
-  class(full_rhs) <- c("data.frame", class(model))
+  class(full_rhs) <- c(class(model), "data.frame")
   
   # Explicit return
   return(full_rhs)

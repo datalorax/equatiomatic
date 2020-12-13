@@ -118,10 +118,8 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   
   # Convert sides into LATEX-like terms
   print("Get Terms LHS ----------------------------------")
-  print(class(lhs))
   lhs$final_terms <- create_term(lhs, ital_vars)
   print("Get Terms RHS ----------------------------------")
-  print(class(rhs))
   rhs$final_terms <- create_term(rhs, ital_vars)
   
   # Combine coefs or greek letters with the terms
@@ -136,6 +134,7 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   
   # Convert the final terms into proper Backshift notation for L/RHS
   ## Setup the parsing functions
+  print("Starting Parsing -------------------------------")
   parsing_functions <- list("ar" = function(x) paste("(1", paste0(x, collapse = " "), ")\\"),
                             "diffs" = function(x) paste(x, collapse = "\\ "),
                             "error" = function(x) x)
@@ -181,6 +180,8 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   # If this is a linear model, also parse yt
   # Note that this is the same set of operations as earlier, but only with yt
   if(regression){
+    print("Starting LM Parsing ---------------------------")
+    print(class(yt))
     # Convert sides into LATEX-like terms
     yt$final_terms <- create_term(yt, ital_vars)
     
