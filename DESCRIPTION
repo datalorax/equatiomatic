@@ -36,7 +36,11 @@ Authors@R: c(
            family  = 'Norouzian',
            role    =  'ctb',           
            email   = 'rnorouzian@gmail.com',
-           comment = c(ORCID = "https://orcid.org/0000-0002-0531-6886"))
+           comment = c(ORCID = "https://orcid.org/0000-0002-0531-6886")),
+    person(given   = 'Jay',
+           family  = 'Sumners',
+           role    =  'ctb',           
+           email   = 'jay.sumners@gmail.com')
     )
 Description: The goal of 'equatiomatic' is to reduce the pain associated with
              writing 'LaTeX' formulas from fitted models. The primary function of
@@ -57,7 +61,8 @@ Suggests:
     ordinal,
     lme4,
     rmarkdown,
-    covr
+    covr,
+    forecast
 URL: https://github.com/datalorax/equatiomatic
 BugReports: https://github.com/datalorax/equatiomatic/issues
 Encoding: UTF-8
