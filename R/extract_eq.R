@@ -241,8 +241,13 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 #' Equation generator for forecast::Arima
 #' @export
 #' @noRd
-extract_eq.forecast_ARIMA <- function(model, raw_tex = FALSE, ital_vars = FALSE,
-                                      use_coefs = FALSE, coef_digits = 2, ...){
+extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
+                                      raw_tex = FALSE, ital_vars = FALSE,
+                                      show_distribution = FALSE,
+                                      wrap = FALSE, terms_per_line = 4,
+                                      operator_location = "end", align_env = "aligned",
+                                      use_coefs = FALSE, coef_digits = 2,
+                                      fix_signs = TRUE, mean_separate,...) {
   
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
