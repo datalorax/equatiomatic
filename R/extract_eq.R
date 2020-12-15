@@ -299,6 +299,8 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
     
     # Add alignment and "where" to ARIMA line
     # Need to re-split the terms. This is redundant, but makes for less repeated code.
+    # Ensure it is seen as a character vector first and foremost. 
+    prep_split <- as.character(eq$arima_eq)
     split_arima <- strsplit(eq$arima_eq, "=")[[1]]
     names(split_arima) <- c("ar", "ma")
     
