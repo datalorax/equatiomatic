@@ -1,5 +1,7 @@
 context("forecast_ARIMA")
 
+library(forecast)
+
 # Test Group A: Simple Arima Model
 test_that("Basic ARIMA model functions",{
   # Set seed so that rnorm returns the same result
@@ -39,11 +41,11 @@ test_that("Regression w/ ARIMA Errors functions",{
                                 x2 = rnd_numbers$x2 * 5))
   
   # Build Regression Model
-  model <- Arima(ts(rnd_numbers$ts_rnorm,freq=4), 
-                 order=c(1,1,1),
-                 seasonal=c(1,0,1),
-                 xreg = xregs,
-                 include.constant = TRUE)
+  model <- forecast::Arima(ts(rnd_numbers$ts_rnorm,freq=4), 
+                           order=c(1,1,1),
+                           seasonal=c(1,0,1),
+                           xreg = xregs,
+                           include.constant = TRUE)
   
   # Test 1: Works with greek letters
   tex <- extract_eq(model)
