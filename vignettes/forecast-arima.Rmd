@@ -10,7 +10,10 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
 )
 ```
 
@@ -23,19 +26,22 @@ This vignette is intended to show the current ability to parse objects generated
 First we need to generate a model. It isn't important the the model is appropriate, but rather that it shows how the equations are parsed.
 
 ```{r setup_arima}
-  # Set seed so that rnorm returns the same result
-  set.seed(123)
-  
-  # Build Arima (no regression)
-model <- forecast::Arima(ts(rnorm(1000),freq=4), 
-                         order=c(1,1,1),
-                         seasonal=c(1,0,1),
-                         include.constant = TRUE)
+library(equatiomatic)
+library(forecast)
+
+# Set seed so that rnorm returns the same result
+set.seed(123)
+
+# Build Arima (no regression)
+model <- Arima(ts(rnorm(1000),freq=4), 
+               order=c(1,1,1),
+               seasonal=c(1,0,1),
+               include.constant = TRUE)
 ```
 
 #### Extracting the equation
 ```{r extract_arima}
-eq <- equatiomatic::extract_eq(model)
+eq <- extract_eq(model)
 ```
 
 #### Kniting the equation
@@ -46,31 +52,30 @@ eq
 ### Regression with ARIMA Errors
 #### Setup
 ```{r setup_arima_errors}
-  # Set seed so that rnorm returns the same result
-  set.seed(123)
-  
-  # Build Exogenous Regressors
-  xregs <- as.matrix(data.frame(x1 = rnorm(1000) + 5,
-                                x2 = rnorm(1000) * 5))
-  
-  # Build Regression Model
-  model <- forecast::Arima(ts(rnorm(1000),freq=4), 
-                           order=c(1,1,1),
-                           seasonal=c(1,0,1),
-                           xreg = xregs,
-                           include.constant = TRUE)
+# Set seed so that rnorm returns the same result
+set.seed(123)
+
+# Build Exogenous Regressors
+xregs <- as.matrix(data.frame(x1 = rnorm(1000) + 5,
+                              x2 = rnorm(1000) * 5))
+
+# Build Regression Model
+model <- Arima(ts(rnorm(1000),freq=4), 
+               order=c(1,1,1),
+               seasonal=c(1,0,1),
+               xreg = xregs,
+               include.constant = TRUE)
 ```
 
 #### Extracting the equation
 ```{r extract_arima_errors}
-eq <- equatiomatic::extract_eq(model)
+eq <- extract_eq(model)
 ```
 
 #### Kniting the equation
 ```{r knit_arima_errors, results='asis'}
 eq
 ```
-
 
 ## Working with other parts of {equatiomatic}
 

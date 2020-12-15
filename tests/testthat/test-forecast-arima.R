@@ -1,7 +1,7 @@
 context("forecast_ARIMA")
 
 # Test Group A: Simple Arima Model
-test_that("Arima only model works with greek",{
+test_that("Basic ARIMA model functions",{
   # Set seed so that rnorm returns the same result
   set.seed(123)
   
@@ -25,7 +25,7 @@ test_that("Arima only model works with greek",{
 })
 
 # Test Group B: Regression w/ ARIMA Errors
-test_that("Arima only model works with greek",{
+test_that("Regression w/ ARIMA Errors functions",{
   # Set seed so that rnorm returns the same result
   set.seed(123)
   
