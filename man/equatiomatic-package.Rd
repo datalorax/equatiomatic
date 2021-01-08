@@ -27,7 +27,6 @@ Useful links:
 Authors:
 \itemize{
   \item Andrew Heiss \email{andrew@andrewheiss.com} (\href{https://orcid.org/0000-0002-3948-3914}{ORCID})
-  \item Jay Sumners \email{jay.sumners@gmail.com}
 }
 
 Other contributors:
@@ -37,6 +36,7 @@ Other contributors:
   \item Ellis Hughes \email{ellishughes@live.com} (\href{http://orcid.org/0000-0003-0637-4436}{ORCID}) [contributor]
   \item Thomas Fung \email{thomas.fung.dr@gmail.com} (\href{http://orcid.org/0000-0003-2601-0728}{ORCID}) [contributor]
   \item Reza Norouzian \email{rnorouzian@gmail.com} (\href{https://orcid.org/0000-0002-0531-6886}{ORCID}) [contributor]
+  \item Jay Sumners \email{jay.sumners@gmail.com} [contributor]
 }
 
 }
