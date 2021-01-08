@@ -147,12 +147,16 @@ supported <- data.frame(
             "logistic regression",
             "probit regression",
             "ordinal logistic regression",
-            "ordinal probit regression"),
+            "ordinal probit regression",
+            "auto-regressive integrated moving average",
+            "regression with auto-regressive integrated moving average errors"),
   packages = c("`stats::lm`",
                "`stats::glm(family = binomial(link = 'logit'))`",
                "`stats::glm(family = binomial(link = 'probit'))`",
                "`MASS::polr(method = 'logistic')`; `ordinal::clm(link = 'logit')`",
-               "`MASS::polr(method = 'probit')`; `ordinal::clm(link = 'probit')`")
+               "`MASS::polr(method = 'probit')`; `ordinal::clm(link = 'probit')`",
+               "`forecast::Arima`",
+               "`forecast::Arima`")
   )
 
 knitr::kable(supported, col.names = c("Model", "Packages/Functions"))

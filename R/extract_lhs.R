@@ -310,3 +310,87 @@ link_function_df <- data.frame(link_name, link_formula,
 #
 # glm.D93$family$link
 # glm.D93$family$family
+
+
+#' Extract left-hand side of an forecast::Arima object
+#'
+#' Extract a dataframe of S/AR components
+#'
+#' @keywords internal
+#'
+#' @param model A forecast::Arima object
+#'
+#' @return A dataframe
+#' @noRd
+extract_lhs.forecast_ARIMA <- function(model, ...){
+  # LHS of ARIMA is the Auto Regressive side
+  # Consists of Non-Seasonal AR (p), Seasonal AR (P), Non-Seasonal Differencing (d), Seasonal Differencing(D), Constant Terms.
+  # Constants are dealt with here if they go here and in LM if they go there.
+  
+  # This is more than needed, but we"re being explicit for readability.
+  # Orders stucture in Arima model:
+  # c(p, q, P, Q, m, d, D)
+  ords <- model$arma
+  names(ords) <- c("p","q","P","Q","m","d","D")
+  
+  # Following the rest of the package.
+  # Pull the full model with broom::tidy
+  full_mdl <- broom::tidy(model)
+  
+  # Filter down to only the AR and SAR coefficients.
+  full_lhs <- full_mdl[grepl("^s?ar", full_mdl$term), ]
+  
+  # Add a Primary column and set it to the backshift operator.
+  full_lhs["primary"] <- rep("B", nrow(full_lhs))
+  
+  # Get the superscript for the backshift operator.
+  ## This is equal to the number on the term for AR
+  ## and the number on the term * the seasonal frequency for SAR.
+  ## Powers of 1 are replaced with an empty string.
+  lhs_super <- as.numeric(gsub("^s?ar", "", full_lhs$term))
+  lhs_super[grepl("^sar", full_lhs$term)] <- lhs_super[grepl("^sar", full_lhs$term)] * ords["m"]
+  
+  lhs_super <- as.character(lhs_super)
+  
+  full_lhs["superscript"] <- lhs_super
+  
+  # The LHS has differencing and seasonal differencing.
+  ## Setup the dataframe
+  diff_df <- data.frame(term = c("zz_differencing", "zz_seas_Differencing"),
+                        estimate = rep(NA, 2),
+                        std.error = rep(NA, 2),
+                        primary = c("(1 - B)", paste0("(1 - B", "^{", ords["m"],"})")),
+                        superscript = c(ords["d"], ords["D"]))
+  
+  ## Remove what isn"t needed
+  diff_df <- diff_df[ords[c("d","D")] > 0,]
+  
+  # Add the differencing lines to the end of the S/AR lines.
+  full_lhs <- rbind(full_lhs, diff_df)
+  
+  # Reduce any "1" superscripts to blank
+  full_lhs[full_lhs$superscript == "1", "superscript"] <- ""
+  
+  # Deal with potential constant terms
+  # This will only come up if it is not a regression model
+  regression <- helper_arima_is_regression(model)
+  if(!regression){
+    # It is not a regression model
+    c_df <- full_mdl[full_mdl$term %in% c("intercept", "drift", "mean"), ]
+    
+    c_df[c_df$term %in% c("intercept", "mean"),"primary"] <- ""
+    c_df[c_df$term == "drift","primary"] <- "t"
+    c_df$superscript <- ""
+    
+    full_lhs <- rbind(full_lhs, c_df)
+  }
+  
+  # Set subscripts so that create_term works later
+  full_lhs$subscripts <- ""
+  
+  # Set the class
+  class(full_lhs) <- c(class(model), "data.frame")
+  
+  # Explicit return
+  return(full_lhs)
+}

@@ -114,7 +114,6 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @keywords internal
 #' @export
 #' @noRd
-
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                raw_tex = FALSE, ital_vars = FALSE,
                                show_distribution = FALSE,
@@ -237,4 +236,94 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
   class(eq) <- c('equation', 'character')
 
   eq
+}
+
+#' Equation generator for forecast::Arima
+#' @export
+#' @noRd
+extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
+                                      raw_tex = FALSE, ital_vars = FALSE,
+                                      show_distribution = FALSE,
+                                      wrap = FALSE, terms_per_line = 4,
+                                      operator_location = "end", align_env = "aligned",
+                                      use_coefs = FALSE, coef_digits = 2,
+                                      fix_signs = TRUE, mean_separate,...) {
+  
+  # Determine if we are working on Regerssion w/ Arima Errors
+  regression <- helper_arima_is_regression(model)
+  
+  # Get each of the sides
+  lhs <- extract_lhs(model)
+  rhs <- extract_rhs(model)
+  
+  if(regression){
+    yt <- helper_arima_extract_lm(model)
+  } else {
+    yt <- NULL
+  }
+
+  # Extract the equation lists
+  eq <- create_eq(model,
+                  lhs,
+                  rhs,
+                  yt,
+                  ital_vars,
+                  use_coefs,
+                  coef_digits,
+                  raw_tex)
+  
+  ##########
+  # Wrapping has not been included due to the 
+  # Multiline nature of Regression w/ ARIMA errors
+  ##########
+  
+  ##########
+  # Fix signs is done automatically
+  # This is necessary so that the Lag/Backshift equations will make sense.
+  #########
+  
+  # Collapse down terms.
+  eq <- lapply(eq, function(x){
+    lhs <- paste(x$lhs[[1]], collapse = " ")
+    rhs <-paste(x$rhs[[1]], collapse = " ")
+    rhs <- gsub("^\\+", "", rhs)
+    
+    # Alignment, if needed, will be added later.
+    paste(lhs, rhs, sep = " = ")
+  })
+  
+  # If regression w/ arima errors.
+  if(regression){
+    # Add alignment to the regression function
+    eq$lm_eq <- paste0("&\\text{let}\\quad &&", eq$lm_eq)
+    
+    # Add alignment and "where" to ARIMA line
+    # Need to re-split the terms. This is redundant, but makes for less repeated code.
+    # Ensure it is seen as a character vector first and foremost. 
+    prep_split <- as.character(eq$arima_eq)
+    split_arima <- strsplit(eq$arima_eq, "=")[[1]]
+    names(split_arima) <- c("ar", "ma")
+    
+    split_arima["ar"] <- paste0("&\\text{where}\\quad  &&", split_arima["ar"])
+    split_arima["ma"] <- paste0("& &&=", split_arima["ma"])
+    
+    eq$arima_eq <- paste(split_arima, collapse = " \\\\\n")
+    
+    # Add line (always the same) indicating the distribution of the residual.
+    eq$err_dist <- "&\\text{where}\\quad &&\\varepsilon_{t} \\sim{WN(0, \\sigma^{2})}"
+    
+    # Add alignment to the equation structure.
+    eq <- paste0("\\begin{alignat}{2}\n",
+                 paste(eq, collapse = " \\\\\n"),
+                 "\n\\end{alignat}")
+  } else {
+    # If arima only then we only need 1 line and no alignment.
+    eq <- eq$arima_eq
+  }
+  
+  # Set the class
+  class(eq) <- c("equation", "character")
+  
+  # Explicit return
+  return(eq)
 }

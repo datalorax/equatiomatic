@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
+
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 <!--- Placeholder for tests/README.md Do Not Edit--->
