@@ -62,6 +62,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/forecast-arima.html">forecast::Arima Models</a>
+    </li>
+    <li>
       <a href="../articles/intro-equatiomatic.html">Introduction to {equatiomatic}</a>
     </li>
     <li>
@@ -227,8 +230,8 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <p>While the above examples focused on regression models (and the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function), {equatiomatic} supports output from other model types as well, specifically:</p>
 <table class="table">
 <colgroup>
-<col width="29%">
-<col width="70%">
+<col width="49%">
+<col width="50%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Model</th>
@@ -258,6 +261,14 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <td align="left">
 <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr(method = 'probit')</a></code>; <code><a href="https://rdrr.io/pkg/ordinal/man/clm.html">ordinal::clm(link = 'probit')</a></code>
 </td>
+</tr>
+<tr class="even">
+<td align="left">auto-regressive integrated moving average</td>
+<td align="left"><code><a href="https://rdrr.io/pkg/forecast/man/Arima.html">forecast::Arima</a></code></td>
+</tr>
+<tr class="odd">
+<td align="left">regression with auto-regressive integrated moving average errors</td>
+<td align="left"><code><a href="https://rdrr.io/pkg/forecast/man/Arima.html">forecast::Arima</a></code></td>
 </tr>
 </tbody>
 </table>
