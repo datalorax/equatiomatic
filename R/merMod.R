@@ -1,10 +1,17 @@
 #' Utility function to wrap things as normally distributed
 #' @keywords internal
+#' @param mean The LaTeX code that should go into the mean part
+#' @param sigma The LaTeX code that should go into the variance part.
+#'   Defaults to sigma squared
 #' @noRd
 wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
   paste0("N \\left(", mean, ", ", sigma, " \\right)")
 }
 
+#' Provides the order of the levels
+#' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "ran_pars", ]}.
+#' @noRd
 get_order <- function(rhs_random) {
   sort(tapply(rhs_random$original_order, rhs_random$group, min))
 } 
@@ -30,7 +37,17 @@ vary_higher_subscripts <- function(term, rhs_random, lev_omit = NULL) {
   paste0(out[!is.na(out)], collapse = ",")
 }
 
-# create a variable that denotes which level the term should be added to
+#' Create a vector to split by
+#' The vector denotes which level the term (for the given row) 
+#' should be added to in the equation (e.g., l1, l2, l3, etc.)
+#' @param rhs_fixed output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "fixed", ]}
+#' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "ran_pars", ]}
+#' @return A named vector where the names represent the term and the 
+#' values represent the level. For example, the output may look similar
+#' to \code{c("(Intercept)" = "l1", "wave" = "l1", 
+#'          "grouplow" = "sid", "groupmedium" = "sid")}
 pred_level_split <- function(rhs_fixed, rhs_random) {
 
   order <- get_order(rhs_random)
@@ -45,25 +62,6 @@ pred_level_split <- function(rhs_fixed, rhs_random) {
     }
     out
   }, FUN.VALUE = character(1))
-}
-
-assign_l1_greek <- function(rhs_fixed, rhs_random) {
-  beta_indices <- seq_along(rhs_fixed$l1[rhs_fixed$l1])
-  if(any(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1)) {
-    beta_indices <- beta_indices - 1
-  }
-  l1 <- ifelse(rhs_fixed$term == "(Intercept)" & rhs_fixed$l1,
-         "\\alpha_{",
-         ifelse(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1,
-                paste0("\\beta_{", beta_indices),
-                NA_character_)
-  )
-  terms <- rhs_fixed$term[!is.na(l1)]
-  
-  ss <- vapply(terms, function(x) vary_higher_subscripts(x, rhs_random),
-               FUN.VALUE = character(1))
-  l1[!is.na(l1)] <- paste0(l1[!is.na(l1)], ss, "}")
-  l1  
 }
 
 pull_term_subscript <- function(greek_coef, n = 1) {
@@ -111,8 +109,48 @@ pull_superscript <- function(slp_preds, detect_cross, cross_data, order) {
   superscripts
 }
 
-# lev_data <- splt[[2]]
-# lev_data_name <- "sid"
+
+#' Creates the greek for the level 1 fixed effects
+#' @param rhs_fixed output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "fixed", ]}
+#' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "ran_pars", ]}
+#' @return A character vector the same length at the number of rows in 
+#'   \code{rhs_fixed} with the greek assigned for those that are at level 1 and 
+#'   \code{NA_character_} otherwise (higher-level predictors).
+#' @noRd
+assign_l1_greek <- function(rhs_fixed, rhs_random) {
+  beta_indices <- seq_along(rhs_fixed$l1[rhs_fixed$l1])
+  if(any(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1)) {
+    beta_indices <- beta_indices - 1
+  }
+  l1 <- ifelse(rhs_fixed$term == "(Intercept)" & rhs_fixed$l1,
+               "\\alpha_{",
+               ifelse(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1,
+                      paste0("\\beta_{", beta_indices),
+                      NA_character_)
+  )
+  terms <- rhs_fixed$term[!is.na(l1)]
+  
+  ss <- vapply(terms, function(x) vary_higher_subscripts(x, rhs_random),
+               FUN.VALUE = character(1))
+  l1[!is.na(l1)] <- paste0(l1[!is.na(l1)], ss, "}")
+  l1  
+}
+
+#' Takes one level of the fixed effects data and assigns greek for that level
+#' @param lev_data One level of the data, e.g. \code{splt[[1]]} where 
+#'   \code{splt} is the \code{rhs_fixed} data split by the \code{predsplit} 
+#'   column.
+#' @param lev_data_name A character vector specifying the name of the level, 
+#'   e.g., \code{"sid"}, \code{"school"}, \code{"site"}.
+#' @param splt The \code{rhs_fixed} data split by the \code{predsplit} 
+#'   column.
+#' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
+#' \code{rhs[rhs$effect == "ran_pars", ]}
+#' @return The full data \code{rhs_fixed} data frame for that level with the
+#'   \code{greek} column filled in
+#' @noRd
 assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
   if(is.null(lev_data)) {
     return()
@@ -157,6 +195,14 @@ assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
   out[order(out$original_order), ]
 }
 
+#' Create the fixed effects portion of the equation
+#' @param model The fitted \code{\link[lme4]{lmer}} model
+#' @return The \code{extract_rhs} data frame where \code{effect == fixed} with
+#'   a new \code{greek} column denoting the greek for the specific
+#'   coefficient (including indexing for the levels the fixed effects vary
+#'   at), and a new \code{predsplit} column that allows this data frame
+#'   to be split by the level at which the variable predicts.
+#' @noRd
 create_fixef_greek_merMod <- function(model) {
   rhs <- extract_rhs(model)
   rhs_fixed <- rhs[rhs$effect == "fixed", ]
@@ -346,7 +392,20 @@ rbind_named <- function(l) {
   Reduce(rbind, l)
 }
 
-# fixed_greek_mermod <- create_fixef_greek_merMod(model)
+#' Create the mean structure for the VCV matrix
+#' @param rhs Output from \code{extract_rhs}
+#' @param fixed_greek_mermod Output from \code{create_fixef_greek_merMod}.
+#' @param model The fitted \code{\link[lme4]{lmer}} model
+#' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable
+#'   names not be wrapped in the \code{\\operatorname{}} command?
+#' @return A data frame with each term that varies at each higher level (term), 
+#' the level at which it varies (group), the greek for the mean structure 
+#' (greek), and the greek for the term that is varying (greek_vary). The 
+#' \code{greek_vary} column defines the left hand side of ~. The greek for the 
+#' mean structure (greek) will include any group-level predictors. If there are 
+#' none, it will be replaced by \code{"\\mu_{greek_vary}"} where 
+#' \code{greek_vary} is actually substituted in.
+#' 
 create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   rhs_random <- rhs_random[rhs_random$group != "Residual" &
