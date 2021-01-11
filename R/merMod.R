@@ -48,6 +48,7 @@ vary_higher_subscripts <- function(term, rhs_random, lev_omit = NULL) {
 #' values represent the level. For example, the output may look similar
 #' to \code{c("(Intercept)" = "l1", "wave" = "l1", 
 #'          "grouplow" = "sid", "groupmedium" = "sid")}
+#' @noRd        
 pred_level_split <- function(rhs_fixed, rhs_random) {
 
   order <- get_order(rhs_random)
@@ -283,8 +284,11 @@ check_interact_vary <- function(splt_lev_fixed, splt_lev_random, order) {
   as.logical(check %*% check_vary)
 }
 
-pull_intercept <- function(splt_lev_fixed, splt_lev_random, order) {
-  int <- paste0("\\alpha")
+pull_intercept <- function(splt_lev_fixed, splt_lev_random, order, 
+                           use_coefs, coef_digits, fix_signs) {
+
+  int <- paste0("\\alpha")  
+
   if(is.null(splt_lev_fixed)) {
     return()
   }
@@ -308,15 +312,28 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, order) {
   # add alpha superscript
   nocross$greek <- paste0(nocross$greek, paste0("^{", int, "}"))
   
-  coef_terms <- paste0(nocross$greek, nocross$terms)
-  
-  # add intercept term
-  coef_terms <- c(paste0("\\gamma_{0}^{", int, "}"), coef_terms)
-  out <- data.frame(term = "(Intercept)", 
-             greek = paste0(coef_terms, collapse = " + "))
-  if(nrow(out) == 0) {
-    return()
+  if(use_coefs) {
+    coef_terms <- paste0(round(nocross$estimate, coef_digits), nocross$terms)
+    if(length(coef_terms) == 0) {
+      coef_terms <- 0
+    }
+    coef_terms <- paste0(coef_terms, collapse = " + ")
+    if(fix_signs) {
+      coef_terms <- fix_coef_signs(coef_terms)
+    }
+    out <- data.frame(term = "(Intercept)", 
+                      greek = coef_terms)
+  } else {
+    coef_terms <- paste0(nocross$greek, nocross$terms)
+    # add intercept term
+    coef_terms <- c(paste0("\\gamma_{0}^{", int, "}"), coef_terms)
+    out <- data.frame(term = "(Intercept)", 
+                      greek = paste0(coef_terms, collapse = " + "))
+    if(nrow(out) == 0) {
+      return()
+    }
   }
+
   out
 }
 
@@ -331,7 +348,7 @@ create_slope_intercept <- function(term) {
 # splt_lev_fixed <- splt_fixed[[1]]
 # splt_lev_random <- splt_rand[[1]]
 pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
-                        order) {
+                        order, use_coefs, coef_digits, fix_signs) {
   if(is.null(splt_lev_fixed)) {
     return()
   }
@@ -368,12 +385,21 @@ pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
     x
   })
   
-  final_slopes <- lapply(cross_splt, function(x) {
-    int <- create_slope_intercept(x$greek[1])
-    slopes <- paste0(x$greek, x$terms)
-    paste0(c(int, paste0(slopes, collapse = " + ")), collapse = " + ")
-  })
-  
+  if(use_coefs) {
+    final_slopes <- lapply(cross_splt, function(x) {
+      slopes <- paste0(round(x$estimate, coef_digits), x$terms)
+      paste0(slopes, collapse = " + ")
+    })
+  } else {
+    final_slopes <- lapply(cross_splt, function(x) {
+      int <- create_slope_intercept(x$greek[1])
+      slopes <- paste0(x$greek, x$terms)
+      paste0(c(int, paste0(slopes, collapse = " + ")), collapse = " + ")
+    })
+  }
+  if(fix_signs) {
+    final_slopes <- lapply(final_slopes, fix_coef_signs)
+  }
   out <- data.frame(term = unlist(terms_predicted),
                     greek = unlist(final_slopes))
   if(nrow(out) == 0) {
@@ -405,8 +431,9 @@ rbind_named <- function(l) {
 #' mean structure (greek) will include any group-level predictors. If there are 
 #' none, it will be replaced by \code{"\\mu_{greek_vary}"} where 
 #' \code{greek_vary} is actually substituted in.
-#' 
-create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
+#' @noRd
+create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
+                                use_coefs, coef_digits, fix_signs) {
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   rhs_random <- rhs_random[rhs_random$group != "Residual" &
                              !grepl("^cor__", rhs_random$term), ]
@@ -432,12 +459,13 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
   names(splt_rand) <- names(order)
   
   ints <- Map(function(fixed, rand) {
-    pull_intercept(fixed, rand, order)
+    pull_intercept(fixed, rand, order, use_coefs, coef_digits, fix_signs)
   }, splt_fixed, splt_rand)
   ints <- rbind_named(ints)
   
   slopes <- Map(function(fixed, rand) {
-    pull_slopes(model, fixed, rand, ital_vars, order)
+    pull_slopes(model, fixed, rand, ital_vars, order, 
+                use_coefs, coef_digits, fix_signs)
   }, splt_fixed, splt_rand)
   slopes <- rbind_named(slopes)
   
@@ -465,9 +493,14 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars) {
     paste0(gsub("(.+)\\}", "\\1", out$greek_vary), lev_indexes, "}")
   )
   
-  out$greek <- ifelse(is.na(out$greek), 
-                      paste0("\\mu_{", out$greek_vary, "}"),
-                      out$greek)
+  if(use_coefs) {
+    out$greek <- ifelse(is.na(out$greek), 0, out$greek)
+  } else {
+    out$greek <- ifelse(is.na(out$greek), 
+                        paste0("\\mu_{", out$greek_vary, "}"),
+                        out$greek) 
+  }
+
   out[order(out$new_order), ]
 }
 
@@ -484,8 +517,8 @@ assign_vcov_greek <- function(rand_lev, means_merMod) {
   })
 }
 
-create_greek_matrix <- function(v, mat, use_coef, est) {
-  if (isFALSE(use_coef)) {
+create_greek_matrix <- function(v, mat, use_coefs, coef_digits, est) {
+  if (isFALSE(use_coefs)) {
     if (length(unique(v)) == 1) {
       greek_vcov <- paste0("\\sigma^2_{", v[1], "}")
     } else {
@@ -495,7 +528,7 @@ create_greek_matrix <- function(v, mat, use_coef, est) {
                            collapse = "")
     }
   } else {
-    greek_vcov <- est
+    greek_vcov <- round(est, coef_digits)
   }
   
   mat[v[1], v[2]] <- greek_vcov
@@ -514,7 +547,8 @@ pull_var <- function(term) {
 }
 
 
-create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
+create_vcov_merMod <- function(rhs_random_lev, means_merMod, 
+                               use_coefs, coef_digits) {
 
   rand_lev <- rhs_random_lev[ ,c("group", "term", "estimate")]
   rand_lev$terms <- gsub("sd__|cor__", "", rand_lev$term)
@@ -543,19 +577,24 @@ create_vcov_merMod <- function(rhs_random_lev, means_merMod, use_coef) {
   dimnames(mat) <- list(unique(unlist(rand_lev$vcov_greek[sd_rows])),
                         unique(unlist(rand_lev$vcov_greek[sd_rows])))
   for(i in seq_along(rand_lev$vcov_greek)) {
-    mat <- create_greek_matrix(rand_lev$vcov_greek[[i]], mat, use_coef, 
+    mat <- create_greek_matrix(rand_lev$vcov_greek[[i]], mat, 
+                               use_coefs, coef_digits, 
                                est = rand_lev$estimate[i])
   }
   mat
 }
 
-create_ranef_structure_merMod <- function(model, ital_vars, use_coef) {
+create_ranef_structure_merMod <- function(model, ital_vars, use_coefs,
+                                          coef_digits, fix_signs) {
   rhs <- extract_rhs(model)
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   order <- get_order(rhs_random[rhs_random$group != "Residual", ])
   
   fixed_greek_mermod <- create_fixef_greek_merMod(model)
-  means_merMod <- create_means_merMod(rhs, fixed_greek_mermod, model, ital_vars)
+  means_merMod <- create_means_merMod(rhs, fixed_greek_mermod, 
+                                      model, ital_vars,
+                                      use_coefs, coef_digits, 
+                                      fix_signs)
   
   means_splt <- split(means_merMod, means_merMod$group)[names(order)]
   names(means_splt) <- names(order)
@@ -563,12 +602,12 @@ create_ranef_structure_merMod <- function(model, ital_vars, use_coef) {
   rhs_random_splt <- split(rhs_random, rhs_random$group)[names(order)]
   
   vcov_mats <- lapply(rhs_random_splt, function(x) {
-    create_vcov_merMod(x, means_merMod, use_coef)
+    create_vcov_merMod(x, means_merMod, use_coefs, coef_digits)
   })
   
   # create each final latex piece
   lhs <- lapply(means_splt, function(x) create_onecol_array(x$greek_vary))
-  means <- lapply(means_splt, function(x) create_onecol_array(x$greek))
+  means <- lapply(means_splt, function(x) create_onecol_array(x$greek)) 
   vcovs <- lapply(vcov_mats, convert_matrix)
   
   distributed <- Map(wrap_normal_dist, means, vcovs)
@@ -650,9 +689,10 @@ convert_matrix <- function(mat) {
 #' }
 create_l1_merMod <- function(model, mean_separate,
                              ital_vars, wrap, terms_per_line,
+                             use_coefs, coef_digits, fix_signs,
                              operator_location, sigma = "\\sigma^2") {
   rhs <- extract_rhs(model)
-  lhs <- extract_lhs(model, ital_vars)
+  lhs <- extract_lhs(model, ital_vars, use_coefs)
   greek <- create_fixef_greek_merMod(model)
   terms <- create_term(greek, ital_vars)
   
@@ -663,8 +703,17 @@ create_l1_merMod <- function(model, mean_separate,
     paste0("(", x, ")")
   }, character(1))
   
-  l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
-               terms[greek$predsplit == "l1"])
+  if(use_coefs) {
+    l1 <- paste0(
+      round(greek$estimate[greek$predsplit == "l1"], coef_digits),
+      # "_{", greek$greek, "}",
+      terms[greek$predsplit == "l1"]
+    )
+  } else {
+    l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
+                 terms[greek$predsplit == "l1"])
+  }
+  
   if(wrap) {
     if (operator_location == "start") {
       line_end <- "\\\\\n&\\quad + "
@@ -679,12 +728,21 @@ create_l1_merMod <- function(model, mean_separate,
         paste0("&", terms_added)
       })
       l1 <- paste0("\\begin{aligned}\n", paste0(l1, collapse = "\\\\"), "\n\\end{aligned}")
+      if(fix_signs) {
+        l1 <- fix_coef_signs(l1)  
+      }
     } else {
       l1 <- lapply(l1, paste0, collapse = " + ")
       l1 <- paste0(l1, collapse = line_end)
+      if(fix_signs) {
+        l1 <- fix_coef_signs(l1)  
+      }
     }
   } else {
     l1 <- paste0(l1, collapse = " + ")
+    if(fix_signs) {
+      l1 <- fix_coef_signs(l1)  
+    }
   }
   
   if(is.null(mean_separate)) {
