@@ -2,11 +2,9 @@ library(forecast)
 
 # Test Group A: Simple Arima Model
 test_that("Basic ARIMA model functions",{
-  # Set seed so that rnorm returns the same result
-  set.seed(123)
   
   # Build Arima (no regression)
-  model <- forecast::Arima(ts(rnorm(1000),freq=4), 
+  model <- forecast::Arima(simple_ts, 
                            order=c(1,1,1),
                            seasonal=c(1,0,1),
                            include.constant = TRUE)
@@ -21,20 +19,14 @@ test_that("Basic ARIMA model functions",{
 
 # Test Group B: Regression w/ ARIMA Errors
 test_that("Regression w/ ARIMA Errors functions",{
-  # Set seed so that rnorm returns the same result
-  set.seed(123)
-  
-  # Build our random numbers
-  rnd_numbers <- list(x1 = rnorm(1000),
-                      x2 = rnorm(1000),
-                      ts_rnorm = rnorm(1000))
-  
   # Build Exogenous Regressors
-  xregs <- as.matrix(data.frame(x1 = rnd_numbers$x1 + 5,
-                                x2 = rnd_numbers$x2 * 5))
+  xregs <- as.matrix(data.frame(x1 = ts_reg_list$x1 + 5,
+                                x2 = ts_reg_list$x2 * 5))
+  
+  regress_ts <- ts(ts_reg_list$ts_rnorm,freq = 4)
   
   # Build Regression Model
-  model <- forecast::Arima(ts(rnd_numbers$ts_rnorm,freq=4), 
+  model <- forecast::Arima(regress_ts, 
                            order=c(1,1,1),
                            seasonal=c(1,0,1),
                            xreg = xregs,
