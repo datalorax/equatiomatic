@@ -68,7 +68,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_github("lme4/lme4", dependencies = TRUE)
+          remotes::install_github("jyypma/nloptr", dependencies = TRUE)
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
