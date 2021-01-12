@@ -287,7 +287,7 @@ check_interact_vary <- function(splt_lev_fixed, splt_lev_random, order) {
 pull_intercept <- function(splt_lev_fixed, splt_lev_random, order, 
                            use_coefs, coef_digits, fix_signs) {
 
-  int <- paste0("\\alpha")  
+  int <- "\\alpha"
 
   if(is.null(splt_lev_fixed)) {
     return()
@@ -308,12 +308,13 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, order,
                           seq_along(nocross$greek),
                           gsub(".+_\\{.{1}(.+)", "\\1", nocross$greek))
   
-  
   # add alpha superscript
   nocross$greek <- paste0(nocross$greek, paste0("^{", int, "}"))
   
   if(use_coefs) {
-    coef_terms <- paste0(round(nocross$estimate, coef_digits), nocross$terms)
+    coef_terms <- paste0(round(nocross$estimate, coef_digits), 
+                         "_{", nocross$greek, "}",  
+                         nocross$terms)
     if(length(coef_terms) == 0) {
       coef_terms <- 0
     }
@@ -387,7 +388,13 @@ pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
   
   if(use_coefs) {
     final_slopes <- lapply(cross_splt, function(x) {
-      slopes <- paste0(round(x$estimate, coef_digits), x$terms)
+      slopes <- paste0(round(x$estimate, coef_digits),
+                       "_{",
+                       #gsub("(^.+)\\^\\{.+\\}\\}(.+)", 
+                        #    "\\1\\2", 
+                            cross_splt[[1]]$greek,#),
+                       "}",
+                       x$terms)
       paste0(slopes, collapse = " + ")
     })
   } else {
@@ -706,7 +713,7 @@ create_l1_merMod <- function(model, mean_separate,
   if(use_coefs) {
     l1 <- paste0(
       round(greek$estimate[greek$predsplit == "l1"], coef_digits),
-      # "_{", greek$greek, "}",
+      "_{", greek$greek[greek$predsplit == "l1"], "}",
       terms[greek$predsplit == "l1"]
     )
   } else {

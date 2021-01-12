@@ -202,17 +202,6 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   return(eq_list)
 }
 
-
-#' Create a full term w/subscripts
-#'
-#' @keywords internal
-#'
-#' @param rhs A data frame of right-hand side variables extracted with
-#'   \code{extract_rhs}.
-#'
-#' @inheritParams extract_eq
-#' @noRd
-#' @export
 create_term <- function(side, ital_vars) {
   UseMethod("create_term", side)
 }
