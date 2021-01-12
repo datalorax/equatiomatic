@@ -94,7 +94,7 @@ test_that("Group-level predictors work as expected", {
   
   # Group-level predictors, Longitudinal (level 2)
   expect_snapshot_output(extract_eq(long2))
-                 
+  
   # level 3 variable
   long3 <- lmer(score ~ wave + group + treatment + prop_low +
                   (wave|sid) + (wave + group + treatment|school) +
@@ -138,9 +138,11 @@ test_that("Interactions work as expected", {
   expect_snapshot_output(extract_eq(l2_long_int))
   
   # cross-level interaction w/random at the level
-  cl_long1 <- lmer(score ~ treatment*wave + (wave|sid) + (1|school) + 
-                        (1|district),
-                      data = sim_longitudinal)
+  suppressWarnings(
+    cl_long1 <- lmer(score ~ treatment*wave + (wave|sid) + (1|school) + 
+                          (1|district),
+                        data = sim_longitudinal)
+  )
  expect_snapshot_output(extract_eq(cl_long1))
   
   # cross-level interaction w/o random at the level
@@ -207,11 +209,12 @@ test_that("Nested model syntax works", {
 })
 
 test_that("use_coef works", {
-  use_coef_m1 <- lmer(score ~ wave*group*treatment + wave*prop_low*treatment +
-                        (wave|sid) + (wave|school) +
-                        (wave + treatment|district),
-                      sim_longitudinal)
-  
+  suppressWarnings(
+    use_coef_m1 <- lmer(score ~ wave*group*treatment + wave*prop_low*treatment +
+                          (wave|sid) + (wave|school) +
+                          (wave + treatment|district),
+                        sim_longitudinal)
+  )
   # Nested random effects 3
   expect_snapshot_output(extract_eq(use_coef_m1))
 })

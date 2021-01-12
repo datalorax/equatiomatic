@@ -88,7 +88,7 @@ A character of class \dQuote{equation}.
 \description{
 Extract the variable names from a model to produce a 'LaTeX' equation, which is
 output to the screen. Supports any model supported by
-\link[broom:reexports]{broom::tidy}.
+\link[broom:tidy]{broom::tidy}.
 }
 \examples{
 # Simple model

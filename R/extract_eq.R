@@ -201,7 +201,7 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 }
 
 # These args still need to be incorporated
-# intercept, greek, raw_tex, use_coefs, coef_digits, fix_signs
+# intercept, greek, raw_tex
 # I haven't incorporated wrap yet either and we should think about if we want to
 # It might be better to have an alternative for matrix notation
 

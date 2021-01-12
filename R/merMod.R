@@ -329,7 +329,8 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, order,
     # add intercept term
     coef_terms <- c(paste0("\\gamma_{0}^{", int, "}"), coef_terms)
     out <- data.frame(term = "(Intercept)", 
-                      greek = paste0(coef_terms, collapse = " + "))
+                      greek = paste0(coef_terms, collapse = " + "),
+                      stringsAsFactors = FALSE)
     if(nrow(out) == 0) {
       return()
     }
@@ -490,7 +491,10 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   random_vary$greek_vary <- gsub("(.+\\{\\d?).+", "\\1}", random_vary$greek)
   random_vary$new_order <- random_vary$original_order
   
-  out <- merge(out, random_vary[ ,c("term", "greek_vary", "new_order")], by = "term", all.x = TRUE)
+  out <- merge(out, 
+               random_vary[ ,c("term", "greek_vary", "new_order")], 
+               by = "term", 
+               all.x = TRUE)
   
   lev_indexes <- setNames(letters[seq_along(order) + 9], names(order))
   lev_indexes <- lev_indexes[match(out$group, names(lev_indexes))]
