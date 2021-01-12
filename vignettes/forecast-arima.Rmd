@@ -33,42 +33,35 @@ library(forecast)
 set.seed(123)
 
 # Build Arima (no regression)
-model <- Arima(ts(rnorm(1000),freq=4), 
-               order=c(1,1,1),
-               seasonal=c(1,0,1),
-               include.constant = TRUE)
+simple_ts_mod <- Arima(simple_ts, 
+                       order=c(1,1,1),
+                       seasonal=c(1,0,1),
+                       include.constant = TRUE)
 ```
 
 #### Extracting the equation
 To extract the equation, we just call `equatiomatic::extract_eq()` on the resulting model object, equivalent to other model types. The model above outputs the following.
 
 ```{r extract_arima}
-extract_eq(model)
+extract_eq(simple_ts_mod)
 ```
 
 ### Regression with ARIMA Errors
-Next, we'll illustrate a slightly more complicated example that includes a linear regression.
+Next, we'll illustrate a slightly more complicated example that includes a linear regression. We'll use the `ts_reg_list` object that is exported from **{equatiomatic}** to build up our data.
 
 #### Setup
 ```{r setup_arima_errors}
-# Set seed so that rnorm returns the same result
-set.seed(123)
-
-# Build our random numbers
-rnd_numbers <- list(x1 = rnorm(1000),
-                    x2 = rnorm(1000),
-                    ts_rnorm = rnorm(1000))
 
 # Build Exogenous Regressors
-xregs <- as.matrix(data.frame(x1 = rnd_numbers$x1 + 5,
-                              x2 = rnd_numbers$x2 * 5))
+xregs <- as.matrix(data.frame(x1 = ts_reg_list$x1 + 5,
+                              x2 = ts_reg_list$x2 * 5))
 
 # Build Regression Model
-model <- Arima(ts(rnd_numbers$ts_rnorm,freq=4), 
-               order=c(1,1,1),
-               seasonal=c(1,0,1),
-               xreg = xregs,
-               include.constant = TRUE)
+ts_reg_mod <- Arima(ts(ts_reg_list$ts_rnorm, freq = 4), 
+                    order=c(1, 1, 1),
+                    seasonal=c(1, 0, 1),
+                    xreg = xregs,
+                    include.constant = TRUE)
 ```
 
 #### Extracting the equation
@@ -76,7 +69,7 @@ model <- Arima(ts(rnd_numbers$ts_rnorm,freq=4),
 Despite the extra complexity of the model, the code to pull the equation remains equivalent.
 
 ```{r extract_arima_errors}
-extract_eq(model)
+extract_eq(ts_reg_mod)
 ```
 
 ## Working with other parts of {equatiomatic}
