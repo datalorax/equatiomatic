@@ -31,8 +31,8 @@ library(forecast)
 
 # Build Arima (no regression)
 simple_ts_mod <- Arima(simple_ts, 
-                       order=c(1,1,1),
-                       seasonal=c(1,0,1),
+                       order = c(1,1,1),
+                       seasonal = c(1,0,1),
                        include.constant = TRUE)
 ```
 
