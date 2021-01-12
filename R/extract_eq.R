@@ -219,9 +219,10 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 
   l1 <- create_l1_merMod(model, mean_separate,
                          ital_vars, wrap, terms_per_line,
-                         operator_location,
-                         sigma = "\\sigma^2")
-  vcv <- create_ranef_structure_merMod(model, ital_vars, use_coefs)
+                         use_coefs, coef_digits, fix_signs,
+                         operator_location, sigma = "\\sigma^2")
+  vcv <- create_ranef_structure_merMod(model, ital_vars, use_coefs, coef_digits,
+                                       fix_signs)
   
   if(grepl("^\n    \n", vcv[[1]])) {
     vcv <- gsub("^\n(.+)", "\\1", vcv)

@@ -202,21 +202,12 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   return(eq_list)
 }
 
-
-#' Create a full term w/subscripts
-#'
-#' @keywords internal
-#'
-#' @param rhs A data frame of right-hand side variables extracted with
-#'   \code{extract_rhs}.
-#'
-#' @inheritParams extract_eq
-#' @noRd
 create_term <- function(side, ital_vars) {
   UseMethod("create_term", side)
 }
 
-
+#' @noRd
+#' @export
 create_term.default <- function(side, ital_vars) {
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
@@ -243,6 +234,7 @@ create_term.default <- function(side, ital_vars) {
 #'
 #' @inheritParams extract_eq
 #' @noRd
+#' @export
 create_term.forecast_ARIMA <- function(side, ital_vars) {
   # Get and format the primaries
   # Do not escape seasonal differecing primary

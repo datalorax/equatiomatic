@@ -28,8 +28,9 @@ extract_lhs.lm <- function(model, ital_vars,
   lhs <- rownames(attr(model$terms, "factors"))[1]
 
   lhs_escaped <- escape_tex(lhs)
-  if (use_coefs){
-  lhs_escaped <- add_hat(lhs)}
+  if (use_coefs) {
+    lhs_escaped <- add_hat(lhs_escaped)
+  }
   add_tex_ital_v(lhs_escaped, ital_vars)
 }
 
@@ -44,10 +45,13 @@ extract_lhs.lm <- function(model, ital_vars,
 #'
 #' @return A character string
 #' @noRd
-extract_lhs.lmerMod <- function(model, ital_vars, ...) {
+extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, ...) {
   lhs <- all.vars(formula(model))[1]
 
   lhs_escaped <- escape_tex(lhs)
+  if (use_coefs) {
+    lhs_escaped <- add_hat(lhs_escaped)
+  }
   paste0(add_tex_ital_v(lhs_escaped, ital_vars), "_{i}")
 }
 
