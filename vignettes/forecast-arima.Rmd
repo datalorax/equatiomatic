@@ -29,9 +29,6 @@ First we need to generate a model. In this example, we won't worry too much abou
 library(equatiomatic)
 library(forecast)
 
-# Set seed so that rnorm returns the same result
-set.seed(123)
-
 # Build Arima (no regression)
 simple_ts_mod <- Arima(simple_ts, 
                        order=c(1,1,1),
@@ -51,15 +48,14 @@ Next, we'll illustrate a slightly more complicated example that includes a linea
 
 #### Setup
 ```{r setup_arima_errors}
-
 # Build Exogenous Regressors
 xregs <- as.matrix(data.frame(x1 = ts_reg_list$x1 + 5,
                               x2 = ts_reg_list$x2 * 5))
 
 # Build Regression Model
 ts_reg_mod <- Arima(ts(ts_reg_list$ts_rnorm, freq = 4), 
-                    order=c(1, 1, 1),
-                    seasonal=c(1, 0, 1),
+                    order = c(1, 1, 1),
+                    seasonal = c(1, 0, 1),
                     xreg = xregs,
                     include.constant = TRUE)
 ```
