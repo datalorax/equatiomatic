@@ -13,12 +13,12 @@ test_that("Unconditional lmer models work", {
   expect_snapshot_output(extract_eq(um_long3))
 })
 
-# lev 1 models used for multiple tests
-lev1_hsb <- lmer(math ~ female + ses + minority + (1|sch.id), hsb)
-lev1_long <- lmer(score ~ wave + (1|sid) + (1|school) + (1|district),
-                  data = sim_longitudinal)
-
 test_that("Level 1 predictors work", {
+  # lev 1 models used for multiple tests
+  lev1_hsb <- lmer(math ~ female + ses + minority + (1|sch.id), hsb)
+  lev1_long <- lmer(score ~ wave + (1|sid) + (1|school) + (1|district),
+                    data = sim_longitudinal)
+  
   # Level 1 predictors HSB
   expect_snapshot_output(extract_eq(lev1_hsb))
   
@@ -27,6 +27,11 @@ test_that("Level 1 predictors work", {
 })
 
 test_that("Mean separate works as expected", {
+  # lev 1 models used for multiple tests
+  lev1_hsb <- lmer(math ~ female + ses + minority + (1|sch.id), hsb)
+  lev1_long <- lmer(score ~ wave + (1|sid) + (1|school) + (1|district),
+                    data = sim_longitudinal)
+  
   # Mean separate HSB
   expect_snapshot_output(extract_eq(lev1_hsb, mean_separate = FALSE))
   
@@ -35,6 +40,11 @@ test_that("Mean separate works as expected", {
 })
 
 test_that("Wrapping works as expected", {
+  # lev 1 models used for multiple tests
+  lev1_hsb <- lmer(math ~ female + ses + minority + (1|sch.id), hsb)
+  lev1_long <- lmer(score ~ wave + (1|sid) + (1|school) + (1|district),
+                    data = sim_longitudinal)
+  
   # Wrapping HSB
   expect_snapshot_output(extract_eq(lev1_hsb, wrap = TRUE, terms_per_line = 2))
 })
@@ -173,21 +183,21 @@ test_that("Alternate random effect VCV structures work", {
 })
 
 test_that("Nested model syntax works", {
-  expect_warning(
+  suppressWarnings(
     nested_m1 <- lmer(score ~ 1 + (1|sid/school), sim_longitudinal)
   )
   
   # Nested random effects 1
   expect_snapshot_output(extract_eq(nested_m1))
   
-  expect_warning(
+  suppressWarnings(
     nested_m2 <- lmer(score ~ 1 + (1|sid/school/district), sim_longitudinal)
   )
   
   # Nested random effects 2
   expect_snapshot_output(extract_eq(nested_m1))
   
-  expect_warning(
+  suppressWarnings(
     nested_m3 <- lmer(score ~ wave + group + prop_low + 
                         (1|sid/school/district), sim_longitudinal)
   )
