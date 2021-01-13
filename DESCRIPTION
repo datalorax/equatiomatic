@@ -56,7 +56,7 @@ Imports:
     utils
 Suggests: 
     texPreview,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     MASS,
     ordinal,
     lme4,
@@ -70,3 +70,4 @@ LazyData: true
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Config/testthat/edition: 3

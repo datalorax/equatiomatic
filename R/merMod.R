@@ -329,7 +329,8 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, order,
     # add intercept term
     coef_terms <- c(paste0("\\gamma_{0}^{", int, "}"), coef_terms)
     out <- data.frame(term = "(Intercept)", 
-                      greek = paste0(coef_terms, collapse = " + "))
+                      greek = paste0(coef_terms, collapse = " + "),
+                      stringsAsFactors = FALSE)
     if(nrow(out) == 0) {
       return()
     }
@@ -490,7 +491,10 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   random_vary$greek_vary <- gsub("(.+\\{\\d?).+", "\\1}", random_vary$greek)
   random_vary$new_order <- random_vary$original_order
   
-  out <- merge(out, random_vary[ ,c("term", "greek_vary", "new_order")], by = "term", all.x = TRUE)
+  out <- merge(out, 
+               random_vary[ ,c("term", "greek_vary", "new_order")], 
+               by = "term", 
+               all.x = TRUE)
   
   lev_indexes <- setNames(letters[seq_along(order) + 9], names(order))
   lev_indexes <- lev_indexes[match(out$group, names(lev_indexes))]
@@ -525,7 +529,7 @@ assign_vcov_greek <- function(rand_lev, means_merMod) {
 }
 
 create_greek_matrix <- function(v, mat, use_coefs, coef_digits, est) {
-  if (isFALSE(use_coefs)) {
+  if (identical(use_coefs, FALSE)) {
     if (length(unique(v)) == 1) {
       greek_vcov <- paste0("\\sigma^2_{", v[1], "}")
     } else {
@@ -729,7 +733,7 @@ create_l1_merMod <- function(model, mean_separate,
     }
     l1 <- split(l1, ceiling(seq_along(l1) / terms_per_line))
     
-    if(isFALSE(mean_separate)) {
+    if(identical(mean_separate, FALSE)) {
       l1 <- lapply(l1, function(x) {
         terms_added <- paste0(x, collapse = " + ")
         paste0("&", terms_added)

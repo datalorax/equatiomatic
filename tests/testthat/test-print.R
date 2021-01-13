@@ -1,5 +1,3 @@
-context("Printing")
-
 test_that("Equation is printed correctly", {
   model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 

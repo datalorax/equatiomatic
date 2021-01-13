@@ -29,6 +29,7 @@ helper_arima_extract_lm <- function(model){
   # Following the rest of the package.
   # Pull the full model with broom::tidy
   full_mdl <- broom::tidy(model)
+  full_mdl$term <- as.character(full_mdl$term)
   
   # Filter down to only non-ARMA coefficients
   full_rhs <- full_mdl[!grepl("^s?ar|^s?ma", full_mdl$term), ]
@@ -71,7 +72,8 @@ helper_arima_extract_lm <- function(model){
                         std.error = NA,
                         split = "y",
                         primary = "y",
-                        subscripts = "0")
+                        subscripts = "0",
+                        stringsAsFactors = FALSE)
     
     # rbind to add y0 to the top
     full_rhs <- rbind(y0_df, full_rhs)
