@@ -1,9 +1,8 @@
 #' Size measurements for adult foraging penguins near Palmer Station, Antarctica
 #'
-#' Data originally from \code{\link[palmerpenguins]{penguins}}. Includes
+#' Data originally from \href{https://allisonhorst.github.io/palmerpenguins/}{\code{palmerpenguins}}. Includes
 #' measurements for penguin species, island in Palmer Archipelago,
 #' size (flipper length, body mass, bill dimensions), and sex.
-#' This is a subset of \code{\link[palmerpenguins]{penguins_raw}}.
 #'
 #' @format A tibble with 344 rows and 8 variables:
 #' \describe{
