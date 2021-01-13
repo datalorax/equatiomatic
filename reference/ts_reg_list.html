@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • equatiomatic</title>
+<title>Simulated data for time-series regression — ts_reg_list • equatiomatic</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Simulated data for time-series regression — ts_reg_list" />
+<meta property="og:description" content="Output from set.seed(123); ts_reg_list &amp;lt;- list(x1 = rnorm(1000), x2 = rnorm(1000), ts_rnorm = rnorm(1000))." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -68,7 +69,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -139,78 +140,31 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Simulated data for time-series regression</h1>
+    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/ts_reg_list.R'><code>R/ts_reg_list.R</code></a></small>
+    <div class="hidden name"><code>ts_reg_list.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Output from <code><a href='https://rdrr.io/r/base/Random.html'>set.seed(123); ts_reg_list &lt;- list(x1 = rnorm(1000), x2 = rnorm(1000), ts_rnorm = rnorm(1000))</a></code>.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>ts_reg_list</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="extract_eq.html">extract_eq()</a></code> </p>
-        </td>
-        <td><p>'LaTeX' code for R models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hsb.html">hsb</a></code> </p>
-        </td>
-        <td><p>A subset of the full 1982 High School and Beyond Survey</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="penguins.html">penguins</a></code> </p>
-        </td>
-        <td><p>Size measurements for adult foraging penguins near Palmer Station, Antarctica</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.equation.html">print(<i>&lt;equation&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print 'LaTeX' equations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sim_longitudinal.html">sim_longitudinal</a></code> </p>
-        </td>
-        <td><p>Simulated longitudinal data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="simple_ts.html">simple_ts</a></code> </p>
-        </td>
-        <td><p>Simple simulated time series data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ts_reg_list.html">ts_reg_list</a></code> </p>
-        </td>
-        <td><p>Simulated data for time-series regression</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A tibble with 1000 rows and 8 variables:</p><dl'>
+<dt>x1</dt><dd><p>Random normal simulated data.</p></dd>
+<dt>x2</dt><dd><p>Random normal simulated data.</p></dd>
+<dt>ts_rnorm</dt><dd><p>Random normal simulated data.</p></dd>
+
+</dl>
+
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

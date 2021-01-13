@@ -123,20 +123,17 @@
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">equatiomatic</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">forecast</span>)
 
-<span class="co"># Set seed so that rnorm returns the same result</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-
 <span class="co"># Build Arima (no regression)</span>
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/forecast/man/Arima.html">Arima</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1000</span>),<span class="kw">freq</span><span class="kw">=</span><span class="fl">4</span>),
-               <span class="kw">order</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>),
-               <span class="kw">seasonal</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span>),
-               <span class="kw">include.constant</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="no">simple_ts_mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/forecast/man/Arima.html">Arima</a></span>(<span class="no">simple_ts</span>,
+                       <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>),
+                       <span class="kw">seasonal</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span>),
+                       <span class="kw">include.constant</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="extracting-the-equation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#extracting-the-equation" class="anchor"></a>Extracting the equation</h4>
 <p>To extract the equation, we just call <code><a href="../reference/extract_eq.html">equatiomatic::extract_eq()</a></code> on the resulting model object, equivalent to other model types. The model above outputs the following.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">model</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">simple_ts_mod</span>)</pre></body></html></div>
 <p><span class="math display">\[
 (1 -\phi_{1}\operatorname{B} )\ (1 -\Phi_{1}\operatorname{B}^{\operatorname{4}} )\ (1 - \operatorname{B}) (y_{t} -\delta\operatorname{t}) = (1 +\theta_{1}\operatorname{B} )\ (1 +\Theta_{1}\operatorname{B}^{\operatorname{4}} )\ \varepsilon_{t}
 \]</span></p>
@@ -145,34 +142,26 @@
 <div id="regression-with-arima-errors" class="section level3">
 <h3 class="hasAnchor">
 <a href="#regression-with-arima-errors" class="anchor"></a>Regression with ARIMA Errors</h3>
-<p>Next, we’ll illustrate a slightly more complicated example that includes a linear regression.</p>
+<p>Next, we’ll illustrate a slightly more complicated example that includes a linear regression. We’ll use the <code>ts_reg_list</code> object that is exported from <strong>{equatiomatic}</strong> to build up our data.</p>
 <div id="setup-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#setup-1" class="anchor"></a>Setup</h4>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Set seed so that rnorm returns the same result</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-
-<span class="co"># Build our random numbers</span>
-<span class="no">rnd_numbers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">x1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1000</span>),
-                    <span class="kw">x2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1000</span>),
-                    <span class="kw">ts_rnorm</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1000</span>))
-
-<span class="co"># Build Exogenous Regressors</span>
-<span class="no">xregs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">x1</span> <span class="kw">=</span> <span class="no">rnd_numbers</span>$<span class="no">x1</span> + <span class="fl">5</span>,
-                              <span class="kw">x2</span> <span class="kw">=</span> <span class="no">rnd_numbers</span>$<span class="no">x2</span> * <span class="fl">5</span>))
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Build Exogenous Regressors</span>
+<span class="no">xregs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">x1</span> <span class="kw">=</span> <span class="no">ts_reg_list</span>$<span class="no">x1</span> + <span class="fl">5</span>,
+                              <span class="kw">x2</span> <span class="kw">=</span> <span class="no">ts_reg_list</span>$<span class="no">x2</span> * <span class="fl">5</span>))
 
 <span class="co"># Build Regression Model</span>
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/forecast/man/Arima.html">Arima</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span>(<span class="no">rnd_numbers</span>$<span class="no">ts_rnorm</span>,<span class="kw">freq</span><span class="kw">=</span><span class="fl">4</span>),
-               <span class="kw">order</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>),
-               <span class="kw">seasonal</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span>),
-               <span class="kw">xreg</span> <span class="kw">=</span> <span class="no">xregs</span>,
-               <span class="kw">include.constant</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="no">ts_reg_mod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/forecast/man/Arima.html">Arima</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span>(<span class="no">ts_reg_list</span>$<span class="no">ts_rnorm</span>, <span class="kw">freq</span> <span class="kw">=</span> <span class="fl">4</span>),
+                    <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>),
+                    <span class="kw">seasonal</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>),
+                    <span class="kw">xreg</span> <span class="kw">=</span> <span class="no">xregs</span>,
+                    <span class="kw">include.constant</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 </div>
 <div id="extracting-the-equation-1" class="section level4">
 <h4 class="hasAnchor">
 <a href="#extracting-the-equation-1" class="anchor"></a>Extracting the equation</h4>
 <p>Despite the extra complexity of the model, the code to pull the equation remains equivalent.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">model</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">ts_reg_mod</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{alignat}{2}
 &amp;\text{let}\quad &amp;&amp;y_{t} = \operatorname{y}_{\operatorname{0}} +\delta\operatorname{t} +\beta_{1}\operatorname{x1}_{\operatorname{t}} +\beta_{2}\operatorname{x2}_{\operatorname{t}} +\eta_{t} \\
