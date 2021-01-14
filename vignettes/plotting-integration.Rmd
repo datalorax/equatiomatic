@@ -20,10 +20,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-{equatiomatic} does not integrate natively with the tidyverse package {ggplot2} by [Hadley Wickam, et al.](https://ggplot2.tidyverse.org/). The output of `extract_eq`, however, is convertible to a character vector and usable with the {latex2exp} package  by [Stefano Meschiari](https://cran.r-project.org/web/packages/latex2exp/index.html) (or manual parsing from latex to plotmath using your favorite string manipulation tools).
+The {equatiomatic} package does not integrate natively with the  [**{ggplot2}**](https://ggplot2.tidyverse.org/) package because `ggplot()` requires a an *expression*, rather than raw LaTeX. The output of `extract_eq`, however, can be converted to a character vector, which can then be converted to an expression via the **{latex2exp}** package  by [Stefano Meschiari](https://cran.r-project.org/web/packages/latex2exp/index.html) (or manual parsing from LaTeX to plotmath using your favorite string manipulation tools).
 
 ## Setup
-I like to put all my libraries in one spot. So, let's put all the libraries we'll use here.
+First, let's load the libraries we'll use here.
 
 ```{r libraries}
 library(ggplot2)
@@ -31,81 +31,92 @@ library(latex2exp)
 library(equatiomatic)
 ```
 
-Next, we'll need a model. We'll use a simulated linear model to make things easy. Don't worry too much about how or why this works if you're not familiar, you can use any dataset with a linear relationship.
+Next, we'll need a model. Let's fit a simple linear model to the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset (which is exported from **{equatiomatic}**) using bill length to predict body mass. 
 
 ```{r model_setup}
-# Set the seed to get consistent results
-set.seed(7462948)
-
-# Setup our simulated datafame
-dat <- data.frame(y = rnorm(500) * 10)
-dat['x'] <- (dat$y * 1.25) + (rnorm(500) * 4)
-
 # Fit an lm model
-model <- lm(y~x, data = dat)
-
-# Add the fitted values to our simulated dataframe
-dat['fit'] = model$fitted.values
+m <- lm(body_mass_g ~ bill_length_mm, penguins)
 ```
 
-
-## The Problem
-Now that we have a model, let's use {equatiomatic} to get our equation.
+Now that we have our model, we can extract the equation using **{equatiomatic}**. We'll do this showing the actual coefficients, since we'll be using this to communicate the results in a figure.
 
 ```{r equation_from_equatiomatic}
-# ital_var = TRUE must be set. 
-# Otherwise extract_eq will output \operatorname which is not parsable by latex2exp.
-eq <- extract_eq(model, ital_vars = TRUE, use_coefs = TRUE)
+extract_eq(m, use_coefs = TRUE)
 ```
 
-Which looks like:
+Great! we can also show the relationship between these variables using **{ggplot2}** as follows.
 
-```{r printed_equation, echo=FALSE, results='asis'}
-eq
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm")
 ```
 
-Great! We have an equation, but we have a problem. The actual character string is in latex:  `r print(eq)`. {ggplot2} and {plot} can't render latex math; instead, they use another system call *plotmath*. The simplest solution is to convert from latex to plotmath.
+This is all well and good, but how do we get the equation to be incorporated *into* the figure? First, let's store the equation into an object. **Importantly, we must also extract the equation with `ital_vars = TRUE`.** Using this option will prevent the use of `\operatorname`, which cannot be parsed by **{latex2exp}**. Additionally, there are a few other things that **{latex2exp}** tends to have difficulty handling. In this case, for example, we have underscores in our variable names, and **{latex2exp}** doesn't like that. Let's replace them with dashes.
 
-## Plotting
-An introduction to {latex2exp} is available at [Using latex2exp](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html).
+```{r }
+# extract equation with `ital_vars = TRUE` to avoid the use of `\operatorname`
+m_eq <- extract_eq(m, use_coef = TRUE, ital_vars = TRUE)
 
-{latex2exp::Tex()} can parse the latex equation for us without having to write our own functions. Note: {latex2exp::latex2exp()} has been deprecated in favor of {latex2exp::TeX()}. Unfortunately `\operatorname` is not supported by {latex2exp::Tex()} so if you are getting an error or missing operators, check that `ital_vars = FALSE` is set in {equatiomatic::extract:eq()}. Additionally, since we built {equatiomatic} to work with rmarkdown, it has an extra `$` that needs to be removed.
-
-```{r latex2exp_parse}
-# Deal with the $$ at the beginning and end
-prep_eq <- paste("$", as.character(eq), "$", sep = "")
-
-# Convert to an expression / plotmath.
-plotmath_eq <- latex2exp::TeX(prep_eq)
+# swap underscores for dashes
+prep_eq <- gsub("\\\\_", "-", m_eq)
 ```
 
-The `expression` version is going to look a bit different than the latex version: `r print(plotmath_eq)`.
+And now, we can use it with our figure directly. Below are a couple different examples.
 
-### ggplot2
-Let's get to plotting:
-
-```{r plot_w_fit}
-ggplot(dat) +
-  geom_point(data = dat, aes(x = x, y = y)) +
-  geom_line(aes(x = x, y = fit), color = "blue") +
-  labs(title = "Linear Model",
-       subtitle = plotmath_eq)
+```{r }
+ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Relation between bill length and body mass",
+       subtitle = TeX(prep_eq))
 ```
 
-### base graphics
 
-Base graphics can also use plotmath equations.
+```{r }
+ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "#ab00fa") +
+  annotate("text", label = TeX(prep_eq), x = 35, y =2500, hjust = 0,
+           color = "#ab00fa") +
+  labs(title = "Relation between bill length and body mass") +
+  ylim(2000, 6500)
+```
+
+A more complete overview of **{latex2exp}** is available through [the package vignette](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html). A few important notes:
+
+As mentioned above, `\operatorname` is unfortunately not supported by `latex2exp::Tex()` so if you are getting an error or missing operators, check that `ital_vars = FALSE` is set in `equatiomatic::extract:eq()`. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue. It is likely that future development will support helper functions for plotting.
+
+## Base graphics
+
+In addition to **{ggplot2}**, we can use **{equatiomatic}** with base graphics using a similar approach. For example:
 
 ```{r base_graphics}
-plot(dat$x, dat$y, type = "p",
-     xlab = "x", ylab = "y",
-     main = "Linear Model")
-lines(dat$x, dat$fit, col = "blue")
-text(20, -20, plotmath_eq)
+plot(penguins$bill_length_mm, penguins$body_mass_g,
+     pch = 20,
+     col = "gray80",
+     xlab = "Bill length",
+     ylab = "Body Mass",
+     main = "Relation between bill length and body mass",
+     sub = TeX(prep_eq))
+lines(na.omit(penguins$bill_length_mm), predict(m),
+      col = "#ab00fa")
+```
+
+```{r }
+plot(penguins$bill_length_mm, penguins$body_mass_g,
+     pch = 20,
+     col = "gray80",
+     xlab = "Bill length",
+     ylab = "Body Mass",
+     main = "Relation between bill length and body mass")
+lines(na.omit(penguins$bill_length_mm), predict(m),
+      col = "#ab00fa")
+text(x = 40, y = 6000, TeX(prep_eq))
 ```
 
 ## Future Development
 
-At this point, we have no plans to build a native parser in {equatiomatic} since {latex2exp} should work for most equations. If there is enough interest we may revisit the idea and build a limited parser. Please let us know if there is something you can't do with {latex2exp} by submitting an issue.
+At this point, we have no plans to build a native parser in **{equatiomatic}** because **{latex2exp}** should work for most equations. If there are common problems (such as the underscore issue shown above), we may build out some helper functions or additional argument(s) for `extract_eq()` to help with plotting. Please let us know if there is something you can't do with **{latex2exp}** by submitting an issue.
 
-Thanks again to the community for the work they do on building packages so we don't have to reinvent the wheel. We also appreciate the feedback from {equatiomatic} users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page. 
+Thanks again to the [#rstats](https://twitter.com/hashtag/rstats) community. The **{latex2exp}** package is a great compliment to **{equatiomatic}**. We also appreciate the feedback from **{equatiomatic}** users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page. 
