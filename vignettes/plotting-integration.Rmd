@@ -1,0 +1,112 @@
+---
+title: "Plotting with {equatiomatic}"
+output: 
+  rmarkdown::html_vignette:
+    fig_width: 5
+    fig_height: 4
+vignette: >
+  %\VignetteIndexEntry{Plotting with {equatiomatic}}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE
+)
+```
+
+{equatiomatic} does not integrate natively with the tidyverse package {ggplot2} by [Hadley Wickam, et al.](https://ggplot2.tidyverse.org/). The output of `extract_eq`, however, is convertible to a character vector and usable with the {latex2exp} package  by [Stefano Meschiari](https://cran.r-project.org/web/packages/latex2exp/index.html) (or manual parsing from latex to plotmath using your favorite string manipulation tools).
+
+## Setup
+I like to put all my libraries in one spot. So, let's put all the libraries we'll use here.
+
+```{r libraries}
+library(dplyr)
+library(ggplot2)
+library(latex2exp)
+library(equatiomatic)
+```
+
+Next, we'll need a model. We'll use a simulated linear model to make things easy. Don't worry too much about how or why this works if you're not familiar, you can use any dataset with a linear relationship.
+
+```{r model_setup}
+# Set the seed to get consistent results
+set.seed(7462948)
+
+# Setup our simulated datafame
+dat <- data.frame(y = rnorm(500) * 10)
+dat['x'] <- (dat$y * 1.25) + (rnorm(500) * 4)
+
+# Fit an lm model
+model <- lm(y~x, data = dat)
+
+# Add the fitted values to our simulated dataframe
+dat['fit'] = model$fitted.values
+```
+
+
+## The Problem
+Now that we have a model, let's use {equatiomatic} to get our equation.
+
+```{r equation_from_equatiomatic}
+# ital_var = TRUE must be set. 
+# Otherwise extract_eq will output \operatorname which is not parsable by latex2exp.
+eq <- extract_eq(model, ital_vars = TRUE, use_coefs = TRUE)
+```
+
+Which looks like:
+
+```{r printed_equation, echo=FALSE, results='asis'}
+eq
+```
+
+Great! We have an equation, but we have a problem. The actual character string is in latex:  `r print(eq)`. {ggplot2} and {plot} can't render latex math; instead, they use another system call *plotmath*. The simplest solution is to convert from latex to plotmath.
+
+## Plotting
+An introduction to {latex2exp} is available at [Using latex2exp](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html).
+
+{latex2exp::Tex()} can parse the latex equation for us without having to write our own functions. Note: {latex2exp::latex2exp()} has been deprecated in favor of {latex2exp::TeX()}. Unfortunately `\operatorname` is not supported by {latex2exp::Tex()} so if you are getting an error or missing operators, check that `ital_vars = FALSE` is set in {equatiomatic::extract:eq()}. Additionally, since we built {equatiomatic} to work with rmarkdown, it has an extra `$` that needs to be removed.
+
+```{r latex2exp_parse}
+# Deal with the $$ at the beginning and end
+prep_eq <- paste("$", as.character(eq), "$", sep = "")
+
+# Convert to an expression / plotmath.
+plotmath_eq <- latex2exp::TeX(prep_eq)
+```
+
+The `expression` version is going to look a bit different than the latex version: `r print(plotmath_eq)`.
+
+### ggplot2
+Let's get to plotting:
+
+```{r plot_w_fit}
+ggplot(dat) +
+  geom_point(data = dat, aes(x = x, y = y)) +
+  geom_line(aes(x = x, y = fit), color = "blue") +
+  labs(title = "Linear Model",
+       subtitle = plotmath_eq)
+```
+
+### base graphics
+
+Base graphics can also use plotmath equations.
+
+```{r base_graphics}
+plot(dat$x, dat$y, type = "p",
+     xlab = "x", ylab = "y",
+     main = "Linear Model")
+lines(dat$x, dat$fit, col = "blue")
+text(20, -20, plotmath_eq)
+```
+
+## Future Development
+
+At this point, we have no plans to build a native parser in {equatiomatic} since {latex2exp} should work for most equations. If there is enough interest we may revisit the idea and build a limited parser. Please let us know if there is something you can't do with {latex2exp} by submitting an issue.
+
+Thanks again to the community for the work they do on building packages so we don't have to reinvent the wheel. We also appreciate the feedback from {equatiomatic} users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page. 
