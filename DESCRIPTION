@@ -63,7 +63,8 @@ Suggests:
     rmarkdown,
     covr,
     forecast (>= 8.13),
-    latex2exp (>= 0.4.0)
+    latex2exp (>= 0.4.0),
+    ggplot2(>= 3.3.2)
 URL: https://github.com/datalorax/equatiomatic
 BugReports: https://github.com/datalorax/equatiomatic/issues
 Encoding: UTF-8

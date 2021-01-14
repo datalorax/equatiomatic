@@ -26,7 +26,6 @@ knitr::opts_chunk$set(
 I like to put all my libraries in one spot. So, let's put all the libraries we'll use here.
 
 ```{r libraries}
-library(dplyr)
 library(ggplot2)
 library(latex2exp)
 library(equatiomatic)
