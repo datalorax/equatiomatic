@@ -52,14 +52,17 @@ ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   geom_smooth(method = "lm")
 ```
 
-This is all well and good, but how do we get the equation to be incorporated *into* the figure? First, let's store the equation into an object. **Importantly, we must also extract the equation with `ital_vars = TRUE`.** Using this option will prevent the use of `\operatorname`, which cannot be parsed by **{latex2exp}**. Additionally, there are a few other things that **{latex2exp}** tends to have difficulty handling. In this case, for example, we have underscores in our variable names, and **{latex2exp}** doesn't like that. Let's replace them with dashes.
+This is all well and good, but how do we get the equation to be incorporated *into* the figure? First, let's store the equation into an object. **Importantly, we must also extract the equation with `ital_vars = TRUE`.** Using this option will prevent the use of `\operatorname`, which cannot be parsed by **{latex2exp}**. Additionally, there are a few other things that **{latex2exp}** tends to have difficulty handling. In this case, for example, we have underscores in our variable names, and **{latex2exp}** doesn't like that (let's replace them with dashes). **{latex2exp}** also doesn't like the double `$` when there are escaped greek letters in the equation (let's replace `$$` with the inline-style `$`).
 
 ```{r }
 # extract equation with `ital_vars = TRUE` to avoid the use of `\operatorname`
 m_eq <- extract_eq(m, use_coef = TRUE, ital_vars = TRUE)
 
-# swap underscores for dashes
+# swap escaped underscores for dashes
 prep_eq <- gsub("\\\\_", "-", m_eq)
+
+# swap $$ with inline-style $
+prep_eq <- paste("$", as.character(prep_eq), "$", sep = "")
 ```
 
 And now, we can use it with our figure directly. Below are a couple different examples.
@@ -86,6 +89,8 @@ ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
 A more complete overview of **{latex2exp}** is available through [the package vignette](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html). A few important notes:
 
 As mentioned above, `\operatorname` is unfortunately not supported by `latex2exp::Tex()` so if you are getting an error or missing operators, check that `ital_vars = FALSE` is set in `equatiomatic::extract:eq()`. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue. It is likely that future development will support helper functions for plotting.
+
+**Multi-line equations require special handling and have a reference section below.**
 
 ## Base graphics
 
@@ -114,6 +119,30 @@ lines(na.omit(penguins$bill_length_mm), predict(m),
       col = "#ab00fa")
 text(x = 40, y = 6000, TeX(prep_eq))
 ```
+
+## Multi-line Equations
+
+Plotmath does not support new lines in expressions. The user has two (2) options, both of which are imperfect:
+
+1. Convert to a single line.
+2. Manually place text geoms.
+
+In the future, this section may be expanded with additional coding details and/or may be added as a built-in conversion function.
+
+### Convert to a single line
+
+Converting to a single line is a good solution when text size is the driving factor to wrapping. To convert to a single line, you can run `extract_eq` with `wrap = FALSE` (the default), which would be the simplest approach. If the equation always has new lines (e.g. `forecast::Arima()` models that are regression models with arima errors), then the equation will need parsed. The exact parsing will depend on how you want the equation to read. Common replacements for new lines are $\text{where}$ or $\text{such that}$ which has a shorter symbol $\owns$ (although this can be construed as $\text{not in}$ in set theory).
+
+Common strings that may need replacing:
+
+- `\\being{aligned}`, `\\end{aligned}`, `\\begin{alignat}{#}`, and `\\end{alignat}{#}` are often used at the beginning and end of multi-line equations to control alignment. These should be removed.
+- `&` control alignment and will likely be used in conjunction with the `\\begin` and `\\end` statements above. `{alignat}` uses multiple `&` to represent different alignment points (e.g. `&&` for the second alignment point). These should also be removed.
+- `\\` is commonly used to denote the end of a line. This is where a $\text{where}$, or $\text{such that}$, or $\owns$ may be useful.
+- If using $\text{where}$, or $\text{such that}$, or $\owns$, the equation can be made more legible replacing the second and subsequent new line (`\\`) with a comma (`,`) or semicolon (`;`).
+
+### Manually place text geoms
+
+Following the parsing notes in the previous section, the equation can be split using `strsplit()` on the new lines (`\\`) for multi-line equations. The user can then manually place each line using `graphics::text()` or `graphics::mtext()` in base R or `annotate()` in **{ggplot2}**.
 
 ## Future Development
 
