@@ -1,6 +1,6 @@
 #' Simple simulated time series data
 #'
-#' Output from \code{set.seed(123); simple_ts <- ts(rnorm(1000),freq = 4)}.
+#' Output from \code{set.seed(42); simple_ts <- ts(rnorm(1000),freq = 4)}.
 #' This is included primarily for unit testing.
 #'
 #' @format A tibble with 1000 rows and 8 variables:
