@@ -71,6 +71,9 @@
       <a href="../articles/lmer4-lmer.html">lme4::lmer Models</a>
     </li>
     <li>
+      <a href="../articles/plotting-integration.html">Plotting with {equatiomatic}</a>
+    </li>
+    <li>
       <a href="../articles/tests_and_coverage.html">Tests and Coverage</a>
     </li>
   </ul>
@@ -101,7 +104,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Tests and Coverage</h1>
             
-            <h4 class="date">13 January, 2021 02:13:05</h4>
+            <h4 class="date">19 January, 2021 04:40:25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/datalorax/equatiomatic/blob/master/vignettes/tests_and_coverage.Rmd"><code>vignettes/tests_and_coverage.Rmd</code></a></small>
       <div class="hidden name"><code>tests_and_coverage.Rmd</code></div>
@@ -190,7 +193,7 @@
 <tr class="odd">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-clm.R">test-clm.R</a></td>
 <td align="right">6</td>
-<td align="right">2.559</td>
+<td align="right">2.478</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -200,7 +203,7 @@
 <tr class="even">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-forecast-arima.R">test-forecast-arima.R</a></td>
 <td align="right">4</td>
-<td align="right">1.057</td>
+<td align="right">1.045</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -210,7 +213,7 @@
 <tr class="odd">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-glm.R">test-glm.R</a></td>
 <td align="right">12</td>
-<td align="right">0.257</td>
+<td align="right">0.247</td>
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -220,7 +223,7 @@
 <tr class="even">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-lm.R">test-lm.R</a></td>
 <td align="right">7</td>
-<td align="right">0.114</td>
+<td align="right">0.092</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -230,7 +233,7 @@
 <tr class="odd">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-lmerMod.R">test-lmerMod.R</a></td>
 <td align="right">28</td>
-<td align="right">56.060</td>
+<td align="right">52.475</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -240,7 +243,7 @@
 <tr class="even">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-polr.R">test-polr.R</a></td>
 <td align="right">5</td>
-<td align="right">0.146</td>
+<td align="right">0.120</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -250,7 +253,7 @@
 <tr class="odd">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-print.R">test-print.R</a></td>
 <td align="right">5</td>
-<td align="right">1.742</td>
+<td align="right">1.658</td>
 <td align="right">0</td>
 <td align="right">3</td>
 <td align="right">0</td>
@@ -260,7 +263,7 @@
 <tr class="even">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-utils.R">test-utils.R</a></td>
 <td align="right">8</td>
-<td align="right">0.060</td>
+<td align="right">0.052</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -270,7 +273,7 @@
 <tr class="odd">
 <td align="left"><a href="https://github.com/datalorax/equatiomatic/tree/master/tests/testthat/test-wrapping-formatting.R">test-wrapping-formatting.R</a></td>
 <td align="right">10</td>
-<td align="right">0.124</td>
+<td align="right">0.127</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -306,7 +309,7 @@
 <td align="left">Ordered models with clm work</td>
 <td align="left">PASS</td>
 <td align="right">5</td>
-<td align="right">2.527</td>
+<td align="right">2.447</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -315,7 +318,7 @@
 <td align="left">Unsupported CLMs create a message</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.032</td>
+<td align="right">0.031</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -324,7 +327,7 @@
 <td align="left">Basic ARIMA model functions</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.319</td>
+<td align="right">0.307</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -342,7 +345,7 @@
 <td align="left">Logistic regression works</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.025</td>
+<td align="right">0.033</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -351,7 +354,7 @@
 <td align="left">Probit regression works</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.039</td>
+<td align="right">0.032</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -360,7 +363,7 @@
 <td align="left">Unsupported GLMs create a message</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.018</td>
+<td align="right">0.016</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -369,7 +372,7 @@
 <td align="left">Distribution-based equations work</td>
 <td align="left">FAILED</td>
 <td align="right">3</td>
-<td align="right">0.079</td>
+<td align="right">0.057</td>
 <td align="left">🛑</td>
 </tr>
 <tr class="odd">
@@ -378,7 +381,7 @@
 <td align="left">Weights work</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.020</td>
+<td align="right">0.018</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -387,7 +390,7 @@
 <td align="left">non-binomial regression works</td>
 <td align="left">PASS</td>
 <td align="right">4</td>
-<td align="right">0.076</td>
+<td align="right">0.091</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -396,7 +399,7 @@
 <td align="left">Simple lm models work</td>
 <td align="left">PASS</td>
 <td align="right">3</td>
-<td align="right">0.047</td>
+<td align="right">0.039</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -405,7 +408,7 @@
 <td align="left">Interactions work</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.035</td>
+<td align="right">0.028</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -414,7 +417,7 @@
 <td align="left">Custom Greek works</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.032</td>
+<td align="right">0.025</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -423,7 +426,7 @@
 <td align="left">Unconditional lmer models work</td>
 <td align="left">PASS</td>
 <td align="right">3</td>
-<td align="right">0.967</td>
+<td align="right">1.287</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -432,7 +435,7 @@
 <td align="left">Level 1 predictors work</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.551</td>
+<td align="right">0.508</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -441,7 +444,7 @@
 <td align="left">Mean separate works as expected</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.547</td>
+<td align="right">0.484</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -450,7 +453,7 @@
 <td align="left">Wrapping works as expected</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">0.370</td>
+<td align="right">0.341</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -459,7 +462,7 @@
 <td align="left">Unstructured variance-covariances work as expected</td>
 <td align="left">PASS</td>
 <td align="right">5</td>
-<td align="right">6.350</td>
+<td align="right">5.844</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -468,7 +471,7 @@
 <td align="left">Group-level predictors work as expected</td>
 <td align="left">PASS</td>
 <td align="right">3</td>
-<td align="right">34.457</td>
+<td align="right">32.059</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -477,7 +480,7 @@
 <td align="left">Interactions work as expected</td>
 <td align="left">PASS</td>
 <td align="right">5</td>
-<td align="right">7.679</td>
+<td align="right">7.350</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -486,7 +489,7 @@
 <td align="left">Alternate random effect VCV structures work</td>
 <td align="left">PASS</td>
 <td align="right">3</td>
-<td align="right">2.474</td>
+<td align="right">2.095</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -495,7 +498,7 @@
 <td align="left">Nested model syntax works</td>
 <td align="left">PASS</td>
 <td align="right">3</td>
-<td align="right">0.562</td>
+<td align="right">0.503</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -504,7 +507,7 @@
 <td align="left">use_coef works</td>
 <td align="left">PASS</td>
 <td align="right">1</td>
-<td align="right">2.103</td>
+<td align="right">2.004</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -513,7 +516,7 @@
 <td align="left">Ordered logistic regression works</td>
 <td align="left">PASS</td>
 <td align="right">5</td>
-<td align="right">0.146</td>
+<td align="right">0.120</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -522,7 +525,7 @@
 <td align="left">Equation is printed correctly</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.022</td>
+<td align="right">0.018</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -531,7 +534,7 @@
 <td align="left">Equation is knit_print-ed correctly</td>
 <td align="left">FAILED</td>
 <td align="right">3</td>
-<td align="right">1.720</td>
+<td align="right">1.640</td>
 <td align="left">🛑</td>
 </tr>
 <tr class="odd">
@@ -540,7 +543,7 @@
 <td align="left">Strict mapply_* functions work</td>
 <td align="left">PASS</td>
 <td align="right">8</td>
-<td align="right">0.060</td>
+<td align="right">0.052</td>
 <td align="left"></td>
 </tr>
 <tr class="even">
@@ -549,7 +552,7 @@
 <td align="left">Coefficient digits work correctly</td>
 <td align="left">PASS</td>
 <td align="right">2</td>
-<td align="right">0.036</td>
+<td align="right">0.030</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
@@ -558,7 +561,7 @@
 <td align="left">Wrapping works correctly</td>
 <td align="left">PASS</td>
 <td align="right">8</td>
-<td align="right">0.088</td>
+<td align="right">0.097</td>
 <td align="left"></td>
 </tr>
 </tbody>
@@ -590,7 +593,7 @@
 <tr class="even">
 <td align="left">Platform</td>
 <td align="left">x86_64-apple-darwin17.0 (64-bit)</td>
-<td align="left"><a href="https://github.com/datalorax/equatiomatic/commit/ba3dc7355e2f608979468af285b9bd062d015eb0/checks" target="_blank"><span title="Built on Github Actions"><img src="https://github.com/metrumresearchgroup/covrpage/blob/actions/inst/logo/gh.png?raw=true"></span></a></td>
+<td align="left"><a href="https://github.com/datalorax/equatiomatic/commit/e77fa87f39729e41beb296c3a32e0c73a845924f/checks" target="_blank"><span title="Built on Github Actions"><img src="https://github.com/metrumresearchgroup/covrpage/blob/actions/inst/logo/gh.png?raw=true"></span></a></td>
 </tr>
 <tr class="odd">
 <td align="left">Running</td>
