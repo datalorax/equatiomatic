@@ -7,7 +7,7 @@
 ---
 
     $$
-    (1 +0.03\operatorname{B} )\ (1 +0.16\operatorname{B}^{\operatorname{4}} )\ (1 - \operatorname{B}) (y_{t} -1e-04\operatorname{t}) = (1 -1\operatorname{B} )\ (1 +0.2\operatorname{B}^{\operatorname{4}} )\ \varepsilon_{t}
+    (1 -0.004\operatorname{B} )\ (1 -0.39\operatorname{B}^{\operatorname{4}} )\ (1 - \operatorname{B}) (y_{t} -3e-05\operatorname{t}) = (1 -1\operatorname{B} )\ (1 -0.36\operatorname{B}^{\operatorname{4}} )\ \varepsilon_{t}
     $$
 
 # Regression w/ ARIMA Errors functions
