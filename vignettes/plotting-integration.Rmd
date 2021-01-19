@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-The {equatiomatic} package does not integrate natively with the  [**{ggplot2}**](https://ggplot2.tidyverse.org/) package because `ggplot()` requires a an *expression*, rather than raw LaTeX. The output of `extract_eq`, however, can be converted to a character vector, which can then be converted to an expression via the **{latex2exp}** package  by [Stefano Meschiari](https://cran.r-project.org/web/packages/latex2exp/index.html) (or manual parsing from LaTeX to plotmath using your favorite string manipulation tools).
+The {equatiomatic} package does not integrate natively with the  [**{ggplot2}**](https://ggplot2.tidyverse.org/) package because `ggplot()` requires a an *expression*, rather than raw LaTeX. The output of `extract_eq`, however, can be converted to a character vector, which can then be converted to an expression via the **{latex2exp}** package  by [Stefano Meschiari](https://cran.r-project.org/web/packages/latex2exp/index.html) (or manual parsing from LaTeX to [plotmath](https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/plotmath.html) using your favorite string manipulation tools).
 
-## Setup
+## A simple use case
 First, let's load the libraries we'll use here.
 
 ```{r libraries}
@@ -52,7 +52,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   geom_smooth(method = "lm")
 ```
 
-This is all well and good, but how do we get the equation to be incorporated *into* the figure? First, let's store the equation into an object. **Importantly, we must also extract the equation with `ital_vars = TRUE`.** Using this option will prevent the use of `\operatorname`, which cannot be parsed by **{latex2exp}**. Additionally, there are a few other things that **{latex2exp}** tends to have difficulty handling. In this case, for example, we have underscores in our variable names, and **{latex2exp}** doesn't like that (let's replace them with dashes). **{latex2exp}** also doesn't like the double `$` when there are escaped greek letters in the equation (let's replace `$$` with the inline-style `$`).
+This is all well and good, but how do we get the equation to be incorporated *into* the figure? First, let's store the equation into an object. **Importantly, we must also extract the equation with `ital_vars = TRUE`.** Using this option will prevent the use of `\operatorname`, which cannot be parsed by **{latex2exp}**. Additionally, there are a few other things that **{latex2exp}** tends to have difficulty handling. In this case, for example, we have underscores in our variable names, and **{latex2exp}** doesn't like that (let's replace them with dashes). **{latex2exp}** also doesn't like the *display* version of equations when there are escaped greek letters in the equation (double `$`). We'll therefore convert the display equation to an inline equation (replacing the `$$` with `$`).
 
 ```{r }
 # extract equation with `ital_vars = TRUE` to avoid the use of `\operatorname`
@@ -61,7 +61,7 @@ m_eq <- extract_eq(m, use_coef = TRUE, ital_vars = TRUE)
 # swap escaped underscores for dashes
 prep_eq <- gsub("\\\\_", "-", m_eq)
 
-# swap $$ with inline-style $
+# swap display-style $$ with inline-style $
 prep_eq <- paste("$", as.character(prep_eq), "$", sep = "")
 ```
 
@@ -86,13 +86,10 @@ ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   ylim(2000, 6500)
 ```
 
-A more complete overview of **{latex2exp}** is available through [the package vignette](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html). A few important notes:
+A more complete overview of **{latex2exp}** is available through [the package vignette](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html). 
 
-As mentioned above, `\operatorname` is unfortunately not supported by `latex2exp::Tex()` so if you are getting an error or missing operators, check that `ital_vars = FALSE` is set in `equatiomatic::extract:eq()`. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue. It is likely that future development will support helper functions for plotting.
 
-**Multi-line equations require special handling and have a reference section below.**
-
-## Base graphics
+### Base graphics
 
 In addition to **{ggplot2}**, we can use **{equatiomatic}** with base graphics using a similar approach. For example:
 
@@ -120,9 +117,9 @@ lines(na.omit(penguins$bill_length_mm), predict(m),
 text(x = 40, y = 6000, TeX(prep_eq))
 ```
 
-## Multi-line Equations
+## More complicated: Multi-line equations
 
-Plotmath does not support new lines in expressions. The user has two (2) options, both of which are imperfect:
+Plotmath does not support new lines in expressions. There are two primary options, both of which are imperfect:
 
 1. Convert to a single line.
 2. Manually place text geoms.
@@ -136,16 +133,17 @@ Converting to a single line is a good solution when text size is the driving fac
 Common strings that may need replacing:
 
 - `\\being{aligned}`, `\\end{aligned}`, `\\begin{alignat}{#}`, and `\\end{alignat}{#}` are often used at the beginning and end of multi-line equations to control alignment. These should be removed.
-- `&` control alignment and will likely be used in conjunction with the `\\begin` and `\\end` statements above. `{alignat}` uses multiple `&` to represent different alignment points (e.g. `&&` for the second alignment point). These should also be removed.
+- `&` control alignment will likely be used in conjunction with the `\\begin` and `\\end` statements above. `{alignat}` uses multiple `&` to represent different alignment points (e.g. `&&` for the second alignment point). These should also be removed.
 - `\\` is commonly used to denote the end of a line. This is where a $\text{where}$, or $\text{such that}$, or $\owns$ may be useful.
 - If using $\text{where}$, or $\text{such that}$, or $\owns$, the equation can be made more legible replacing the second and subsequent new line (`\\`) with a comma (`,`) or semicolon (`;`).
 
 ### Manually place text geoms
 
-Following the parsing notes in the previous section, the equation can be split using `strsplit()` on the new lines (`\\`) for multi-line equations. The user can then manually place each line using `graphics::text()` or `graphics::mtext()` in base R or `annotate()` in **{ggplot2}**.
+Following the parsing notes in the previous section, the equation can be split using `strsplit()` on the new lines (`\\`) for multi-line equations. You can then manually place each line using `graphics::text()` or `graphics::mtext()` in base R or `annotate()` in **{ggplot2}**.
 
-## Future Development
+### Limitations and future development
+For simple equations, it's fairly straightforward to incorporate the equation into the plot. The difficulty of incorporating equations into figures increases as the equation becomes more complicated. As mentioned above, `\operatorname` is unfortunately not supported by `latex2exp::Tex()` so if you are getting an error or missing operators, check that `ital_vars = TRUE` is set in `equatiomatic::extract:eq()`. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue. 
 
-At this point, we have no plans to build a native parser in **{equatiomatic}** because **{latex2exp}** should work for most equations. If there are common problems (such as the underscore issue shown above), we may build out some helper functions or additional argument(s) for `extract_eq()` to help with plotting. Please let us know if there is something you can't do with **{latex2exp}** by submitting an issue.
+Much of the above is fairly "manual", and at this point we don't have plans to build out a full parser for **{equatiomatic}** because **{latex2exp}** should work for many use cases. However, we do hope to include helper functions in the future to make some of the above a little easier (e.g., fixing the the underscore issue, or moving to inline equations). Please let us know if there is something you can't do with **{latex2exp}** by submitting an issue.
 
 Thanks again to the [#rstats](https://twitter.com/hashtag/rstats) community. The **{latex2exp}** package is a great compliment to **{equatiomatic}**. We also appreciate the feedback from **{equatiomatic}** users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page. 
