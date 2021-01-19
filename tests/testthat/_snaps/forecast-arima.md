@@ -25,9 +25,9 @@
 
     $$
     \begin{alignat}{2}
-    &\text{let}\quad &&y_{t} = \operatorname{y}_{\operatorname{0}} +8e-05\operatorname{t} +0.04\operatorname{x1}_{\operatorname{t}} +0.003\operatorname{x2}_{\operatorname{t}} +\eta_{t} \\
-    &\text{where}\quad  &&(1 +0.03\operatorname{B} )\ (1 -0.15\operatorname{B}^{\operatorname{4}} )\ (1 - \operatorname{B}) \eta_{t}  \\
-    & &&= (1 -1\operatorname{B} )\ (1 -0.18\operatorname{B}^{\operatorname{4}} )\ \varepsilon_{t} \\
+    &\text{let}\quad &&y_{t} = \operatorname{y}_{\operatorname{0}} -1e-04\operatorname{t} -0.02\operatorname{x1}_{\operatorname{t}} -0.004\operatorname{x2}_{\operatorname{t}} +\eta_{t} \\
+    &\text{where}\quad  &&(1 -0.01\operatorname{B} )\ (1 +0.78\operatorname{B}^{\operatorname{4}} )\ (1 - \operatorname{B}) \eta_{t}  \\
+    & &&= (1 -1\operatorname{B} )\ (1 +0.82\operatorname{B}^{\operatorname{4}} )\ \varepsilon_{t} \\
     &\text{where}\quad &&\varepsilon_{t} \sim{WN(0, \sigma^{2})}
     \end{alignat}
     $$
