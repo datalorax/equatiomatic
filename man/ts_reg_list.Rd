@@ -16,6 +16,6 @@ A tibble with 1000 rows and 8 variables:
 ts_reg_list
 }
 \description{
-Output from \code{set.seed(123); ts_reg_list <- list(x1 = rnorm(1000), x2 = rnorm(1000), ts_rnorm = rnorm(1000))}.
+Output from \code{set.seed(42); ts_reg_list <- list(x1 = rnorm(1000), x2 = rnorm(1000), ts_rnorm = rnorm(1000))}.
 }
 \keyword{datasets}

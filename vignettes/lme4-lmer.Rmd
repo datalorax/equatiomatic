@@ -199,11 +199,20 @@ extract_eq(long_mixed_ranef)
 
 With that said, this is the part of the code that I would consider the most "experimental" at this point, so please do reach out if you have issues or run into use cases that are not supported.
 
+## Using estimated coefficients 
+Because of the multilevel nature of the notation used by **{equatiomatic}**, tracking the estimated coefficients can at times be a little difficult. To help with this, we keep the Greek notation with the estimated coefficients as subscripts. For example, let's extract the equation from our model with group-level predictors.
+
+```{r }
+extract_eq(group_preds_m1, use_coef = TRUE)
+```
+
+
 ## Future developments
 There are still a few things I'm planning to implement that I haven't quite gotten around to yet. These include
 
-* Implementation of `use_coef`. This is relatively straightforward and should be implemented soon.
 * Implementation of other features currently included in the `lm` extraction, including `intercept`, and `raw_tex` 
 * Inevitable bug fixes
+
+Additionally, the Greek notation as subscripts may not always be desirable, particularly if the model is fairly simple. Future developments will likely make this optional.
 
 The range of models that you can fit with `lme4::lmer` is huge, but I hope this will handle a wide range of models. I also recognize that some users may want a different notation for the models. At this point, I'm not planning to implement other notations, but that could change if there's enough demand for it. I'm open to any/all suggestions for how to improve the package, and would *love* pull requests to help support the package, big or small.
