@@ -4,8 +4,8 @@ pkgdown_sha: 1401803e77fc756c31f71291843c8200265a4af5
 articles:
   forecast-arima: forecast-arima.html
   intro-equatiomatic: intro-equatiomatic.html
-  lmer4-lmer: lmer4-lmer.html
+  lme4-lmer: lme4-lmer.html
   plotting-integration: plotting-integration.html
   tests_and_coverage: tests_and_coverage.html
-last_built: 2021-01-19T21:34Z
+last_built: 2021-01-30T02:40Z
 

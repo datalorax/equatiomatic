@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -68,7 +68,7 @@
       <a href="../articles/intro-equatiomatic.html">Introduction to {equatiomatic}</a>
     </li>
     <li>
-      <a href="../articles/lmer4-lmer.html">lme4::lmer Models</a>
+      <a href="../articles/lme4-lmer.html">lme4::lmer Models</a>
     </li>
     <li>
       <a href="../articles/plotting-integration.html">Plotting with {equatiomatic}</a>
@@ -112,7 +112,7 @@
 
     
     
-<p>The {equatiomatic} package does not integrate natively with the <a href="https://ggplot2.tidyverse.org/"><strong>{ggplot2}</strong></a> package because <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> requires a an <em>expression</em>, rather than raw LaTeX. The output of <code>extract_eq</code>, however, can be converted to a character vector, which can then be converted to an expression via the <strong>{latex2exp}</strong> package by <a href="https://cran.r-project.org/web/packages/latex2exp/index.html">Stefano Meschiari</a> (or manual parsing from LaTeX to <a href="https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/plotmath.html">plotmath</a> using your favorite string manipulation tools).</p>
+<p>The {equatiomatic} package does not integrate natively with the <a href="https://ggplot2.tidyverse.org/"><strong>{ggplot2}</strong></a> package because <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> requires a an <em>expression</em>, rather than raw LaTeX. The output of <code>extract_eq</code>, however, can be converted to a character vector, which can then be converted to an expression via the <strong>{latex2exp}</strong> package by <a href="https://cran.r-project.org/package=latex2exp">Stefano Meschiari</a> (or manual parsing from LaTeX to <a href="https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/plotmath.html">plotmath</a> using your favorite string manipulation tools).</p>
 <div id="a-simple-use-case" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-simple-use-case" class="anchor"></a>A simple use case</h2>
@@ -157,7 +157,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span>(<span class="fl">2000</span>, <span class="fl">6500</span>)</pre></body></html></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>A more complete overview of <strong>{latex2exp}</strong> is available through <a href="https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html">the package vignette</a>.</p>
+<p>A more complete overview of <strong>{latex2exp}</strong> is available through <a href="https://cran.r-project.org/package=latex2exp">the associated vignette shipped with the package</a>.</p>
 <div id="base-graphics" class="section level3">
 <h3 class="hasAnchor">
 <a href="#base-graphics" class="anchor"></a>Base graphics</h3>
@@ -218,7 +218,7 @@
 <a href="#limitations-and-future-development" class="anchor"></a>Limitations and future development</h3>
 <p>For simple equations, it’s fairly straightforward to incorporate the equation into the plot. The difficulty of incorporating equations into figures increases as the equation becomes more complicated. As mentioned above, <code>\operatorname</code> is unfortunately not supported by <code>latex2exp::Tex()</code> so if you are getting an error or missing operators, check that <code>ital_vars = TRUE</code> is set in <code>equatiomatic::extract:eq()</code>. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue.</p>
 <p>Much of the above is fairly “manual”, and at this point we don’t have plans to build out a full parser for <strong>{equatiomatic}</strong> because <strong>{latex2exp}</strong> should work for many use cases. However, we do hope to include helper functions in the future to make some of the above a little easier (e.g., fixing the the underscore issue, or moving to inline equations). Please let us know if there is something you can’t do with <strong>{latex2exp}</strong> by submitting an issue.</p>
-<p>Thanks again to the <a href="https://twitter.com/hashtag/rstats">#rstats</a> community. The <strong>{latex2exp}</strong> package is a great compliment to <strong>{equatiomatic}</strong>. We also appreciate the feedback from <strong>{equatiomatic}</strong> users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page.</p>
+<p>Thanks again to the R community. The <strong>{latex2exp}</strong> package is a great compliment to <strong>{equatiomatic}</strong>. We also appreciate the feedback from <strong>{equatiomatic}</strong> users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page.</p>
 </div>
 </div>
   </div>
@@ -234,7 +234,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Daniel Anderson, Andrew Heiss.</p>
+  <p>Developed by Daniel Anderson, Andrew Heiss, Jay Sumners.</p>
 </div>
 
 <div class="pkgdown">
