@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-The {equatiomatic} package does not integrate natively with the  [**{ggplot2}**](https://ggplot2.tidyverse.org/) package because `ggplot()` requires a an *expression*, rather than raw LaTeX. The output of `extract_eq`, however, can be converted to a character vector, which can then be converted to an expression via the **{latex2exp}** package  by [Stefano Meschiari](https://cran.r-project.org/web/packages/latex2exp/index.html) (or manual parsing from LaTeX to [plotmath](https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/plotmath.html) using your favorite string manipulation tools).
+The {equatiomatic} package does not integrate natively with the  [**{ggplot2}**](https://ggplot2.tidyverse.org/) package because `ggplot()` requires a an *expression*, rather than raw LaTeX. The output of `extract_eq`, however, can be converted to a character vector, which can then be converted to an expression via the **{latex2exp}** package  by [Stefano Meschiari](https://cran.r-project.org/package=latex2exp) (or manual parsing from LaTeX to [plotmath](https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/plotmath.html) using your favorite string manipulation tools).
 
 ## A simple use case
 First, let's load the libraries we'll use here.
