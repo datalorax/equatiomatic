@@ -1,6 +1,6 @@
 Tests and Coverage
 ================
-30 January, 2021 18:20:13
+30 January, 2021 23:43:35
 
   - [Coverage](#coverage)
   - [Unit Tests](#unit-tests)
@@ -40,15 +40,15 @@ Unit Test summary is created using the
 
 | file                                                              |  n |   time | error | failed | skipped | warning | icon |
 | :---------------------------------------------------------------- | -: | -----: | ----: | -----: | ------: | ------: | :--- |
-| [test-clm.R](testthat/test-clm.R)                                 |  6 |  2.685 |     0 |      0 |       0 |       0 |      |
-| [test-forecast-arima.R](testthat/test-forecast-arima.R)           |  4 |  0.831 |     0 |      0 |       0 |       0 |      |
-| [test-glm.R](testthat/test-glm.R)                                 | 12 |  0.237 |     0 |      1 |       0 |       0 | 🛑    |
-| [test-lm.R](testthat/test-lm.R)                                   |  7 |  0.106 |     0 |      0 |       0 |       0 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R)                         | 28 | 56.707 |     0 |      0 |       0 |       0 |      |
-| [test-polr.R](testthat/test-polr.R)                               |  5 |  0.132 |     0 |      0 |       0 |       0 |      |
-| [test-print.R](testthat/test-print.R)                             |  5 |  1.700 |     0 |      3 |       0 |       0 | 🛑    |
-| [test-utils.R](testthat/test-utils.R)                             |  8 |  0.055 |     0 |      0 |       0 |       0 |      |
-| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R) | 10 |  0.114 |     0 |      0 |       0 |       0 |      |
+| [test-clm.R](testthat/test-clm.R)                                 |  6 |  2.673 |     0 |      0 |       0 |       0 |      |
+| [test-forecast-arima.R](testthat/test-forecast-arima.R)           |  4 |  0.873 |     0 |      0 |       0 |       0 |      |
+| [test-glm.R](testthat/test-glm.R)                                 | 12 |  0.212 |     0 |      1 |       0 |       0 | 🛑    |
+| [test-lm.R](testthat/test-lm.R)                                   |  7 |  0.100 |     0 |      0 |       0 |       0 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R)                         | 28 | 54.861 |     0 |      0 |       0 |       0 |      |
+| [test-polr.R](testthat/test-polr.R)                               |  5 |  0.156 |     0 |      0 |       0 |       0 |      |
+| [test-print.R](testthat/test-print.R)                             |  5 |  1.717 |     0 |      3 |       0 |       0 | 🛑    |
+| [test-utils.R](testthat/test-utils.R)                             |  8 |  0.052 |     0 |      0 |       0 |       0 |      |
+| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R) | 10 |  0.109 |     0 |      0 |       0 |       0 |      |
 
 <details open>
 
@@ -56,35 +56,35 @@ Unit Test summary is created using the
 
 | file                                                                      | context             | test                                               | status | n |   time | icon |
 | :------------------------------------------------------------------------ | :------------------ | :------------------------------------------------- | :----- | -: | -----: | :--- |
-| [test-clm.R](testthat/test-clm.R#L14)                                     | clm                 | Ordered models with clm work                       | PASS   | 5 |  2.655 |      |
-| [test-clm.R](testthat/test-clm.R#L34)                                     | clm                 | Unsupported CLMs create a message                  | PASS   | 1 |  0.030 |      |
-| [test-forecast-arima.R](testthat/test-forecast-arima.R#L14)               | forecast-arima      | Basic ARIMA model functions                        | PASS   | 2 |  0.312 |      |
-| [test-forecast-arima.R](testthat/test-forecast-arima.R#L37)               | forecast-arima      | Regression w/ ARIMA Errors functions               | PASS   | 2 |  0.519 |      |
-| [test-glm.R](testthat/test-glm.R#L13)                                     | glm                 | Logistic regression works                          | PASS   | 1 |  0.023 |      |
-| [test-glm.R](testthat/test-glm.R#L27)                                     | glm                 | Probit regression works                            | PASS   | 2 |  0.034 |      |
-| [test-glm.R](testthat/test-glm.R#L39)                                     | glm                 | Unsupported GLMs create a message                  | PASS   | 1 |  0.017 |      |
-| [test-glm.R](testthat/test-glm.R#L55)                                     | glm                 | Distribution-based equations work                  | FAILED | 3 |  0.072 | 🛑    |
+| [test-clm.R](testthat/test-clm.R#L14)                                     | clm                 | Ordered models with clm work                       | PASS   | 5 |  2.641 |      |
+| [test-clm.R](testthat/test-clm.R#L34)                                     | clm                 | Unsupported CLMs create a message                  | PASS   | 1 |  0.032 |      |
+| [test-forecast-arima.R](testthat/test-forecast-arima.R#L14)               | forecast-arima      | Basic ARIMA model functions                        | PASS   | 2 |  0.319 |      |
+| [test-forecast-arima.R](testthat/test-forecast-arima.R#L37)               | forecast-arima      | Regression w/ ARIMA Errors functions               | PASS   | 2 |  0.554 |      |
+| [test-glm.R](testthat/test-glm.R#L13)                                     | glm                 | Logistic regression works                          | PASS   | 1 |  0.022 |      |
+| [test-glm.R](testthat/test-glm.R#L27)                                     | glm                 | Probit regression works                            | PASS   | 2 |  0.031 |      |
+| [test-glm.R](testthat/test-glm.R#L39)                                     | glm                 | Unsupported GLMs create a message                  | PASS   | 1 |  0.014 |      |
+| [test-glm.R](testthat/test-glm.R#L55)                                     | glm                 | Distribution-based equations work                  | FAILED | 3 |  0.055 | 🛑    |
 | [test-glm.R](testthat/test-glm.R#L75)                                     | glm                 | Weights work                                       | PASS   | 1 |  0.019 |      |
-| [test-glm.R](testthat/test-glm.R#L89)                                     | glm                 | non-binomial regression works                      | PASS   | 4 |  0.072 |      |
-| [test-lm.R](testthat/test-lm.R#L8)                                        | lm                  | Simple lm models work                              | PASS   | 3 |  0.050 |      |
-| [test-lm.R](testthat/test-lm.R#L22)                                       | lm                  | Interactions work                                  | PASS   | 2 |  0.029 |      |
-| [test-lm.R](testthat/test-lm.R#L32_L34)                                   | lm                  | Custom Greek works                                 | PASS   | 2 |  0.027 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L6)                              | lmerMod             | Unconditional lmer models work                     | PASS   | 3 |  0.939 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L23)                             | lmerMod             | Level 1 predictors work                            | PASS   | 2 |  0.593 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L36)                             | lmerMod             | Mean separate works as expected                    | PASS   | 2 |  0.577 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L49)                             | lmerMod             | Wrapping works as expected                         | PASS   | 1 |  0.348 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L58)                             | lmerMod             | Unstructured variance-covariances work as expected | PASS   | 5 |  6.642 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L96)                             | lmerMod             | Group-level predictors work as expected            | PASS   | 3 | 34.426 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L132)                            | lmerMod             | Interactions work as expected                      | PASS   | 5 |  8.094 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L168)                            | lmerMod             | Alternate random effect VCV structures work        | PASS   | 3 |  2.321 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L193)                            | lmerMod             | Nested model syntax works                          | PASS   | 3 |  0.547 |      |
-| [test-lmerMod.R](testthat/test-lmerMod.R#L219)                            | lmerMod             | use\_coef works                                    | PASS   | 1 |  2.220 |      |
-| [test-polr.R](testthat/test-polr.R#L13)                                   | polr                | Ordered logistic regression works                  | PASS   | 5 |  0.132 |      |
-| [test-print.R](testthat/test-print.R#L9_L10)                              | print               | Equation is printed correctly                      | PASS   | 2 |  0.029 |      |
-| [test-print.R](testthat/test-print.R#L22_L24)                             | print               | Equation is knit\_print-ed correctly               | FAILED | 3 |  1.671 | 🛑    |
-| [test-utils.R](testthat/test-utils.R#L7_L10)                              | utils               | Strict mapply\_\* functions work                   | PASS   | 8 |  0.055 |      |
-| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#L5_L7)   | wrapping-formatting | Coefficient digits work correctly                  | PASS   | 2 |  0.033 |      |
-| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#L19_L21) | wrapping-formatting | Wrapping works correctly                           | PASS   | 8 |  0.081 |      |
+| [test-glm.R](testthat/test-glm.R#L89)                                     | glm                 | non-binomial regression works                      | PASS   | 4 |  0.071 |      |
+| [test-lm.R](testthat/test-lm.R#L8)                                        | lm                  | Simple lm models work                              | PASS   | 3 |  0.048 |      |
+| [test-lm.R](testthat/test-lm.R#L22)                                       | lm                  | Interactions work                                  | PASS   | 2 |  0.027 |      |
+| [test-lm.R](testthat/test-lm.R#L32_L34)                                   | lm                  | Custom Greek works                                 | PASS   | 2 |  0.025 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L6)                              | lmerMod             | Unconditional lmer models work                     | PASS   | 3 |  0.943 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L23)                             | lmerMod             | Level 1 predictors work                            | PASS   | 2 |  0.592 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L36)                             | lmerMod             | Mean separate works as expected                    | PASS   | 2 |  0.517 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L49)                             | lmerMod             | Wrapping works as expected                         | PASS   | 1 |  0.339 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L58)                             | lmerMod             | Unstructured variance-covariances work as expected | PASS   | 5 |  6.232 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L96)                             | lmerMod             | Group-level predictors work as expected            | PASS   | 3 | 33.362 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L132)                            | lmerMod             | Interactions work as expected                      | PASS   | 5 |  7.922 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L168)                            | lmerMod             | Alternate random effect VCV structures work        | PASS   | 3 |  2.252 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L193)                            | lmerMod             | Nested model syntax works                          | PASS   | 3 |  0.553 |      |
+| [test-lmerMod.R](testthat/test-lmerMod.R#L219)                            | lmerMod             | use\_coef works                                    | PASS   | 1 |  2.149 |      |
+| [test-polr.R](testthat/test-polr.R#L13)                                   | polr                | Ordered logistic regression works                  | PASS   | 5 |  0.156 |      |
+| [test-print.R](testthat/test-print.R#L9_L10)                              | print               | Equation is printed correctly                      | PASS   | 2 |  0.018 |      |
+| [test-print.R](testthat/test-print.R#L22_L24)                             | print               | Equation is knit\_print-ed correctly               | FAILED | 3 |  1.699 | 🛑    |
+| [test-utils.R](testthat/test-utils.R#L7_L10)                              | utils               | Strict mapply\_\* functions work                   | PASS   | 8 |  0.052 |      |
+| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#L5_L7)   | wrapping-formatting | Coefficient digits work correctly                  | PASS   | 2 |  0.031 |      |
+| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#L19_L21) | wrapping-formatting | Wrapping works correctly                           | PASS   | 8 |  0.078 |      |
 
 | Failed | Warning | Skipped |
 | :----- | :------ | :------ |
@@ -99,7 +99,7 @@ Unit Test summary is created using the
 | Field    | Value                             |                                                                                                                                                                                                                                                                         |
 | :------- | :-------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Version  | R version 4.0.3 (2020-10-10)      |                                                                                                                                                                                                                                                                         |
-| Platform | x86\_64-apple-darwin17.0 (64-bit) | <a href="https://github.com/datalorax/equatiomatic/commit/8fcbf102bb135e0b81d9f517dbf640481bc64b62/checks" target="_blank"><span title="Built on Github Actions">![](https://github.com/metrumresearchgroup/covrpage/blob/actions/inst/logo/gh.png?raw=true)</span></a> |
+| Platform | x86\_64-apple-darwin17.0 (64-bit) | <a href="https://github.com/datalorax/equatiomatic/commit/cca5f416df4a3931ecd03e95697560a6218cb83c/checks" target="_blank"><span title="Built on Github Actions">![](https://github.com/metrumresearchgroup/covrpage/blob/actions/inst/logo/gh.png?raw=true)</span></a> |
 | Running  | macOS Catalina 10.15.7            |                                                                                                                                                                                                                                                                         |
 | Language | en\_US                            |                                                                                                                                                                                                                                                                         |
 | Timezone | UTC                               |                                                                                                                                                                                                                                                                         |
