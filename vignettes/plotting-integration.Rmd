@@ -86,7 +86,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   ylim(2000, 6500)
 ```
 
-A more complete overview of **{latex2exp}** is available through [the package vignette](https://cran.r-project.org/web/packages/latex2exp/vignettes/using-latex2exp.html). 
+A more complete overview of **{latex2exp}** is available through [the associated vignette shipped with the package](https://cran.r-project.org/package=latex2exp). 
 
 
 ### Base graphics
@@ -146,4 +146,4 @@ For simple equations, it's fairly straightforward to incorporate the equation in
 
 Much of the above is fairly "manual", and at this point we don't have plans to build out a full parser for **{equatiomatic}** because **{latex2exp}** should work for many use cases. However, we do hope to include helper functions in the future to make some of the above a little easier (e.g., fixing the the underscore issue, or moving to inline equations). Please let us know if there is something you can't do with **{latex2exp}** by submitting an issue.
 
-Thanks again to the [#rstats](https://twitter.com/hashtag/rstats) community. The **{latex2exp}** package is a great compliment to **{equatiomatic}**. We also appreciate the feedback from **{equatiomatic}** users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page. 
+Thanks again to the R community. The **{latex2exp}** package is a great compliment to **{equatiomatic}**. We also appreciate the feedback from **{equatiomatic}** users. Please let us know if you run into any issues (preferably with a reproducible example) in the issues section of the package GitHub page. 
