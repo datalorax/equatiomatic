@@ -1,3 +1,5 @@
+# equatiomatic (development version)
+
 # equatiomatic 0.2.0
 * **New models**: This is the first version to support `lme4::lmer()` models and `forecast::Arima()` models. 
 * New vignettes for each of the new models supported.
