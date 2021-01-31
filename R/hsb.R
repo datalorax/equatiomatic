@@ -1,6 +1,6 @@
 #' A subset of the full 1982 High School and Beyond Survey
 #'
-#' This is the dataset used throughout Raudenbush & Bryk (2002). 
+#' This is the dataset used throughout Raudenbush & Bryk (2002).
 #'
 #' @format A tibble with 7185 rows and 8 variables:
 #' \describe{

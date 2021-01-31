@@ -66,11 +66,13 @@
 #' extract_eq(mod3)
 #'
 #' set.seed(8675309)
-#' d <- data.frame(cat1 = rep(letters[1:3], 100),
-#'                 cat2 = rep(LETTERS[1:3], each = 100),
-#'                 cont1 = rnorm(300, 100, 1),
-#'                 cont2 = rnorm(300, 50, 5),
-#'                 out   = rnorm(300, 10, 0.5))
+#' d <- data.frame(
+#'   cat1 = rep(letters[1:3], 100),
+#'   cat2 = rep(LETTERS[1:3], each = 100),
+#'   cont1 = rnorm(300, 100, 1),
+#'   cont2 = rnorm(300, 50, 5),
+#'   out = rnorm(300, 10, 0.5)
+#' )
 #' mod4 <- lm(out ~ ., d)
 #' extract_eq(mod4)
 #'
@@ -91,21 +93,22 @@
 #'
 #' # Use other model types, like glm
 #' set.seed(8675309)
-#' d <- data.frame(out = sample(0:1, 100, replace = TRUE),
-#'                 cat1 = rep(letters[1:3], 100),
-#'                 cat2 = rep(LETTERS[1:3], each = 100),
-#'                 cont1 = rnorm(300, 100, 1),
-#'                 cont2 = rnorm(300, 50, 5))
+#' d <- data.frame(
+#'   out = sample(0:1, 100, replace = TRUE),
+#'   cat1 = rep(letters[1:3], 100),
+#'   cat2 = rep(LETTERS[1:3], each = 100),
+#'   cont1 = rnorm(300, 100, 1),
+#'   cont2 = rnorm(300, 50, 5)
+#' )
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
-
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        raw_tex = FALSE, ital_vars = FALSE,
                        show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
-                       mean_separate,...) {
+                       mean_separate, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -120,21 +123,22 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
-                               fix_signs = TRUE, mean_separate,...) {
-
+                               fix_signs = TRUE, mean_separate, ...) {
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
 
-  eq_raw <- create_eq(model,
-                      lhs,
-                      rhs,
-                      ital_vars,
-                      use_coefs,
-                      coef_digits,
-                      fix_signs,
-                      intercept,
-                      greek,
-                      raw_tex)
+  eq_raw <- create_eq(
+    model,
+    lhs,
+    rhs,
+    ital_vars,
+    use_coefs,
+    coef_digits,
+    fix_signs,
+    intercept,
+    greek,
+    raw_tex
+  )
 
   if (wrap) {
     if (operator_location == "start") {
@@ -172,10 +176,12 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   # Combine RHS and LHS
   eq <- Map(function(.lhs, .rhs) {
     paste(.lhs, .rhs,
-          sep = ifelse(needs_align, " &= ", " = "))
+      sep = ifelse(needs_align, " &= ", " = ")
+    )
   },
   .lhs = eq_raw$lhs,
-  .rhs = wrap_rhs(model, rhs_combined))
+  .rhs = wrap_rhs(model, rhs_combined)
+  )
 
   if (use_coefs && fix_signs) {
     eq <- lapply(eq, fix_coef_signs)
@@ -190,12 +196,14 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   # Add environment finally, if wrapping or if there are multiple equations
   # This comes later so that multiple equations don't get their own environments
   if (needs_align) {
-    eq <- paste0("\\begin{", align_env, "}\n",
-                 eq,
-                 "\n\\end{", align_env, "}")
+    eq <- paste0(
+      "\\begin{", align_env, "}\n",
+      eq,
+      "\n\\end{", align_env, "}"
+    )
   }
 
-  class(eq) <- c('equation', 'character')
+  class(eq) <- c("equation", "character")
 
   return(eq)
 }
@@ -216,25 +224,30 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, mean_separate = NULL, ...) {
-
   l1 <- create_l1_merMod(model, mean_separate,
-                         ital_vars, wrap, terms_per_line,
-                         use_coefs, coef_digits, fix_signs,
-                         operator_location, sigma = "\\sigma^2")
-  vcv <- create_ranef_structure_merMod(model, ital_vars, use_coefs, coef_digits,
-                                       fix_signs)
-  
-  if(grepl("^\n    \n", vcv[[1]])) {
+    ital_vars, wrap, terms_per_line,
+    use_coefs, coef_digits, fix_signs,
+    operator_location,
+    sigma = "\\sigma^2"
+  )
+  vcv <- create_ranef_structure_merMod(
+    model, ital_vars, use_coefs, coef_digits,
+    fix_signs
+  )
+
+  if (grepl("^\n    \n", vcv[[1]])) {
     vcv <- gsub("^\n(.+)", "\\1", vcv)
   }
-  
+
   eq <- paste(c(l1, vcv), collapse = " \\\\")
   eq <- gsub("\\sim", " &\\sim", eq, fixed = TRUE)
   eq <- paste(eq, collapse = " \\\\ \n")
-  eq <- paste0("\\begin{", align_env, "}\n",
-               paste0("  ", eq),
-               "\n\\end{", align_env, "}")
-  class(eq) <- c('equation', 'character')
+  eq <- paste0(
+    "\\begin{", align_env, "}\n",
+    paste0("  ", eq),
+    "\n\\end{", align_env, "}"
+  )
+  class(eq) <- c("equation", "character")
 
   eq
 }
@@ -248,83 +261,87 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
                                       wrap = FALSE, terms_per_line = 4,
                                       operator_location = "end", align_env = "aligned",
                                       use_coefs = FALSE, coef_digits = 2,
-                                      fix_signs = TRUE, mean_separate,...) {
-  
+                                      fix_signs = TRUE, mean_separate, ...) {
+
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
-  
+
   # Get each of the sides
   lhs <- extract_lhs(model)
   rhs <- extract_rhs(model)
-  
-  if(regression){
+
+  if (regression) {
     yt <- helper_arima_extract_lm(model)
   } else {
     yt <- NULL
   }
 
   # Extract the equation lists
-  eq <- create_eq(model,
-                  lhs,
-                  rhs,
-                  yt,
-                  ital_vars,
-                  use_coefs,
-                  coef_digits,
-                  raw_tex)
-  
+  eq <- create_eq(
+    model,
+    lhs,
+    rhs,
+    yt,
+    ital_vars,
+    use_coefs,
+    coef_digits,
+    raw_tex
+  )
+
   ##########
-  # Wrapping has not been included due to the 
+  # Wrapping has not been included due to the
   # Multiline nature of Regression w/ ARIMA errors
   ##########
-  
+
   ##########
   # Fix signs is done automatically
   # This is necessary so that the Lag/Backshift equations will make sense.
   #########
-  
+
   # Collapse down terms.
-  eq <- lapply(eq, function(x){
+  eq <- lapply(eq, function(x) {
     lhs <- paste(x$lhs[[1]], collapse = " ")
-    rhs <-paste(x$rhs[[1]], collapse = " ")
+    rhs <- paste(x$rhs[[1]], collapse = " ")
     rhs <- gsub("^\\+", "", rhs)
-    
+
     # Alignment, if needed, will be added later.
     paste(lhs, rhs, sep = " = ")
   })
-  
+
   # If regression w/ arima errors.
-  if(regression){
+  if (regression) {
     # Add alignment to the regression function
     eq$lm_eq <- paste0("&\\text{let}\\quad &&", eq$lm_eq)
-    
+
     # Add alignment and "where" to ARIMA line
     # Need to re-split the terms. This is redundant, but makes for less repeated code.
-    # Ensure it is seen as a character vector first and foremost. 
+    # Ensure it is seen as a character vector first and foremost.
     prep_split <- as.character(eq$arima_eq)
     split_arima <- strsplit(eq$arima_eq, "=")[[1]]
     names(split_arima) <- c("ar", "ma")
-    
+
     split_arima["ar"] <- paste0("&\\text{where}\\quad  &&", split_arima["ar"])
     split_arima["ma"] <- paste0("& &&=", split_arima["ma"])
-    
+
     eq$arima_eq <- paste(split_arima, collapse = " \\\\\n")
-    
+
     # Add line (always the same) indicating the distribution of the residual.
     eq$err_dist <- "&\\text{where}\\quad &&\\varepsilon_{t} \\sim{WN(0, \\sigma^{2})}"
-    
+
     # Add alignment to the equation structure.
-    eq <- paste0("\\begin{alignat}{2}\n",
-                 paste(eq, collapse = " \\\\\n"),
-                 "\n\\end{alignat}")
+    eq <- paste0(
+      "\\begin{alignat}{2}\n",
+      paste(eq, collapse = " \\\\\n"),
+      "\n\\end{alignat}"
+    )
   } else {
     # If arima only then we only need 1 line and no alignment.
     eq <- eq$arima_eq
   }
-  
+
   # Set the class
   class(eq) <- c("equation", "character")
-  
+
   # Explicit return
   return(eq)
 }
