@@ -1,3 +1,14 @@
+# Categorical variable level parsing works (from issue #140)
+
+    $$
+    \begin{aligned}
+      \operatorname{error}_{i}  &\sim N \left(\mu, \sigma^2 \right) \\
+        \mu &=\alpha_{j[i]} + \beta_{1}(\operatorname{brochure}_{\operatorname{standard}}) + \beta_{2}(\operatorname{disease}_{\operatorname{DS}}) + \beta_{3}(\operatorname{brochure}_{\operatorname{standard}} \times \operatorname{disease}_{\operatorname{DS}}) \\
+        \alpha_{j}  &\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
+        \text{, for ID j = 1,} \dots \text{,J}
+    \end{aligned}
+    $$
+
 # Unconditional lmer models work
 
     $$

@@ -119,14 +119,6 @@ extract_rhs.lmerMod <- function(model) {
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
   
-  # Figure out which predictors are at which level
-  # could probs put this in its own function
-  group_coefs <- detect_group_coef(model, full_rhs)
-  all_terms <- unique(unlist(full_rhs$split[full_rhs$effect == "fixed"]))
-  l1_terms <- setdiff(all_terms, names(group_coefs))
-  l1_terms <- setNames(rep("l1", length(l1_terms)), l1_terms)
-  
-  var_levs <- c(l1_terms, group_coefs)
   
   full_rhs$primary <- lapply(full_rhs$term, function(x) "")
   full_rhs$primary[full_rhs$effect == "fixed"] <- extract_primary_term(
@@ -148,6 +140,13 @@ extract_rhs.lmerMod <- function(model) {
     full_rhs$split[full_rhs$effect == "fixed"]
   )
   
+  group_coefs <- detect_group_coef(model, full_rhs)
+  all_terms <- unique(unlist(full_rhs$primary[full_rhs$effect == "fixed"]))
+  l1_terms <- setdiff(all_terms, names(group_coefs))
+  l1_terms <- setNames(rep("l1", length(l1_terms)), l1_terms)
+  
+  var_levs <- c(l1_terms, group_coefs)
+  
   full_rhs$pred_level <- lapply(full_rhs$primary, function(x) {
     var_levs[names(var_levs) %in% x]
   })
@@ -161,7 +160,7 @@ extract_rhs.lmerMod <- function(model) {
   full_rhs$split[full_rhs$effect == "fixed"])
   
   full_rhs$l1 <- vapply(full_rhs$pred_level, function(x) {
-    (length(x) > 0 & all(x == "l1"))
+    length(x) > 0 & all(x == "l1")
   }, FUN.VALUE = logical(1))
   full_rhs$l1 <- ifelse(full_rhs$term == "(Intercept)", 
                         TRUE,
