@@ -9,7 +9,7 @@
 #'
 
 print.equation <- function(x, ...) {
-  	cat(format(x), sep = "")
+  cat(format(x), sep = "")
 }
 
 #' Print 'LaTeX' equations in Rmarkdown environments
@@ -27,21 +27,23 @@ print.equation <- function(x, ...) {
 #' @importFrom knitr knit_print asis_output
 #' @noRd
 #'
-knit_print.equation <- function(x,...,tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}"){
+knit_print.equation <- function(x, ..., tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}") {
   eq <- format(x)
-  if(isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") %in% c("gfm", "markdown_strict"))){
+  if (isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") %in% c("gfm", "markdown_strict"))) {
     if (!is_texPreview_installed()) {
       message("Please install \"{texPreview}\" with `install.packages(\"texPreview\")` for equations to render with GitHub flavored markdown. Defaulting to raw TeX code.", call. = FALSE)
       print(eq)
     } else {
       knit_print(texPreview::tex_preview(eq, usrPackages = tex_packages))
-      if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "markdown_strict") {
-        knit_print(texPreview::tex_preview(eq, usrPackages = tex_packages,
-                                           returnType = "html",
-                                           density = 300))
+      if (knitr::opts_knit$get("rmarkdown.pandoc.to") == "markdown_strict") {
+        knit_print(texPreview::tex_preview(eq,
+          usrPackages = tex_packages,
+          returnType = "html",
+          density = 300
+        ))
       }
     }
-  }else{
+  } else {
     return(knitr::asis_output(eq))
   }
 }

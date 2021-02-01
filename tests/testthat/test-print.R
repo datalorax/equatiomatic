@@ -7,9 +7,11 @@ test_that("Equation is printed correctly", {
   printed_tex <- capture.output(tex)
 
   expect_equal(printed_tex[1], "$$",
-               label = "first line is $$")
+    label = "first line is $$"
+  )
   expect_equal(printed_tex[2], actual,
-               label = "second line is the formula")
+    label = "second line is the formula"
+  )
 })
 
 test_that("Equation is knit_print-ed correctly", {
@@ -20,8 +22,11 @@ test_that("Equation is knit_print-ed correctly", {
 
 
   expect_equal(as.character(knit_print_tex),
-               actual,
-               label = "second line is the formula")
-  expect_s3_class(knit_print_tex,
-               "knit_asis")
+    actual,
+    label = "second line is the formula"
+  )
+  expect_s3_class(
+    knit_print_tex,
+    "knit_asis"
+  )
 })

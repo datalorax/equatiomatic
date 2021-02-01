@@ -10,25 +10,25 @@
 #'   \code{dbl} = double, \code{lgl} = logical, and \code{int} = logical
 #' @noRd
 mapply_chr <- function(...) {
-	out <- mapply(...)
-	stopifnot(is.character(out))
-	out
+  out <- mapply(...)
+  stopifnot(is.character(out))
+  out
 }
 
 mapply_lgl <- function(...) {
-	out <- mapply(...)
-	stopifnot(is.logical(out))
-	out
+  out <- mapply(...)
+  stopifnot(is.logical(out))
+  out
 }
 
 mapply_int <- function(...) {
-	out <- mapply(...)
-	stopifnot(is.integer(out))
-	out
+  out <- mapply(...)
+  stopifnot(is.integer(out))
+  out
 }
 
 mapply_dbl <- function(...) {
-	out <- mapply(...)
-	stopifnot(is.double(out))
-	out
+  out <- mapply(...)
+  stopifnot(is.double(out))
+  out
 }

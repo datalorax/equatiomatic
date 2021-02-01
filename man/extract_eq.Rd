@@ -104,11 +104,13 @@ mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 
 set.seed(8675309)
-d <- data.frame(cat1 = rep(letters[1:3], 100),
-                cat2 = rep(LETTERS[1:3], each = 100),
-                cont1 = rnorm(300, 100, 1),
-                cont2 = rnorm(300, 50, 5),
-                out   = rnorm(300, 10, 0.5))
+d <- data.frame(
+  cat1 = rep(letters[1:3], 100),
+  cat2 = rep(LETTERS[1:3], each = 100),
+  cont1 = rnorm(300, 100, 1),
+  cont2 = rnorm(300, 50, 5),
+  out = rnorm(300, 10, 0.5)
+)
 mod4 <- lm(out ~ ., d)
 extract_eq(mod4)
 
@@ -129,11 +131,13 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 4, use_coefs = TRUE, fix_signs = 
 
 # Use other model types, like glm
 set.seed(8675309)
-d <- data.frame(out = sample(0:1, 100, replace = TRUE),
-                cat1 = rep(letters[1:3], 100),
-                cat2 = rep(LETTERS[1:3], each = 100),
-                cont1 = rnorm(300, 100, 1),
-                cont2 = rnorm(300, 50, 5))
+d <- data.frame(
+  out = sample(0:1, 100, replace = TRUE),
+  cat1 = rep(letters[1:3], 100),
+  cat2 = rep(LETTERS[1:3], each = 100),
+  cont1 = rnorm(300, 100, 1),
+  cont2 = rnorm(300, 50, 5)
+)
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
 }
