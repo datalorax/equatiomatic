@@ -1,6 +1,6 @@
 Tests and Coverage
 ================
-01 February, 2021 00:18:28
+01 February, 2021 17:12:32
 
   - [Coverage](#coverage)
   - [Unit Tests](#unit-tests)
@@ -34,15 +34,15 @@ Unit Test summary is created using the
 
 | file                                                              |  n |  time | error | failed | skipped | warning |
 | :---------------------------------------------------------------- | -: | ----: | ----: | -----: | ------: | ------: |
-| [test-clm.R](testthat/test-clm.R)                                 |  6 | 0.040 |     0 |      0 |       0 |       0 |
+| [test-clm.R](testthat/test-clm.R)                                 |  6 | 0.035 |     0 |      0 |       0 |       0 |
 | [test-forecast-arima.R](testthat/test-forecast-arima.R)           |  4 | 0.002 |     0 |      0 |       0 |       0 |
-| [test-glm.R](testthat/test-glm.R)                                 | 12 | 0.005 |     0 |      0 |       0 |       0 |
+| [test-glm.R](testthat/test-glm.R)                                 | 12 | 0.004 |     0 |      0 |       0 |       0 |
 | [test-lm.R](testthat/test-lm.R)                                   |  7 | 0.003 |     0 |      0 |       0 |       0 |
-| [test-lmerMod.R](testthat/test-lmerMod.R)                         | 28 | 0.009 |     0 |      0 |       0 |       0 |
-| [test-polr.R](testthat/test-polr.R)                               |  5 | 0.002 |     0 |      0 |       0 |       0 |
-| [test-print.R](testthat/test-print.R)                             |  4 | 0.000 |     0 |      0 |       0 |       0 |
-| [test-utils.R](testthat/test-utils.R)                             |  8 | 0.003 |     0 |      0 |       0 |       0 |
-| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R) | 10 | 0.003 |     0 |      0 |       0 |       0 |
+| [test-lmerMod.R](testthat/test-lmerMod.R)                         | 28 | 0.010 |     0 |      0 |       0 |       0 |
+| [test-polr.R](testthat/test-polr.R)                               |  5 | 0.001 |     0 |      0 |       0 |       0 |
+| [test-print.R](testthat/test-print.R)                             |  4 | 0.001 |     0 |      0 |       0 |       0 |
+| [test-utils.R](testthat/test-utils.R)                             |  8 | 0.002 |     0 |      0 |       0 |       0 |
+| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R) | 10 | 0.004 |     0 |      0 |       0 |       0 |
 
 <details closed>
 
@@ -50,12 +50,12 @@ Unit Test summary is created using the
 
 | file                                                               | context | test                                               | status | n |  time |
 | :----------------------------------------------------------------- | :------ | :------------------------------------------------- | :----- | -: | ----: |
-| [test-clm.R](testthat/test-clm.R#)                                 |         | Ordered models with clm work                       | PASS   | 5 | 0.039 |
+| [test-clm.R](testthat/test-clm.R#)                                 |         | Ordered models with clm work                       | PASS   | 5 | 0.034 |
 | [test-clm.R](testthat/test-clm.R#)                                 |         | Unsupported CLMs create a message                  | PASS   | 1 | 0.001 |
 | [test-forecast-arima.R](testthat/test-forecast-arima.R#)           |         | Basic ARIMA model functions                        | PASS   | 2 | 0.001 |
 | [test-forecast-arima.R](testthat/test-forecast-arima.R#)           |         | Regression w/ ARIMA Errors functions               | PASS   | 2 | 0.001 |
 | [test-glm.R](testthat/test-glm.R#)                                 |         | Logistic regression works                          | PASS   | 1 | 0.001 |
-| [test-glm.R](testthat/test-glm.R#)                                 |         | Probit regression works                            | PASS   | 2 | 0.001 |
+| [test-glm.R](testthat/test-glm.R#)                                 |         | Probit regression works                            | PASS   | 2 | 0.000 |
 | [test-glm.R](testthat/test-glm.R#)                                 |         | Unsupported GLMs create a message                  | PASS   | 1 | 0.000 |
 | [test-glm.R](testthat/test-glm.R#)                                 |         | Distribution-based equations work                  | PASS   | 3 | 0.001 |
 | [test-glm.R](testthat/test-glm.R#)                                 |         | Weights work                                       | PASS   | 1 | 0.001 |
@@ -66,19 +66,19 @@ Unit Test summary is created using the
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Unconditional lmer models work                     | PASS   | 3 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Level 1 predictors work                            | PASS   | 2 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Mean separate works as expected                    | PASS   | 2 | 0.001 |
-| [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Wrapping works as expected                         | PASS   | 1 | 0.000 |
+| [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Wrapping works as expected                         | PASS   | 1 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Unstructured variance-covariances work as expected | PASS   | 5 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Group-level predictors work as expected            | PASS   | 3 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Interactions work as expected                      | PASS   | 5 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Alternate random effect VCV structures work        | PASS   | 3 | 0.002 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | Nested model syntax works                          | PASS   | 3 | 0.001 |
 | [test-lmerMod.R](testthat/test-lmerMod.R#)                         |         | use\_coef works                                    | PASS   | 1 | 0.000 |
-| [test-polr.R](testthat/test-polr.R#)                               |         | Ordered logistic regression works                  | PASS   | 5 | 0.002 |
-| [test-print.R](testthat/test-print.R#)                             |         | Equation is printed correctly                      | PASS   | 2 | 0.000 |
+| [test-polr.R](testthat/test-polr.R#)                               |         | Ordered logistic regression works                  | PASS   | 5 | 0.001 |
+| [test-print.R](testthat/test-print.R#)                             |         | Equation is printed correctly                      | PASS   | 2 | 0.001 |
 | [test-print.R](testthat/test-print.R#)                             |         | Equation is knit\_print-ed correctly               | PASS   | 2 | 0.000 |
-| [test-utils.R](testthat/test-utils.R#)                             |         | Strict mapply\_\* functions work                   | PASS   | 8 | 0.003 |
+| [test-utils.R](testthat/test-utils.R#)                             |         | Strict mapply\_\* functions work                   | PASS   | 8 | 0.002 |
 | [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#) |         | Coefficient digits work correctly                  | PASS   | 2 | 0.001 |
-| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#) |         | Wrapping works correctly                           | PASS   | 8 | 0.002 |
+| [test-wrapping-formatting.R](testthat/test-wrapping-formatting.R#) |         | Wrapping works correctly                           | PASS   | 8 | 0.003 |
 
 </details>
 
@@ -89,7 +89,7 @@ Unit Test summary is created using the
 | Field    | Value                             |                                                                                                                                                                                                                                                                         |
 | :------- | :-------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Version  | R version 4.0.3 (2020-10-10)      |                                                                                                                                                                                                                                                                         |
-| Platform | x86\_64-apple-darwin17.0 (64-bit) | <a href="https://github.com/datalorax/equatiomatic/commit/8ad7f29f2cb69b100d293ec1ff41c5eacb2bba30/checks" target="_blank"><span title="Built on Github Actions">![](https://github.com/metrumresearchgroup/covrpage/blob/actions/inst/logo/gh.png?raw=true)</span></a> |
+| Platform | x86\_64-apple-darwin17.0 (64-bit) | <a href="https://github.com/datalorax/equatiomatic/commit/79c6c6b62e49437e4c5f96bef80b4932cc207e0f/checks" target="_blank"><span title="Built on Github Actions">![](https://github.com/metrumresearchgroup/covrpage/blob/actions/inst/logo/gh.png?raw=true)</span></a> |
 | Running  | macOS Catalina 10.15.7            |                                                                                                                                                                                                                                                                         |
 | Language | en\_US                            |                                                                                                                                                                                                                                                                         |
 | Timezone | UTC                               |                                                                                                                                                                                                                                                                         |
