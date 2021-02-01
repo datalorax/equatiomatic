@@ -146,14 +146,18 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">bill_length_mm</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">body_mass_g</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>,
-       <span class="kw">subtitle</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>))</pre></body></html></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(
+    <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>,
+    <span class="kw">subtitle</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>)
+  )</pre></body></html></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">bill_length_mm</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">body_mass_g</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"lm"</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span>(<span class="st">"text"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="fl">35</span>, <span class="kw">y</span> <span class="kw">=</span><span class="fl">2500</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">0</span>,
-           <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>) +
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span>(<span class="st">"text"</span>,
+    <span class="kw">label</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>), <span class="kw">x</span> <span class="kw">=</span> <span class="fl">35</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2500</span>, <span class="kw">hjust</span> <span class="kw">=</span> <span class="fl">0</span>,
+    <span class="kw">color</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>
+  ) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span>(<span class="fl">2000</span>, <span class="fl">6500</span>)</pre></body></html></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
@@ -163,23 +167,27 @@
 <a href="#base-graphics" class="anchor"></a>Base graphics</h3>
 <p>In addition to <strong>{ggplot2}</strong>, we can use <strong>{equatiomatic}</strong> with base graphics using a similar approach. For example:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">penguins</span>$<span class="no">bill_length_mm</span>, <span class="no">penguins</span>$<span class="no">body_mass_g</span>,
-     <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">20</span>,
-     <span class="kw">col</span> <span class="kw">=</span> <span class="st">"gray80"</span>,
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Bill length"</span>,
-     <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Body Mass"</span>,
-     <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>,
-     <span class="kw">sub</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>))
+  <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">20</span>,
+  <span class="kw">col</span> <span class="kw">=</span> <span class="st">"gray80"</span>,
+  <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Bill length"</span>,
+  <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Body Mass"</span>,
+  <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>,
+  <span class="kw">sub</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>)
+)
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(<span class="no">penguins</span>$<span class="no">bill_length_mm</span>), <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">m</span>),
-      <span class="kw">col</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>)</pre></body></html></div>
+  <span class="kw">col</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>
+)</pre></body></html></div>
 <p><img src="plotting-integration_files/figure-html/base_graphics-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">penguins</span>$<span class="no">bill_length_mm</span>, <span class="no">penguins</span>$<span class="no">body_mass_g</span>,
-     <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">20</span>,
-     <span class="kw">col</span> <span class="kw">=</span> <span class="st">"gray80"</span>,
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Bill length"</span>,
-     <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Body Mass"</span>,
-     <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>)
+  <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">20</span>,
+  <span class="kw">col</span> <span class="kw">=</span> <span class="st">"gray80"</span>,
+  <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">"Bill length"</span>,
+  <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Body Mass"</span>,
+  <span class="kw">main</span> <span class="kw">=</span> <span class="st">"Relation between bill length and body mass"</span>
+)
 <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span>(<span class="no">penguins</span>$<span class="no">bill_length_mm</span>), <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">m</span>),
-      <span class="kw">col</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>)
+  <span class="kw">col</span> <span class="kw">=</span> <span class="st">"#ab00fa"</span>
+)
 <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">40</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">6000</span>, <span class="fu"><a href="https://rdrr.io/pkg/latex2exp/man/TeX.html">TeX</a></span>(<span class="no">prep_eq</span>))</pre></body></html></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>

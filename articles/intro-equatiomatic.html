@@ -158,7 +158,7 @@
 <a href="#an-example-with-a-slightly-more-complicated-model" class="anchor"></a>An example with a slightly more complicated model</h2>
 <p>The above was super simple, but—often—you have categorical variables with lots of levels and interactions, which can make the output of your models (and writing a model equation for your models) a bit more complicated. {equatiomatic} is intended to “smooth out” some of these issues, requiring the same process as in the above example to extract (and present) the model’s equation:</p>
 <p>For example, here is an example using a categorical variable (<code>island</code>) in an interaction with the <code>bill_depth_mm</code> variable we used in the example above:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">m2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">bill_length_mm</span> ~ <span class="no">bill_depth_mm</span>*<span class="no">island</span>, <span class="no">penguins</span>)
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">m2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">bill_length_mm</span> ~ <span class="no">bill_depth_mm</span> * <span class="no">island</span>, <span class="no">penguins</span>)
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">m2</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{island}_{\operatorname{Dream}}) + \beta_{3}(\operatorname{island}_{\operatorname{Torgersen}}) + \beta_{4}(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Dream}}) + \beta_{5}(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Torgersen}}) + \epsilon
@@ -203,10 +203,11 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <a href="#raw-tex-code" class="anchor"></a>Raw TeX code</h2>
 <p>Currently, the <code>intercept</code> argument defaults to <code>"alpha"</code> and only takes one additional argument, <code>"beta"</code>. However, the <code>raw_tex</code> and <code>greek</code> arguments allows you to specify whatever syntax you would like both for the intercept and for the coefficients. For example</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">m2</span>,
-           <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
-           <span class="kw">intercept</span> <span class="kw">=</span> <span class="st">"\\hat{\\phi}"</span>,
-           <span class="kw">greek</span> <span class="kw">=</span> <span class="st">"\\hat{\\gamma}"</span>,
-           <span class="kw">raw_tex</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+  <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
+  <span class="kw">intercept</span> <span class="kw">=</span> <span class="st">"\\hat{\\phi}"</span>,
+  <span class="kw">greek</span> <span class="kw">=</span> <span class="st">"\\hat{\\gamma}"</span>,
+  <span class="kw">raw_tex</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
 \operatorname{bill\_length\_mm} &amp;= \hat{\phi} + \hat{\gamma}_{1}(\operatorname{bill\_depth\_mm}) + \hat{\gamma}_{2}(\operatorname{island}_{\operatorname{Dream}}) + \hat{\gamma}_{3}(\operatorname{island}_{\operatorname{Torgersen}})\ + \\
@@ -279,9 +280,10 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <div id="logistic-regression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#logistic-regression" class="anchor"></a>Logistic Regression</h2>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">lr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">species</span>*<span class="no">bill_length_mm</span>,
-          <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>,
-          <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>))
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">lr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">species</span> * <span class="no">bill_length_mm</span>,
+  <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>,
+  <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>)
+)
 
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">lr</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><span class="math display">\[
@@ -305,9 +307,10 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <h2 class="hasAnchor">
 <a href="#probit-regression" class="anchor"></a>Probit Regression</h2>
 <p>Probit regression works similarly to logistic regression:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">pr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">species</span>*<span class="no">bill_length_mm</span>,
-          <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>,
-          <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>))
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">pr</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">sex</span> ~ <span class="no">species</span> * <span class="no">bill_length_mm</span>,
+  <span class="kw">data</span> <span class="kw">=</span> <span class="no">penguins</span>,
+  <span class="kw">family</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span>(<span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+)
 
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">pr</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><span class="math display">\[
@@ -402,7 +405,8 @@ P( \operatorname{sex} = \operatorname{male} ) &amp;= \Phi[\alpha + \beta_{1}(\op
 <h4 class="hasAnchor">
 <a href="#logit-method" class="anchor"></a>Logit method</h4>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">mass_ologit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="no">rating</span> ~ <span class="no">temp</span> * <span class="no">contact</span>,
-                          <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>)
+  <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>
+)
 
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">mass_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)
 <span class="co">#&gt; </span>
@@ -427,8 +431,9 @@ P( \operatorname{sex} = \operatorname{male} ) &amp;= \Phi[\alpha + \beta_{1}(\op
 <h4 class="hasAnchor">
 <a href="#probit-method" class="anchor"></a>Probit method</h4>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">mass_oprobit</span> <span class="kw">&lt;-</span> <span class="kw pkg">MASS</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html">polr</a></span>(<span class="no">rating</span> ~ <span class="no">temp</span> * <span class="no">contact</span>,
-                          <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>,
-                          <span class="kw">method</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+  <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>,
+  <span class="kw">method</span> <span class="kw">=</span> <span class="st">"probit"</span>
+)
 
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">mass_oprobit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)
 <span class="co">#&gt; </span>
@@ -458,8 +463,9 @@ P( \operatorname{4} \geq \operatorname{5} ) &amp;= \Phi[\alpha_{4} + \beta_{1}(\
 <h4 class="hasAnchor">
 <a href="#logit-method-1" class="anchor"></a>Logit method</h4>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">ordinal_ologit</span> <span class="kw">&lt;-</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="no">rating</span> ~ <span class="no">temp</span> * <span class="no">contact</span>,
-                               <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>,
-                               <span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>)
+  <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>,
+  <span class="kw">link</span> <span class="kw">=</span> <span class="st">"logit"</span>
+)
 
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">ordinal_ologit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><span class="math display">\[
@@ -479,8 +485,9 @@ P( \operatorname{4} \geq \operatorname{5} ) &amp;= \Phi[\alpha_{4} + \beta_{1}(\
 <h4 class="hasAnchor">
 <a href="#probit-method-1" class="anchor"></a>Probit method</h4>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">ordinal_probit</span> <span class="kw">&lt;-</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html">clm</a></span>(<span class="no">rating</span> ~ <span class="no">temp</span> * <span class="no">contact</span>,
-                               <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>,
-                               <span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>)
+  <span class="kw">data</span> <span class="kw">=</span> <span class="kw pkg">ordinal</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/ordinal/man/wine.html">wine</a></span>,
+  <span class="kw">link</span> <span class="kw">=</span> <span class="st">"probit"</span>
+)
 
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">ordinal_probit</span>, <span class="kw">wrap</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">terms_per_line</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><span class="math display">\[

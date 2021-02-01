@@ -152,20 +152,22 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#equatiomatic-development-version" class="anchor"></a>equatiomatic (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>Bug fix related to categorical variables and level parsing for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models</li>
+</ul>
 </div>
     <div id="equatiomatic-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#equatiomatic-020" class="anchor"></a>equatiomatic 0.2.0<small> 2021-01-30 </small>
 </h1>
 <ul>
-<li>
-<strong>New models</strong>: This is the first version to support <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models and <code><a href="https://rdrr.io/pkg/forecast/man/Arima.html">forecast::Arima()</a></code> models.</li>
-<li>New vignettes for each of the new models supported.</li>
-<li>New vignette showing how to use the package with plotting</li>
-<li>Switched the testing framework to use snapshot testing</li>
-<li>Uses new print method so users no longer have to specify <code>results = "asis"</code> in the R Markdown chunk option</li>
-<li>Fixed error in rendering logistic/probit regression equations by removing the epsilon (error term) at the end of the left-hand side</li>
-<li>The epsilon (error term) is no longer shown when rendering the fitted model equation, i.e. <code>use_coefs = TRUE</code>, for <code>lm</code> models. The hat sign is also added to the response variable.</li>
+<li><p><strong>New models</strong>: This is the first version to support <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models and <code><a href="https://rdrr.io/pkg/forecast/man/Arima.html">forecast::Arima()</a></code> models.</p></li>
+<li><p>New vignettes for each of the new models supported.</p></li>
+<li><p>New vignette showing how to use the package with plotting</p></li>
+<li><p>Switched the testing framework to use snapshot testing</p></li>
+<li><p>Uses new print method so users no longer have to specify <code>results = "asis"</code> in the R Markdown chunk option</p></li>
+<li><p>Fixed error in rendering logistic/probit regression equations by removing the epsilon (error term) at the end of the left-hand side</p></li>
+<li><p>The epsilon (error term) is no longer shown when rendering the fitted model equation, i.e. <code>use_coefs = TRUE</code>, for <code>lm</code> models. The hat sign is also added to the response variable.</p></li>
 </ul>
 </div>
     <div id="equatiomatic-010" class="section level1">
@@ -173,17 +175,15 @@
 <a href="#equatiomatic-010" class="anchor"></a>equatiomatic 0.1.0<small> 2020-08-27 </small>
 </h1>
 <ul>
-<li>Initial CRAN Release</li>
-<li>Extracts equations for <code>lm</code> models</li>
-<li>Extracts equations for <code>glm</code> models with <code>family = binomial(link = "logit")</code> or <code>family = binomial(link = "probit")</code>
-</li>
-<li>Extracts equations form ordered regression models using <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr</a></code> or <code>ordered::clm</code> for logit and probit link functions</li>
-<li>
-<code>glm</code> models have an optional <code>show_distribution</code> argument to show the distributional assumptions</li>
-<li>All equations can be displayed using Greek notation or the estimated coefficients</li>
-<li>The <code>raw_tex</code> code can be used to supply custom TeX code for the intercept or the coefficients, through the <code>intercept</code> and <code>greek</code> arguments respectively</li>
-<li>Long equations can be wrapped to multiple lines with the optional <code>wrap</code> argument. The length of the wrapping is controlled by <code>terms_per_line</code>.</li>
-<li>Added a <code>NEWS.md</code> file to track subsequent changes to the package.</li>
+<li><p>Initial CRAN Release</p></li>
+<li><p>Extracts equations for <code>lm</code> models</p></li>
+<li><p>Extracts equations for <code>glm</code> models with <code>family = binomial(link = "logit")</code> or <code>family = binomial(link = "probit")</code></p></li>
+<li><p>Extracts equations form ordered regression models using <code><a href="https://rdrr.io/pkg/MASS/man/polr.html">MASS::polr</a></code> or <code>ordered::clm</code> for logit and probit link functions</p></li>
+<li><p><code>glm</code> models have an optional <code>show_distribution</code> argument to show the distributional assumptions</p></li>
+<li><p>All equations can be displayed using Greek notation or the estimated coefficients</p></li>
+<li><p>The <code>raw_tex</code> code can be used to supply custom TeX code for the intercept or the coefficients, through the <code>intercept</code> and <code>greek</code> arguments respectively</p></li>
+<li><p>Long equations can be wrapped to multiple lines with the optional <code>wrap</code> argument. The length of the wrapping is controlled by <code>terms_per_line</code>.</p></li>
+<li><p>Added a <code>NEWS.md</code> file to track subsequent changes to the package.</p></li>
 </ul>
 </div>
   </div>
