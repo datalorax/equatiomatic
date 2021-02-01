@@ -1,4 +1,5 @@
 # equatiomatic (development version)
+* Bug fix related to categorical variables and level parsing for `lme4::lmer()` models
 
 # equatiomatic 0.2.0
 * **New models**: This is the first version to support `lme4::lmer()` models and `forecast::Arima()` models. 
