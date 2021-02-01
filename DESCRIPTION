@@ -1,76 +1,84 @@
 Package: equatiomatic
 Title: Transform Models into 'LaTeX' Equations
 Version: 0.2.0.9000
-Authors@R: c(
-    person(given = "Daniel",
-           family = "Anderson",
-           role = c("aut", "cre"),
-           email = "daniela@uoregon.edu",
-           comment = c(ORCID = "https://orcid.org/0000-0003-4699-4680")),
-    person(given = "Andrew",
-           family = "Heiss",
-           role = "aut",
-           email = "andrew@andrewheiss.com",
-           comment = c(ORCID = "https://orcid.org/0000-0002-3948-3914")),
-    person(given   = 'Jay',
-           family  = 'Sumners',
-           role    =  'aut',           
-           email   = 'jay.sumners@gmail.com'),
-    person(given = "Joshua",
-           family = "Rosenberg",
-           role = "ctb",
-           email = "jmrosenberg@utk.edu",
-           comment = c(ORCID = "http://orcid.org/0000-0003-2170-0447")),
-    person(given   = 'Jonathan',
-           family  = 'Sidi',
-           role    =  'ctb',           
-           email   = 'yonis@metrumrg.com',
-           comment = c(ORCID = "https://orcid.org/0000-0002-4222-1819")),
-    person(given   = 'Ellis',
-           family  = 'Hughes',
-           role    =  'ctb',           
-           email   = 'ellishughes@live.com',
-           comment = c(ORCID = "http://orcid.org/0000-0003-0637-4436")),
-    person(given   = 'Thomas',
-           family  = 'Fung',
-           role    =  'ctb',           
-           email   = 'thomas.fung.dr@gmail.com',
-           comment = c(ORCID = "http://orcid.org/0000-0003-2601-0728")),
-    person(given   = 'Reza',
-           family  = 'Norouzian',
-           role    =  'ctb',           
-           email   = 'rnorouzian@gmail.com',
-           comment = c(ORCID = "https://orcid.org/0000-0002-0531-6886"))
-    )
-Description: The goal of 'equatiomatic' is to reduce the pain associated with
-             writing 'LaTeX' formulas from fitted models. The primary function of
-             the package, extract_eq(), takes a fitted model object as its input
-             and returns the corresponding 'LaTeX' code for the model.
+Authors@R: 
+    c(person(given = "Daniel",
+             family = "Anderson",
+             role = c("aut", "cre"),
+             email = "daniela@uoregon.edu",
+             comment = c(ORCID = "https://orcid.org/0000-0003-4699-4680")),
+      person(given = "Andrew",
+             family = "Heiss",
+             role = "aut",
+             email = "andrew@andrewheiss.com",
+             comment = c(ORCID = "https://orcid.org/0000-0002-3948-3914")),
+      person(given = "Jay",
+             family = "Sumners",
+             role = "aut",
+             email = "jay.sumners@gmail.com"),
+      person(given = "Joshua",
+             family = "Rosenberg",
+             role = "ctb",
+             email = "jmrosenberg@utk.edu",
+             comment = c(ORCID = "http://orcid.org/0000-0003-2170-0447")),
+      person(given = "Jonathan",
+             family = "Sidi",
+             role = "ctb",
+             email = "yonis@metrumrg.com",
+             comment = c(ORCID = "https://orcid.org/0000-0002-4222-1819")),
+      person(given = "Ellis",
+             family = "Hughes",
+             role = "ctb",
+             email = "ellishughes@live.com",
+             comment = c(ORCID = "http://orcid.org/0000-0003-0637-4436")),
+      person(given = "Thomas",
+             family = "Fung",
+             role = "ctb",
+             email = "thomas.fung.dr@gmail.com",
+             comment = c(ORCID = "http://orcid.org/0000-0003-2601-0728")),
+      person(given = "Reza",
+             family = "Norouzian",
+             role = "ctb",
+             email = "rnorouzian@gmail.com",
+             comment = c(ORCID = "https://orcid.org/0000-0002-0531-6886")),
+      person(given = "Indrajeet",
+             family = "Patil",
+             role = c("cre", "aut", "cph"),
+             email = "patilindrajeet.science@gmail.com",
+             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")))
+Description: The goal of 'equatiomatic' is to reduce the pain
+    associated with writing 'LaTeX' formulas from fitted models. The
+    primary function of the package, extract_eq(), takes a fitted model
+    object as its input and returns the corresponding 'LaTeX' code for the
+    model.
 License: MIT + file LICENSE
-Depends: R (>= 3.3.0)
+Depends: 
+    R (>= 3.3.0)
+URL: https://github.com/datalorax/equatiomatic,
+    https://datalorax.github.io/equatiomatic/
+BugReports: https://github.com/datalorax/equatiomatic/issues
 Imports: 
     broom (>= 0.7.0),
-    stats,
-    knitr,
     broom.mixed,
+    knitr,
+    stats,
     utils
 Suggests: 
-    texPreview,
-    testthat (>= 3.0.0),
-    MASS,
-    ordinal,
-    lme4,
-    rmarkdown,
     covr,
     forecast (>= 8.13),
+    ggplot2 (>= 3.3.3),
     latex2exp (>= 0.4.0),
-    ggplot2(>= 3.3.2)
-URL: https://github.com/datalorax/equatiomatic, https://datalorax.github.io/equatiomatic/
-BugReports: https://github.com/datalorax/equatiomatic/issues
+    lme4,
+    MASS,
+    ordinal,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    texPreview
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr
+RoxygenNote: 7.1.1
 Config/testthat/edition: 3
 Config/testthat/parallel: true
