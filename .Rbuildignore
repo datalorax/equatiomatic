@@ -14,3 +14,4 @@
 ^Meta$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^\.lintr

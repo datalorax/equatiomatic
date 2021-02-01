@@ -318,16 +318,6 @@ link_function_df <- data.frame(link_name, link_formula,
   stringsAsFactors = FALSE
 )
 
-# how to find the link function and distribution family
-# counts <- c(18,17,15,20,10,20,25,13,12)
-# outcome <- gl(3,1,9)
-# treatment <- gl(3,3)
-# print(d.AD <- data.frame(treatment, outcome, counts))
-# glm.D93 <- glm(counts ~ outcome + treatment, family = poisson())
-#
-# glm.D93$family$link
-# glm.D93$family$family
-
 
 #' Extract left-hand side of an forecast::Arima object
 #'
@@ -341,12 +331,12 @@ link_function_df <- data.frame(link_name, link_formula,
 #' @noRd
 extract_lhs.forecast_ARIMA <- function(model, ...) {
   # LHS of ARIMA is the Auto Regressive side
-  # Consists of Non-Seasonal AR (p), Seasonal AR (P), Non-Seasonal Differencing (d), Seasonal Differencing(D), Constant Terms.
+  # Consists of Non-Seasonal AR (p), Seasonal AR (P), Non-Seasonal Differencing 
+  # (d), Seasonal Differencing(D), Constant Terms.
   # Constants are dealt with here if they go here and in LM if they go there.
 
   # This is more than needed, but we"re being explicit for readability.
-  # Orders stucture in Arima model:
-  # c(p, q, P, Q, m, d, D)
+  # Orders stucture in Arima model: c(p, q, P, Q, m, d, D)
   ords <- model$arma
   names(ords) <- c("p", "q", "P", "Q", "m", "d", "D")
 

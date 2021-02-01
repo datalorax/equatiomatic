@@ -2,7 +2,10 @@ test_that("Equation is printed correctly", {
   model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 
   tex <- extract_eq(model_simple)
-  actual <- "\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp}) + \\epsilon"
+  actual <- paste(
+    "\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl})",
+    "+ \\beta_{2}(\\operatorname{disp}) + \\epsilon"
+  )
 
   printed_tex <- capture.output(tex)
 
@@ -18,8 +21,10 @@ test_that("Equation is knit_print-ed correctly", {
   model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 
   knit_print_tex <- knitr::knit_print(extract_eq(model_simple))
-  actual <- "$$\n\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) + \\beta_{2}(\\operatorname{disp}) + \\epsilon\n$$"
-
+  actual <- paste(
+    "$$\n\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) +",
+    "\\beta_{2}(\\operatorname{disp}) + \\epsilon\n$$"
+  )
 
   expect_equal(as.character(knit_print_tex),
     actual,
