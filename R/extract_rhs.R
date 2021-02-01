@@ -202,8 +202,7 @@ extract_rhs.forecast_ARIMA <- function(model, ...) {
   # Consists of a Non-Seasonal MA (p), Seasonal MA (P), Seasonal Differencing.
 
   # This is more than needed, but we"re being explicit for readability.
-  # Orders stucture in Arima model:
-  # c(p, q, P, Q, m, d, D)
+  # Orders stucture in Arima model: c(p, q, P, Q, m, d, D)
   ords <- model$arma
   names(ords) <- c("p", "q", "P", "Q", "m", "d", "D")
 

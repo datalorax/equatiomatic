@@ -1,14 +1,18 @@
 library(lme4)
 
-DF <- structure(list(brochure = structure(c(2L, 1L, 2L, 1L, 1L, 1L, 1L, 2L, 1L, 1L), .Label = c("pictorial", "standard"), class = "factor"), 
-                     disease = structure(c(1L, 2L, 2L, 2L, 1L, 2L, 2L, 1L, 1L, 2L), .Label = c("BC", "DS"), class = "factor"), 
+DF <- structure(list(brochure = structure(c(2L, 1L, 2L, 1L, 1L, 1L, 1L, 2L, 1L, 1L), 
+                                          .Label = c("pictorial", "standard"), 
+                                          class = "factor"), 
+                     disease = structure(c(1L, 2L, 2L, 2L, 1L, 2L, 2L, 1L, 1L, 2L), 
+                                         .Label = c("BC", "DS"), 
+                                         class = "factor"), 
                      ID = c(1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L), 
                      error = c(5, 3.9, 70, 73.5, 0.2, 19.9, 60.6, 50.8, 0.1, 0.3), 
                      pers = c(4, 2.3, 4.7, 3.3, 3.7, 3, 5, 4.6, 4.4, 5)), 
                 row.names = c(NA, -10L), class = c("tbl_df", "tbl", "data.frame"))
 
-test_that("Categorical variable level parsing works (from issue #140)",{
-  cat_interaction <- lmer(error ~ brochure * disease  + (1|ID), data = DF)
+test_that("Categorical variable level parsing works (from issue #140)", {
+  cat_interaction <- lmer(error ~ brochure * disease  + (1 | ID), data = DF)
   expect_snapshot_output(extract_eq(cat_interaction))
 })
 

@@ -256,14 +256,14 @@ create_term.forecast_ARIMA <- function(side, ital_vars) {
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
-
-  prim_escaped[side$term %in% c("zz_differencing", "zz_seas_Differencing")] <- side[side$term %in% c("zz_differencing", "zz_seas_Differencing"), "primary"]
+  term_check <- side$term %in% c("zz_differencing", "zz_seas_Differencing")
+  prim_escaped[term_check] <- side[term_check, "primary"]
 
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
 
   if (!ital_vars) {
     # We don"t want (1-B) inside \\operatorname
-    prim[side$term %in% c("zz_differencing", "zz_seas_Differencing")] <- gsub("B", "\\\\operatorname{B}", side$primary[side$term %in% c("zz_differencing", "zz_seas_Differencing")])
+    prim[term_check] <- gsub("B", "\\\\operatorname{B}", side$primary[term_check])
   }
 
   # Get and format the subscripts
@@ -621,7 +621,8 @@ add_greek.forecast_ARIMA <- function(side, terms, regression, raw_tex = FALSE, s
     subs <- rep("", nrow(side))
 
     ## Give numbers to non-constants
-    subs[!(side$term %in% c("intercept", "drift", "y0"))] <- as.character(1:sum(!(side$term %in% c("intercept", "drift", "y0"))))
+    int_drift_y0 <- !(side$term %in% c("intercept", "drift", "y0"))
+    subs[int_drift_y0] <- as.character(1:sum(int_drift_y0))
   } else {
     # Deal with ARIMA component
 

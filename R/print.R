@@ -31,7 +31,12 @@ knit_print.equation <- function(x, ..., tex_packages = "\\renewcommand*\\familyd
   eq <- format(x)
   if (isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") %in% c("gfm", "markdown_strict"))) {
     if (!is_texPreview_installed()) {
-      message("Please install \"{texPreview}\" with `install.packages(\"texPreview\")` for equations to render with GitHub flavored markdown. Defaulting to raw TeX code.", call. = FALSE)
+      message(
+        paste(
+          "Please install \"{texPreview}\" with",
+          "`install.packages(\"texPreview\")` for equations to render with",
+          "GitHub flavored markdown. Defaulting to raw TeX code."), 
+        call. = FALSE)
       print(eq)
     } else {
       knit_print(texPreview::tex_preview(eq, usrPackages = tex_packages))
