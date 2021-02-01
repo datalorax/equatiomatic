@@ -30,10 +30,11 @@ library(equatiomatic)
 library(forecast)
 
 # Build Arima (no regression)
-simple_ts_mod <- Arima(simple_ts, 
-                       order = c(1,1,1),
-                       seasonal = c(1,0,1),
-                       include.constant = TRUE)
+simple_ts_mod <- Arima(simple_ts,
+  order = c(1, 1, 1),
+  seasonal = c(1, 0, 1),
+  include.constant = TRUE
+)
 ```
 
 #### Extracting the equation
@@ -49,15 +50,18 @@ Next, we'll illustrate a slightly more complicated example that includes a linea
 #### Setup
 ```{r setup_arima_errors}
 # Build Exogenous Regressors
-xregs <- as.matrix(data.frame(x1 = ts_reg_list$x1 + 5,
-                              x2 = ts_reg_list$x2 * 5))
+xregs <- as.matrix(data.frame(
+  x1 = ts_reg_list$x1 + 5,
+  x2 = ts_reg_list$x2 * 5
+))
 
 # Build Regression Model
-ts_reg_mod <- Arima(ts(ts_reg_list$ts_rnorm, freq = 4), 
-                    order = c(1, 1, 1),
-                    seasonal = c(1, 0, 1),
-                    xreg = xregs,
-                    include.constant = TRUE)
+ts_reg_mod <- Arima(ts(ts_reg_list$ts_rnorm, freq = 4),
+  order = c(1, 1, 1),
+  seasonal = c(1, 0, 1),
+  xreg = xregs,
+  include.constant = TRUE
+)
 ```
 
 #### Extracting the equation
@@ -77,7 +81,9 @@ Although currently still in development, the other functionalities of `extract_e
 Development items on the docket include:
 
 * Testing additional functionality from `extract_eq()` for `lm` objects.
+
 * Implementation of arguments that will allow the user to rename variables and/or specify a set of greek letters.
+
 * If there is interest, the ability to switch to an expanded version of the equation. However, this could potentially generate extremely long and difficult to read equations.
 
 This is the first of (hopefully) most of the models in `forecast` being implemented in {equatiomatic}. `Arima` is one of the most used modeling techniques for time-series and, as such, got first treatment. There's a lot we can do from here and I'm happy for any help or feedback from the community.
