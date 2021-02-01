@@ -2,6 +2,7 @@
 #' @importFrom stats terms formula coef
 #' @importFrom knitr knit_print asis_output
 #' @importFrom stats setNames
+#' @importFrom utils tail
 
 
 "_PACKAGE"

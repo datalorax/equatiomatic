@@ -52,7 +52,7 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
   if (!is.null(model$offset)) {
     rhs <- rbind(rhs, c(
       rep(NA, (dim(rhs)[2] - 1)),
-      add_tex_ital(utils::tail(names(attr(model$terms, "dataClasses")), 1), ital_vars)
+      add_tex_ital(tail(names(attr(model$terms, "dataClasses")), 1), ital_vars)
     ))
   }
 
