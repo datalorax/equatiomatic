@@ -1,5 +1,7 @@
 #' 'LaTeX' code for R models
-#'
+#' 
+#' \Sexpr[results=rd, stage=render]{rlang:::lifecycle("maturing")}
+#' 
 #' Extract the variable names from a model to produce a 'LaTeX' equation, which is
 #' output to the screen. Supports any model supported by
 #' [broom::tidy][broom::tidy].
