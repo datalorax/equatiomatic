@@ -1,5 +1,7 @@
 #' Print 'LaTeX' equations
-#'
+#' 
+#' \Sexpr[results=rd, stage=render]{rlang:::lifecycle("stable")}
+#' 
 #' Print 'LaTeX' equations built with \code{\link{extract_eq}}.
 #'
 #' @export

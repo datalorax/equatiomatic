@@ -86,6 +86,9 @@ same equation would be outcome ~ N(alpha + beta, sigma).}
 A character of class \dQuote{equation}.
 }
 \description{
+\Sexpr[results=rd, stage=render]{rlang:::lifecycle("maturing")}
+}
+\details{
 Extract the variable names from a model to produce a 'LaTeX' equation, which is
 output to the screen. Supports any model supported by
 \link[broom:reexports]{broom::tidy}.
