@@ -702,6 +702,7 @@ create_l1_merMod <- function(model, mean_separate,
   }, character(1))
   
   if (use_coefs) {
+    sigma <- round(sigma(model), coef_digits)
     l1 <- paste0(
       round(greek$estimate[greek$predsplit == "l1"], coef_digits),
       "_{", greek$greek[greek$predsplit == "l1"], "}",
