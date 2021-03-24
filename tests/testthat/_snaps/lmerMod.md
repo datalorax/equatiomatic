@@ -121,7 +121,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -157,7 +157,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -196,7 +196,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -238,7 +238,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -278,7 +278,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -304,7 +304,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -330,7 +330,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -364,7 +364,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -393,7 +393,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -426,7 +426,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -462,7 +462,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -491,7 +491,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -525,7 +525,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -563,7 +563,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -590,7 +590,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -618,7 +618,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -666,7 +666,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -697,7 +697,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -739,7 +739,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -789,7 +789,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -815,7 +815,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -842,7 +842,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -881,7 +881,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -922,7 +922,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -960,7 +960,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -986,7 +986,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -1013,7 +1013,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -1083,7 +1083,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -1109,7 +1109,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -1136,7 +1136,7 @@
         \end{aligned}
       \end{array}
     \right)
-      &\sim N \left(
+      &\sim MVN \left(
     \left(
       \begin{array}{c} 
         \begin{aligned}

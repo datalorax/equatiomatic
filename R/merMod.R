@@ -5,7 +5,8 @@
 #'   Defaults to sigma squared
 #' @noRd
 wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
-  paste0("N \\left(", mean, ", ", sigma, " \\right)")
+  type <- ifelse(grepl("left", mean), "MVN", "N")
+  paste0(type, " \\left(", mean, ", ", sigma, " \\right)")
 }
 
 #' Provides the order of the levels

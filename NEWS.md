@@ -1,4 +1,6 @@
 # equatiomatic (development version)
+* Changed the notation to use MVN instead of N when assuming a multivariate normal distribution instead of a univariate normal distribution
+* Add the estimated sigma to the level 1 equation when `use_coef = TRUE` for `lme4::lmer()` models
 * Bug fix related to categorical variables and level parsing for `lme4::lmer()` models
 
 # equatiomatic 0.2.0
