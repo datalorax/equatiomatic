@@ -1,5 +1,6 @@
 # equatiomatic (development version)
 * Bug fix related to categorical variables and level parsing for `lme4::lmer()` models
+* Minor bug fix related to indexing of coefficients for `lme4::lmer()` models
 
 # equatiomatic 0.2.0
 
