@@ -132,10 +132,7 @@
 <a href="#unconditional-models" class="anchor"></a>Unconditional models</h2>
 <p>A basic two-level unconditional model:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">um_hsb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">math</span> ~ <span class="fl">1</span> + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">sch.id</span>), <span class="kw">data</span> <span class="kw">=</span> <span class="no">hsb</span>)
-<span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">um_hsb</span>)
-<span class="co">#&gt; Registered S3 method overwritten by 'broom.mixed':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   tidy.gamlss broom</span></pre></body></html></div>
+<span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">um_hsb</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
   \operatorname{math}_{i}  &amp;\sim N \left(\alpha_{j[i]}, \sigma^2 \right) \\
@@ -232,7 +229,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -271,7 +268,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -317,7 +314,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -381,7 +378,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -407,7 +404,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -433,7 +430,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -500,7 +497,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -559,7 +556,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -585,7 +582,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -612,7 +609,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -658,7 +655,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -702,7 +699,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -728,7 +725,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -767,7 +764,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -793,7 +790,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -820,7 +817,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -858,7 +855,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -884,7 +881,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
@@ -910,7 +907,7 @@
     \end{aligned}
   \end{array}
 \right)
-  &amp;\sim MVN \left(
+  &amp;\sim N \left(
 \left(
   \begin{array}{c} 
     \begin{aligned}
