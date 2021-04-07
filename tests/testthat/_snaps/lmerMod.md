@@ -730,12 +730,12 @@
 
     $$
     \begin{aligned}
-      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{0j[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i]}(\operatorname{wave}), \sigma^2 \right) \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}
           &\alpha_{j} \\
-          &\beta_{0j}
+          &\beta_{1j}
         \end{aligned}
       \end{array}
     \right)
@@ -744,15 +744,15 @@
       \begin{array}{c} 
         \begin{aligned}
           &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) \\
-          &\gamma^{\beta_{0}}_{0} + \gamma^{\beta_{0}}_{1}(\operatorname{treatment}_{\operatorname{1}})
+          &\gamma^{\beta_{1}}_{0} + \gamma^{\beta_{1}}_{1}(\operatorname{treatment}_{\operatorname{1}})
         \end{aligned}
       \end{array}
     \right)
     , 
     \left(
       \begin{array}{cc}
-         \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{0j}} \\ 
-         \rho_{\beta_{0j}\alpha_{j}} & \sigma^2_{\beta_{0j}}
+         \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+         \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
       \end{array}
     \right)
      \right)
@@ -766,7 +766,7 @@
 
     $$
     \begin{aligned}
-      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{0}(\operatorname{wave}), \sigma^2 \right) \\
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1}(\operatorname{wave}), \sigma^2 \right) \\
         \alpha_{j}  &\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) + \gamma_{2}^{\alpha}(\operatorname{treatment}_{\operatorname{1}} \times \operatorname{wave}), \sigma^2_{\alpha_{j}} \right)
         \text{, for sid j = 1,} \dots \text{,J} \\
         \alpha_{k}  &\sim N \left(\mu_{\alpha_{k}}, \sigma^2_{\alpha_{k}} \right)
