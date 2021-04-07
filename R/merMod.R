@@ -120,15 +120,13 @@ pull_superscript <- function(slp_preds, detect_cross, cross_data, order) {
 #' @noRd
 assign_l1_greek <- function(rhs_fixed, rhs_random) {
   beta_indices <- seq_along(rhs_fixed$l1[rhs_fixed$l1])
-  if (any(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1)) {
-    beta_indices <- beta_indices - 1
+  if (any(rhs_fixed$term == "(Intercept)" & rhs_fixed$l1)) {
+    beta_indices <- beta_indices[-length(beta_indices)]
   }
-  l1 <- ifelse(rhs_fixed$term == "(Intercept)" & rhs_fixed$l1,
-               "\\alpha_{",
-               ifelse(rhs_fixed$term != "(Intercept)" & rhs_fixed$l1,
-                      paste0("\\beta_{", beta_indices),
-                      NA_character_)
-  )
+  l1 <- rep(NA_character_, length(rhs_fixed$term))
+  l1[rhs_fixed$term == "(Intercept)" & rhs_fixed$l1] <- "\\alpha_{"
+  l1[rhs_fixed$term != "(Intercept)" & rhs_fixed$l1] <- paste0("\\beta_{", beta_indices)
+  
   terms <- rhs_fixed$term[!is.na(l1)]
   
   ss <- vapply(terms, function(x) vary_higher_subscripts(x, rhs_random),
