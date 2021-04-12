@@ -309,9 +309,12 @@ create_term.forecast_ARIMA <- function(side, ital_vars) {
 
 escape_tex <- function(term) {
   unescaped <- c(" ", "&", "%", "$", "#", "_", "{", "}", "~", "^", "\\")
+  
+  hat <- ifelse(is_html_output(), "\\texttt{^}", "\\texttt{\\^{}}")
+  
   escaped <- c(
     "\\ ", "\\&", "\\%", "\\$", "\\#", "\\_", "\\{", "\\}",
-    "\\char`\\~", "\\text{^}", "\\backslash "
+    "\\char`\\~", hat, "\\backslash "
   )
 
   # Split term into a vector of single characters
