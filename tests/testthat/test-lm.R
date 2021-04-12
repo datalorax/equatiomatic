@@ -42,3 +42,9 @@ test_that("Custom Greek works", {
     )
   )
 })
+
+test_that("Hat is escaped correctly", {
+  mtcars$carb <- ordered(mtcars$carb)
+  m <- lm(mpg ~ carb, mtcars)
+  expect_snapshot_output(extract_eq(m))
+})

@@ -40,3 +40,9 @@
     \operatorname{mpg} = \zeta + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
     $$
 
+# Hat is escaped correctly
+
+    $$
+    \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{carb}_{\operatorname{.L}}) + \beta_{2}(\operatorname{carb}_{\operatorname{.Q}}) + \beta_{3}(\operatorname{carb}_{\operatorname{.C}}) + \beta_{4}(\operatorname{carb}_{\operatorname{\texttt{\^{}}4}}) + \beta_{5}(\operatorname{carb}_{\operatorname{\texttt{\^{}}5}}) + \epsilon
+    $$
+
