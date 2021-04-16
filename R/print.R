@@ -72,5 +72,5 @@ is_texPreview_installed <- function() {
 #' @param ... not used
 #' @noRd
 format.equation <- function(x, ...) {
-  paste0(c("$$\n", x, "\n$$"), collapse = "")
+  paste0(c("$$\n", x, "\n$$\n"), collapse = "")
 }

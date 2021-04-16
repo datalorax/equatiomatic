@@ -23,7 +23,7 @@ test_that("Equation is knit_print-ed correctly", {
   knit_print_tex <- knitr::knit_print(extract_eq(model_simple))
   actual <- paste(
     "$$\n\\operatorname{mpg} = \\alpha + \\beta_{1}(\\operatorname{cyl}) +",
-    "\\beta_{2}(\\operatorname{disp}) + \\epsilon\n$$"
+    "\\beta_{2}(\\operatorname{disp}) + \\epsilon\n$$\n"
   )
 
   expect_equal(as.character(knit_print_tex),
