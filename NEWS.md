@@ -1,4 +1,5 @@
 # equatiomatic (development version)
+* Added new `font_size` argument, which takes any LaTeX font size (see [here](https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles))
 * Bug fix related to categorical variables and level parsing for `lme4::lmer()` models
 * Minor bug fix related to indexing of coefficients for `lme4::lmer()` models
 

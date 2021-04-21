@@ -18,6 +18,7 @@ extract_eq(
   use_coefs = FALSE,
   coef_digits = 2,
   fix_signs = TRUE,
+  font_size,
   mean_separate,
   ...
 )
@@ -71,6 +72,10 @@ round to when displaying model estimates.}
 coefficient estimates that are negative are preceded with a "+" (e.g.
 \code{5(x) + -3(z)}). If enabled, the "+ -" is replaced with a "-" (e.g.
 \code{5(x) - 3(z)}).}
+
+\item{font_size}{The font size of the equation. Defaults to default of
+the output format. Takes any of the standard LaTeX arguments (see
+\href{https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles}{here}).}
 
 \item{mean_separate}{Currently only support for \code{\link[lme4]{lmer}}
 models. Should the mean structure be inside or separated from the

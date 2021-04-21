@@ -42,6 +42,9 @@
 #'   coefficient estimates that are negative are preceded with a "+" (e.g.
 #'   `5(x) + -3(z)`). If enabled, the "+ -" is replaced with a "-" (e.g.
 #'   `5(x) - 3(z)`).
+#' @param font_size The font size of the equation. Defaults to default of
+#'   the output format. Takes any of the standard LaTeX arguments (see 
+#'   [here](https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles)).
 #' @param mean_separate Currently only support for \code{\link[lme4]{lmer}}
 #'   models. Should the mean structure be inside or separated from the
 #'   normal distribution? Defaults to \code{NULL}, in which case it will become
@@ -110,7 +113,7 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
-                       mean_separate, ...) {
+                       font_size, mean_separate, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -125,7 +128,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
-                               fix_signs = TRUE, mean_separate, ...) {
+                               fix_signs = TRUE, font_size = NULL, 
+                               mean_separate, ...) {
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
 
@@ -169,7 +173,10 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     })
   }
 
-  if (wrap | length(rhs_combined) > 1 | show_distribution) {
+  if (wrap | 
+      length(rhs_combined) > 1 | 
+      show_distribution | 
+      !is.null(font_size)) {
     needs_align <- TRUE
   } else {
     needs_align <- FALSE
@@ -204,6 +211,9 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
       "\n\\end{", align_env, "}"
     )
   }
+  if (!is.null(font_size)) {
+    eq <- paste0("\\", font_size, "\n", eq)
+  }
 
   class(eq) <- c("equation", "character")
 
@@ -225,7 +235,8 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                operator_location = "end",
                                align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
-                               fix_signs = TRUE, mean_separate = NULL, ...) {
+                               fix_signs = TRUE, 
+                               font_size = NULL, mean_separate = NULL, ...) {
   l1 <- create_l1_merMod(model, mean_separate,
     ital_vars, wrap, terms_per_line,
     use_coefs, coef_digits, fix_signs,
@@ -249,6 +260,9 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
     paste0("  ", eq),
     "\n\\end{", align_env, "}"
   )
+  if (!is.null(font_size)) {
+    eq <- paste0("\\", font_size, "\n", eq)
+  }
   class(eq) <- c("equation", "character")
 
   eq
@@ -263,7 +277,8 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
                                       wrap = FALSE, terms_per_line = 4,
                                       operator_location = "end", align_env = "aligned",
                                       use_coefs = FALSE, coef_digits = 2,
-                                      fix_signs = TRUE, mean_separate, ...) {
+                                      fix_signs = TRUE, 
+                                      font_size = NULL, mean_separate, ...) {
 
   # Determine if we are working on Regerssion w/ Arima Errors
   regression <- helper_arima_is_regression(model)
@@ -335,11 +350,22 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
       paste(eq, collapse = " \\\\\n"),
       "\n\\end{alignat}"
     )
+    if (!is.null(font_size)) {
+      eq <- paste0("\\", font_size, "\n", eq)
+    }
   } else {
     # If arima only then we only need 1 line and no alignment.
     eq <- eq$arima_eq
+    if (!is.null(font_size)) {
+      eq <- paste0(
+        "\\begin{aligned}\n",
+        paste(eq, collapse = " \\\\\n"),
+        "\n\\end{aligned}"
+      )
+      eq <- paste0("\\", font_size, "\n", eq)
+    }
   }
-
+  
   # Set the class
   class(eq) <- c("equation", "character")
 
