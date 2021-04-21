@@ -168,6 +168,7 @@
   <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>coef_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>font_size</span>,
   <span class='no'>mean_separate</span>,
   <span class='no'>...</span>
 )</pre>
@@ -249,6 +250,12 @@ round to when displaying model estimates.</p></td>
 coefficient estimates that are negative are preceded with a "+" (e.g.
 <code>5(x) + -3(z)</code>). If enabled, the "+ -" is replaced with a "-" (e.g.
 <code>5(x) - 3(z)</code>).</p></td>
+    </tr>
+    <tr>
+      <th>font_size</th>
+      <td><p>The font size of the equation. Defaults to default of
+the output format. Takes any of the standard LaTeX arguments (see
+<a href='https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles'>here</a>).</p></td>
     </tr>
     <tr>
       <th>mean_separate</th>
