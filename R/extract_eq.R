@@ -237,7 +237,7 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, 
                                font_size = NULL, mean_separate = NULL, ...) {
-  l1 <- create_l1(model, mean_separate = NULL,
+  l1 <- create_l1(model, mean_separate,
     ital_vars, wrap, terms_per_line,
     use_coefs, coef_digits, fix_signs,
     operator_location,

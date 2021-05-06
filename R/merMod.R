@@ -670,8 +670,65 @@ convert_matrix <- function(mat) {
   )
 }
 
-#' @export
-#' @noRd
+create_l1_fixef <- function(model, ital_vars, use_coefs, coef_digits, 
+                            mean_separate, fix_signs, wrap, terms_per_line, 
+                            operator_location) {
+  rhs <- extract_rhs(model)
+  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  greek <- create_fixef_greek_merMod(model)
+  terms <- create_term(greek, ital_vars)
+  
+  terms <- vapply(terms, function(x) {
+    if (nchar(x) == 0) {
+      return("")
+    }
+    paste0("(", x, ")")
+  }, character(1))
+  
+  if (use_coefs) {
+    sigma <- round(sigma(model), coef_digits)
+    l1 <- paste0(
+      round(greek$estimate[greek$predsplit == "l1"], coef_digits),
+      "_{", greek$greek[greek$predsplit == "l1"], "}",
+      terms[greek$predsplit == "l1"]
+    )
+  } else {
+    l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
+                 terms[greek$predsplit == "l1"])
+  }
+  
+  if (wrap) {
+    if (operator_location == "start") {
+      line_end <- "\\\\\n&\\quad + "
+    } else {
+      line_end <- "\\ + \\\\\n&\\quad "
+    }
+    l1 <- split(l1, ceiling(seq_along(l1) / terms_per_line))
+    
+    if (identical(mean_separate, FALSE)) {
+      l1 <- lapply(l1, function(x) {
+        terms_added <- paste0(x, collapse = " + ")
+        paste0("&", terms_added)
+      })
+      l1 <- paste0("\\begin{aligned}\n", paste0(l1, collapse = "\\\\"), "\n\\end{aligned}")
+      if (fix_signs) {
+        l1 <- fix_coef_signs(l1)  
+      }
+    } else {
+      l1 <- lapply(l1, paste0, collapse = " + ")
+      l1 <- paste0(l1, collapse = line_end)
+      if (fix_signs) {
+        l1 <- fix_coef_signs(l1)  
+      }
+    }
+  } else {
+    l1 <- paste0(l1, collapse = " + ")
+    if (fix_signs) {
+      l1 <- fix_coef_signs(l1)  
+    }
+  }
+}
+
 create_l1 <- function(model, ...) {
   UseMethod("create_l1", model)
 }
@@ -694,61 +751,12 @@ create_l1.lmerMod <- function(model, mean_separate,
                              ital_vars, wrap, terms_per_line,
                              use_coefs, coef_digits, fix_signs,
                              operator_location, sigma = "\\sigma^2") {
+  
   rhs <- extract_rhs(model)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
-  greek <- create_fixef_greek_merMod(model)
-  terms <- create_term(greek, ital_vars)
-  
-  terms <- vapply(terms, function(x) {
-    if (nchar(x) == 0) {
-      return("")
-    }
-    paste0("(", x, ")")
-  }, character(1))
-  
-  if (use_coefs) {
-    sigma <- round(sigma(model), coef_digits)
-    l1 <- paste0(
-      round(greek$estimate[greek$predsplit == "l1"], coef_digits),
-      "_{", greek$greek[greek$predsplit == "l1"], "}",
-      terms[greek$predsplit == "l1"]
-    )
-  } else {
-    l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
-                 terms[greek$predsplit == "l1"])
-  }
-  
-  if (wrap) {
-    if (operator_location == "start") {
-      line_end <- "\\\\\n&\\quad + "
-    } else {
-      line_end <- "\\ + \\\\\n&\\quad "
-    }
-    l1 <- split(l1, ceiling(seq_along(l1) / terms_per_line))
-    
-    if (identical(mean_separate, FALSE)) {
-      l1 <- lapply(l1, function(x) {
-        terms_added <- paste0(x, collapse = " + ")
-        paste0("&", terms_added)
-      })
-      l1 <- paste0("\\begin{aligned}\n", paste0(l1, collapse = "\\\\"), "\n\\end{aligned}")
-      if (fix_signs) {
-        l1 <- fix_coef_signs(l1)  
-      }
-    } else {
-      l1 <- lapply(l1, paste0, collapse = " + ")
-      l1 <- paste0(l1, collapse = line_end)
-      if (fix_signs) {
-        l1 <- fix_coef_signs(l1)  
-      }
-    }
-  } else {
-    l1 <- paste0(l1, collapse = " + ")
-    if (fix_signs) {
-      l1 <- fix_coef_signs(l1)  
-    }
-  }
-  
+  l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
+                        mean_separate, fix_signs, wrap, terms_per_line, 
+                        operator_location)
   if (is.null(mean_separate)) {
     mean_separate <- sum(rhs$l1) > 3
   }
@@ -766,61 +774,12 @@ create_l1.glmerMod <- function(model, mean_separate,
                               ital_vars, wrap, terms_per_line,
                               use_coefs, coef_digits, fix_signs,
                               operator_location, sigma = "\\sigma^2") {
+  
   rhs <- extract_rhs(model)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
-  greek <- create_fixef_greek_merMod(model)
-  terms <- create_term(greek, ital_vars)
-  
-  terms <- vapply(terms, function(x) {
-    if (nchar(x) == 0) {
-      return("")
-    }
-    paste0("(", x, ")")
-  }, character(1))
-  
-  if (use_coefs) {
-    sigma <- round(sigma(model), coef_digits)
-    l1 <- paste0(
-      round(greek$estimate[greek$predsplit == "l1"], coef_digits),
-      "_{", greek$greek[greek$predsplit == "l1"], "}",
-      terms[greek$predsplit == "l1"]
-    )
-  } else {
-    l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
-                 terms[greek$predsplit == "l1"])
-  }
-  
-  if (wrap) {
-    if (operator_location == "start") {
-      line_end <- "\\\\\n&\\quad + "
-    } else {
-      line_end <- "\\ + \\\\\n&\\quad "
-    }
-    l1 <- split(l1, ceiling(seq_along(l1) / terms_per_line))
-    
-    if (identical(mean_separate, FALSE)) {
-      l1 <- lapply(l1, function(x) {
-        terms_added <- paste0(x, collapse = " + ")
-        paste0("&", terms_added)
-      })
-      l1 <- paste0("\\begin{aligned}\n", paste0(l1, collapse = "\\\\"), "\n\\end{aligned}")
-      if (fix_signs) {
-        l1 <- fix_coef_signs(l1)  
-      }
-    } else {
-      l1 <- lapply(l1, paste0, collapse = " + ")
-      l1 <- paste0(l1, collapse = line_end)
-      if (fix_signs) {
-        l1 <- fix_coef_signs(l1)  
-      }
-    }
-  } else {
-    l1 <- paste0(l1, collapse = " + ")
-    if (fix_signs) {
-      l1 <- fix_coef_signs(l1)  
-    }
-  }
-  
+  l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
+                        mean_separate, fix_signs, wrap, terms_per_line, 
+                        operator_location)
   outcome <- escape_tex(all.vars(formula(model))[1])
   out_v <- model@frame[[outcome]]
   if (is.factor(out_v)) {
