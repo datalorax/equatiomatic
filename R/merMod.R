@@ -670,6 +670,12 @@ convert_matrix <- function(mat) {
   )
 }
 
+#' @export
+#' @noRd
+create_l1 <- function(model, ...) {
+  UseMethod("create_l1", model)
+}
+
 #' Create the full fixed-effects portion of an lmerMod
 #'
 #' @param model A fitted model from \code{\link[lme4]{lmer}}
@@ -677,13 +683,14 @@ convert_matrix <- function(mat) {
 #'   names not be wrapped in the \code{\\operatorname{}} command?
 #' @param sigma The error term. Defaults to "\\sigma^2".
 #' @keywords internal
+#' @export
 #' @noRd
 #' @examples \dontrun{
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #' equatiomatic:::create_fixed_merMod(fm1, FALSE)
 #' }
-create_l1_merMod <- function(model, mean_separate,
+create_l1.lmerMod <- function(model, mean_separate,
                              ital_vars, wrap, terms_per_line,
                              use_coefs, coef_digits, fix_signs,
                              operator_location, sigma = "\\sigma^2") {
@@ -752,3 +759,95 @@ create_l1_merMod <- function(model, mean_separate,
     paste(lhs, "\\sim", wrap_normal_dist(l1, sigma))
   }
 }
+
+#' @export
+#' @noRd
+create_l1.glmerMod <- function(model, mean_separate,
+                              ital_vars, wrap, terms_per_line,
+                              use_coefs, coef_digits, fix_signs,
+                              operator_location, sigma = "\\sigma^2") {
+  rhs <- extract_rhs(model)
+  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  greek <- create_fixef_greek_merMod(model)
+  terms <- create_term(greek, ital_vars)
+  
+  terms <- vapply(terms, function(x) {
+    if (nchar(x) == 0) {
+      return("")
+    }
+    paste0("(", x, ")")
+  }, character(1))
+  
+  if (use_coefs) {
+    sigma <- round(sigma(model), coef_digits)
+    l1 <- paste0(
+      round(greek$estimate[greek$predsplit == "l1"], coef_digits),
+      "_{", greek$greek[greek$predsplit == "l1"], "}",
+      terms[greek$predsplit == "l1"]
+    )
+  } else {
+    l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
+                 terms[greek$predsplit == "l1"])
+  }
+  
+  if (wrap) {
+    if (operator_location == "start") {
+      line_end <- "\\\\\n&\\quad + "
+    } else {
+      line_end <- "\\ + \\\\\n&\\quad "
+    }
+    l1 <- split(l1, ceiling(seq_along(l1) / terms_per_line))
+    
+    if (identical(mean_separate, FALSE)) {
+      l1 <- lapply(l1, function(x) {
+        terms_added <- paste0(x, collapse = " + ")
+        paste0("&", terms_added)
+      })
+      l1 <- paste0("\\begin{aligned}\n", paste0(l1, collapse = "\\\\"), "\n\\end{aligned}")
+      if (fix_signs) {
+        l1 <- fix_coef_signs(l1)  
+      }
+    } else {
+      l1 <- lapply(l1, paste0, collapse = " + ")
+      l1 <- paste0(l1, collapse = line_end)
+      if (fix_signs) {
+        l1 <- fix_coef_signs(l1)  
+      }
+    }
+  } else {
+    l1 <- paste0(l1, collapse = " + ")
+    if (fix_signs) {
+      l1 <- fix_coef_signs(l1)  
+    }
+  }
+  
+  outcome <- escape_tex(all.vars(formula(model))[1])
+  out_v <- model@frame[[outcome]]
+  if (is.factor(out_v)) {
+    ss <- escape_tex(levels(out_v)[2])
+  } else {
+    ss <- 1
+  }
+  
+  p <- paste0(
+    "\\operatorname{prob}",
+    add_tex_subscripts(
+      paste0(
+        add_tex_ital_v(outcome, ital_vars), " = ",
+        ifelse(grepl("\\d", ss), ss, add_tex_ital_v(ss, ital_vars))
+      )
+    )
+  )
+  
+  paste0(lhs, " \\sim ", wrap_binomial_dist(p),
+         " \\\\\n    ", create_logit(), " &=", l1)
+}
+
+wrap_binomial_dist <- function(p, n = 1) {
+  paste0("\\operatorname{Binomial}(n = ", n, ", ", p, " = \\widehat{P})")
+}
+
+create_logit <- function() {
+  "\\log\\left[\\frac{\\hat{P}}{1 - \\hat{P}} \\right]"
+}
+
