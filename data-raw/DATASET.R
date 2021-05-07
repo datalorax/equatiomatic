@@ -16,3 +16,19 @@ polls <- dplyr::mutate(polls,
                                                "45-64", "65+")))
 
 usethis::use_data(polls, overwrite = TRUE)
+
+###
+arrests <- readr::read_delim("http://www.stat.columbia.edu/~gelman/arm/examples/police/frisk_with_noise.dat",
+                             skip = 6,
+                             delim = " ")
+
+library(tidyverse)
+arrests <- arrests %>% 
+  group_by(precinct, eth) %>% 
+  summarize(stops = sum(stops),
+            arrests = sum(past.arrests)) %>% 
+  mutate(eth = factor(eth,
+                      levels = 1:3,
+                      labels = c("black", "hispanic", "white")))
+
+usethis::use_data(arrests, overwrite = TRUE)
