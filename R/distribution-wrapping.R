@@ -8,34 +8,38 @@ wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
   paste0("N \\left(", mean, ", ", sigma, " \\right)")
 }
 
+#' @noRd
 wrap_binomial_dist <- function(p, n = 1) {
   paste0("\\operatorname{Binomial}(n = ", n, ", ", p, " = \\widehat{P})")
 }
 
+#' @noRd
 create_logit <- function() {
   "\\log\\left[\\frac{\\hat{P}}{1 - \\hat{P}} \\right]"
 }
 
+#' @noRd
 create_poisson_dist <- function() {
   paste0("\\operatorname{Poisson}(\\lambda_i)")
 }
 
 
 
-
-
 #### Helpers for distributions
 
 #' For glmer models, check which family was used
+#' @noRd
 which_family <- function(model) {
   model@resp$family$family
 }
 
+#' @noRd
 which_link <- function(model) {
   model@resp$family$link
 }
 
 #' Check if a glmer model uses an offset
+#' @noRd
 is_exposure_modeled <- function(model) {
   all(model@resp$offset != 0)
 }
