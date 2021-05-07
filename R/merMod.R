@@ -1,13 +1,3 @@
-#' Utility function to wrap things as normally distributed
-#' @keywords internal
-#' @param mean The LaTeX code that should go into the mean part
-#' @param sigma The LaTeX code that should go into the variance part.
-#'   Defaults to sigma squared
-#' @noRd
-wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
-  paste0("N \\left(", mean, ", ", sigma, " \\right)")
-}
-
 #' Provides the order of the levels
 #' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
 #' \code{rhs[rhs$effect == "ran_pars", ]}.
@@ -780,33 +770,33 @@ create_l1.glmerMod <- function(model, mean_separate,
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
                         operator_location)
-  outcome <- escape_tex(all.vars(formula(model))[1])
-  out_v <- model@frame[[outcome]]
-  if (is.factor(out_v)) {
-    ss <- escape_tex(levels(out_v)[2])
-  } else {
-    ss <- 1
-  }
   
-  p <- paste0(
-    "\\operatorname{prob}",
-    add_tex_subscripts(
-      paste0(
-        add_tex_ital_v(outcome, ital_vars), " = ",
-        ifelse(grepl("\\d", ss), ss, add_tex_ital_v(ss, ital_vars))
+  if (which_family(model) == "binomial" & which_link(model) == "logit") {
+    outcome <- escape_tex(all.vars(formula(model))[1])
+    out_v <- model@frame[[outcome]]
+    if (is.factor(out_v)) {
+      ss <- escape_tex(levels(out_v)[2])
+    } else {
+      ss <- 1
+    }
+    
+    p <- paste0(
+      "\\operatorname{prob}",
+      add_tex_subscripts(
+        paste0(
+          add_tex_ital_v(outcome, ital_vars), " = ",
+          ifelse(grepl("\\d", ss), ss, add_tex_ital_v(ss, ital_vars))
+        )
       )
     )
-  )
-  
-  paste0(lhs, " \\sim ", wrap_binomial_dist(p),
-         " \\\\\n    ", create_logit(), " &=", l1)
+    
+    out <- paste0(lhs, " \\sim ", wrap_binomial_dist(p),
+                  " \\\\\n    ", create_logit(), " &=", l1)
+  } else if (which_family(model) == "poisson" & which_link(model) == "log") {
+    out <- paste0(lhs, " \\sim ", create_poisson_dist(),
+                  " \\\\\n    ", "\\log(\\lambda_i)", " &=", l1)
+  }
+  out
 }
 
-wrap_binomial_dist <- function(p, n = 1) {
-  paste0("\\operatorname{Binomial}(n = ", n, ", ", p, " = \\widehat{P})")
-}
-
-create_logit <- function() {
-  "\\log\\left[\\frac{\\hat{P}}{1 - \\hat{P}} \\right]"
-}
 
