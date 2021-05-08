@@ -43,3 +43,34 @@ which_link <- function(model) {
 is_exposure_modeled <- function(model) {
   all(model@resp$offset != 0)
 }
+
+
+
+### Full distribution wrapping
+binomial_logit_l1 <- function(model, lhs, l1, ital_vars) {
+  outcome <- escape_tex(all.vars(formula(model))[1])
+  out_v <- model@frame[[outcome]]
+  if (is.factor(out_v)) {
+    ss <- escape_tex(levels(out_v)[2])
+  } else {
+    ss <- 1
+  }
+  
+  p <- paste0(
+    "\\operatorname{prob}",
+    add_tex_subscripts(
+      paste0(
+        add_tex_ital_v(outcome, ital_vars), " = ",
+        ifelse(grepl("\\d", ss), ss, add_tex_ital_v(ss, ital_vars))
+      )
+    )
+  )
+  
+  out <- paste0(lhs, " \\sim ", wrap_binomial_dist(p),
+                " \\\\\n    ", create_logit(), " &=", l1)
+}
+
+poisson_log_l1 <- function(lhs, l1) {
+  paste0(lhs, " \\sim ", create_poisson_dist(),
+         " \\\\\n    ", "\\log(\\lambda_i)", " &=", l1)
+}
