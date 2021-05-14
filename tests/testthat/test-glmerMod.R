@@ -1,17 +1,18 @@
 library(lme4)
 
+d <- arrests
+totes <- tapply(d$arrests, d$precinct, sum)
+tot_arrests <- data.frame(precinct = as.numeric(names(totes)),
+                          total_arrests = totes)
+
+d <- merge(d, tot_arrests, by = "precinct")
+
 test_that("Standard Poisson regression models work", {
   p1 <- glmer(stops ~ eth + (1|precinct), 
               data = arrests,
               family = poisson(link = "log"))
   expect_snapshot_output(extract_eq(p1))
   
-  d <- arrests
-  totes <- tapply(d$arrests, d$precinct, sum)
-  tot_arrests <- data.frame(precinct = as.numeric(names(totes)),
-                            total_arrests = totes)
-  
-  d <- merge(d, tot_arrests, by = "precinct")
   
   expect_warning(
     p_complicated <- glmer(stops ~ eth*total_arrests + (eth|precinct), 
@@ -20,6 +21,26 @@ test_that("Standard Poisson regression models work", {
   )
   expect_snapshot_output(extract_eq(p_complicated))
 })
+
+
+test_that("Poisson regression models with an offset work", {
+  p_offset1 <- glmer(stops ~ eth + (1|precinct), 
+              data = arrests,
+              family = poisson(link = "log"),
+              offset = log(arrests))
+  expect_snapshot_output(extract_eq(p_offset1))
+  
+  
+  expect_warning(
+    p_offset_complicated <- glmer(stops ~ eth*total_arrests + (eth|precinct), 
+                           data = d,
+                           family = poisson(link = "log"),
+                           offset = log(arrests))
+  )
+  expect_snapshot_output(extract_eq(p_offset_complicated))
+})
+
+
 
 test_that("Binomial Logistic Regression models work", {
   m <- glmer(bush ~ 1 + black + female + edu + (black|state),

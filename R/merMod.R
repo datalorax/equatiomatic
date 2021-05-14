@@ -685,6 +685,10 @@ create_l1_fixef <- function(model, ital_vars, use_coefs, coef_digits,
   } else {
     l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
                  terms[greek$predsplit == "l1"])
+    if(is_exposure_modeled(model)) {
+      offset <- get_offset(model, ital_vars)
+      l1 <- c(offset, l1)
+    }
   }
   
   if (wrap) {

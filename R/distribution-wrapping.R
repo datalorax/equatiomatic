@@ -44,6 +44,20 @@ is_exposure_modeled <- function(model) {
   all(model@resp$offset != 0)
 }
 
+get_offset <- function(model, ital_vars) {
+  offset_term <- as.character(as.list(model@call)$offset)
+  
+  if(length(offset_term) == 2) {
+    offset_term[1] <- ifelse(offset_term[1] == "log", "\\log", offset_term[1])
+    offset_term[2] <- add_tex_ital(escape_tex(offset_term[2]), ital_vars)
+    offset_term <- paste0(offset_term[1], "(", offset_term[2], ")")
+  } else if (length(offset_term) == 2) {
+    offset_term <- add_tex_ital(escape_tex(offset_term), ital_vars)
+  }
+  
+  offset_term
+}
+
 
 
 ### Full distribution wrapping
