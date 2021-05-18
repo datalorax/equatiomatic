@@ -187,6 +187,12 @@ extract_rhs.lmerMod <- function(model) {
   full_rhs
 }
 
+#' @noRd
+#' @export
+extract_rhs.glmerMod <- function(model) {
+  extract_rhs.lmerMod(model)
+}
+
 #' Extract right-hand side of an forecast::Arima object
 #'
 #' Extract a dataframe of S/MA components

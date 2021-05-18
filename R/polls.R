@@ -1,0 +1,23 @@
+#' The polls data from Gelman and Hill ()
+#'
+#' This is the dataset used in Gelman & Hill's book, Data Analysis Using 
+#' Regression and Multilevel/Hierarchical Models. They are polling data on
+#' the presidential election from 1988, collected one week before the election.
+#' You can download all the data from the book here: http://www.stat.columbia.edu/~gelman/arm/examples/ARM_Data.zip.
+#' Note that this is only a few of the variables from the original data supplied
+#' with the book.
+#'
+#' @format A tibble with 13,544 rows and 7 variables:
+#' \describe{
+#'   \item{state}{An integer denoting the state identification number.}
+#'   \item{edu}{An ordered factor  stating the education level of the respondent}
+#'   \item{age}{An unordered factor stating the age of range of the respondent}
+#'   \item{female}{A dummy variable (integer) denoting whether the respondent was 
+#'     coded as male (female = 0) or female (female = 1).}
+#'   \item{black}{A dummy variable (integer) denoting whether the respondent was 
+#'     coded as Black (black = 1) or not Black (black = 0).}
+#'   \item{weight}{A sampling weight}
+#'   \item{bush}{Whether the respondent stated they were in favor of voting for
+#'   George Bush Sr.}
+#' }
+"polls"

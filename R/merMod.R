@@ -1,13 +1,3 @@
-#' Utility function to wrap things as normally distributed
-#' @keywords internal
-#' @param mean The LaTeX code that should go into the mean part
-#' @param sigma The LaTeX code that should go into the variance part.
-#'   Defaults to sigma squared
-#' @noRd
-wrap_normal_dist <- function(mean, sigma = "\\sigma^2") {
-  paste0("N \\left(", mean, ", ", sigma, " \\right)")
-}
-
 #' Provides the order of the levels
 #' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
 #' \code{rhs[rhs$effect == "ran_pars", ]}.
@@ -670,23 +660,9 @@ convert_matrix <- function(mat) {
   )
 }
 
-#' Create the full fixed-effects portion of an lmerMod
-#'
-#' @param model A fitted model from \code{\link[lme4]{lmer}}
-#' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable
-#'   names not be wrapped in the \code{\\operatorname{}} command?
-#' @param sigma The error term. Defaults to "\\sigma^2".
-#' @keywords internal
-#' @noRd
-#' @examples \dontrun{
-#' library(lme4)
-#' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
-#' equatiomatic:::create_fixed_merMod(fm1, FALSE)
-#' }
-create_l1_merMod <- function(model, mean_separate,
-                             ital_vars, wrap, terms_per_line,
-                             use_coefs, coef_digits, fix_signs,
-                             operator_location, sigma = "\\sigma^2") {
+create_l1_fixef <- function(model, ital_vars, use_coefs, coef_digits, 
+                            mean_separate, fix_signs, wrap, terms_per_line, 
+                            operator_location) {
   rhs <- extract_rhs(model)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
   greek <- create_fixef_greek_merMod(model)
@@ -709,6 +685,10 @@ create_l1_merMod <- function(model, mean_separate,
   } else {
     l1 <- paste0(greek$greek[greek$predsplit == "l1"], 
                  terms[greek$predsplit == "l1"])
+    if(is_exposure_modeled(model)) {
+      offset <- get_offset(model, ital_vars)
+      l1 <- c(offset, l1)
+    }
   }
   
   if (wrap) {
@@ -741,7 +721,36 @@ create_l1_merMod <- function(model, mean_separate,
       l1 <- fix_coef_signs(l1)  
     }
   }
+}
+
+create_l1 <- function(model, ...) {
+  UseMethod("create_l1", model)
+}
+
+#' Create the full fixed-effects portion of an lmerMod
+#'
+#' @param model A fitted model from \code{\link[lme4]{lmer}}
+#' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable
+#'   names not be wrapped in the \code{\\operatorname{}} command?
+#' @param sigma The error term. Defaults to "\\sigma^2".
+#' @keywords internal
+#' @export
+#' @noRd
+#' @examples \dontrun{
+#' library(lme4)
+#' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' equatiomatic:::create_fixed_merMod(fm1, FALSE)
+#' }
+create_l1.lmerMod <- function(model, mean_separate,
+                             ital_vars, wrap, terms_per_line,
+                             use_coefs, coef_digits, fix_signs,
+                             operator_location, sigma = "\\sigma^2") {
   
+  rhs <- extract_rhs(model)
+  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
+                        mean_separate, fix_signs, wrap, terms_per_line, 
+                        operator_location)
   if (is.null(mean_separate)) {
     mean_separate <- sum(rhs$l1) > 3
   }
@@ -752,3 +761,27 @@ create_l1_merMod <- function(model, mean_separate,
     paste(lhs, "\\sim", wrap_normal_dist(l1, sigma))
   }
 }
+
+#' @export
+#' @noRd
+create_l1.glmerMod <- function(model, mean_separate,
+                              ital_vars, wrap, terms_per_line,
+                              use_coefs, coef_digits, fix_signs,
+                              operator_location, sigma = "\\sigma^2") {
+  
+  rhs <- extract_rhs(model)
+  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
+                        mean_separate, fix_signs, wrap, terms_per_line, 
+                        operator_location)
+  
+  combo <- paste0(which_family(model), "-", which_link(model))
+  
+  switch(
+    combo,
+    "binomial-logit" = binomial_logit_l1(model, lhs, l1, ital_vars),
+    "poisson-log" = poisson_log_l1(lhs, l1)
+  )
+}
+
+
