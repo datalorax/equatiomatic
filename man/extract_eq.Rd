@@ -86,6 +86,11 @@ outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If \code{FALSE}, this
 same equation would be outcome ~ N(alpha + beta, sigma).}
 
 \item{...}{Additional arguments (for future development; not currently used).}
+
+\item{return_variances}{Logical. When \code{use_coefs = TRUE} with a mixed
+effects model (e.g., \code{lme4::lmer()}), should the variances and
+co-variances be returned? If \code{FALSE} (the default) standard deviations
+and correlations are returned instead.}
 }
 \value{
 A character of class \dQuote{equation}.

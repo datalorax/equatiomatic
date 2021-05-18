@@ -190,8 +190,8 @@ assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
 #'   at), and a new \code{predsplit} column that allows this data frame
 #'   to be split by the level at which the variable predicts.
 #' @noRd
-create_fixef_greek_merMod <- function(model) {
-  rhs <- extract_rhs(model)
+create_fixef_greek_merMod <- function(model, return_variances) {
+  rhs <- extract_rhs(model, return_variances)
   rhs_fixed <- rhs[rhs$effect == "fixed", ]
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   rhs_random <- rhs_random[rhs_random$group != "Residual", ]
@@ -580,12 +580,13 @@ create_vcov_merMod <- function(rhs_random_lev, means_merMod,
 }
 
 create_ranef_structure_merMod <- function(model, ital_vars, use_coefs,
-                                          coef_digits, fix_signs) {
-  rhs <- extract_rhs(model)
+                                          coef_digits, fix_signs, 
+                                          return_variances) {
+  rhs <- extract_rhs(model, return_variances)
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   order <- get_order(rhs_random[rhs_random$group != "Residual", ])
   
-  fixed_greek_mermod <- create_fixef_greek_merMod(model)
+  fixed_greek_mermod <- create_fixef_greek_merMod(model, return_variances)
   means_merMod <- create_means_merMod(rhs, fixed_greek_mermod, 
                                       model, ital_vars,
                                       use_coefs, coef_digits, 
@@ -662,10 +663,10 @@ convert_matrix <- function(mat) {
 
 create_l1_fixef <- function(model, ital_vars, use_coefs, coef_digits, 
                             mean_separate, fix_signs, wrap, terms_per_line, 
-                            operator_location) {
-  rhs <- extract_rhs(model)
+                            operator_location, return_variances) {
+  rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
-  greek <- create_fixef_greek_merMod(model)
+  greek <- create_fixef_greek_merMod(model, return_variances)
   terms <- create_term(greek, ital_vars)
   
   terms <- vapply(terms, function(x) {
@@ -744,13 +745,14 @@ create_l1 <- function(model, ...) {
 create_l1.lmerMod <- function(model, mean_separate,
                              ital_vars, wrap, terms_per_line,
                              use_coefs, coef_digits, fix_signs,
-                             operator_location, sigma = "\\sigma^2") {
+                             operator_location, sigma = "\\sigma^2",
+                             return_variances) {
   
-  rhs <- extract_rhs(model)
+  rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
-                        operator_location)
+                        operator_location, return_variances)
   if (is.null(mean_separate)) {
     mean_separate <- sum(rhs$l1) > 3
   }
@@ -767,13 +769,14 @@ create_l1.lmerMod <- function(model, mean_separate,
 create_l1.glmerMod <- function(model, mean_separate,
                               ital_vars, wrap, terms_per_line,
                               use_coefs, coef_digits, fix_signs,
-                              operator_location, sigma = "\\sigma^2") {
+                              operator_location, sigma = "\\sigma^2",
+                              return_variances) {
   
-  rhs <- extract_rhs(model)
+  rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
-                        operator_location)
+                        operator_location, return_variances)
   
   combo <- paste0(which_family(model), "-", which_link(model))
   

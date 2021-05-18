@@ -52,6 +52,10 @@
 #'   \code{TRUE}, the equation will be displayed as, for example,
 #'   outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If \code{FALSE}, this
 #'   same equation would be outcome ~ N(alpha + beta, sigma).
+#' @param return_variances Logical. When \code{use_coefs = TRUE} with a mixed
+#'   effects model (e.g., \code{lme4::lmer()}), should the variances and
+#'   co-variances be returned? If \code{FALSE} (the default) standard deviations
+#'   and correlations are returned instead.
 #' @param ... Additional arguments (for future development; not currently used).
 #' @export
 #'
@@ -236,16 +240,17 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, 
-                               font_size = NULL, mean_separate = NULL, ...) {
+                               font_size = NULL, mean_separate = NULL,
+                               return_variances = FALSE, ...) {
   l1 <- create_l1(model, mean_separate,
     ital_vars, wrap, terms_per_line,
     use_coefs, coef_digits, fix_signs,
     operator_location,
-    sigma = "\\sigma^2"
+    sigma = "\\sigma^2", return_variances
   )
   vcv <- create_ranef_structure_merMod(
     model, ital_vars, use_coefs, coef_digits,
-    fix_signs
+    fix_signs, return_variances
   )
 
   if (grepl("^\n    \n", vcv[[1]])) {
