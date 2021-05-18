@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • equatiomatic</title>
+<title>Arrest data from Gelman &amp; Hill — arrests • equatiomatic</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,11 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Arrest data from Gelman &amp; Hill — arrests" />
+<meta property="og:description" content="Arrest data from Gelman &amp;amp; Hill's book, used in Chapter 6 (and others).
+The data have been aggregated by precinct and race/ethnicity, with the
+sum of prior arrests and stops calculated. You can download the original
+data here: http://www.stat.columbia.edu/~gelman/arm/examples/police/" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -68,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -142,90 +146,35 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Arrest data from Gelman &amp; Hill</h1>
+    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/arrests.R'><code>R/arrests.R</code></a></small>
+    <div class="hidden name"><code>arrests.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Arrest data from Gelman &amp; Hill's book, used in Chapter 6 (and others).
+The data have been aggregated by precinct and race/ethnicity, with the
+sum of prior arrests and stops calculated. You can download the original
+data here: http://www.stat.columbia.edu/~gelman/arm/examples/police/</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>arrests</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="arrests.html">arrests</a></code> </p>
-        </td>
-        <td><p>Arrest data from Gelman &amp; Hill</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="extract_eq.html">extract_eq()</a></code> </p>
-        </td>
-        <td><p>'LaTeX' code for R models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hsb.html">hsb</a></code> </p>
-        </td>
-        <td><p>A subset of the full 1982 High School and Beyond Survey</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="penguins.html">penguins</a></code> </p>
-        </td>
-        <td><p>Size measurements for adult foraging penguins near Palmer Station, Antarctica</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="polls.html">polls</a></code> </p>
-        </td>
-        <td><p>The polls data from Gelman and Hill ()</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.equation.html">print(<i>&lt;equation&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print 'LaTeX' equations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sim_longitudinal.html">sim_longitudinal</a></code> </p>
-        </td>
-        <td><p>Simulated longitudinal data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="simple_ts.html">simple_ts</a></code> </p>
-        </td>
-        <td><p>Simple simulated time series data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ts_reg_list.html">ts_reg_list</a></code> </p>
-        </td>
-        <td><p>Simulated data for time-series regression</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A tibble with 225 rows and 4 variables:</p><dl'>
+<dt>precinct</dt><dd><p>An integer denoting the precinct identification number.</p></dd>
+<dt>eth</dt><dd><p>A factor with the coded race/ethnicity</p></dd>
+<dt>stops</dt><dd><p>The number of police stops</p></dd>
+<dt>arrests</dt><dd><p>The number of prior arrests (this is used as an offset variable in the book)</p></dd>
+
+</dl>
+
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
