@@ -14,7 +14,7 @@ test_that("Standard Poisson regression models work", {
   expect_snapshot_output(extract_eq(p1))
   
   
-  expect_warning(
+  suppressWarnings(
     p_complicated <- glmer(stops ~ eth*total_arrests + (eth|precinct), 
                            data = d,
                            family = poisson(link = "log"))
@@ -31,7 +31,7 @@ test_that("Poisson regression models with an offset work", {
   expect_snapshot_output(extract_eq(p_offset1))
   
   
-  expect_warning(
+  suppressWarnings(
     p_offset_complicated <- glmer(stops ~ eth*total_arrests + (eth|precinct), 
                            data = d,
                            family = poisson(link = "log"),
