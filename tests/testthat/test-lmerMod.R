@@ -261,12 +261,27 @@ test_that("Nested model syntax works", {
 test_that("use_coef works", {
   suppressWarnings(
     use_coef_m1 <- lmer(
-      score ~ wave * group * treatment + wave * prop_low * treatment +
+      score ~ wave  + treatment +
         (wave | sid) + (wave | school) +
-        (wave + treatment | district),
+        (1 | district),
       sim_longitudinal
     )
   )
   # Nested random effects 3
-  expect_snapshot_output(extract_eq(use_coef_m1))
+  expect_snapshot_output(extract_eq(use_coef_m1, use_coefs = TRUE))
+})
+
+test_that("return variances works", {
+  suppressWarnings(
+    use_coef_m1_var <- lmer(
+      score ~ wave  + treatment +
+        (wave | sid) + (wave | school) +
+        (1 | district),
+      sim_longitudinal
+    )
+  )
+  # Nested random effects 3
+  expect_snapshot_output(
+    extract_eq(use_coef_m1_var, use_coefs = TRUE, return_variances = TRUE)
+  )
 })

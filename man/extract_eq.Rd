@@ -20,6 +20,7 @@ extract_eq(
   fix_signs = TRUE,
   font_size,
   mean_separate,
+  return_variances = FALSE,
   ...
 )
 }
@@ -84,6 +85,11 @@ normal distribution? Defaults to \code{NULL}, in which case it will become
 \code{TRUE}, the equation will be displayed as, for example,
 outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If \code{FALSE}, this
 same equation would be outcome ~ N(alpha + beta, sigma).}
+
+\item{return_variances}{Logical. When \code{use_coefs = TRUE} with a mixed
+effects model (e.g., \code{lme4::lmer()}), should the variances and
+co-variances be returned? If \code{FALSE} (the default) standard deviations
+and correlations are returned instead.}
 
 \item{...}{Additional arguments (for future development; not currently used).}
 }

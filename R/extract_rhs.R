@@ -103,7 +103,7 @@ extract_rhs.default <- function(model) {
 
 #' @noRd
 #' @export
-extract_rhs.lmerMod <- function(model) {
+extract_rhs.lmerMod <- function(model, return_variances) {
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))
 
@@ -112,8 +112,16 @@ extract_rhs.lmerMod <- function(model) {
   formula_rhs_terms <- gsub("^`?(.+)`$?", "\\1", formula_rhs_terms)
 
   # Extract coefficient names and values from model
-  full_rhs <- broom.mixed::tidy(model)
-
+  if(return_variances) {
+    full_rhs <- broom.mixed::tidy(model, scales = c("vcov", NA))
+    
+    # Make the names like they are sdcor, so it doesn't break other code
+    full_rhs$term <- gsub("var__", "sd__", full_rhs$term)
+    full_rhs$term <- gsub("cov__", "cor__", full_rhs$term)
+  } else {
+    full_rhs <- broom.mixed::tidy(model)  
+  }
+  
   full_rhs$term <- vapply(full_rhs$term, order_interaction,
     FUN.VALUE = character(1)
   )
@@ -189,8 +197,8 @@ extract_rhs.lmerMod <- function(model) {
 
 #' @noRd
 #' @export
-extract_rhs.glmerMod <- function(model) {
-  extract_rhs.lmerMod(model)
+extract_rhs.glmerMod <- function(model, ...) {
+  extract_rhs.lmerMod(model, ...)
 }
 
 #' Extract right-hand side of an forecast::Arima object
