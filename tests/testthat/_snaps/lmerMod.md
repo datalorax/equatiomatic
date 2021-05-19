@@ -1074,7 +1074,7 @@
 
     $$
     \begin{aligned}
-      \operatorname{\widehat{score}}_{i}  &\sim N \left(96.8_{\alpha_{j[i],k[i],l[i]}} + 0.08_{\beta_{1j[i],k[i],l[i]}}(\operatorname{wave}), \sigma^2 \right) \\    
+      \operatorname{\widehat{score}}_{i}  &\sim N \left(98.18_{\alpha_{j[i],k[i],l[i]}} + 0.17_{\beta_{1j[i],k[i]}}(\operatorname{wave}), \sigma^2 \right) \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -1087,16 +1087,16 @@
     \left(
       \begin{array}{c} 
         \begin{aligned}
-          &-7.71_{\gamma_{1}^{\alpha}}(\operatorname{group}_{\operatorname{low}}) - 5.63_{\gamma_{2}^{\alpha}}(\operatorname{group}_{\operatorname{medium}}) + 2.52_{\gamma_{3l[i]}^{\alpha}}(\operatorname{treatment}_{\operatorname{1}}) + 5.31_{\gamma_{4}^{\alpha}}(\operatorname{group}_{\operatorname{low}} \times \operatorname{treatment}_{\operatorname{1}}) + 2.56_{\gamma_{5}^{\alpha}}(\operatorname{group}_{\operatorname{medium}} \times \operatorname{treatment}_{\operatorname{1}}) \\
-          &0.12_{\gamma^{\beta_{1}}_{1}}(\operatorname{group}_{\operatorname{low}}) + 0.38_{\gamma^{\beta_{1}}_{2}}(\operatorname{group}_{\operatorname{medium}}) - 0.01_{\gamma^{\beta_{1}}_{3}}(\operatorname{treatment}_{\operatorname{1}}) - 0.23_{\gamma^{\beta_{1}}_{4}}(\operatorname{group}_{\operatorname{low}} \times \operatorname{treatment}_{\operatorname{1}}) - 0.52_{\gamma^{\beta_{1}}_{5}}(\operatorname{group}_{\operatorname{medium}} \times \operatorname{treatment}_{\operatorname{1}})
+          &-2.1_{\gamma_{1}^{\alpha}}(\operatorname{treatment}_{\operatorname{1}}) \\
+          &0
         \end{aligned}
       \end{array}
     \right)
     , 
     \left(
       \begin{array}{cc}
-         9.11 & -0.15 \\ 
-         -0.15 & 0.16
+         9.26 & -0.2 \\ 
+         -0.2 & 0.29
       \end{array}
     \right)
      \right)
@@ -1113,34 +1113,6 @@
     \left(
       \begin{array}{c} 
         \begin{aligned}
-          &19.01_{\gamma_{1}^{\alpha}}(\operatorname{prop\_low}) - 16.67_{\gamma_{2}^{\alpha}}(\operatorname{prop\_low} \times \operatorname{treatment}_{\operatorname{1}}) \\
-          &0.13_{\gamma^{\beta_{1}}_{1}}(\operatorname{prop\_low}) - 0.1_{\gamma^{\beta_{1}}_{1}}(\operatorname{prop\_low} \times \operatorname{treatment}_{\operatorname{1}})
-        \end{aligned}
-      \end{array}
-    \right)
-    , 
-    \left(
-      \begin{array}{cc}
-         3.18 & 1 \\ 
-         1 & 0.01
-      \end{array}
-    \right)
-     \right)
-        \text{, for school k = 1,} \dots \text{,K} \\    
-    \left(
-      \begin{array}{c} 
-        \begin{aligned}
-          &\alpha_{l} \\
-          &\beta_{1l} \\
-          &\gamma_{3l}
-        \end{aligned}
-      \end{array}
-    \right)
-      &\sim N \left(
-    \left(
-      \begin{array}{c} 
-        \begin{aligned}
-          &0 \\
           &0 \\
           &0
         \end{aligned}
@@ -1148,13 +1120,13 @@
     \right)
     , 
     \left(
-      \begin{array}{ccc}
-         1.12 & 1 & -0.64 \\ 
-         1 & 0.04 & -0.67 \\ 
-         -0.64 & -0.67 & 3.2
+      \begin{array}{cc}
+         3.24 & 1 \\ 
+         1 & 0.01
       \end{array}
     \right)
      \right)
+        \text{, for school k = 1,} \dots \text{,K} \\    \alpha_{l}  &\sim N \left(0, 0 \right)
         \text{, for district l = 1,} \dots \text{,L}
     \end{aligned}
     $$
@@ -1163,7 +1135,7 @@
 
     $$
     \begin{aligned}
-      \operatorname{\widehat{score}}_{i}  &\sim N \left(96.8_{\alpha_{j[i],k[i],l[i]}} + 0.08_{\beta_{1j[i],k[i],l[i]}}(\operatorname{wave}), \sigma^2 \right) \\    
+      \operatorname{\widehat{score}}_{i}  &\sim N \left(98.18_{\alpha_{j[i],k[i],l[i]}} + 0.17_{\beta_{1j[i],k[i]}}(\operatorname{wave}), \sigma^2 \right) \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -1176,16 +1148,16 @@
     \left(
       \begin{array}{c} 
         \begin{aligned}
-          &-7.71_{\gamma_{1}^{\alpha}}(\operatorname{group}_{\operatorname{low}}) - 5.63_{\gamma_{2}^{\alpha}}(\operatorname{group}_{\operatorname{medium}}) + 2.52_{\gamma_{3l[i]}^{\alpha}}(\operatorname{treatment}_{\operatorname{1}}) + 5.31_{\gamma_{4}^{\alpha}}(\operatorname{group}_{\operatorname{low}} \times \operatorname{treatment}_{\operatorname{1}}) + 2.56_{\gamma_{5}^{\alpha}}(\operatorname{group}_{\operatorname{medium}} \times \operatorname{treatment}_{\operatorname{1}}) \\
-          &0.12_{\gamma^{\beta_{1}}_{1}}(\operatorname{group}_{\operatorname{low}}) + 0.38_{\gamma^{\beta_{1}}_{2}}(\operatorname{group}_{\operatorname{medium}}) - 0.01_{\gamma^{\beta_{1}}_{3}}(\operatorname{treatment}_{\operatorname{1}}) - 0.23_{\gamma^{\beta_{1}}_{4}}(\operatorname{group}_{\operatorname{low}} \times \operatorname{treatment}_{\operatorname{1}}) - 0.52_{\gamma^{\beta_{1}}_{5}}(\operatorname{group}_{\operatorname{medium}} \times \operatorname{treatment}_{\operatorname{1}})
+          &-2.1_{\gamma_{1}^{\alpha}}(\operatorname{treatment}_{\operatorname{1}}) \\
+          &0
         \end{aligned}
       \end{array}
     \right)
     , 
     \left(
       \begin{array}{cc}
-         82.96 & -0.22 \\ 
-         -0.22 & 0.03
+         85.78 & -0.53 \\ 
+         -0.53 & 0.09
       \end{array}
     \right)
      \right)
@@ -1202,34 +1174,6 @@
     \left(
       \begin{array}{c} 
         \begin{aligned}
-          &19.01_{\gamma_{1}^{\alpha}}(\operatorname{prop\_low}) - 16.67_{\gamma_{2}^{\alpha}}(\operatorname{prop\_low} \times \operatorname{treatment}_{\operatorname{1}}) \\
-          &0.13_{\gamma^{\beta_{1}}_{1}}(\operatorname{prop\_low}) - 0.1_{\gamma^{\beta_{1}}_{1}}(\operatorname{prop\_low} \times \operatorname{treatment}_{\operatorname{1}})
-        \end{aligned}
-      \end{array}
-    \right)
-    , 
-    \left(
-      \begin{array}{cc}
-         10.11 & 0.03 \\ 
-         0.03 & 0
-      \end{array}
-    \right)
-     \right)
-        \text{, for school k = 1,} \dots \text{,K} \\    
-    \left(
-      \begin{array}{c} 
-        \begin{aligned}
-          &\alpha_{l} \\
-          &\beta_{1l} \\
-          &\gamma_{3l}
-        \end{aligned}
-      \end{array}
-    \right)
-      &\sim N \left(
-    \left(
-      \begin{array}{c} 
-        \begin{aligned}
-          &0 \\
           &0 \\
           &0
         \end{aligned}
@@ -1237,13 +1181,13 @@
     \right)
     , 
     \left(
-      \begin{array}{ccc}
-         1.25 & 0.04 & -2.29 \\ 
-         0.04 & 0 & -0.08 \\ 
-         -2.29 & -0.08 & 10.24
+      \begin{array}{cc}
+         10.47 & 0.02 \\ 
+         0.02 & 0
       \end{array}
     \right)
      \right)
+        \text{, for school k = 1,} \dots \text{,K} \\    \alpha_{l}  &\sim N \left(0, 0 \right)
         \text{, for district l = 1,} \dots \text{,L}
     \end{aligned}
     $$

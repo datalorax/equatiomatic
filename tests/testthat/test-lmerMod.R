@@ -261,9 +261,9 @@ test_that("Nested model syntax works", {
 test_that("use_coef works", {
   suppressWarnings(
     use_coef_m1 <- lmer(
-      score ~ wave * group * treatment + wave * prop_low * treatment +
+      score ~ wave  + treatment +
         (wave | sid) + (wave | school) +
-        (wave + treatment | district),
+        (1 | district),
       sim_longitudinal
     )
   )
@@ -274,9 +274,9 @@ test_that("use_coef works", {
 test_that("return variances works", {
   suppressWarnings(
     use_coef_m1_var <- lmer(
-      score ~ wave * group * treatment + wave * prop_low * treatment +
+      score ~ wave  + treatment +
         (wave | sid) + (wave | school) +
-        (wave + treatment | district),
+        (1 | district),
       sim_longitudinal
     )
   )
