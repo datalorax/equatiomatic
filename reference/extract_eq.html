@@ -170,6 +170,7 @@
   <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>font_size</span>,
   <span class='no'>mean_separate</span>,
+  <span class='kw'>return_variances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -266,6 +267,13 @@ normal distribution? Defaults to <code>NULL</code>, in which case it will become
 <code>TRUE</code>, the equation will be displayed as, for example,
 outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If <code>FALSE</code>, this
 same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
+    </tr>
+    <tr>
+      <th>return_variances</th>
+      <td><p>Logical. When <code>use_coefs = TRUE</code> with a mixed
+effects model (e.g., <code><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lme4::lmer()</a></code>), should the variances and
+co-variances be returned? If <code>FALSE</code> (the default) standard deviations
+and correlations are returned instead.</p></td>
     </tr>
     <tr>
       <th>...</th>
