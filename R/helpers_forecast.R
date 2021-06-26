@@ -8,7 +8,7 @@
 #' @return A boolean
 #' @noRd
 helper_arima_is_regression <- function(model) {
-  # Determine if we are working on Regerssion w/ Arima Errors
+  # Determine if we are working on Regression w/ Arima Errors
   !(is.null(model$xreg) || ((NCOL(model$xreg) == 1) && is.element("drift", names(model$coef))))
 }
 

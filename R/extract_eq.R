@@ -293,7 +293,7 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
                                       font_size = NULL, mean_separate, 
                                       return_variances = FALSE, ...) {
 
-  # Determine if we are working on Regerssion w/ Arima Errors
+  # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
 
   # Get each of the sides
