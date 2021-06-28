@@ -115,7 +115,7 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @noRd
 create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, coef_digits, raw_tex, ...) {
 
-  # Determine if we are working on Regerssion w/ Arima Errors
+  # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
 
   # Convert sides into LATEX-like terms

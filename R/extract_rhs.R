@@ -212,11 +212,11 @@ extract_rhs.glmerMod <- function(model, ...) {
 #' @return A dataframe
 #' @noRd
 extract_rhs.forecast_ARIMA <- function(model, ...) {
-  # RHS of ARIMA is the Moving Averageside
+  # RHS of ARIMA is the Moving Average side
   # Consists of a Non-Seasonal MA (p), Seasonal MA (P), Seasonal Differencing.
 
   # This is more than needed, but we"re being explicit for readability.
-  # Orders stucture in Arima model: c(p, q, P, Q, m, d, D)
+  # Orders structure in Arima model: c(p, q, P, Q, m, d, D)
   ords <- model$arma
   names(ords) <- c("p", "q", "P", "Q", "m", "d", "D")
 
@@ -241,22 +241,9 @@ extract_rhs.forecast_ARIMA <- function(model, ...) {
 
   full_rhs$superscript <- rhs_super
 
-  # The RHS has only seasonal differencing.
-  # This is similar to the RHS, but here we only have 1 element.
-  # So we"ll use an if statement instead of vectorized filters.
-  if (ords["D"] > 0) {
-    # Then there is a seasonal difference.
-    diff_df <- data.frame(
-      term = "zz_seas_Differencing",
-      estimate = NA,
-      std.error = NA,
-      primary = paste0("(1+B", "^{", ords["m"], "})"),
-      superscript = ords["D"]
-    )
-
-    # Add the differencing lines to the end of the S/MA lines.
-    full_rhs <- rbind(full_rhs, diff_df)
-  }
+  # The RHS (MA side) has no differencing.
+  # Previous versions of this function were erroneous
+  # in that it included a seasonal difference on this side.
 
   # Reduce any "1" superscripts to not show the superscript
   full_rhs[full_rhs$superscript == "1", "superscript"] <- ""
