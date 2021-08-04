@@ -1,5 +1,17 @@
 library(lme4)
 
+test_that("Really big models work", {
+  big_mod <- lmer(rt ~ 0 + n1_intercept + n1_warning1 + n1_cuing1 + x1_intercept +  
+         x1_warning1 + x1_cuing1 + n2_intercept + n2_warning1 + n2_cuing1 +  
+         x2_intercept + x2_warning1 + x2_cuing1 + 
+         (0 + n1_intercept + n1_warning1 + n1_cuing1 + x1_intercept + 
+            x1_warning1 + x1_cuing1 + n2_intercept + n2_warning1 + n2_cuing1 + 
+            x2_intercept + x2_warning1 + x2_cuing1 | id),
+         data = test_data)
+  expect_snapshot(extract_eq(big_mod))
+})
+
+
 DF <- structure(list(brochure = structure(c(2L, 1L, 2L, 1L, 1L, 1L, 1L, 2L, 1L, 1L), 
                                           .Label = c("pictorial", "standard"), 
                                           class = "factor"), 
