@@ -133,7 +133,6 @@ extract_rhs.lmerMod <- function(model, return_variances) {
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
   
-  
   full_rhs$primary <- lapply(full_rhs$term, function(x) "")
   full_rhs$primary[full_rhs$effect == "fixed"] <- extract_primary_term(
     formula_rhs_terms,
@@ -143,13 +142,13 @@ extract_rhs.lmerMod <- function(model, return_variances) {
   # make sure split and primary are in the same order
   full_rhs$primary[full_rhs$effect == "fixed"] <- Map(
     function(prim, splt) {
-      ord <- vapply(prim, function(x) grep(x, splt), FUN.VALUE = integer(1))
+      ord <- vapply(prim, function(x) grep(x, splt, fixed = TRUE), FUN.VALUE = integer(1))
       names(sort(ord))
     },
     full_rhs$primary[full_rhs$effect == "fixed"],
     full_rhs$split[full_rhs$effect == "fixed"]
   )
-
+  
   full_rhs$subscripts <- lapply(full_rhs$term, function(x) "")
   full_rhs$subscripts[full_rhs$effect == "fixed"] <- extract_all_subscripts(
     full_rhs$primary[full_rhs$effect == "fixed"],
@@ -169,7 +168,9 @@ extract_rhs.lmerMod <- function(model, return_variances) {
 
   full_rhs$pred_level[full_rhs$effect == "fixed"] <- Map(
     function(predlev, splt) {
-      ord <- vapply(names(predlev), function(x) grep(x, splt), FUN.VALUE = integer(1))
+      ord <- vapply(names(predlev), 
+                    function(x) grep(x, splt, fixed = TRUE), 
+                    FUN.VALUE = integer(1))
       ord <- names(sort(ord))
       predlev[ord]
     },
