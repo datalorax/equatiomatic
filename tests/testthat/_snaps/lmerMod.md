@@ -1,3 +1,71 @@
+# Really big models work
+
+    Code
+      extract_eq(big_mod)
+    Output
+      $$
+      \begin{aligned}
+        \operatorname{rt}_{i}  &\sim N \left(\mu, \sigma^2 \right) \\
+          \mu &=\beta_{1j[i]}(\operatorname{n1\_intercept}) + \beta_{2j[i]}(\operatorname{n1\_warning1}) + \beta_{3j[i]}(\operatorname{n1\_cuing1}) + \beta_{4j[i]}(\operatorname{x1\_intercept}) + \beta_{5j[i]}(\operatorname{x1\_warning1}) + \beta_{6j[i]}(\operatorname{x1\_cuing1}) + \beta_{7j[i]}(\operatorname{n2\_intercept}) + \beta_{8j[i]}(\operatorname{n2\_warning1}) + \beta_{9j[i]}(\operatorname{n2\_cuing1}) + \beta_{10j[i]}(\operatorname{x2\_intercept}) + \beta_{11j[i]}(\operatorname{x2\_warning1}) + \beta_{12j[i]}(\operatorname{x2\_cuing1}) \\    
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\beta_{1j} \\
+            &\beta_{2j} \\
+            &\beta_{3j} \\
+            &\beta_{4j} \\
+            &\beta_{5j} \\
+            &\beta_{6j} \\
+            &\beta_{7j} \\
+            &\beta_{8j} \\
+            &\beta_{9j} \\
+            &\beta_{10j} \\
+            &\beta_{11j} \\
+            &\beta_{12j}
+          \end{aligned}
+        \end{array}
+      \right)
+        &\sim N \left(
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\mu_{\beta_{1j}} \\
+            &\mu_{\beta_{2j}} \\
+            &\mu_{\beta_{3j}} \\
+            &\mu_{\beta_{4j}} \\
+            &\mu_{\beta_{5j}} \\
+            &\mu_{\beta_{6j}} \\
+            &\mu_{\beta_{7j}} \\
+            &\mu_{\beta_{8j}} \\
+            &\mu_{\beta_{9j}} \\
+            &\mu_{\beta_{10j}} \\
+            &\mu_{\beta_{11j}} \\
+            &\mu_{\beta_{12j}}
+          \end{aligned}
+        \end{array}
+      \right)
+      , 
+      \left(
+        \begin{array}{cccccccccccc}
+           \sigma^2_{\beta_{1j}} & \rho_{\beta_{1j}\beta_{2j}} & \rho_{\beta_{1j}\beta_{3j}} & \rho_{\beta_{1j}\beta_{4j}} & \rho_{\beta_{1j}\beta_{5j}} & \rho_{\beta_{1j}\beta_{6j}} & \rho_{\beta_{1j}\beta_{7j}} & \rho_{\beta_{1j}\beta_{8j}} & \rho_{\beta_{1j}\beta_{9j}} & \rho_{\beta_{1j}\beta_{10j}} & \rho_{\beta_{1j}\beta_{11j}} & \rho_{\beta_{1j}\beta_{12j}} \\ 
+           \rho_{\beta_{2j}\beta_{1j}} & \sigma^2_{\beta_{2j}} & \rho_{\beta_{2j}\beta_{3j}} & \rho_{\beta_{2j}\beta_{4j}} & \rho_{\beta_{2j}\beta_{5j}} & \rho_{\beta_{2j}\beta_{6j}} & \rho_{\beta_{2j}\beta_{7j}} & \rho_{\beta_{2j}\beta_{8j}} & \rho_{\beta_{2j}\beta_{9j}} & \rho_{\beta_{2j}\beta_{10j}} & \rho_{\beta_{2j}\beta_{11j}} & \rho_{\beta_{2j}\beta_{12j}} \\ 
+           \rho_{\beta_{3j}\beta_{1j}} & \rho_{\beta_{3j}\beta_{2j}} & \sigma^2_{\beta_{3j}} & \rho_{\beta_{3j}\beta_{4j}} & \rho_{\beta_{3j}\beta_{5j}} & \rho_{\beta_{3j}\beta_{6j}} & \rho_{\beta_{3j}\beta_{7j}} & \rho_{\beta_{3j}\beta_{8j}} & \rho_{\beta_{3j}\beta_{9j}} & \rho_{\beta_{3j}\beta_{10j}} & \rho_{\beta_{3j}\beta_{11j}} & \rho_{\beta_{3j}\beta_{12j}} \\ 
+           \rho_{\beta_{4j}\beta_{1j}} & \rho_{\beta_{4j}\beta_{2j}} & \rho_{\beta_{4j}\beta_{3j}} & \sigma^2_{\beta_{4j}} & \rho_{\beta_{4j}\beta_{5j}} & \rho_{\beta_{4j}\beta_{6j}} & \rho_{\beta_{4j}\beta_{7j}} & \rho_{\beta_{4j}\beta_{8j}} & \rho_{\beta_{4j}\beta_{9j}} & \rho_{\beta_{4j}\beta_{10j}} & \rho_{\beta_{4j}\beta_{11j}} & \rho_{\beta_{4j}\beta_{12j}} \\ 
+           \rho_{\beta_{5j}\beta_{1j}} & \rho_{\beta_{5j}\beta_{2j}} & \rho_{\beta_{5j}\beta_{3j}} & \rho_{\beta_{5j}\beta_{4j}} & \sigma^2_{\beta_{5j}} & \rho_{\beta_{5j}\beta_{6j}} & \rho_{\beta_{5j}\beta_{7j}} & \rho_{\beta_{5j}\beta_{8j}} & \rho_{\beta_{5j}\beta_{9j}} & \rho_{\beta_{5j}\beta_{10j}} & \rho_{\beta_{5j}\beta_{11j}} & \rho_{\beta_{5j}\beta_{12j}} \\ 
+           \rho_{\beta_{6j}\beta_{1j}} & \rho_{\beta_{6j}\beta_{2j}} & \rho_{\beta_{6j}\beta_{3j}} & \rho_{\beta_{6j}\beta_{4j}} & \rho_{\beta_{6j}\beta_{5j}} & \sigma^2_{\beta_{6j}} & \rho_{\beta_{6j}\beta_{7j}} & \rho_{\beta_{6j}\beta_{8j}} & \rho_{\beta_{6j}\beta_{9j}} & \rho_{\beta_{6j}\beta_{10j}} & \rho_{\beta_{6j}\beta_{11j}} & \rho_{\beta_{6j}\beta_{12j}} \\ 
+           \rho_{\beta_{7j}\beta_{1j}} & \rho_{\beta_{7j}\beta_{2j}} & \rho_{\beta_{7j}\beta_{3j}} & \rho_{\beta_{7j}\beta_{4j}} & \rho_{\beta_{7j}\beta_{5j}} & \rho_{\beta_{7j}\beta_{6j}} & \sigma^2_{\beta_{7j}} & \rho_{\beta_{7j}\beta_{8j}} & \rho_{\beta_{7j}\beta_{9j}} & \rho_{\beta_{7j}\beta_{10j}} & \rho_{\beta_{7j}\beta_{11j}} & \rho_{\beta_{7j}\beta_{12j}} \\ 
+           \rho_{\beta_{8j}\beta_{1j}} & \rho_{\beta_{8j}\beta_{2j}} & \rho_{\beta_{8j}\beta_{3j}} & \rho_{\beta_{8j}\beta_{4j}} & \rho_{\beta_{8j}\beta_{5j}} & \rho_{\beta_{8j}\beta_{6j}} & \rho_{\beta_{8j}\beta_{7j}} & \sigma^2_{\beta_{8j}} & \rho_{\beta_{8j}\beta_{9j}} & \rho_{\beta_{8j}\beta_{10j}} & \rho_{\beta_{8j}\beta_{11j}} & \rho_{\beta_{8j}\beta_{12j}} \\ 
+           \rho_{\beta_{9j}\beta_{1j}} & \rho_{\beta_{9j}\beta_{2j}} & \rho_{\beta_{9j}\beta_{3j}} & \rho_{\beta_{9j}\beta_{4j}} & \rho_{\beta_{9j}\beta_{5j}} & \rho_{\beta_{9j}\beta_{6j}} & \rho_{\beta_{9j}\beta_{7j}} & \rho_{\beta_{9j}\beta_{8j}} & \sigma^2_{\beta_{9j}} & \rho_{\beta_{9j}\beta_{10j}} & \rho_{\beta_{9j}\beta_{11j}} & \rho_{\beta_{9j}\beta_{12j}} \\ 
+           \rho_{\beta_{10j}\beta_{1j}} & \rho_{\beta_{10j}\beta_{2j}} & \rho_{\beta_{10j}\beta_{3j}} & \rho_{\beta_{10j}\beta_{4j}} & \rho_{\beta_{10j}\beta_{5j}} & \rho_{\beta_{10j}\beta_{6j}} & \rho_{\beta_{10j}\beta_{7j}} & \rho_{\beta_{10j}\beta_{8j}} & \rho_{\beta_{10j}\beta_{9j}} & \sigma^2_{\beta_{10j}} & \rho_{\beta_{10j}\beta_{11j}} & \rho_{\beta_{10j}\beta_{12j}} \\ 
+           \rho_{\beta_{11j}\beta_{1j}} & \rho_{\beta_{11j}\beta_{2j}} & \rho_{\beta_{11j}\beta_{3j}} & \rho_{\beta_{11j}\beta_{4j}} & \rho_{\beta_{11j}\beta_{5j}} & \rho_{\beta_{11j}\beta_{6j}} & \rho_{\beta_{11j}\beta_{7j}} & \rho_{\beta_{11j}\beta_{8j}} & \rho_{\beta_{11j}\beta_{9j}} & \rho_{\beta_{11j}\beta_{10j}} & \sigma^2_{\beta_{11j}} & \rho_{\beta_{11j}\beta_{12j}} \\ 
+           \rho_{\beta_{12j}\beta_{1j}} & \rho_{\beta_{12j}\beta_{2j}} & \rho_{\beta_{12j}\beta_{3j}} & \rho_{\beta_{12j}\beta_{4j}} & \rho_{\beta_{12j}\beta_{5j}} & \rho_{\beta_{12j}\beta_{6j}} & \rho_{\beta_{12j}\beta_{7j}} & \rho_{\beta_{12j}\beta_{8j}} & \rho_{\beta_{12j}\beta_{9j}} & \rho_{\beta_{12j}\beta_{10j}} & \rho_{\beta_{12j}\beta_{11j}} & \sigma^2_{\beta_{12j}}
+        \end{array}
+      \right)
+       \right)
+          \text{, for id j = 1,} \dots \text{,J}
+      \end{aligned}
+      $$
+
 # Categorical variable level parsing works (from issue #140)
 
     $$

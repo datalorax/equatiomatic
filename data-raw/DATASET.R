@@ -32,3 +32,67 @@ arrests <- arrests %>%
                       labels = c("black", "hispanic", "white")))
 
 usethis::use_data(arrests, overwrite = TRUE)
+
+library(tidyverse)
+library(lme4)
+library(equatiomatic)
+
+#make some fake data
+(
+  expand_grid(
+    session = factor(c(1,2))
+    , task = factor(c('n','x'))
+    , warning = factor(c('lo','hi'))
+    , cuing = factor(c('invalid','valid'))
+    , trial = 1:2
+    , id = factor(1:2)
+  )
+) -> test_data
+
+#set contrasts
+contrasts(test_data$warning) = contr.sum
+contrasts(test_data$cuing) = contr.sum
+
+# specify the contrast matrix
+(
+  test_data
+  %>% ungroup()
+  %>% mutate(
+    obs_row = 1:n()
+  )
+  %>% group_by(session,task)
+  %>% group_modify(
+    .f = function(x,y){
+      (
+        x
+        #get the contrast matrix (wrapper on stats::model.matrix)
+        %>% model.matrix(
+          object = ~ (warning+cuing)
+        )
+        #convert to tibble
+        %>% as_tibble(.name_repair='unique')
+        %>% rename(intercept=`(Intercept)`)
+      ) -> out
+      names(out) = paste0(paste0(y$task[1],y$session[1]),'_',names(out))
+      out$obs_row = x$obs_row
+      return(out)
+    }
+  )
+  %>% mutate(
+    across(everything(), ~replace_na(.x, 0))
+  )
+  %>% ungroup()
+  %>% arrange(obs_row)
+  %>% select(-obs_row,-session,-task)
+) -> W
+
+(test_data
+  %>% dplyr::ungroup()
+  %>% dplyr::select(id)
+  %>% dplyr::mutate(
+    rt = rnorm(n())
+  )
+  %>% bind_cols(W)
+) -> test_data 
+
+usethis::use_data(test_data, internal = TRUE, overwrite = TRUE)
