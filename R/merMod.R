@@ -472,7 +472,7 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   }
   out <- out[order(out$original_order), c("group", "term", "greek", "original_order")]  
   random_vary <- fixed_greek_mermod[fixed_greek_mermod$term %in% unique(out$term), ]
-  random_vary$greek_vary <- gsub("(.+\\{\\d?).+", "\\1}", random_vary$greek)
+  random_vary$greek_vary <- gsub("(.+\\{\\d?\\d?\\d?).+", "\\1}", random_vary$greek)
   random_vary$new_order <- random_vary$original_order
   
   out <- merge(out, 
