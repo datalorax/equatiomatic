@@ -75,7 +75,8 @@ Suggests:
     ordinal,
     rmarkdown,
     testthat (>= 3.0.0),
-    texPreview
+    texPreview,
+    gtsummary
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
