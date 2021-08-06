@@ -60,6 +60,7 @@ BugReports: https://github.com/datalorax/equatiomatic/issues
 Imports: 
     broom (>= 0.7.0),
     broom.mixed,
+    shiny,
     knitr,
     stats,
     utils
