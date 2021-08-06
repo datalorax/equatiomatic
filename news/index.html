@@ -118,6 +118,9 @@
     <li>
       <a href="../articles/tests_and_coverage.html">Tests and Coverage</a>
     </li>
+    <li>
+      <a href="../articles/usage-shiny.html">Usage with shiny</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -153,9 +156,16 @@
 <a href="#equatiomatic-development-version" class="anchor"></a>equatiomatic (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li>Export new <code><a href="../reference/renderEq.html">renderEq()</a></code> and <code><a href="../reference/renderEq.html">eqOutput()</a></code> functions for working with equatiomatic with shiny.</li>
+<li>Now accommodates <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> models.</li>
+<li>Include new <code>return_variances</code> argument, which allows users to optionally return the variance/covariances in <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> models</li>
 <li>Added new <code>font_size</code> argument, which takes any LaTeX font size (see <a href="https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles">here</a>)</li>
-<li>Bug fix related to categorical variables and level parsing for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models</li>
+<li>Bug fix related to categorical variables and level parsing for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> and and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> models</li>
 <li>Minor bug fix related to indexing of coefficients for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models</li>
+<li>Minor bug fix related to very large models, which would not render properly before</li>
+<li>
+<code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models now allow for in-line alterations to the code, e.g., <code><a href="https://rdrr.io/r/base/AsIs.html">I(n &gt;5)</a></code>.</li>
+<li>Minor bug fix related to SARIMA models</li>
 </ul>
 </div>
     <div id="equatiomatic-020" class="section level1">

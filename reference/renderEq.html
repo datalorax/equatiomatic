@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulated longitudinal data — sim_longitudinal • equatiomatic</title>
+<title>Display equations in shiny apps — renderEq • equatiomatic</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,9 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Simulated longitudinal data — sim_longitudinal" />
-<meta property="og:description" content="Data are simulated to be similar to longitudinal data collected within
-schools/districts." />
+<meta property="og:title" content="Display equations in shiny apps — renderEq" />
+<meta property="og:description" content="" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -149,40 +148,56 @@ schools/districts." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulated longitudinal data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/sim_longitudinal.R'><code>R/sim_longitudinal.R</code></a></small>
-    <div class="hidden name"><code>sim_longitudinal.Rd</code></div>
+    <h1>Display equations in shiny apps</h1>
+    <small class="dont-index">Source: <a href='https://github.com/datalorax/equatiomatic/blob/master/R/shiny.R'><code>R/shiny.R</code></a></small>
+    <div class="hidden name"><code>renderEq.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Data are simulated to be similar to longitudinal data collected within
-schools/districts.</p>
+    <p><a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a></p>
     </div>
 
-    <pre class="usage"><span class='no'>sim_longitudinal</span></pre>
+    <pre class="usage"><span class='fu'>renderEq</span>(<span class='no'>expr</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span>(), <span class='kw'>quoted</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outputArgs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())
 
+<span class='fu'>eqOutput</span>(<span class='no'>outputId</span>)</pre>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>expr</th>
+      <td><p>An R expression, specifically a call to <code><a href='extract_eq.html'>extract_eq()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>env</th>
+      <td><p>The environment</p></td>
+    </tr>
+    <tr>
+      <th>quoted</th>
+      <td><p>Is the expresion quoted?</p></td>
+    </tr>
+    <tr>
+      <th>outputArgs</th>
+      <td><p>list of output arguments</p></td>
+    </tr>
+    <tr>
+      <th>outputId</th>
+      <td><p>The identifier of the output from the server. Should be
+passed as a string.</p></td>
+    </tr>
+    </table>
 
-    <p>A tibble with 1000 rows and 8 variables:</p><dl'>
-<dt>sid</dt><dd><p>An integer denoting the individual student.
-There are 100 students.</p></dd>
-<dt>school</dt><dd><p>An integer denoting the school There are 15 schools.</p></dd>
-<dt>district</dt><dd><p>An integer denoting the school district. There are
-5 districts.</p></dd>
-<dt>group</dt><dd><p>A character variable denoting the instructional level of
-the student, low, medium, or high.</p></dd>
-<dt>treatment</dt><dd><p>A factor indicating whether the student received the
-intervention treatment (0 = no treatment received; 1 = treatment
-received).</p></dd>
-<dt>prop_low</dt><dd><p>The proportion of student in the school in the low
-instructional group.</p></dd>
-<dt>wave</dt><dd><p>The assessment wave. Each student has nine waves of data
-collection</p></dd>
-<dt>score</dt><dd><p>The individual students' score at the given wave.</p></dd>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-</dl>
+    <p>These are a set of functions designed to help render equations in
+shiny applications. For a complete example see</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
+    
+<ul>
+<li><p><code>renderEq</code>: Rendering function</p></li>
+<li><p><code>eqOutput</code>: Output function</p></li>
+</ul>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
