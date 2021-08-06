@@ -1,0 +1,164 @@
+---
+title: "Usage with shiny"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with shiny}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The equatiomatic package now exports `renderEq()` and `eqOutput()` functions
+to make it's usage with shiny more straightforward.
+
+Imagine, for example, that we wanted to have an app that showed us the 
+coefficients of a model in a nice table. We could do that with something like
+
+```{r}
+library(equatiomatic)
+library(shiny)
+library(shinyWidgets)
+library(gtsummary)
+library(gt)
+
+ui <- fluidPage(
+  titlePanel("equatiomatic w/Shiny"),
+  sidebarLayout(
+    sidebarPanel(
+      multiInput(
+        inputId = "xvars", label = "Select predictor variables :",
+        choices = names(penguins)[-3],
+        selected = "island"
+      )
+    ),
+    mainPanel(
+      gt_output("tbl")
+    )
+  )
+)
+
+server <- function(input, output) {
+  model <- reactive({
+    form <- paste("bill_length_mm ~ ", paste(input$xvars, collapse = " + "))
+    lm(as.formula(form), penguins)
+  })
+  
+  output$tbl <- render_gt({
+    as_gt(tbl_regression(model()))
+  })
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+But, naturally, we'd probably also want the equation rendered too. We can extend
+The above with **equatiomatic** as follows.
+
+```{r}
+library(equatiomatic)
+library(shiny)
+library(shinyWidgets)
+library(gtsummary)
+library(gt)
+
+ui <- fluidPage(
+  titlePanel("equatiomatic w/Shiny"),
+  withMathJax(), # Initialize mathJax so the equation renders properly
+  sidebarLayout(
+    sidebarPanel(
+      multiInput(
+        inputId = "xvars", label = "Select predictor variables :",
+        choices = names(penguins)[-3],
+        selected = "island"
+      )
+    ),
+    mainPanel(
+      eqOutput("equation"),
+      gt_output("tbl")
+    )
+  )
+)
+
+server <- function(input, output) {
+  model <- reactive({
+    form <- paste("bill_length_mm ~ ", paste(input$xvars, collapse = " + "))
+    lm(as.formula(form), penguins)
+  })
+  
+  output$equation <- renderEq(
+    extract_eq(model())
+  )
+  
+  output$tbl <- render_gt({
+    as_gt(tbl_regression(model()))
+  })
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+Note that, beyond the `renderEq()` and `eqOutput()` function, we also have to initialize mathJax with the `shiny::withMathJax()` function somewhere in the UI. Without this line, you'll get the text version of the equation.
+
+Finally, we can of course add additional arguments `extract_eq()`, and it all 
+works as expected.
+
+```{r}
+library(equatiomatic)
+library(shiny)
+library(shinyWidgets)
+library(gtsummary)
+library(gt)
+
+ui <- fluidPage(
+  titlePanel("equatiomatic w/Shiny"),
+  withMathJax(),
+  sidebarLayout(
+    sidebarPanel(
+      multiInput(
+        inputId = "xvars", 
+        label = "Select predictor variables :",
+        choices = names(penguins)[-3],
+        selected = "island"
+      )
+    ),
+    mainPanel(
+      eqOutput("eq2"),
+      eqOutput("equation"),
+      gt_output("tbl")
+    )
+  )
+)
+
+server <- function(input, output) {
+  model <- reactive({
+    form <- paste("bill_length_mm ~ ", paste(input$xvars, collapse = " + "))
+    lm(as.formula(form), penguins)
+  })
+  
+  output$equation <- renderEq(
+      extract_eq(
+        model(), 
+        wrap = TRUE,
+        terms_per_line = 2,
+        use_coefs = TRUE,
+        font_size = "Huge"
+    )
+  )
+
+  output$tbl <- render_gt({
+    as_gt(tbl_regression(model()))
+  })
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
