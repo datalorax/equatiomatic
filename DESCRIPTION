@@ -66,6 +66,7 @@ Imports:
     utils
 Suggests: 
     covr,
+    shinyWidgets,
     forecast (>= 8.13),
     ggplot2 (>= 3.3.3),
     latex2exp (>= 0.4.0),
