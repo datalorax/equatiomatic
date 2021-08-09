@@ -163,6 +163,7 @@
   <span class='kw'>greek</span> <span class='kw'>=</span> <span class='st'>"beta"</span>,
   <span class='kw'>raw_tex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>show_distribution</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>,
@@ -206,6 +207,16 @@ raw tex code?</p></td>
       <th>ital_vars</th>
       <td><p>Logical, defaults to <code>FALSE</code>. Should the variable names
 not be wrapped in the <code>\operatorname{}</code> command?</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>A label for the equation, which can then be used for in-text
+references. See example <a href='https://www.overleaf.com/learn/latex/Cross_referencing_sections,_equations_and_floats#Referencing_equations.2C_figures_and_tables'>here</a>.
+Note that this <strong>only works for PDF output</strong>. The in-text references also
+must match the label exactly, and must be formatted as
+<code>\ref{eq: label}</code>, where <code>label</code> is a place holder for the
+specific label. Notice the space after the colon before the label. This
+also must be there, or the cross-reference will fail.</p></td>
     </tr>
     <tr>
       <th>show_distribution</th>
