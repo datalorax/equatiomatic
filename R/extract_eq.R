@@ -25,6 +25,8 @@
 #'   \code{\\ref{eq: label}}, where \code{label} is a place holder for the
 #'   specific label. Notice the space after the colon before the label. This
 #'   also must be there, or the cross-reference will fail.
+#' @param index_factors Logical, defaults to \code{FALSE}. Should the factors 
+#' be indexed, rather than using subscripts to display all levels?
 #' @param show_distribution Logical. When fitting a logistic or probit
 #'   regression, should the binomial distribution be displayed? Defaults to
 #'   \code{FALSE}.
@@ -107,6 +109,9 @@
 #' # Don't fix doubled-up "+ -" signs
 #' extract_eq(mod2, wrap = TRUE, terms_per_line = 4, use_coefs = TRUE, fix_signs = FALSE)
 #'
+#' # Use indices for factors instead of subscripts
+#' extract_eq(mod2, wrap = TRUE, terms_per_line = 4, index_factors = TRUE)
+#'
 #' # Use other model types, like glm
 #' set.seed(8675309)
 #' d <- data.frame(
@@ -142,6 +147,10 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
                                mean_separate, return_variances = FALSE, ...) {
+  if (index_factors & use_coefs) {
+    stop("Coefficient estimates cannot be returned when factors are indexed.")
+  }
+  
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model, index_factors)
 
@@ -245,7 +254,7 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 #' @noRd
 extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                raw_tex = FALSE, ital_vars = FALSE, label = NULL,
-                               show_distribution = FALSE,
+                               index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end",
                                align_env = "aligned",
@@ -299,6 +308,7 @@ extract_eq.glmerMod <- function(...) {
 extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
                                       raw_tex = FALSE, ital_vars = FALSE,
                                       label = NULL,
+                                      index_factors = FALSE, 
                                       show_distribution = FALSE,
                                       wrap = FALSE, terms_per_line = 4,
                                       operator_location = "end", align_env = "aligned",

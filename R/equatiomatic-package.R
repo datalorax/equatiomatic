@@ -4,7 +4,7 @@
 #' @importFrom utils tail
 #' @importFrom shiny installExprFunction createRenderFunction htmlOutput
 #'   withMathJax helpText
-#' @importFrom dplyr distinct
+#' @importFrom dplyr distinct .data
 
 "_PACKAGE"
 
