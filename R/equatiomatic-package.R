@@ -1,6 +1,6 @@
 #' @keywords internal
 #' @importFrom stats terms formula coef setNames
-#' @importFrom knitr knit_print asis_output is_html_output
+#' @importFrom knitr knit_print asis_output is_html_output is_latex_output
 #' @importFrom utils tail
 #' @importFrom shiny installExprFunction createRenderFunction htmlOutput
 #'   withMathJax helpText

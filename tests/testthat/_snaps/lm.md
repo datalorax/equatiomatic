@@ -1,3 +1,10 @@
+# Labeling works
+
+    $$
+    \label{eq: mpg_mod}
+    \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
+    $$
+
 # Simple lm models work
 
     $$
