@@ -75,7 +75,7 @@ extract_rhs <- function(model, ...) {
 #' # >   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
 #' }
 #'
-extract_rhs.default <- function(model) {
+extract_rhs.default <- function(model, index_factors) {
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))
 
@@ -97,6 +97,15 @@ extract_rhs.default <- function(model) {
     full_rhs$primary,
     full_rhs$split
   )
+  if (index_factors) {
+    full_rhs <- dplyr::distinct(full_rhs, primary, .keep_all = TRUE)
+    unique_ss <- unique(unlist(full_rhs$subscripts))
+    unique_ss <- unique_ss[vapply(unique_ss, nchar, FUN.VALUE = integer(1)) > 0]
+    replacement_ss <- letters[seq(9, (length(unique_ss) + 8))]
+    full_rhs$subscripts <- lapply(full_rhs$subscripts, function(x) {
+      replacement_ss[match(x, unique_ss)]
+    })
+  }
   class(full_rhs) <- c("data.frame", class(model))
   full_rhs
 }

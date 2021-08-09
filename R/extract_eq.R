@@ -120,7 +120,7 @@
 #' extract_eq(mod5, wrap = TRUE)
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        raw_tex = FALSE, ital_vars = FALSE, label = NULL,
-                       show_distribution = FALSE,
+                       index_factors = FALSE, show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
@@ -136,14 +136,14 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                raw_tex = FALSE, ital_vars = FALSE, label = NULL,
-                               show_distribution = FALSE,
+                               index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
                                mean_separate, return_variances = FALSE, ...) {
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
-  rhs <- extract_rhs(model)
+  rhs <- extract_rhs(model, index_factors)
 
   eq_raw <- create_eq(
     model,
