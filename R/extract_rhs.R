@@ -98,7 +98,7 @@ extract_rhs.default <- function(model, index_factors) {
     full_rhs$split
   )
   if (index_factors) {
-    full_rhs <- dplyr::distinct(full_rhs, primary, .keep_all = TRUE)
+    full_rhs <- distinct(full_rhs, primary, .keep_all = TRUE)
     unique_ss <- unique(unlist(full_rhs$subscripts))
     unique_ss <- unique_ss[vapply(unique_ss, nchar, FUN.VALUE = integer(1)) > 0]
     replacement_ss <- letters[seq(9, (length(unique_ss) + 8))]

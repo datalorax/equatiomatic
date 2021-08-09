@@ -11,6 +11,7 @@ extract_eq(
   raw_tex = FALSE,
   ital_vars = FALSE,
   label = NULL,
+  index_factors = FALSE,
   show_distribution = FALSE,
   wrap = FALSE,
   terms_per_line = 4,
