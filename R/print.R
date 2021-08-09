@@ -51,7 +51,7 @@ knit_print.equation <- function(x, ..., tex_packages = "\\renewcommand*\\familyd
       }
     }
   } else {
-    return(knitr::asis_output(eq))
+    return(asis_output(eq))
   }
 }
 
@@ -72,5 +72,9 @@ is_texPreview_installed <- function() {
 #' @param ... not used
 #' @noRd
 format.equation <- function(x, ...) {
-  paste0(c("$$\n", x, "\n$$\n"), collapse = "")
+  if (is_latex_output()) {
+    paste0(c("\\begin{equation}\n", x, "\n\\end{equation}"))
+  } else {
+    paste0(c("$$\n", x, "\n$$\n"), collapse = "")
+  }
 }

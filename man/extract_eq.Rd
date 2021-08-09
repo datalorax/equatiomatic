@@ -10,6 +10,7 @@ extract_eq(
   greek = "beta",
   raw_tex = FALSE,
   ital_vars = FALSE,
+  label = NULL,
   show_distribution = FALSE,
   wrap = FALSE,
   terms_per_line = 4,
@@ -41,6 +42,14 @@ raw tex code?}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\operatorname{}} command?}
+
+\item{label}{A label for the equation, which can then be used for in-text
+references. See example \href{https://www.overleaf.com/learn/latex/Cross_referencing_sections,_equations_and_floats#Referencing_equations.2C_figures_and_tables}{here}.
+Note that this \strong{only works for PDF output}. The in-text references also
+must match the label exactly, and must be formatted as
+\code{\\ref{eq: label}}, where \code{label} is a place holder for the
+specific label. Notice the space after the colon before the label. This
+also must be there, or the cross-reference will fail.}
 
 \item{show_distribution}{Logical. When fitting a logistic or probit
 regression, should the binomial distribution be displayed? Defaults to

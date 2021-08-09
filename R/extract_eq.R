@@ -18,6 +18,13 @@
 #' raw tex code?
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\operatorname{}} command?
+#' @param label A label for the equation, which can then be used for in-text 
+#'   references. See example [here](https://www.overleaf.com/learn/latex/Cross_referencing_sections,_equations_and_floats#Referencing_equations.2C_figures_and_tables).
+#'   Note that this **only works for PDF output**. The in-text references also 
+#'   must match the label exactly, and must be formatted as 
+#'   \code{\\ref{eq: label}}, where \code{label} is a place holder for the
+#'   specific label. Notice the space after the colon before the label. This
+#'   also must be there, or the cross-reference will fail.
 #' @param show_distribution Logical. When fitting a logistic or probit
 #'   regression, should the binomial distribution be displayed? Defaults to
 #'   \code{FALSE}.
@@ -112,7 +119,7 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
-                       raw_tex = FALSE, ital_vars = FALSE,
+                       raw_tex = FALSE, ital_vars = FALSE, label = NULL,
                        show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
@@ -128,12 +135,12 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
-                               raw_tex = FALSE, ital_vars = FALSE,
+                               raw_tex = FALSE, ital_vars = FALSE, label = NULL,
                                show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
-                               fix_signs = TRUE, font_size = NULL, 
+                               fix_signs = TRUE, font_size = NULL,
                                mean_separate, return_variances = FALSE, ...) {
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
   rhs <- extract_rhs(model)
@@ -216,6 +223,9 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
       "\n\\end{", align_env, "}"
     )
   }
+  if (!is.null(label)) {
+    eq <- paste0("\\label{eq: ", label, "}\n", eq)
+  }
   if (!is.null(font_size)) {
     eq <- paste0("\\", font_size, "\n", eq)
   }
@@ -234,7 +244,7 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
-                               raw_tex = FALSE, ital_vars = FALSE,
+                               raw_tex = FALSE, ital_vars = FALSE, label = NULL,
                                show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end",
@@ -266,6 +276,9 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
     paste0("  ", eq),
     "\n\\end{", align_env, "}"
   )
+  if (!is.null(label)) {
+    eq <- paste0("\\label{eq: ", label, "}\n", eq)
+  }
   if (!is.null(font_size)) {
     eq <- paste0("\\", font_size, "\n", eq)
   }
@@ -285,6 +298,7 @@ extract_eq.glmerMod <- function(...) {
 #' @noRd
 extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
                                       raw_tex = FALSE, ital_vars = FALSE,
+                                      label = NULL,
                                       show_distribution = FALSE,
                                       wrap = FALSE, terms_per_line = 4,
                                       operator_location = "end", align_env = "aligned",
@@ -369,6 +383,9 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
   } else {
     # If arima only then we only need 1 line and no alignment.
     eq <- eq$arima_eq
+    if (!is.null(label)) {
+      eq <- paste0("\\label{eq: ", label, "}\n", eq)
+    }
     if (!is.null(font_size)) {
       eq <- paste0(
         "\\begin{aligned}\n",

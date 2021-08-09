@@ -1,3 +1,8 @@
+test_that("Labeling works", {
+  m <- lm(mpg ~ cyl + disp, data = mtcars)
+  expect_snapshot_output(extract_eq(m, label = "mpg_mod"))
+})
+
 test_that("Simple lm models work", {
   model_simple <- lm(mpg ~ cyl + disp, data = mtcars)
 
