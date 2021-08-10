@@ -11,6 +11,7 @@ extract_eq(
   raw_tex = FALSE,
   ital_vars = FALSE,
   label = NULL,
+  index_factors = FALSE,
   show_distribution = FALSE,
   wrap = FALSE,
   terms_per_line = 4,
@@ -50,6 +51,9 @@ must match the label exactly, and must be formatted as
 \code{\\ref{eq: label}}, where \code{label} is a place holder for the
 specific label. Notice the space after the colon before the label. This
 also must be there, or the cross-reference will fail.}
+
+\item{index_factors}{Logical, defaults to \code{FALSE}. Should the factors
+be indexed, rather than using subscripts to display all levels?}
 
 \item{show_distribution}{Logical. When fitting a logistic or probit
 regression, should the binomial distribution be displayed? Defaults to
@@ -151,6 +155,9 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 2, use_coefs = TRUE)
 
 # Don't fix doubled-up "+ -" signs
 extract_eq(mod2, wrap = TRUE, terms_per_line = 4, use_coefs = TRUE, fix_signs = FALSE)
+
+# Use indices for factors instead of subscripts
+extract_eq(mod2, wrap = TRUE, terms_per_line = 4, index_factors = TRUE)
 
 # Use other model types, like glm
 set.seed(8675309)

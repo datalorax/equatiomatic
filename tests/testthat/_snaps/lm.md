@@ -1,3 +1,21 @@
+# Collapsing lm factors works
+
+    Code
+      extract_eq(m)
+    Output
+      $$
+      \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{gear}_{\operatorname{4}}) + \beta_{2}(\operatorname{gear}_{\operatorname{5}}) + \beta_{3}(\operatorname{carb}_{\operatorname{2}}) + \beta_{4}(\operatorname{carb}_{\operatorname{3}}) + \beta_{5}(\operatorname{carb}_{\operatorname{4}}) + \beta_{6}(\operatorname{carb}_{\operatorname{6}}) + \beta_{7}(\operatorname{carb}_{\operatorname{8}}) + \beta_{8}(\operatorname{disp}) + \beta_{9}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{2}}) + \beta_{10}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{2}}) + \beta_{11}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{3}}) + \beta_{12}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{3}}) + \beta_{13}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{4}}) + \beta_{14}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{4}}) + \beta_{15}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{6}}) + \beta_{16}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{6}}) + \beta_{17}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{8}}) + \beta_{18}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{8}}) + \beta_{19}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{disp}) + \beta_{20}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{disp}) + \beta_{21}(\operatorname{carb}_{\operatorname{2}} \times \operatorname{disp}) + \beta_{22}(\operatorname{carb}_{\operatorname{3}} \times \operatorname{disp}) + \beta_{23}(\operatorname{carb}_{\operatorname{4}} \times \operatorname{disp}) + \beta_{24}(\operatorname{carb}_{\operatorname{6}} \times \operatorname{disp}) + \beta_{25}(\operatorname{carb}_{\operatorname{8}} \times \operatorname{disp}) + \beta_{26}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{2}} \times \operatorname{disp}) + \beta_{27}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{2}} \times \operatorname{disp}) + \beta_{28}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{3}} \times \operatorname{disp}) + \beta_{29}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{3}} \times \operatorname{disp}) + \beta_{30}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{4}} \times \operatorname{disp}) + \beta_{31}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{4}} \times \operatorname{disp}) + \beta_{32}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{6}} \times \operatorname{disp}) + \beta_{33}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{6}} \times \operatorname{disp}) + \beta_{34}(\operatorname{gear}_{\operatorname{4}} \times \operatorname{carb}_{\operatorname{8}} \times \operatorname{disp}) + \beta_{35}(\operatorname{gear}_{\operatorname{5}} \times \operatorname{carb}_{\operatorname{8}} \times \operatorname{disp}) + \epsilon
+      $$
+
+---
+
+    Code
+      extract_eq(m, index_factors = TRUE)
+    Output
+      $$
+      \operatorname{mpg} = \alpha + \operatorname{gear}_{\operatorname{i}} + \operatorname{carb}_{\operatorname{j}} + \operatorname{disp} + \left(\operatorname{gear}_{\operatorname{i}} \times \operatorname{carb}_{\operatorname{j}}\right) + \left(\operatorname{gear}_{\operatorname{i}} \times \operatorname{disp}\right) + \left(\operatorname{carb}_{\operatorname{j}} \times \operatorname{disp}\right) + \left(\operatorname{gear}_{\operatorname{i}} \times \operatorname{carb}_{\operatorname{j}} \times \operatorname{disp}\right) + \epsilon
+      $$
+
 # Labeling works
 
     $$

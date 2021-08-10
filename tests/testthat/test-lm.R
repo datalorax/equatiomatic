@@ -1,3 +1,17 @@
+test_that("Collapsing lm factors works", {
+  d <- mtcars
+  d$gear <- as.factor(d$gear)
+  d$carb <- as.factor(d$carb)
+  
+  m <- lm(mpg ~ gear*carb*disp, data = d)
+  
+  # no collapsing
+  expect_snapshot(extract_eq(m))
+  
+  # collapsing
+  expect_snapshot(extract_eq(m, index_factors = TRUE))
+})
+
 test_that("Labeling works", {
   m <- lm(mpg ~ cyl + disp, data = mtcars)
   expect_snapshot_output(extract_eq(m, label = "mpg_mod"))
