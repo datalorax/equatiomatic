@@ -1,4 +1,32 @@
 # glms
+test_that("Collapsing glm factors works", {
+  set.seed(1234)
+  df <- data.frame(
+    outcome = sample(0:1, 100, replace = TRUE),
+    categorical = rep(letters[1:5], 20),
+    continuous_1 = rnorm(100, 100, 1),
+    continuous_2 = rnorm(100, 50, 5)
+  )
+  
+  model_logit <- glm(outcome ~ categorical*continuous_1*continuous_2,
+                     data = df,
+                     family = binomial(link = "logit")
+  )
+  model_probit <- glm(outcome ~ categorical*continuous_1*continuous_2,
+                     data = df,
+                     family = binomial(link = "probit")
+  )
+  
+  # no collapsing
+  expect_snapshot(extract_eq(model_logit))
+  expect_snapshot(extract_eq(model_probit))
+  
+  # collapsing
+  expect_snapshot(extract_eq(model_logit, index_factors = TRUE))
+  expect_snapshot(extract_eq(model_probit, index_factors = TRUE))
+})
+
+
 test_that("Logistic regression works", {
   set.seed(1234)
   df <- data.frame(

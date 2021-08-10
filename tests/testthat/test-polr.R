@@ -1,3 +1,34 @@
+test_that("Collapsing polr factors works", {
+  df <- data.frame(
+    outcome = factor(rep(LETTERS[1:3], 100),
+                     levels = LETTERS[1:3],
+                     ordered = TRUE
+    ),
+    categorical = rep(letters[1:5], 20),
+    continuous = rnorm(300, 100, 1)
+  )
+  model_logit <- MASS::polr(
+    outcome ~ categorical*continuous,
+    Hess = TRUE,
+    data = df, 
+    method = "logistic"
+  )
+  model_probit <- MASS::polr(
+    outcome ~ categorical*continuous,
+    Hess = TRUE,
+    data = df,
+    method = "probit"
+  )
+  
+  # no collapsing
+  expect_snapshot(extract_eq(model_logit))
+  expect_snapshot(extract_eq(model_probit))
+  
+  # collapsing
+  expect_snapshot(extract_eq(model_logit, index_factors = TRUE))
+  expect_snapshot(extract_eq(model_probit, index_factors = TRUE))
+})
+
 test_that("Ordered logistic regression works", {
   set.seed(1234)
   df <- data.frame(

@@ -1,3 +1,28 @@
+test_that("Collapsing clm factors works", {
+  df <- data.frame(
+    outcome = factor(rep(LETTERS[1:3], 100),
+                     levels = LETTERS[1:3],
+                     ordered = TRUE
+    ),
+    categorical = rep(letters[1:5], 20),
+    continuous = rnorm(300, 100, 1)
+  )
+  model_logit <- ordinal::clm(outcome ~ categorical*continuous,
+                              data = df, link = "logit"
+  )
+  model_probit <- ordinal::clm(outcome ~ categorical*continuous,
+                               data = df, link = "probit"
+  )
+  
+  # no collapsing
+  expect_snapshot(extract_eq(model_logit))
+  expect_snapshot(extract_eq(model_probit))
+  
+  # collapsing
+  expect_snapshot(extract_eq(model_logit, index_factors = TRUE))
+  expect_snapshot(extract_eq(model_probit, index_factors = TRUE))
+})
+
 test_that("Ordered models with clm work", {
   set.seed(1234)
   df <- data.frame(
