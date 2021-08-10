@@ -16,12 +16,23 @@ create_eq <- function(lhs, ...) {
 #' @noRd
 
 create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, intercept, greek,
-                              raw_tex) {
+                              fix_signs, intercept, greek, raw_tex,
+                              index_factors) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else if (index_factors) {
+    rhs$final_terms <- ifelse(
+      grepl("\\\\times", rhs$final_terms),
+      paste0("\\left(", rhs$final_terms, "\\right)"),
+      rhs$final_terms
+    )
+    rhs$final_terms <- ifelse(
+      rhs$final_terms == "",
+      "\\alpha",
+      rhs$final_terms
+    )
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
@@ -41,11 +52,22 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex) {
+                          fix_signs, intercept, greek, raw_tex, index_factors) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else if (index_factors) {
+    rhs$final_terms <- ifelse(
+      grepl("\\\\times", rhs$final_terms),
+      paste0("\\left(", rhs$final_terms, "\\right)"),
+      rhs$final_terms
+    )
+    rhs$final_terms <- ifelse(
+      rhs$final_terms == "",
+      "\\alpha",
+      rhs$final_terms
+    )
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
@@ -62,13 +84,24 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                           fix_signs, ...) {
+                           fix_signs, intercept, greek, raw_tex, index_factors) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else if (index_factors) {
+    rhs$final_terms <- ifelse(
+      grepl("\\\\times", rhs$final_terms),
+      paste0("\\left(", rhs$final_terms, "\\right)"),
+      rhs$final_terms
+    )
+    rhs$final_terms <- ifelse(
+      rhs$final_terms == "",
+      "\\alpha",
+      rhs$final_terms
+    )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
 
   splt <- split(rhs, rhs$coef.type)
@@ -82,13 +115,24 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, ...) {
+                          fix_signs, intercept, greek, raw_tex, index_factors) {
   rhs$final_terms <- create_term(rhs, ital_vars)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
+  } else if (index_factors) {
+    rhs$final_terms <- ifelse(
+      grepl("\\\\times", rhs$final_terms),
+      paste0("\\left(", rhs$final_terms, "\\right)"),
+      rhs$final_terms
+    )
+    rhs$final_terms <- ifelse(
+      rhs$final_terms == "",
+      "\\alpha",
+      rhs$final_terms
+    )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
   }
 
   splt <- split(rhs, rhs$coef.type)

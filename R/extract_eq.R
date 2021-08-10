@@ -164,7 +164,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     fix_signs,
     intercept,
     greek,
-    raw_tex
+    raw_tex,
+    index_factors
   )
 
   if (wrap) {
