@@ -395,6 +395,12 @@ detect_crosslevel <- function(primary, pred_level) {
 #### Consider refactoring the below too
 detect_covar_level <- function(predictor, group) {
   nm <- names(group)
+  if (is.numeric(predictor)) {
+    if (is.matrix(predictor)) {
+      predictor <- predictor[ ,1]
+    }
+    predictor <- round(predictor, 5)
+  }
   v <- paste(predictor, group[, 1], sep = " _|_ ")
   unique_v <- unique(v)
   test <- gsub(".+\\s\\_\\|\\_\\s(.+)", "\\1", unique_v)
@@ -435,7 +441,7 @@ collapse_list <- function(x, y) {
 detect_group_coef <- function(model, rhs) {
   outcome <- all.vars(formula(model))[1]
   d <- model@frame
-
+  
   random_lev_names <- names(extract_random_vars(rhs))
   random_levs <- unlist(strsplit(random_lev_names, ":"))
   random_levs <- gsub("^\\(|\\)$", "", random_levs)
