@@ -1,3 +1,143 @@
+# Math extraction works
+
+    Code
+      extract_eq(m1)
+    Output
+      $$
+      \begin{aligned}
+        \operatorname{Reaction}_{i}  &\sim N \left(\mu, \sigma^2 \right) \\
+          \mu &=\alpha_{j[i]} + \beta_{1}(\operatorname{log(Days\ +\ 1)}) + \beta_{2}(\operatorname{exp(Days)}) + \beta_{3}(\operatorname{Days}) + \beta_{4}(\operatorname{Days^2}) + \beta_{5}(\operatorname{Days^3}) + \beta_{6}(\operatorname{Days^4}) \\
+          \alpha_{j}  &\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
+          \text{, for Subject j = 1,} \dots \text{,J}
+      \end{aligned}
+      $$
+
+---
+
+    Code
+      extract_eq(m2)
+    Output
+      $$
+      \begin{aligned}
+        \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i]} + \beta_{1}(\operatorname{log(wave\ +\ 1)}), \sigma^2 \right) \\    
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\alpha_{j} \\
+            &\beta_{1j}
+          \end{aligned}
+        \end{array}
+      \right)
+        &\sim N \left(
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{exp(prop\_low)}) \\
+            &\mu_{\beta_{1j}}
+          \end{aligned}
+        \end{array}
+      \right)
+      , 
+      \left(
+        \begin{array}{cc}
+           \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+           \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
+        \end{array}
+      \right)
+       \right)
+          \text{, for sid j = 1,} \dots \text{,J}
+      \end{aligned}
+      $$
+
+---
+
+    Code
+      extract_eq(m3)
+    Output
+      $$
+      \begin{aligned}
+        \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\alpha_{j} \\
+            &\beta_{1j}
+          \end{aligned}
+        \end{array}
+      \right)
+        &\sim N \left(
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\mu_{\alpha_{j}} \\
+            &\mu_{\beta_{1j}}
+          \end{aligned}
+        \end{array}
+      \right)
+      , 
+      \left(
+        \begin{array}{cc}
+           \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+           \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
+        \end{array}
+      \right)
+       \right)
+          \text{, for sid j = 1,} \dots \text{,J} \\    
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\alpha_{k} \\
+            &\beta_{1k}
+          \end{aligned}
+        \end{array}
+      \right)
+        &\sim N \left(
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{prop\_low}) + \gamma_{2}^{\alpha}(\operatorname{prop\_low^2}) + \gamma_{3}^{\alpha}(\operatorname{prop\_low^3}) + \gamma_{4}^{\alpha}(\operatorname{prop\_low^4}) \\
+            &\mu_{\beta_{1k}}
+          \end{aligned}
+        \end{array}
+      \right)
+      , 
+      \left(
+        \begin{array}{cc}
+           \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\beta_{1k}} \\ 
+           \rho_{\beta_{1k}\alpha_{k}} & \sigma^2_{\beta_{1k}}
+        \end{array}
+      \right)
+       \right)
+          \text{, for school k = 1,} \dots \text{,K} \\    
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\alpha_{l} \\
+            &\beta_{1l}
+          \end{aligned}
+        \end{array}
+      \right)
+        &\sim N \left(
+      \left(
+        \begin{array}{c} 
+          \begin{aligned}
+            &\mu_{\alpha_{l}} \\
+            &\mu_{\beta_{1l}}
+          \end{aligned}
+        \end{array}
+      \right)
+      , 
+      \left(
+        \begin{array}{cc}
+           \sigma^2_{\alpha_{l}} & \rho_{\alpha_{l}\beta_{1l}} \\ 
+           \rho_{\beta_{1l}\alpha_{l}} & \sigma^2_{\beta_{1l}}
+        \end{array}
+      \right)
+       \right)
+          \text{, for district l = 1,} \dots \text{,L}
+      \end{aligned}
+      $$
+
 # Really big models work
 
     Code

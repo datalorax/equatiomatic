@@ -1,4 +1,23 @@
 library(lme4)
+test_that("Math extraction works", {
+  expect_warning(
+    m1 <- lmer(Reaction ~ log(Days + 1) + exp(Days) + poly(Days, 4) + 
+                 (1 | Subject), 
+               data = sleepstudy)
+  )
+  m2 <- lmer(score ~ log(wave + 1) + exp(prop_low) +
+                     (log(wave + 1)|sid),
+             data = sim_longitudinal)
+  
+  m3 <- lmer(score ~ wave + poly(prop_low, 4) +
+                     (wave|sid) + (wave|school) + (wave|district),
+             data = sim_longitudinal)
+  
+  expect_snapshot(extract_eq(m1))
+  expect_snapshot(extract_eq(m2))
+  expect_snapshot(extract_eq(m3))
+})
+
 
 test_that("Really big models work", {
   big_mod <- lmer(rt ~ 0 + n1_intercept + n1_warning1 + n1_cuing1 + x1_intercept +  
