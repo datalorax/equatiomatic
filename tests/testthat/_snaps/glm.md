@@ -1,3 +1,15 @@
+# math extraction works
+
+    $$
+    \log\left[ \frac { P( \operatorname{outcome} = \operatorname{1} ) }{ 1 - P( \operatorname{outcome} = \operatorname{1} ) } \right] = \alpha + \beta_{1}(\operatorname{log(continuous\_1)}) + \beta_{2}(\operatorname{exp(continuous\_2)}) + \beta_{3}(\operatorname{continuous\_2}) + \beta_{4}(\operatorname{continuous\_2^2}) + \beta_{5}(\operatorname{continuous\_2^3})
+    $$
+
+---
+
+    $$
+    P( \operatorname{outcome} = \operatorname{1} ) = \Phi[\alpha + \beta_{1}(\operatorname{log(continuous\_1)}) + \beta_{2}(\operatorname{exp(continuous\_2)}) + \beta_{3}(\operatorname{continuous\_2}) + \beta_{4}(\operatorname{continuous\_2^2}) + \beta_{5}(\operatorname{continuous\_2^3})]
+    $$
+
 # Collapsing glm factors works
 
     Code

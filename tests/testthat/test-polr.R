@@ -1,3 +1,28 @@
+test_that("Math extraction works", {
+  df <- data.frame(
+    outcome = factor(rep(LETTERS[1:3], 100),
+                     levels = LETTERS[1:3],
+                     ordered = TRUE
+    ),
+    continuous = rnorm(300, 100, 1)
+  )
+  model_logit <- MASS::polr(
+    outcome ~ poly(continuous, 3) + log(continuous),
+    Hess = TRUE,
+    data = df, 
+    method = "logistic"
+  )
+  model_probit <- MASS::polr(
+    outcome ~ poly(continuous, 3) + log(continuous),
+    Hess = TRUE,
+    data = df,
+    method = "probit"
+  )
+  
+  expect_snapshot_output(extract_eq(model_logit))
+  expect_snapshot_output(extract_eq(model_probit))
+})
+
 test_that("Collapsing polr factors works", {
   df <- data.frame(
     outcome = factor(rep(LETTERS[1:3], 100),

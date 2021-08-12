@@ -1,3 +1,11 @@
+test_that("Math extraction works", {
+  m_lm <- lm(bill_length_mm ~ poly(bill_depth_mm, 5) + 
+               log(flipper_length_mm) +
+               exp(bill_length_mm), 
+             data = na.omit(penguins))
+  
+  expect_snapshot_output(extract_eq(m_lm))
+})
 test_that("Collapsing lm factors works", {
   d <- mtcars
   d$gear <- as.factor(d$gear)
