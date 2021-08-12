@@ -271,6 +271,7 @@ create_term.default <- function(side, ital_vars) {
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
+  prim_escaped <- add_math(prim_escaped)
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
 
   subs_escaped <- lapply(side$subscripts, function(x) {
@@ -282,6 +283,20 @@ create_term.default <- function(side, ital_vars) {
   final <- Map(paste0, prim, subs)
 
   vapply(final, add_tex_mult, FUN.VALUE = character(1))
+}
+
+# swap out log, exp
+add_math <- function(l) {
+  lapply(l, check_math)
+}
+
+check_math <- function(x) {
+  checks <- c("log", "exp")
+  replacements <- c("\\\\log", "\\\\exp")
+  for(i in seq_along(checks)) {
+    x <- gsub(checks[i], replacements[i], x)  
+  }
+  x
 }
 
 #' Create a full term w/subscripts
