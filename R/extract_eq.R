@@ -16,6 +16,11 @@
 #'   notation, e.g., \code{"\\hat{\\beta}"}.
 #' @param raw_tex Logical. Is the greek code being passed to denote coefficients
 #' raw tex code?
+#' @param swap_var_names A vector of the form c("old_var_name" = "new name"). 
+#'   For example: c("bill_length_mm" = "Bill Length (MM)").
+#' @param swap_subscript_names A vector of the form 
+#'   c("old_subscript_name" = "new name"). For example: 
+#'   c("f" = "Female").
 #' @param ital_vars Logical, defaults to \code{FALSE}. Should the variable names
 #'   not be wrapped in the \code{\\operatorname{}} command?
 #' @param label A label for the equation, which can then be used for in-text 
@@ -124,7 +129,9 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
-                       raw_tex = FALSE, ital_vars = FALSE, label = NULL,
+                       raw_tex = FALSE, swap_var_names = NULL,
+                       swap_subscript_names = NULL,
+                       ital_vars = FALSE, label = NULL,
                        index_factors = FALSE, show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
@@ -258,7 +265,9 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
-                               raw_tex = FALSE, ital_vars = FALSE, label = NULL,
+                               raw_tex = FALSE, swap_var_names = NULL,
+                               swap_subscript_names = NULL,
+                               ital_vars = FALSE, label = NULL,
                                index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end",
@@ -271,11 +280,12 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
     ital_vars, wrap, terms_per_line,
     use_coefs, coef_digits, fix_signs,
     operator_location,
-    sigma = "\\sigma^2", return_variances
+    sigma = "\\sigma^2", return_variances,
+    swap_var_names, swap_subscript_names
   )
   vcv <- create_ranef_structure_merMod(
     model, ital_vars, use_coefs, coef_digits,
-    fix_signs, return_variances
+    fix_signs, return_variances, swap_var_names, swap_subscript_names
   )
 
   if (grepl("^\n    \n", vcv[[1]])) {
@@ -311,7 +321,9 @@ extract_eq.glmerMod <- function(...) {
 #' @export
 #' @noRd
 extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
-                                      raw_tex = FALSE, ital_vars = FALSE,
+                                      raw_tex = FALSE, swap_var_names = NULL,
+                                      swap_subscript_names = NULL,
+                                      ital_vars = FALSE,
                                       label = NULL,
                                       index_factors = FALSE, 
                                       show_distribution = FALSE,
@@ -344,7 +356,9 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
     ital_vars,
     use_coefs,
     coef_digits,
-    raw_tex
+    raw_tex,
+    swap_var_names,
+    swap_subscript_names
   )
 
   ##########

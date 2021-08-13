@@ -166,7 +166,8 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @return A dataframe
 #' @noRd
 create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
-                                     coef_digits, raw_tex, ...) {
+                                     coef_digits, raw_tex, swap_var_names,
+                                     swap_subscript_names, ...) {
 
   # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
@@ -242,7 +243,8 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs,
   # Note that this is the same set of operations as earlier, but only with yt
   if (regression) {
     # Convert sides into LATEX-like terms
-    yt$final_terms <- create_term(yt, ital_vars)
+    yt$final_terms <- create_term(yt, ital_vars, swap_var_names, 
+                                  swap_subscript_names)
 
     # Combine coefs or greek letters with the terms
     if (use_coefs) {
@@ -312,7 +314,14 @@ create_term.default <- function(side, ital_vars, swap_var_names,
 #' @inheritParams extract_eq
 #' @noRd
 #' @export
-create_term.forecast_ARIMA <- function(side, ital_vars) {
+create_term.forecast_ARIMA <- function(side, ital_vars, swap_var_names,
+                                       swap_subscript_names) {
+  if (!is.null(swap_var_names)) {
+    side$primary <- swap_names(swap_var_names, side$primary)
+  }
+  if (!is.null(swap_subscript_names)) {
+    side$subscripts <- swap_names(swap_subscript_names, side$subscripts)
+  }
   # Get and format the primaries
   # Do not escape seasonal differecing primary
   prim_escaped <- lapply(side$primary, function(x) {

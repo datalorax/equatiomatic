@@ -1,3 +1,104 @@
+# Renaming Variables works
+
+    $$
+    \begin{aligned}
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{Wave}), \sigma^2 \right) \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{j} \\
+          &\beta_{1j}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\gamma_{0}^{\alpha} + \gamma_{1k[i]}^{\alpha}(\operatorname{group}_{\operatorname{low}}) + \gamma_{2k[i]}^{\alpha}(\operatorname{group}_{\operatorname{medium}}) + \gamma_{3k[i],l[i]}^{\alpha}(\operatorname{treatment}) \\
+          &\mu_{\beta_{1j}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+         \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for sid j = 1,} \dots \text{,J} \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{k} \\
+          &\beta_{1k} \\
+          &\gamma_{1k} \\
+          &\gamma_{2k} \\
+          &\gamma_{3k}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\gamma_{0}^{\alpha} + \gamma_{1l[i]}^{\alpha}(\operatorname{P(low\ income)}) \\
+          &\mu_{\beta_{1k}} \\
+          &\mu_{\gamma_{1k}} \\
+          &\mu_{\gamma_{2k}} \\
+          &\mu_{\gamma_{3k}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{ccccc}
+         \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\beta_{1k}} & \rho_{\alpha_{k}\gamma_{1k}} & \rho_{\alpha_{k}\gamma_{2k}} & \rho_{\alpha_{k}\gamma_{3k}} \\ 
+         \rho_{\beta_{1k}\alpha_{k}} & \sigma^2_{\beta_{1k}} & \rho_{\beta_{1k}\gamma_{1k}} & \rho_{\beta_{1k}\gamma_{2k}} & \rho_{\beta_{1k}\gamma_{3k}} \\ 
+         \rho_{\gamma_{1k}\alpha_{k}} & \rho_{\gamma_{1k}\beta_{1k}} & \sigma^2_{\gamma_{1k}} & \rho_{\gamma_{1k}\gamma_{2k}} & \rho_{\gamma_{1k}\gamma_{3k}} \\ 
+         \rho_{\gamma_{2k}\alpha_{k}} & \rho_{\gamma_{2k}\beta_{1k}} & \rho_{\gamma_{2k}\gamma_{1k}} & \sigma^2_{\gamma_{2k}} & \rho_{\gamma_{2k}\gamma_{3k}} \\ 
+         \rho_{\gamma_{3k}\alpha_{k}} & \rho_{\gamma_{3k}\beta_{1k}} & \rho_{\gamma_{3k}\gamma_{1k}} & \rho_{\gamma_{3k}\gamma_{2k}} & \sigma^2_{\gamma_{3k}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for school k = 1,} \dots \text{,K} \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{l} \\
+          &\beta_{1l} \\
+          &\gamma_{3l} \\
+          &\gamma_{1l}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\mu_{\alpha_{l}} \\
+          &\mu_{\beta_{1l}} \\
+          &\mu_{\gamma_{3l}} \\
+          &\mu_{\gamma_{1l}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cccc}
+         \sigma^2_{\alpha_{l}} & \rho_{\alpha_{l}\beta_{1l}} & \rho_{\alpha_{l}\gamma_{3l}} & \rho_{\alpha_{l}\gamma_{1l}} \\ 
+         \rho_{\beta_{1l}\alpha_{l}} & \sigma^2_{\beta_{1l}} & \rho_{\beta_{1l}\gamma_{3l}} & \rho_{\beta_{1l}\gamma_{1l}} \\ 
+         \rho_{\gamma_{3l}\alpha_{l}} & \rho_{\gamma_{3l}\beta_{1l}} & \sigma^2_{\gamma_{3l}} & \rho_{\gamma_{3l}\gamma_{1l}} \\ 
+         \rho_{\gamma_{1l}\alpha_{l}} & \rho_{\gamma_{1l}\beta_{1l}} & \rho_{\gamma_{1l}\gamma_{3l}} & \sigma^2_{\gamma_{1l}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for district l = 1,} \dots \text{,L}
+    \end{aligned}
+    $$
+
 # Really big models work
 
     Code
