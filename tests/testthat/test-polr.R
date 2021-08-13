@@ -1,3 +1,35 @@
+test_that("Renaming Variables works", {
+  df <- data.frame(
+    outcome = factor(rep(LETTERS[1:3], 100),
+                     levels = LETTERS[1:3],
+                     ordered = TRUE
+    ),
+    categorical = rep(letters[1:5], 20),
+    continuous = rnorm(300, 100, 1)
+  )
+  
+  m4 <- MASS::polr(
+    outcome ~ categorical*continuous,
+    Hess = TRUE,
+    data = df,
+    method = "probit"
+  )
+  expect_snapshot_output(
+    extract_eq(
+      m4,
+      swap_var_names = c(
+        "categorical" = "catty",
+        "continuous" = "Cont Var"),
+      swap_subscript_names = c(
+        "a" = "alabama arkansas",
+        "d" = "do do do"
+      ),
+      wrap = TRUE,
+      terms_per_line = 2
+    )
+  )
+})
+
 test_that("Collapsing polr factors works", {
   df <- data.frame(
     outcome = factor(rep(LETTERS[1:3], 100),

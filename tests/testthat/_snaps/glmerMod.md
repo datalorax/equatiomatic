@@ -1,3 +1,14 @@
+# Renaming Variables works
+
+    $$
+    \begin{aligned}
+      \operatorname{stops}_{i}  &\sim \operatorname{Poisson}(\lambda_i) \\
+        \log(\lambda_i) &=\alpha_{j[i]} + \beta_{1}(\operatorname{Ethnicity}_{\operatorname{Hispanic/Latino}}) + \beta_{2}(\operatorname{Ethnicity}_{\operatorname{White}}) \\
+        \alpha_{j}  &\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{Total\ Arrests}), \sigma^2_{\alpha_{j}} \right)
+        \text{, for precinct j = 1,} \dots \text{,J}
+    \end{aligned}
+    $$
+
 # Standard Poisson regression models work
 
     $$

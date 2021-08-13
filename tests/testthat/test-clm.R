@@ -1,3 +1,32 @@
+test_that("Renaming Variables works", {
+  df <- data.frame(
+    outcome = factor(rep(LETTERS[1:3], 100),
+                     levels = LETTERS[1:3],
+                     ordered = TRUE
+    ),
+    categorical = rep(letters[1:5], 20),
+    continuous = rnorm(300, 100, 1)
+  )
+  expect_warning(
+    m3 <- ordinal::clm(outcome ~ categorical*continuous,
+                       data = df, 
+                       link = "logit"
+    )
+  )
+  expect_snapshot_output(
+    extract_eq(
+      m3,
+      swap_var_names = c("categorical" = "cat"),
+      swap_subscript_names = c(
+        "a" = "Hey look! A new subscript",
+        "d" = "Don't look at me though"
+      ),
+      wrap = TRUE,
+      terms_per_line = 2
+    )
+  )
+})
+
 test_that("Collapsing clm factors works", {
   df <- data.frame(
     outcome = factor(rep(LETTERS[1:3], 100),
@@ -7,11 +36,15 @@ test_that("Collapsing clm factors works", {
     categorical = rep(letters[1:5], 20),
     continuous = rnorm(300, 100, 1)
   )
-  model_logit <- ordinal::clm(outcome ~ categorical*continuous,
-                              data = df, link = "logit"
+  expect_warning(
+    model_logit <- ordinal::clm(outcome ~ categorical*continuous,
+                                data = df, link = "logit"
+    )
   )
-  model_probit <- ordinal::clm(outcome ~ categorical*continuous,
-                               data = df, link = "probit"
+  expect_warning(
+    model_probit <- ordinal::clm(outcome ~ categorical*continuous,
+                                 data = df, link = "probit"
+    )
   )
   
   # no collapsing
