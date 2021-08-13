@@ -63,8 +63,7 @@ Imports:
     shiny,
     knitr,
     stats,
-    utils,
-    dplyr
+    utils
 Suggests: 
     covr,
     shinyWidgets,

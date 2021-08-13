@@ -32,3 +32,7 @@ mapply_dbl <- function(...) {
   stopifnot(is.double(out))
   out
 }
+
+distinct <- function(df, col) {
+  df[!duplicated(df[col]), ]
+}
