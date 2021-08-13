@@ -9,6 +9,8 @@ extract_eq(
   intercept = "alpha",
   greek = "beta",
   raw_tex = FALSE,
+  swap_var_names = NULL,
+  swap_subscript_names = NULL,
   ital_vars = FALSE,
   label = NULL,
   index_factors = FALSE,
@@ -40,6 +42,13 @@ notation, e.g., \code{"\\hat{\\beta}"}.}
 
 \item{raw_tex}{Logical. Is the greek code being passed to denote coefficients
 raw tex code?}
+
+\item{swap_var_names}{A vector of the form c("old_var_name" = "new name").
+For example: c("bill_length_mm" = "Bill Length (MM)").}
+
+\item{swap_subscript_names}{A vector of the form
+c("old_subscript_name" = "new name"). For example:
+c("f" = "Female").}
 
 \item{ital_vars}{Logical, defaults to \code{FALSE}. Should the variable names
 not be wrapped in the \code{\\operatorname{}} command?}

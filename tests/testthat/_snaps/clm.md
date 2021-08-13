@@ -16,6 +16,23 @@
     \end{aligned}
     $$
 
+# Renaming Variables works
+
+    $$
+    \begin{aligned}
+    \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{cat}_{\operatorname{b}})\ + \\
+    &\quad \beta_{2}(\operatorname{cat}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat}_{\operatorname{Don't\ look\ at\ me\ though}})\ + \\
+    &\quad \beta_{4}(\operatorname{cat}_{\operatorname{e}}) + \beta_{5}(\operatorname{continuous})\ + \\
+    &\quad \beta_{6}(\operatorname{cat}_{\operatorname{b}} \times \operatorname{continuous}) + \beta_{7}(\operatorname{cat}_{\operatorname{c}} \times \operatorname{continuous})\ + \\
+    &\quad \beta_{8}(\operatorname{cat}_{\operatorname{Don't\ look\ at\ me\ though}} \times \operatorname{continuous}) + \beta_{9}(\operatorname{cat}_{\operatorname{e}} \times \operatorname{continuous}) \\
+    \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{cat}_{\operatorname{b}})\ + \\
+    &\quad \beta_{2}(\operatorname{cat}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat}_{\operatorname{Don't\ look\ at\ me\ though}})\ + \\
+    &\quad \beta_{4}(\operatorname{cat}_{\operatorname{e}}) + \beta_{5}(\operatorname{continuous})\ + \\
+    &\quad \beta_{6}(\operatorname{cat}_{\operatorname{b}} \times \operatorname{continuous}) + \beta_{7}(\operatorname{cat}_{\operatorname{c}} \times \operatorname{continuous})\ + \\
+    &\quad \beta_{8}(\operatorname{cat}_{\operatorname{Don't\ look\ at\ me\ though}} \times \operatorname{continuous}) + \beta_{9}(\operatorname{cat}_{\operatorname{e}} \times \operatorname{continuous})
+    \end{aligned}
+    $$
+
 # Collapsing clm factors works
 
     Code

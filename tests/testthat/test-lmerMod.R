@@ -19,6 +19,27 @@ test_that("Math extraction works", {
 })
 
 
+test_that("Renaming Variables works", {
+  m5 <- lme4::lmer(
+    score ~ wave + group + treatment + prop_low +
+      (wave | sid) + (wave + group + treatment | school) +
+      (wave + treatment + prop_low | district),
+    sim_longitudinal
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      m5,
+      swap_var_names = c(
+        "wave" = "Wave",
+        "prop_low" = "P(low income)"),
+      swap_subscript_names = c(
+        "1" = ""
+      )
+    )
+  )
+})
+
 test_that("Really big models work", {
   big_mod <- lmer(rt ~ 0 + n1_intercept + n1_warning1 + n1_cuing1 + x1_intercept +  
          x1_warning1 + x1_cuing1 + n2_intercept + n2_warning1 + n2_cuing1 +  

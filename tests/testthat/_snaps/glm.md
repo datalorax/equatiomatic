@@ -1,3 +1,20 @@
+# Renaming Variables works
+
+    $$
+    \begin{aligned}
+    \log\left[ \frac { P( \operatorname{outcome} = \operatorname{1} ) }{ 1 - P( \operatorname{outcome} = \operatorname{1} ) } \right] &= \alpha + \beta_{1}(\operatorname{cat}_{\operatorname{b}})\ + \\
+    &\quad \beta_{2}(\operatorname{cat}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat}_{\operatorname{dddd}})\ + \\
+    &\quad \beta_{4}(\operatorname{cat}_{\operatorname{e}}) + \beta_{5}(\operatorname{Continuous\ Variable\ [1]})\ + \\
+    &\quad \beta_{6}(\operatorname{continuous\_2}) + \beta_{7}(\operatorname{cat}_{\operatorname{b}} \times \operatorname{Continuous\ Variable\ [1]})\ + \\
+    &\quad \beta_{8}(\operatorname{cat}_{\operatorname{c}} \times \operatorname{Continuous\ Variable\ [1]}) + \beta_{9}(\operatorname{cat}_{\operatorname{dddd}} \times \operatorname{Continuous\ Variable\ [1]})\ + \\
+    &\quad \beta_{10}(\operatorname{cat}_{\operatorname{e}} \times \operatorname{Continuous\ Variable\ [1]}) + \beta_{11}(\operatorname{cat}_{\operatorname{b}} \times \operatorname{continuous\_2})\ + \\
+    &\quad \beta_{12}(\operatorname{cat}_{\operatorname{c}} \times \operatorname{continuous\_2}) + \beta_{13}(\operatorname{cat}_{\operatorname{dddd}} \times \operatorname{continuous\_2})\ + \\
+    &\quad \beta_{14}(\operatorname{cat}_{\operatorname{e}} \times \operatorname{continuous\_2}) + \beta_{15}(\operatorname{Continuous\ Variable\ [1]} \times \operatorname{continuous\_2})\ + \\
+    &\quad \beta_{16}(\operatorname{cat}_{\operatorname{b}} \times \operatorname{Continuous\ Variable\ [1]} \times \operatorname{continuous\_2}) + \beta_{17}(\operatorname{cat}_{\operatorname{c}} \times \operatorname{Continuous\ Variable\ [1]} \times \operatorname{continuous\_2})\ + \\
+    &\quad \beta_{18}(\operatorname{cat}_{\operatorname{dddd}} \times \operatorname{Continuous\ Variable\ [1]} \times \operatorname{continuous\_2}) + \beta_{19}(\operatorname{cat}_{\operatorname{e}} \times \operatorname{Continuous\ Variable\ [1]} \times \operatorname{continuous\_2})
+    \end{aligned}
+    $$
+
 # Math extraction works
 
     $$

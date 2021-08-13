@@ -1,4 +1,34 @@
 # glms
+test_that("Renaming Variables works", {
+  set.seed(1234)
+  df <- data.frame(
+    outcome = sample(0:1, 100, replace = TRUE),
+    categorical = rep(letters[1:5], 20),
+    continuous_1 = rnorm(100, 100, 1),
+    continuous_2 = rnorm(100, 50, 5)
+  )
+  
+  m2 <- glm(outcome ~ categorical*continuous_1*continuous_2,
+            data = df,
+            family = binomial(link = "logit")
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      m2,
+      swap_var_names = c(
+        "categorical" = "cat",
+        "continuous_1" = "Continuous Variable [1]"),
+      swap_subscript_names = c(
+        "a" = "aaaaaaaaa",
+        "d" = "dddd"
+      ),
+      wrap = TRUE,
+      terms_per_line = 2
+    )
+  )
+})
+
 test_that("Math extraction works", {
   set.seed(1234)
   df <- data.frame(
