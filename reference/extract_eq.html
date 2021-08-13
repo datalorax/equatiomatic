@@ -164,6 +164,7 @@
   <span class='kw'>raw_tex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>index_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>show_distribution</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>,
@@ -217,6 +218,11 @@ must match the label exactly, and must be formatted as
 <code>\ref{eq: label}</code>, where <code>label</code> is a place holder for the
 specific label. Notice the space after the colon before the label. This
 also must be there, or the cross-reference will fail.</p></td>
+    </tr>
+    <tr>
+      <th>index_factors</th>
+      <td><p>Logical, defaults to <code>FALSE</code>. Should the factors
+be indexed, rather than using subscripts to display all levels?</p></td>
     </tr>
     <tr>
       <th>show_distribution</th>
@@ -369,6 +375,14 @@ output to the screen. Supports any model supported by
 #&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp}) + -0.02(\operatorname{hp})\ + \\
 #&gt; &amp;\quad 0.79(\operatorname{drat}) + -3.72(\operatorname{wt}) + 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs})\ + \\
 #&gt; &amp;\quad 2.52(\operatorname{am}) + 0.66(\operatorname{gear}) + -0.2(\operatorname{carb})
+#&gt; \end{aligned}
+#&gt; $$</div><div class='input'>
+<span class='co'># Use indices for factors instead of subscripts</span>
+<span class='fu'>extract_eq</span>(<span class='no'>mod2</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>terms_per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>index_factors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; $$
+#&gt; \begin{aligned}
+#&gt; \operatorname{mpg} &amp;= \alpha + \operatorname{cyl} + \operatorname{disp} + \operatorname{hp}\ + \\
+#&gt; &amp;\quad \operatorname{drat} + \operatorname{wt} + \operatorname{qsec} + \operatorname{vs}\ + \\
+#&gt; &amp;\quad \operatorname{am} + \operatorname{gear} + \operatorname{carb} + \epsilon
 #&gt; \end{aligned}
 #&gt; $$</div><div class='input'>
 <span class='co'># Use other model types, like glm</span>
