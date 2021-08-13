@@ -6,7 +6,7 @@
       $$
       \begin{aligned}
         \operatorname{Reaction}_{i}  &\sim N \left(\mu, \sigma^2 \right) \\
-          \mu &=\alpha_{j[i]} + \beta_{1}(\operatorname{log(Days\ +\ 1)}) + \beta_{2}(\operatorname{exp(Days)}) + \beta_{3}(\operatorname{Days}) + \beta_{4}(\operatorname{Days^2}) + \beta_{5}(\operatorname{Days^3}) + \beta_{6}(\operatorname{Days^4}) \\
+          \mu &=\alpha_{j[i]} + \beta_{1}(\operatorname{\log(Days\ +\ 1)}) + \beta_{2}(\operatorname{\exp(Days)}) + \beta_{3}(\operatorname{Days}) + \beta_{4}(\operatorname{Days^2}) + \beta_{5}(\operatorname{Days^3}) + \beta_{6}(\operatorname{Days^4}) \\
           \alpha_{j}  &\sim N \left(\mu_{\alpha_{j}}, \sigma^2_{\alpha_{j}} \right)
           \text{, for Subject j = 1,} \dots \text{,J}
       \end{aligned}
@@ -19,7 +19,7 @@
     Output
       $$
       \begin{aligned}
-        \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i]} + \beta_{1}(\operatorname{log(wave\ +\ 1)}), \sigma^2 \right) \\    
+        \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i]} + \beta_{1}(\operatorname{\log(wave\ +\ 1)}), \sigma^2 \right) \\    
       \left(
         \begin{array}{c} 
           \begin{aligned}
@@ -32,7 +32,7 @@
       \left(
         \begin{array}{c} 
           \begin{aligned}
-            &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{exp(prop\_low)}) \\
+            &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{\exp(prop\_low)}) \\
             &\mu_{\beta_{1j}}
           \end{aligned}
         \end{array}

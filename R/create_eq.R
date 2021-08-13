@@ -274,10 +274,11 @@ create_term.default <- function(side, ital_vars) {
   prim_escaped <- add_math(prim_escaped, side$subscripts)
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
   
-  is_poly <- vapply(side$primary, 
-                    function(x) any(grepl("poly", x)), 
-                    FUN.VALUE = logical(1))
-  subs <- ifelse(is_poly, "", side$subscripts)
+  drop_subscripts <- vapply(side$primary, 
+                            function(x) any(grepl("poly|<|>", x)), 
+                            FUN.VALUE = logical(1))
+  
+  subs <- ifelse(drop_subscripts, "", side$subscripts)
   subs_escaped <- lapply(subs, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
@@ -295,12 +296,12 @@ add_math <- function(primary, subscripts) {
 }
 
 check_math <- function(primary, subscripts) {
-  checks <- c("log", "exp", "poly\\((.+),.+")
-  replacements <- c("\\\\log", "\\\\exp", paste0("\\1^", subscripts))
+  checks <- c("log", "exp", "poly\\((.+),.+", "I\\((.+)\\)")
+  replacements <- c("\\\\log", "\\\\exp", paste0("\\1^", subscripts), "\\1")
   for(i in seq_along(checks)) {
-    x <- gsub(checks[i], replacements[i], primary)  
+    primary <- gsub(checks[i], replacements[i], primary)  
   }
-  gsub("\\^1$", "", x)
+  gsub("\\^1$", "", primary)
 }
 
 #' Create a full term w/subscripts

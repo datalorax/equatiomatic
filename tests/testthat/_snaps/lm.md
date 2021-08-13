@@ -1,7 +1,19 @@
 # Math extraction works
 
     $$
-    \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{bill\_depth\_mm^2}) + \beta_{3}(\operatorname{bill\_depth\_mm^3}) + \beta_{4}(\operatorname{bill\_depth\_mm^4}) + \beta_{5}(\operatorname{bill\_depth\_mm^5}) + \beta_{6}(\operatorname{log(flipper\_length\_mm)}) + \beta_{7}(\operatorname{exp(bill\_length\_mm)}) + \epsilon
+    \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{bill\_depth\_mm^2}) + \beta_{3}(\operatorname{bill\_depth\_mm^3}) + \beta_{4}(\operatorname{bill\_depth\_mm^4}) + \beta_{5}(\operatorname{bill\_depth\_mm^5}) + \beta_{6}(\operatorname{\log(flipper\_length\_mm)}) + \beta_{7}(\operatorname{\exp(bill\_length\_mm)}) + \epsilon
+    $$
+
+---
+
+    $$
+    \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{hp\ >\ 150}) + \epsilon
+    $$
+
+---
+
+    $$
+    \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{hp\ <\ 250}) + \epsilon
     $$
 
 # Collapsing lm factors works

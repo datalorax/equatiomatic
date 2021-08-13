@@ -5,6 +5,11 @@ test_that("Math extraction works", {
              data = na.omit(penguins))
   
   expect_snapshot_output(extract_eq(m_lm))
+
+  m1 <- lm(mpg ~ I(hp > 150), data = mtcars)
+  m2 <- lm(mpg ~ I(hp < 250), data = mtcars)
+  expect_snapshot_output(extract_eq(m1))
+  expect_snapshot_output(extract_eq(m2))
 })
 test_that("Collapsing lm factors works", {
   d <- mtcars
