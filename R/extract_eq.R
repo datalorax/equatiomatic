@@ -140,7 +140,9 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
-                               raw_tex = FALSE, ital_vars = FALSE, label = NULL,
+                               raw_tex = FALSE, swap_var_names = NULL,
+                               swap_subscript_names = NULL,
+                               ital_vars = FALSE, label = NULL,
                                index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
                                operator_location = "end", align_env = "aligned",
@@ -165,7 +167,9 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     intercept,
     greek,
     raw_tex,
-    index_factors
+    index_factors,
+    swap_var_names,
+    swap_subscript_names
   )
 
   if (wrap) {

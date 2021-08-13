@@ -17,8 +17,10 @@ create_eq <- function(lhs, ...) {
 
 create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                               fix_signs, intercept, greek, raw_tex,
-                              index_factors) {
-  rhs$final_terms <- create_term(rhs, ital_vars)
+                              index_factors, swap_var_names, 
+                              swap_subscript_names) {
+  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
+                                 swap_subscript_names)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -52,8 +54,10 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex, index_factors) {
-  rhs$final_terms <- create_term(rhs, ital_vars)
+                          fix_signs, intercept, greek, raw_tex, index_factors,
+                          swap_var_names, swap_subscript_names) {
+  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
+                                 swap_subscript_names)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -84,8 +88,10 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                           fix_signs, intercept, greek, raw_tex, index_factors) {
-  rhs$final_terms <- create_term(rhs, ital_vars)
+                           fix_signs, intercept, greek, raw_tex, index_factors,
+                           swap_var_names, swap_subscript_names) {
+  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
+                                 swap_subscript_names)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -115,8 +121,10 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex, index_factors) {
-  rhs$final_terms <- create_term(rhs, ital_vars)
+                          fix_signs, intercept, greek, raw_tex, index_factors,
+                          swap_var_names, swap_subscript_names) {
+  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
+                                 swap_subscript_names)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -157,14 +165,17 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #'
 #' @return A dataframe
 #' @noRd
-create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, coef_digits, raw_tex, ...) {
+create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
+                                     coef_digits, raw_tex, ...) {
 
   # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
 
   # Convert sides into LATEX-like terms
-  lhs$final_terms <- create_term(lhs, ital_vars)
-  rhs$final_terms <- create_term(rhs, ital_vars)
+  lhs$final_terms <- create_term(lhs, ital_vars, swap_var_names, 
+                                 swap_subscript_names)
+  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
+                                 swap_subscript_names)
 
   # Combine coefs or greek letters with the terms
   if (use_coefs) {
@@ -261,13 +272,20 @@ create_eq.forecast_ARIMA <- function(model, lhs, rhs, yt, ital_vars, use_coefs, 
   return(eq_list)
 }
 
-create_term <- function(side, ital_vars) {
+create_term <- function(side, ...) {
   UseMethod("create_term", side)
 }
 
 #' @noRd
 #' @export
-create_term.default <- function(side, ital_vars) {
+create_term.default <- function(side, ital_vars, swap_var_names, 
+                                swap_subscript_names) {
+  if (!is.null(swap_var_names)) {
+    side$primary <- swap_names(swap_var_names, side$primary)
+  }
+  if (!is.null(swap_subscript_names)) {
+    side$subscripts <- swap_names(swap_subscript_names, side$subscripts)
+  }
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
@@ -334,6 +352,21 @@ create_term.forecast_ARIMA <- function(side, ital_vars) {
 
   # Explicit return
   return(final)
+}
+
+#' Swap out variable names for more human readable forms
+#' @param name_vector A vector of the form c("old_var_name" = "new name"). For
+#' example: c("bill_length_mm" = "Bill Length (MM)")
+#' @param primary The primary column from \code{rhs}
+#' @noRd
+swap_names <- function(name_vector, primary) {
+  missing <- setdiff(unique(unlist(primary)), names(name_vector))
+  names(missing) <- missing
+  full_name_vector <- c(name_vector, missing)
+  
+  lapply(primary, function(x) {
+    full_name_vector[match(x, names(full_name_vector))]
+  })
 }
 
 #' Escape TeX

@@ -1,3 +1,23 @@
+test_that("Renaming Variables works", {
+  m1 <- lm(body_mass_g ~ bill_length_mm * species + 
+             flipper_length_mm * sex, 
+           data = penguins)
+  expect_snapshot_output(
+    extract_eq(
+      m1, 
+      swap_var_names = c(
+        "bill_length_mm" = "Bill Length (MM)",
+        "flipper_length_mm" = "Flipper Length (MM)",
+        "sex" = "SEX"
+      ),
+      swap_subscript_names = c(
+        "male" = "Male",
+        "Chinstrap" = "chinny chin chin"
+      )
+    )
+  )
+})
+
 test_that("Collapsing lm factors works", {
   d <- mtcars
   d$gear <- as.factor(d$gear)

@@ -1,3 +1,9 @@
+# Renaming Variables works
+
+    $$
+    \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{Bill\ Length\ (MM)}) + \beta_{2}(\operatorname{species}_{\operatorname{chinny\ chin\ chin}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \beta_{4}(\operatorname{Flipper\ Length\ (MM)}) + \beta_{5}(\operatorname{SEX}_{\operatorname{Male}}) + \beta_{6}(\operatorname{Bill\ Length\ (MM)} \times \operatorname{species}_{\operatorname{chinny\ chin\ chin}}) + \beta_{7}(\operatorname{Bill\ Length\ (MM)} \times \operatorname{species}_{\operatorname{Gentoo}}) + \beta_{8}(\operatorname{Flipper\ Length\ (MM)} \times \operatorname{SEX}_{\operatorname{Male}}) + \epsilon
+    $$
+
 # Collapsing lm factors works
 
     Code
