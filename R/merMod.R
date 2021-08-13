@@ -309,7 +309,8 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, order,
       coef_terms <- fix_coef_signs(coef_terms)
     }
     out <- data.frame(term = "(Intercept)", 
-                      greek = coef_terms)
+                      greek = coef_terms,
+                      stringsAsFactors = FALSE)
   } else {
     coef_terms <- paste0(nocross$greek, nocross$terms)
     # add intercept term
@@ -395,7 +396,8 @@ pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
     final_slopes <- lapply(final_slopes, fix_coef_signs)
   }
   out <- data.frame(term = unlist(terms_predicted),
-                    greek = unlist(final_slopes))
+                    greek = unlist(final_slopes),
+                    stringsAsFactors = FALSE)
   if (nrow(out) == 0) {
     return()
   }
