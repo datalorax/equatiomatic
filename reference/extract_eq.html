@@ -162,6 +162,8 @@
   <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='st'>"alpha"</span>,
   <span class='kw'>greek</span> <span class='kw'>=</span> <span class='st'>"beta"</span>,
   <span class='kw'>raw_tex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>swap_var_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>swap_subscript_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ital_vars</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>index_factors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -203,6 +205,17 @@ notation, e.g., <code>"\hat{\beta}"</code>.</p></td>
       <th>raw_tex</th>
       <td><p>Logical. Is the greek code being passed to denote coefficients
 raw tex code?</p></td>
+    </tr>
+    <tr>
+      <th>swap_var_names</th>
+      <td><p>A vector of the form c("old_var_name" = "new name").
+For example: c("bill_length_mm" = "Bill Length (MM)").</p></td>
+    </tr>
+    <tr>
+      <th>swap_subscript_names</th>
+      <td><p>A vector of the form
+c("old_subscript_name" = "new name"). For example:
+c("f" = "Female").</p></td>
     </tr>
     <tr>
       <th>ital_vars</th>
