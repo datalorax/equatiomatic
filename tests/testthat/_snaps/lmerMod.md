@@ -1,21 +1,62 @@
 # Implicit ID variables are handled
 
-    Linear mixed model fit by REML ['lmerMod']
-    Formula: score ~ wave + treatment + (wave | sid) + (wave | school)
-       Data: d
-    REML criterion at convergence: 7123.501
-    Random effects:
-     Groups   Name        Std.Dev.  Corr
-     school   (Intercept) 4.6561228     
-              wave        0.0044121 1.00
-     sid      (Intercept) 1.8160871     
-              wave        0.0003033 1.00
-     Residual             8.2892514     
-    Number of obs: 1000, groups:  school, 15; sid, 7
-    Fixed Effects:
-    (Intercept)         wave   treatment1  
-        97.9930       0.1735      -1.6958  
-    optimizer (nloptwrap) convergence code: 0 (OK) ; 0 optimizer warnings; 1 lme4 warnings 
+    $$
+    \begin{aligned}
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i]} + \beta_{1j[i],k[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{j} \\
+          &\beta_{1j}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) \\
+          &\mu_{\beta_{1j}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+         \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for school j = 1,} \dots \text{,J} \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{k} \\
+          &\beta_{1k}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\mu_{\alpha_{k}} \\
+          &\mu_{\beta_{1k}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\beta_{1k}} \\ 
+         \rho_{\beta_{1k}\alpha_{k}} & \sigma^2_{\beta_{1k}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for sid k = 1,} \dots \text{,K}
+    \end{aligned}
+    $$
 
 # Renaming Variables works
 

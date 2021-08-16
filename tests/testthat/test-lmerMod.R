@@ -13,7 +13,7 @@ test_that("Implicit ID variables are handled", {
     data = d
   )
   
-  expect_snapshot_output(m)
+  expect_snapshot_output(extract_eq(m))
   
 })
 
