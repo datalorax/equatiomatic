@@ -1,4 +1,22 @@
 library(lme4)
+test_that("Implicit ID variables are handled", {
+  splt <- split(sim_longitudinal, sim_longitudinal$school)
+  splt <- lapply(splt, function(x) {
+    x$sid <- as.numeric(as.factor(x$sid))
+    x
+  })
+  d <- do.call(rbind, splt)
+  
+  m <- lme4::lmer(
+    score ~ wave + treatment +
+      (wave | sid) + (wave | school),
+    data = d
+  )
+  
+  expect_snapshot_output(m)
+  
+})
+
 
 test_that("Renaming Variables works", {
   m5 <- lme4::lmer(

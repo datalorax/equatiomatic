@@ -1,3 +1,22 @@
+# Implicit ID variables are handled
+
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: score ~ wave + treatment + (wave | sid) + (wave | school)
+       Data: d
+    REML criterion at convergence: 7123.501
+    Random effects:
+     Groups   Name        Std.Dev.  Corr
+     school   (Intercept) 4.6561228     
+              wave        0.0044121 1.00
+     sid      (Intercept) 1.8160871     
+              wave        0.0003033 1.00
+     Residual             8.2892514     
+    Number of obs: 1000, groups:  school, 15; sid, 7
+    Fixed Effects:
+    (Intercept)         wave   treatment1  
+        97.9930       0.1735      -1.6958  
+    optimizer (nloptwrap) convergence code: 0 (OK) ; 0 optimizer warnings; 1 lme4 warnings 
+
 # Renaming Variables works
 
     $$
