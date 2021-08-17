@@ -435,7 +435,7 @@ collapse_list <- function(x, y) {
 detect_group_coef <- function(model, rhs) {
   outcome <- all.vars(formula(model))[1]
   d <- model@frame
-
+  
   random_lev_names <- names(extract_random_vars(rhs))
   random_levs <- unlist(strsplit(random_lev_names, ":"))
   random_levs <- gsub("^\\(|\\)$", "", random_levs)
@@ -448,6 +448,9 @@ detect_group_coef <- function(model, rhs) {
   ranef_order <- rev(sort(ranef_order))
   random_lev_ids <- random_lev_ids[, names(ranef_order), drop = FALSE]
 
+  # Make sure there are explicit ids
+  random_lev_ids <- make_explicit_id(random_lev_ids)
+  
   X <- d[!(names(d) %in% c(random_levs, outcome))]
 
   lev_assign <- vector("list", length(random_levs))
@@ -464,10 +467,22 @@ detect_group_coef <- function(model, rhs) {
   unlist(out[!is.na(out)])
 }
 
+row_paste <- function(d) {
+  apply(d, 1, paste, collapse = "-")
+}
 
+#' Makes the grouping variables explicit, which is neccessary for
+#' detecting group-level predictors
+#' @param ranef_df A data frame that includes only the random 
+#'   effect ID variables (i.e., random_lev_ids)
+#' @noRd
 
-
-
+make_explicit_id <- function(ranef_df) {
+  for(i in seq_along(ranef_df)[-length(ranef_df)]) {
+    ranef_df[[i]] <- row_paste(ranef_df[ ,i:length(ranef_df)])
+  }
+  ranef_df
+}
 
 
 #' Extract the primary terms from all terms
