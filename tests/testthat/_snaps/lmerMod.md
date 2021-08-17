@@ -138,6 +138,66 @@
       \end{aligned}
       $$
 
+# Implicit ID variables are handled
+
+    $$
+    \begin{aligned}
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i]} + \beta_{1j[i],k[i]}(\operatorname{wave}), \sigma^2 \right) \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{j} \\
+          &\beta_{1j}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) \\
+          &\mu_{\beta_{1j}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+         \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for school j = 1,} \dots \text{,J} \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{k} \\
+          &\beta_{1k}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\mu_{\alpha_{k}} \\
+          &\mu_{\beta_{1k}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\beta_{1k}} \\ 
+         \rho_{\beta_{1k}\alpha_{k}} & \sigma^2_{\beta_{1k}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for sid k = 1,} \dots \text{,K}
+    \end{aligned}
+    $$
+
 # Renaming Variables works
 
     $$
