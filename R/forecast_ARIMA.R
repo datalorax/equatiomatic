@@ -237,7 +237,18 @@ extract_eq.forecast_ARIMA <-
     ##########################
     # Convert to latex
     ##########################
-    eq <- convert2latex(eq)
+    eq <- 
+      convert2latex(
+        .x = eq,
+        .use_coef = .use_coef,
+        .coef_digits = .coef_digits,
+        .use_coef_sign = .use_coef_sign,
+        .inverse_sign = .inverse_sign,
+        .wrap = .wrap,
+        .operator_location = .operator_location,
+        .terms_per_line = .terms_per_line,
+        .align_env = .align_env
+      )
 
     ##########################
     # Convert to latex
