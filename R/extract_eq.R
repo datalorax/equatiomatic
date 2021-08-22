@@ -287,9 +287,16 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
     model, ital_vars, use_coefs, coef_digits,
     fix_signs, return_variances, swap_var_names, swap_subscript_names
   )
-
-  if (grepl("^\n    \n", vcv[[1]])) {
-    vcv <- gsub("^\n(.+)", "\\1", vcv)
+  
+  # check for double line breaks
+  dbl_brk <- any(
+    vapply(vcv, function(x) grepl("\n\\W+\n", x), FUN.VALUE = logical(1))
+  )
+  
+  if (dbl_brk) {
+      vcv <- lapply(vcv, function(x) {
+        gsub("^\n(.+)", "\\1", x)
+      })
   }
 
   eq <- paste(c(l1, vcv), collapse = " \\\\")

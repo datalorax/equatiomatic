@@ -883,10 +883,8 @@
 
     $$
     \begin{aligned}
-      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]}, \sigma^2 \right) \\
-        \alpha_{j}  &\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1k[i],l[i]}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) + \gamma_{2l[i]}^{\alpha}(\operatorname{group}_{\operatorname{low}}) + \gamma_{3l[i]}^{\alpha}(\operatorname{group}_{\operatorname{medium}}) + \gamma_{4l[i]}^{\alpha}(\operatorname{group}_{\operatorname{low}} \times \operatorname{treatment}_{\operatorname{1}}) + \gamma_{5l[i]}^{\alpha}(\operatorname{group}_{\operatorname{medium}} \times \operatorname{treatment}_{\operatorname{1}}), \sigma^2_{\alpha_{j}} \right)
-        \text{, for sid j = 1,} \dots \text{,J} \\
-        
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]}, \sigma^2 \right) \\    \alpha_{j}  &\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1k[i],l[i]}^{\alpha}(\operatorname{treatment}_{\operatorname{1}}) + \gamma_{2l[i]}^{\alpha}(\operatorname{group}_{\operatorname{low}}) + \gamma_{3l[i]}^{\alpha}(\operatorname{group}_{\operatorname{medium}}) + \gamma_{4l[i]}^{\alpha}(\operatorname{group}_{\operatorname{low}} \times \operatorname{treatment}_{\operatorname{1}}) + \gamma_{5l[i]}^{\alpha}(\operatorname{group}_{\operatorname{medium}} \times \operatorname{treatment}_{\operatorname{1}}), \sigma^2_{\alpha_{j}} \right)
+        \text{, for sid j = 1,} \dots \text{,J} \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -912,8 +910,7 @@
       \end{array}
     \right)
      \right)
-        \text{, for school k = 1,} \dots \text{,K} \\
-        
+        \text{, for school k = 1,} \dots \text{,K} \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}
