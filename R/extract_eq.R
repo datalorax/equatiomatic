@@ -147,6 +147,7 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
+                               greek_colors = NULL, num_colors = NULL,
                                raw_tex = FALSE, swap_var_names = NULL,
                                swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
@@ -164,18 +165,10 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   rhs <- extract_rhs(model, index_factors)
 
   eq_raw <- create_eq(
-    model,
-    lhs,
-    rhs,
-    ital_vars,
-    use_coefs,
-    coef_digits,
-    fix_signs,
-    intercept,
-    greek,
-    raw_tex,
-    index_factors,
-    swap_var_names,
+    model, lhs, rhs, ital_vars, use_coefs, coef_digits,
+    fix_signs, intercept, greek, 
+    greek_colors, num_colors, raw_tex,
+    index_factors, swap_var_names, 
     swap_subscript_names
   )
 
