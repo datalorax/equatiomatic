@@ -73,7 +73,9 @@ is_texPreview_installed <- function() {
 #' @noRd
 format.equation <- function(x, ...) {
   if (is_latex_output()) {
-    paste0(c("\\begin{equation}\n", x, "\n\\end{equation}"))
+    header <- paste0(attr(x, "latex_define_colors"), collapse = "\n")
+    eq <- paste0(c("\n\n\\begin{equation}\n", x, "\n\\end{equation}"))
+    paste0(c(header, eq))
   } else {
     paste0(c("$$\n", x, "\n$$\n"), collapse = "")
   }

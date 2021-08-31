@@ -147,8 +147,9 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
-                               greek_colors = NULL, num_colors = NULL,
-                               raw_tex = FALSE, swap_var_names = NULL,
+                               greek_colors = NULL, subscript_colors = NULL,
+                               term_colors = NULL, raw_tex = FALSE, 
+                               swap_var_names = NULL,
                                swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
                                index_factors = FALSE, show_distribution = FALSE,
@@ -167,7 +168,7 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   eq_raw <- create_eq(
     model, lhs, rhs, ital_vars, use_coefs, coef_digits,
     fix_signs, intercept, greek, 
-    greek_colors, num_colors, raw_tex,
+    greek_colors, subscript_colors, term_colors, raw_tex,
     index_factors, swap_var_names, 
     swap_subscript_names
   )
@@ -243,9 +244,17 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   if (!is.null(font_size)) {
     eq <- paste0("\\", font_size, "\n", eq)
   }
-
+  
+  if(any(!is.null(c(greek_colors, subscript_colors, term_colors)))) {
+    full_colors <- unique(c(greek_colors, subscript_colors, term_colors)) 
+  
+    attributes(eq) <- list(
+      latex_define_colors = define_latex_html_colors(full_colors)
+    )
+  }
+  
   class(eq) <- c("equation", "character")
-
+  
   return(eq)
 }
 

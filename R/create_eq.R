@@ -17,8 +17,8 @@ create_eq <- function(lhs, ...) {
 
 create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                               fix_signs, intercept, greek, 
-                              greek_colors, num_colors, raw_tex,
-                              index_factors, swap_var_names, 
+                              greek_colors, subscript_colors, term_colors,
+                              raw_tex, index_factors, swap_var_names, 
                               swap_subscript_names) {
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
                                  swap_subscript_names)
@@ -37,7 +37,9 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, greek_colors, num_colors, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, term_colors,
+                                 raw_tex)
   }
 
   # Add error row or not in lm
@@ -625,7 +627,8 @@ add_greek <- function(rhs, ...) {
 #' @noRd
 
 add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
-                              greek_colors, num_colors, raw_tex = FALSE) {
+                              greek_colors, subscript_colors, term_colors,
+                              raw_tex = FALSE) {
   int <- switch(intercept,
     "alpha" = "\\alpha",
     "beta" = "\\beta_{0}"
@@ -636,7 +639,15 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
 
   ifelse(rhs$term == "(Intercept)",
     int,
-    anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, greek_colors, num_colors, raw_tex)
+    anno_greek(
+      greek, 
+      seq_len(nrow(rhs)) - 1, 
+      terms, 
+      greek_colors, 
+      subscript_colors, 
+      term_colors,
+      raw_tex
+    )
   )
 }
 
@@ -746,16 +757,25 @@ add_greek.forecast_ARIMA <- function(side, terms, regression, raw_tex = FALSE, s
 #' @keywords internal
 #' @noRd
 anno_greek <- function(greek, nums, terms = NULL, 
-                       greek_colors = NULL, num_colors = NULL, 
-                       raw_tex = FALSE) {
+                       greek_colors = NULL, subscript_colors = NULL, 
+                       term_colors = NULL, raw_tex = FALSE) {
+  if(is_latex_output()) {
+   greek_colors <- strip_html_hash(greek_colors)
+   subscript_colors <- strip_html_hash(subscript_colors)
+   term_colors <- strip_html_hash(term_colors)
+  }
+  
+  
   if (raw_tex) {
     out <- paste0(greek, "_{", nums, "}")
-  } else if (!is.null(greek_colors)){
-    out <- paste0("\\color{", greek_colors, "}{\\", greek, "}_\\color{", num_colors, "}{{", nums, "}}")
   } else {
-    out <- paste0("\\", greek, "_{", nums, "}")
+    coefs <- colorize(greek_colors, paste0("\\", greek))
+    subscripts <- colorize(subscript_colors, nums)
+    out <- paste0(coefs, "_{", subscripts, "}")
   }
+    
   if (!is.null(terms)) {
+    terms <- colorize(term_colors, terms)
     out <- paste0(out, "(", terms, ")")
   }
   out

@@ -36,3 +36,29 @@ mapply_dbl <- function(...) {
 distinct <- function(df, col) {
   df[!duplicated(df[col]), ]
 }
+
+colorize <- function(col, x) {
+  if(is.null(col)) {
+    return(x)
+  }
+  paste0("{\\color{", col, "}{", x, "}}")
+}
+
+is_html_colorcode <- function(cols) {
+  grepl("^#", cols)
+}
+
+strip_html_hash <- function(cols) {
+  is_hex <- is_html_colorcode(cols)
+  cols[is_hex] <- gsub("^#(.+)", "\\1", cols[is_hex])
+  cols
+}
+
+define_latex_html_colors <- function(cols) {
+  nms <- strip_html_hash(cols)
+  nms <- nms[is_html_colorcode(cols)]
+  vapply(nms, function(x) {
+    paste0("\\definecolor{", x, "}{HTML}{", x, "}")
+  }, FUN.VALUE = character(1))
+}
+
