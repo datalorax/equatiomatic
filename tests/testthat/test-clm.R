@@ -27,6 +27,34 @@ test_that("Renaming Variables works", {
   )
 })
 
+test_that("Math extraction works", {
+  df <- data.frame(
+    outcome = factor(rep(LETTERS[1:3], 100),
+                     levels = LETTERS[1:3],
+                     ordered = TRUE
+    ),
+    continuous = rnorm(300, 100, 1)
+  )
+  
+  expect_warning(
+    model_logit <- ordinal::clm(
+      outcome ~ poly(continuous, 3) + exp(continuous) + log(continuous),
+      data = df, 
+      link = "logit"
+    )
+  )
+  expect_warning(
+    model_probit <- ordinal::clm(
+      outcome ~ poly(continuous, 3) + exp(continuous) + log(continuous),
+      data = df,
+      link = "probit"
+    )
+  )
+  
+  expect_snapshot_output(extract_eq(model_logit))
+  expect_snapshot_output(extract_eq(model_probit))
+})
+
 test_that("Collapsing clm factors works", {
   df <- data.frame(
     outcome = factor(rep(LETTERS[1:3], 100),
@@ -46,7 +74,6 @@ test_that("Collapsing clm factors works", {
                                  data = df, link = "probit"
     )
   )
-  
   # no collapsing
   expect_snapshot(extract_eq(model_logit))
   expect_snapshot(extract_eq(model_probit))

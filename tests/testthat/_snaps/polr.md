@@ -15,6 +15,24 @@
     \end{aligned}
     $$
 
+# Math extraction works
+
+    $$
+    \begin{aligned}
+    \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous}) + \beta_{2}(\operatorname{continuous^2}) + \beta_{3}(\operatorname{continuous^3}) + \beta_{4}(\operatorname{\log(continuous)}) \\
+    \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous}) + \beta_{2}(\operatorname{continuous^2}) + \beta_{3}(\operatorname{continuous^3}) + \beta_{4}(\operatorname{\log(continuous)})
+    \end{aligned}
+    $$
+
+---
+
+    $$
+    \begin{aligned}
+    P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous}) + \beta_{2}(\operatorname{continuous^2}) + \beta_{3}(\operatorname{continuous^3}) + \beta_{4}(\operatorname{\log(continuous)})] \\
+    P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous}) + \beta_{2}(\operatorname{continuous^2}) + \beta_{3}(\operatorname{continuous^3}) + \beta_{4}(\operatorname{\log(continuous)})]
+    \end{aligned}
+    $$
+
 # Collapsing polr factors works
 
     Code

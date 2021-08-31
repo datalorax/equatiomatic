@@ -7,6 +7,7 @@
 * Added new `font_size` argument, which takes any LaTeX font size (see [here](https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles))
 * Added new `label` argument, which allows for cross-referencing equation in-text
 with PDF outputs.
+* Now includes rendering of `poly()`, `log()`, and `exp()` functions for in-line equations, and will drop the `I()` for generic in-line equation operation
 * Bug fix related to categorical variables and level parsing for `lme4::lmer()` and and `lme4::glmer()` models
 * Minor bug fix related to indexing of coefficients for `lme4::lmer()` models
 * Minor bug fix related to very large models, which would not render properly before

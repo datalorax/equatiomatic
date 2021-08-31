@@ -291,9 +291,15 @@ create_term.default <- function(side, ital_vars, swap_var_names,
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
+  prim_escaped <- add_math(prim_escaped, side$subscripts)
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
-
-  subs_escaped <- lapply(side$subscripts, function(x) {
+  
+  drop_subscripts <- vapply(side$primary, 
+                            function(x) any(grepl("poly|<|>", x)), 
+                            FUN.VALUE = logical(1))
+  
+  subs <- ifelse(drop_subscripts, "", side$subscripts)
+  subs_escaped <- lapply(subs, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
@@ -302,6 +308,20 @@ create_term.default <- function(side, ital_vars, swap_var_names,
   final <- Map(paste0, prim, subs)
 
   vapply(final, add_tex_mult, FUN.VALUE = character(1))
+}
+
+# swap out log, exp
+add_math <- function(primary, subscripts) {
+  Map(check_math, primary, subscripts)
+}
+
+check_math <- function(primary, subscripts) {
+  checks <- c("log", "exp", "poly\\((.+),.+", "I\\((.+)\\)")
+  replacements <- c("\\\\log", "\\\\exp", paste0("\\1^", subscripts), "\\1")
+  for(i in seq_along(checks)) {
+    primary <- gsub(checks[i], replacements[i], primary)  
+  }
+  gsub("\\^1$", "", primary)
 }
 
 #' Create a full term w/subscripts
