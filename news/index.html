@@ -162,6 +162,7 @@
 <li>Includes new <code>swap_var_names</code> and <code>swap_subscript_names</code> arguments to change the names of the variables or subscripts in the rendered equation</li>
 <li>Added new <code>font_size</code> argument, which takes any LaTeX font size (see <a href="https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles">here</a>)</li>
 <li>Added new <code>label</code> argument, which allows for cross-referencing equation in-text with PDF outputs.</li>
+<li>Now includes rendering of <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>, and <code><a href="https://rdrr.io/r/base/Log.html">exp()</a></code> functions for in-line equations, and will drop the <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> for generic in-line equation operation</li>
 <li>Bug fix related to categorical variables and level parsing for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> and and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> models</li>
 <li>Minor bug fix related to indexing of coefficients for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> models</li>
 <li>Minor bug fix related to very large models, which would not render properly before</li>
