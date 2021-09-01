@@ -29,6 +29,28 @@ test_that("Renaming Variables works", {
   )
 })
 
+test_that("Math extraction works", {
+  set.seed(1234)
+  df <- data.frame(
+    outcome = sample(0:1, 100, replace = TRUE),
+    continuous_1 = rnorm(100, 100, 1),
+    continuous_2 = rnorm(100, 50, 5)
+  )
+  
+  model_logit <- glm(outcome ~ log(continuous_1) + exp(continuous_2) +
+                       poly(continuous_2, 3),
+                     data = df,
+                     family = binomial(link = "logit")
+  )
+  model_probit <- glm(outcome ~ log(continuous_1) + exp(continuous_2) +
+                        poly(continuous_2, 3),
+                      data = df,
+                      family = binomial(link = "probit")
+  )
+  expect_snapshot_output(extract_eq(model_logit))
+  expect_snapshot_output(extract_eq(model_probit))
+})
+
 test_that("Collapsing glm factors works", {
   set.seed(1234)
   df <- data.frame(

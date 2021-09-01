@@ -395,6 +395,12 @@ detect_crosslevel <- function(primary, pred_level) {
 #### Consider refactoring the below too
 detect_covar_level <- function(predictor, group) {
   nm <- names(group)
+  if (is.numeric(predictor)) {
+    if (is.matrix(predictor)) {
+      predictor <- predictor[ ,1]
+    }
+    predictor <- round(predictor, 5)
+  }
   v <- paste(predictor, group[, 1], sep = " _|_ ")
   unique_v <- unique(v)
   test <- gsub(".+\\s\\_\\|\\_\\s(.+)", "\\1", unique_v)
