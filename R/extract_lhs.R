@@ -24,14 +24,18 @@ extract_lhs <- function(model, ...) {
 
 extract_lhs.lm <- function(model, ital_vars,
                            show_distribution,
-                           use_coefs, ...) {
+                           use_coefs, var_colors = NULL, ...) {
   lhs <- rownames(attr(model$terms, "factors"))[1]
-
+  names(lhs) <- lhs
+  
   lhs_escaped <- escape_tex(lhs)
+  names(lhs_escaped) <- lhs
+  
   if (use_coefs) {
     lhs_escaped <- add_hat(lhs_escaped)
   }
-  add_tex_ital_v(lhs_escaped, ital_vars)
+  lhs_escaped <- add_tex_ital_v(lhs_escaped, ital_vars)
+  colorize_terms(var_colors, list(lhs), list(lhs_escaped))
 }
 
 #' Extract left-hand side of an lme4::lmer object

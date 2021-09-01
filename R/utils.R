@@ -41,6 +41,9 @@ colorize <- function(col, x) {
   if(is.null(col)) {
     return(x)
   }
+  if(is_latex_output()) {
+    col <- strip_html_hash(col)
+  }
   paste0("{\\color{", col, "}{", x, "}}")
 }
 
@@ -51,7 +54,10 @@ colorize_terms <- function(colors, side_primary, primary_escaped) {
   })
   
   Map(function(.x, .y) {
-    colorize(.x[match(names(.x), names(.y))], .y)
+    matched <- .x[match(names(.y), names(.x))]
+    out <- ifelse(is.na(matched), .y, colorize(matched, .y))
+    names(out) <- names(.y)
+    out
   },
   .x = color_matches, 
   .y = primary_escaped)

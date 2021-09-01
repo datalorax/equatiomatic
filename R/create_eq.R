@@ -40,7 +40,7 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
     )
   } else {
     rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
-                                 greek_colors, subscript_colors, term_colors,
+                                 greek_colors, subscript_colors, 
                                  raw_tex)
   }
 
@@ -49,6 +49,10 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
     error_row <- rhs[nrow(rhs) + 1, ]
     error_row$term <- "error"
     error_row$final_terms <- "\\epsilon"
+    error_row$final_terms <- colorize(
+      greek_colors[length(greek_colors)], 
+      error_row$final_terms
+    )
     rhs <- rbind(rhs, error_row)
   }
 
@@ -288,11 +292,18 @@ create_term <- function(side, ...) {
 create_term.default <- function(side, ital_vars, swap_var_names, 
                                 swap_subscript_names, var_colors,
                                 var_subscript_colors) {
+  side$primary <- lapply(side$primary, function(x) {
+    names(x) <- x
+    x
+  })
   
-  if(is_latex_output()) {
-    var_colors <- strip_html_hash(var_colors)
-    var_subscript_colors <- strip_html_hash(var_subscript_colors)
-  }
+  side$subscripts <- Map(function(.x, .y) {
+    names(.x) <- .y
+    .x
+    }, 
+    .x = side$subscripts,
+    .y = side$primary
+  )
   
   if (!is.null(swap_var_names)) {
     side$primary <- swap_names(swap_var_names, side$primary)
@@ -317,7 +328,7 @@ create_term.default <- function(side, ital_vars, swap_var_names,
   subs <- lapply(subs, add_tex_subscripts_v)
   
   if (!is.null(var_subscript_colors)) {
-    subs <- colorize_terms(var_subscript_colors, side$primary)
+    subs <- colorize_terms(var_subscript_colors, side$primary, subs)
   }
 
   final <- Map(paste0, prim, subs)
@@ -439,9 +450,7 @@ escape_tex <- function(term) {
   )
 
   # Return the reassembled term
-  out <- paste0(replaced, collapse = "")
-  names(out) <- term
-  out
+  paste0(replaced, collapse = "")
 }
 
 
@@ -647,7 +656,7 @@ add_greek <- function(rhs, ...) {
 #' @noRd
 
 add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
-                              greek_colors, subscript_colors, term_colors,
+                              greek_colors, subscript_colors,
                               raw_tex = FALSE) {
   int <- switch(intercept,
     "alpha" = "\\alpha",
@@ -658,14 +667,13 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   }
 
   ifelse(rhs$term == "(Intercept)",
-    int,
+    colorize(greek_colors[1], int),
     anno_greek(
       greek, 
       seq_len(nrow(rhs)) - 1, 
       terms, 
-      greek_colors, 
+      greek_colors[-1], 
       subscript_colors, 
-      term_colors,
       raw_tex
     )
   )
@@ -778,11 +786,7 @@ add_greek.forecast_ARIMA <- function(side, terms, regression, raw_tex = FALSE, s
 #' @noRd
 anno_greek <- function(greek, nums, terms = NULL, 
                        greek_colors = NULL, subscript_colors = NULL, 
-                       term_colors = NULL, raw_tex = FALSE) {
-  if(is_latex_output()) {
-   greek_colors <- strip_html_hash(greek_colors)
-   subscript_colors <- strip_html_hash(subscript_colors)
-  }
+                       raw_tex = FALSE) {
   
   if (raw_tex) {
     out <- paste0(greek, "_{", nums, "}")
