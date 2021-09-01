@@ -17,11 +17,13 @@ create_eq <- function(lhs, ...) {
 
 create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                               fix_signs, intercept, greek, 
-                              greek_colors, subscript_colors, term_colors,
+                              greek_colors, subscript_colors, 
+                              var_colors, var_subscript_colors,
                               raw_tex, index_factors, swap_var_names, 
                               swap_subscript_names) {
-  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+  rhs$final_terms <- create_term(rhs, ital_vars, 
+                                 swap_var_names, swap_subscript_names, 
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -284,23 +286,39 @@ create_term <- function(side, ...) {
 #' @noRd
 #' @export
 create_term.default <- function(side, ital_vars, swap_var_names, 
-                                swap_subscript_names) {
+                                swap_subscript_names, var_colors,
+                                var_subscript_colors) {
+  
+  if(is_latex_output()) {
+    var_colors <- strip_html_hash(var_colors)
+    var_subscript_colors <- strip_html_hash(var_subscript_colors)
+  }
+  
   if (!is.null(swap_var_names)) {
     side$primary <- swap_names(swap_var_names, side$primary)
   }
   if (!is.null(swap_subscript_names)) {
     side$subscripts <- swap_names(swap_subscript_names, side$subscripts)
   }
+  
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
-
+  
+  if (!is.null(var_colors)) {
+    prim <- colorize_terms(var_colors, side$primary, prim)
+  }
+  
   subs_escaped <- lapply(side$subscripts, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
   subs <- lapply(subs, add_tex_subscripts_v)
+  
+  if (!is.null(var_subscript_colors)) {
+    subs <- colorize_terms(var_subscript_colors, side$primary)
+  }
 
   final <- Map(paste0, prim, subs)
 
@@ -421,7 +439,9 @@ escape_tex <- function(term) {
   )
 
   # Return the reassembled term
-  paste0(replaced, collapse = "")
+  out <- paste0(replaced, collapse = "")
+  names(out) <- term
+  out
 }
 
 
@@ -762,9 +782,7 @@ anno_greek <- function(greek, nums, terms = NULL,
   if(is_latex_output()) {
    greek_colors <- strip_html_hash(greek_colors)
    subscript_colors <- strip_html_hash(subscript_colors)
-   term_colors <- strip_html_hash(term_colors)
   }
-  
   
   if (raw_tex) {
     out <- paste0(greek, "_{", nums, "}")
@@ -775,7 +793,6 @@ anno_greek <- function(greek, nums, terms = NULL,
   }
     
   if (!is.null(terms)) {
-    terms <- colorize(term_colors, terms)
     out <- paste0(out, "(", terms, ")")
   }
   out

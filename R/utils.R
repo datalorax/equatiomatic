@@ -44,6 +44,19 @@ colorize <- function(col, x) {
   paste0("{\\color{", col, "}{", x, "}}")
 }
 
+colorize_terms <- function(colors, side_primary, primary_escaped) {
+  color_matches <- swap_names(colors, side_primary)
+  color_matches <- lapply(color_matches, function(x) {
+    x[x != names(x)]
+  })
+  
+  Map(function(.x, .y) {
+    colorize(.x[match(names(.x), names(.y))], .y)
+  },
+  .x = color_matches, 
+  .y = primary_escaped)
+}
+
 is_html_colorcode <- function(cols) {
   grepl("^#", cols)
 }

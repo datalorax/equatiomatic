@@ -148,9 +148,9 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                greek_colors = NULL, subscript_colors = NULL,
-                               term_colors = NULL, raw_tex = FALSE, 
-                               swap_var_names = NULL,
-                               swap_subscript_names = NULL,
+                               var_colors = NULL, var_subscript_colors = NULL, 
+                               raw_tex = FALSE, 
+                               swap_var_names = NULL, swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
                                index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
@@ -168,9 +168,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   eq_raw <- create_eq(
     model, lhs, rhs, ital_vars, use_coefs, coef_digits,
     fix_signs, intercept, greek, 
-    greek_colors, subscript_colors, term_colors, raw_tex,
-    index_factors, swap_var_names, 
-    swap_subscript_names
+    greek_colors, subscript_colors, var_colors, var_subscript_colors, raw_tex,
+    index_factors, swap_var_names, swap_subscript_names
   )
 
   if (wrap) {
@@ -245,8 +244,18 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     eq <- paste0("\\", font_size, "\n", eq)
   }
   
-  if(any(!is.null(c(greek_colors, subscript_colors, term_colors)))) {
-    full_colors <- unique(c(greek_colors, subscript_colors, term_colors)) 
+  if (
+    any(
+      !is.null(c(greek_colors, 
+                 subscript_colors, 
+                 var_colors, 
+                 var_subscript_colors))
+      )
+    ) {
+    
+    full_colors <- unique(
+      c(greek_colors, subscript_colors, var_colors, var_subscript_colors)
+    ) 
   
     attributes(eq) <- list(
       latex_define_colors = define_latex_html_colors(full_colors)
