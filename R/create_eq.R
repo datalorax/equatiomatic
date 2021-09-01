@@ -318,18 +318,17 @@ create_term.default <- function(side, ital_vars, swap_var_names,
   prim_escaped <- add_math(prim_escaped, side$subscripts)
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
   
+  if (!is.null(var_colors)) {
+    prim <- colorize_terms(var_colors, side$primary, prim)
+  }
+  
   drop_subscripts <- vapply(side$primary, 
                             function(x) any(grepl("poly|<|>", x)), 
                             FUN.VALUE = logical(1))
   
   subs <- ifelse(drop_subscripts, "", side$subscripts)
+  
   subs_escaped <- lapply(subs, function(x) {
-  
-  if (!is.null(var_colors)) {
-    prim <- colorize_terms(var_colors, side$primary, prim)
-  }
-  
-  subs_escaped <- lapply(side$subscripts, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
