@@ -312,7 +312,7 @@ create_term.default <- function(side, ital_vars, swap_var_names,
     x
   })
   
-  side$subscripts <- Map(function(.x, .y) {
+  subscript_nms <- Map(function(.x, .y) {
     names(.x) <- .y
     .x
     }, 
@@ -325,6 +325,13 @@ create_term.default <- function(side, ital_vars, swap_var_names,
   }
   if (!is.null(swap_subscript_names)) {
     side$subscripts <- swap_names(swap_subscript_names, side$subscripts)
+    side$subscripts <- Map(function(.x, .y) {
+      names(.x) <- names(.y)
+      .x
+    }, 
+    .x = side$subscripts,
+    .y = subscript_nms
+    )
   }
   
   prim_escaped <- lapply(side$primary, function(x) {
