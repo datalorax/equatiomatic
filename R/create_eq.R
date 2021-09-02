@@ -357,6 +357,14 @@ create_term.default <- function(side, ital_vars, swap_var_names,
   subs <- lapply(subs, add_tex_subscripts_v)
   
   if (!is.null(var_subscript_colors)) {
+    subs <- Map(function(.x, .y) {
+      names(.x) <- names(.y)
+      .x
+    }, 
+    .x = subs,
+    .y = subscript_nms
+    )
+    
     subs <- colorize_terms(var_subscript_colors, side$primary, subs)
   }
 
