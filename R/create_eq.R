@@ -63,10 +63,14 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex, index_factors,
+                          fix_signs, intercept, greek, 
+                          greek_colors, subscript_colors, 
+                          var_colors, var_subscript_colors,
+                          raw_tex, index_factors,
                           swap_var_names, swap_subscript_names) {
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+                                 swap_subscript_names,
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -82,7 +86,8 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, raw_tex)
   }
   if (!is.null(model$offset)) {
     rhs <- rbind(rhs, c(
