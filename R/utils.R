@@ -48,7 +48,17 @@ colorize <- function(col, x) {
 }
 
 colorize_terms <- function(colors, side_primary, primary_escaped) {
-  color_matches <- swap_names(colors, side_primary)
+  missing <- setdiff(
+    unique(names(unlist(side_primary))), 
+    names(colors)
+  )
+  names(missing) <- missing
+  full_name_vector <- c(colors, missing)
+  
+  color_matches <- lapply(side_primary, function(x) {
+    full_name_vector[match(names(x), names(full_name_vector))]
+  })
+  
   color_matches <- lapply(color_matches, function(x) {
     x[x != names(x)]
   })
