@@ -221,9 +221,6 @@ extract_lhs2_binomial <- function(model, ital_vars, use_coefs, var_colors) {
     ss_escaped <- colorize_terms(var_colors, list(outcome), list(ss_escaped))
   }
   
-  lhs <- add_tex_ital_v(outcome_escaped, ital_vars)
-  
-  
   p <- paste0(
     "\\operatorname{prob}",
     add_tex_subscripts(
@@ -239,7 +236,7 @@ extract_lhs2_binomial <- function(model, ital_vars, use_coefs, var_colors) {
     "\\right)"
   )
 
-  topline <- paste(lhs, "&\\sim", rhs)
+  topline <- paste(outcome_escaped, "&\\sim", rhs)
 
   second_line <- modify_lhs_for_link(model, "\\hat{P}")
 

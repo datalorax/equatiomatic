@@ -14,6 +14,26 @@
 #'   coefficients? Currently only accepts \code{"beta"} (with plans for future
 #'   development). Can be used in combination with \code{raw_tex} to use any
 #'   notation, e.g., \code{"\\hat{\\beta}"}.
+#' @param greek_colors The colors of the greek notation in the equation. Must
+#'   be a single color (named or HTML hex code) or a vector of colors (which
+#'   will be recycled if smaller than the number of terms in the model). When
+#'   rendering to PDF, I suggest using HTML hex codes, as not all named colors
+#'   are recognized by LaTeX, but equatiomatic will internally create the
+#'   color definitions for you if HTML codes are supplied. Note that this is 
+#'   not yet implemented for mixed effects models (lme4). 
+#' @param subscript_colors The colors of the subscripts for the greek notation.
+#'   The argument structure is equivalent to \code{greek_colors} (i.e., see
+#'   above for more detail).
+#' @param var_colors The color of the variable names. This takes a named vector
+#'   of the form \code{c("variable" = "color")}. For example 
+#'   \code{c("bill_length_mm" = "#00d4fa", "island" = "#00fa85")}. Colors can
+#'   be names (e.g., \code{"red"}) or HTML hex codes, as shown in the example.
+#' @param var_subscript_colors The colors of the factor subscripts for 
+#'   categorical variables. The interface for this is equivalent to 
+#'   \code{var_colors}, and all subscripts for a given variable will be 
+#'   displayed in the provided color. For example, the code 
+#'   \code{c("island" = "green")} would result in the subscripts for "Dream"
+#'   and "Torgersen" being green (assuming "Biscoe" was the reference group).
 #' @param raw_tex Logical. Is the greek code being passed to denote coefficients
 #' raw tex code?
 #' @param swap_var_names A vector of the form c("old_var_name" = "new name"). 
@@ -129,15 +149,17 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
-                       raw_tex = FALSE, swap_var_names = NULL,
-                       swap_subscript_names = NULL,
+                       greek_colors = NULL, subscript_colors = NULL,
+                       var_colors = NULL, var_subscript_colors = NULL, 
+                       raw_tex = FALSE, 
+                       swap_var_names = NULL, swap_subscript_names = NULL,
                        ital_vars = FALSE, label = NULL,
                        index_factors = FALSE, show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
-                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
-                       font_size, mean_separate, return_variances = FALSE,
-                       ...) {
+                       use_coefs = FALSE, coef_digits = 2,
+                       fix_signs = TRUE, font_size = NULL,
+                       mean_separate, return_variances = FALSE, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -365,18 +387,17 @@ extract_eq.glmerMod <- function(...,
 #' @export
 #' @noRd
 extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
-                                      raw_tex = FALSE, swap_var_names = NULL,
-                                      swap_subscript_names = NULL,
-                                      ital_vars = FALSE,
-                                      label = NULL,
-                                      index_factors = FALSE, 
-                                      show_distribution = FALSE,
+                                      greek_colors = NULL, subscript_colors = NULL,
+                                      var_colors = NULL, var_subscript_colors = NULL, 
+                                      raw_tex = FALSE, 
+                                      swap_var_names = NULL, swap_subscript_names = NULL,
+                                      ital_vars = FALSE, label = NULL,
+                                      index_factors = FALSE, show_distribution = FALSE,
                                       wrap = FALSE, terms_per_line = 4,
                                       operator_location = "end", align_env = "aligned",
                                       use_coefs = FALSE, coef_digits = 2,
-                                      fix_signs = TRUE, 
-                                      font_size = NULL, mean_separate, 
-                                      return_variances = FALSE, ...) {
+                                      fix_signs = TRUE, font_size = NULL,
+                                      mean_separate, return_variances = FALSE, ...) {
 
   # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
