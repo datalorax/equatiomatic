@@ -1,3 +1,21 @@
+test_that("colorizing works", {
+  ordinal_ologit <- ordinal::clm(rating ~ temp * contact,
+                                 data = ordinal::wine,
+                                 link = "logit"
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      ordinal_ologit,
+      wrap = TRUE, 
+      terms_per_line = 2,
+      var_colors = c(temp = "blue"),
+      greek_colors = rainbow(8),
+      subscript_colors = rev(rainbow(6))
+    )
+  )
+})
+
 test_that("Renaming Variables works", {
   df <- data.frame(
     outcome = factor(rep(LETTERS[1:3], 100),

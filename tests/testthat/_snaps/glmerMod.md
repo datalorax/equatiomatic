@@ -1,3 +1,14 @@
+# colorizing works
+
+    $$
+    \begin{aligned}
+      \operatorname{stops}_{i}  &\sim \operatorname{Poisson}(\lambda_i) \\
+        \log(\lambda_i) &=\alpha_{j[i]} + \beta_{1}({\color{red}{\operatorname{Ethnicity}}}{\color{purple}{_{\operatorname{hispanic}}}}) + \beta_{2}({\color{red}{\operatorname{Ethnicity}}}{\color{purple}{_{\operatorname{white}}}}) \\
+        \alpha_{j}  &\sim N \left(\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{Total\ Arrests}), \sigma^2_{\alpha_{j}} \right)
+        \text{, for precinct j = 1,} \dots \text{,J}
+    \end{aligned}
+    $$
+
 # Renaming Variables works
 
     $$

@@ -8,6 +8,47 @@ tot_arrests <- data.frame(precinct = as.numeric(names(totes)),
 d <- merge(d, tot_arrests, by = "precinct")
 
 
+test_that("colorizing works", {
+  suppressWarnings(
+    m <- lme4::glmer(stops ~ eth + total_arrests + (1|precinct), 
+                     data = d,
+                     family = poisson(link = "log"))
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      m,
+      swap_var_names = c(
+        "eth" = "Ethnicity",
+        "total_arrests" = "Total Arrests"
+      ),
+      var_colors = c(
+        eth = "red"
+      ),
+      var_subscript_colors = c(
+        eth = "purple"
+      )
+    )
+  )
+  
+  expect_warning(
+    extract_eq(
+      m,
+      swap_var_names = c(
+        "eth" = "Ethnicity",
+        "total_arrests" = "Total Arrests"
+      ),
+      var_colors = c(
+        eth = "red"
+      ),
+      var_subscript_colors = c(
+        eth = "purple"
+      ),
+      greek_colors = rainbow(7)
+    )
+  )
+})
+
 test_that("Renaming Variables works", {
   suppressWarnings(
     m6 <- lme4::glmer(stops ~ eth + total_arrests + (1|precinct), 

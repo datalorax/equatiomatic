@@ -1,3 +1,28 @@
+test_that("colorizing works", {
+  m <- lm(bill_depth_mm ~ flipper_length_mm*island, penguins)
+  
+  coef_colors <- rainbow(7)
+  ss_colors <- rainbow(5)
+  
+  expect_snapshot_output(
+    extract_eq(
+      m,
+      swap_var_names = c("flipper_length_mm" = "Flipper Length (MM)",
+                         "island" = "ISLAND"),
+      swap_subscript_names = c("Dream" = "super dreamy"),
+      greek_colors = coef_colors, 
+      subscript_colors = ss_colors,
+      var_colors = c(
+        "bill_depth_mm" = "#0f70f7",
+        "flipper_length_mm" = "#b22222",
+        "island" = "green"
+      ),
+      var_subscript_colors = c("island" = "cyan"),
+      wrap = 2,
+      terms_per_line = 2
+    )
+  )
+})
 test_that("Renaming Variables works", {
   m1 <- lm(body_mass_g ~ bill_length_mm * species + 
              flipper_length_mm * sex, 

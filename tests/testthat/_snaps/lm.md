@@ -1,3 +1,14 @@
+# colorizing works
+
+    $$
+    \begin{aligned}
+    {\color{#0f70f7}{\operatorname{bill\_depth\_mm}}} &= {\color{#FF0000}{\alpha}} + {\color{#49FF00}{\beta}}_{{\color{#CCFF00}{1}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}})\ + \\
+    &\quad {\color{#00FF92}{\beta}}_{{\color{#00FF66}{2}}}({\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{super\ dreamy}}}}) + {\color{#0092FF}{\beta}}_{{\color{#0066FF}{3}}}({\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{Torgersen}}}})\ + \\
+    &\quad {\color{#4900FF}{\beta}}_{{\color{#CC00FF}{4}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}} \times {\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{super\ dreamy}}}}) + {\color{#FF00DB}{\beta}}_{{\color{#FF0000}{5}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}} \times {\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{Torgersen}}}})\ + \\
+    &\quad {\color{#FF00DB}{\epsilon}}
+    \end{aligned}
+    $$
+
 # Renaming Variables works
 
     $$

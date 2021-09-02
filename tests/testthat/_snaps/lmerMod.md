@@ -1,3 +1,92 @@
+# colorizing works
+
+    $$
+    \begin{aligned}
+      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}({\color{blue}{\operatorname{wave}}}), \sigma^2 \right) \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{j} \\
+          &\beta_{1j}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{group}{\color{orange}{_{\operatorname{low}}}}) + \gamma_{2}^{\alpha}(\operatorname{group}{\color{orange}{_{\operatorname{medium}}}}) + \gamma_{3l[i]}^{\alpha}({\color{red}{\operatorname{treatment}}}_{\operatorname{1}}) + \gamma_{4}^{\alpha}(\operatorname{group}{\color{orange}{_{\operatorname{low}}}} \times {\color{red}{\operatorname{treatment}}}_{\operatorname{1}}) + \gamma_{5}^{\alpha}(\operatorname{group}{\color{orange}{_{\operatorname{medium}}}} \times {\color{red}{\operatorname{treatment}}}_{\operatorname{1}}) \\
+          &\gamma^{\beta_{1}}_{0} + \gamma^{\beta_{1}}_{1}(\operatorname{group}{\color{orange}{_{\operatorname{low}}}}) + \gamma^{\beta_{1}}_{2}(\operatorname{group}{\color{orange}{_{\operatorname{medium}}}}) + \gamma^{\beta_{1}}_{3}({\color{red}{\operatorname{treatment}}}_{\operatorname{1}}) + \gamma^{\beta_{1}}_{4}(\operatorname{group}{\color{orange}{_{\operatorname{low}}}} \times {\color{red}{\operatorname{treatment}}}_{\operatorname{1}}) + \gamma^{\beta_{1}}_{5}(\operatorname{group}{\color{orange}{_{\operatorname{medium}}}} \times {\color{red}{\operatorname{treatment}}}_{\operatorname{1}})
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{j}} & \rho_{\alpha_{j}\beta_{1j}} \\ 
+         \rho_{\beta_{1j}\alpha_{j}} & \sigma^2_{\beta_{1j}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for sid j = 1,} \dots \text{,J} \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{k} \\
+          &\beta_{1k}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\gamma_{0}^{\alpha} + \gamma_{1}^{\alpha}(\operatorname{prop\_low}) + \gamma_{2}^{\alpha}(\operatorname{prop\_low} \times {\color{red}{\operatorname{treatment}}}_{\operatorname{1}}) \\
+          &\gamma^{\beta_{1}}_{0} + \gamma^{\beta_{1}}_{1}(\operatorname{prop\_low}) + \gamma^{\beta_{1}}_{1}(\operatorname{prop\_low} \times {\color{red}{\operatorname{treatment}}}_{\operatorname{1}})
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{cc}
+         \sigma^2_{\alpha_{k}} & \rho_{\alpha_{k}\beta_{1k}} \\ 
+         \rho_{\beta_{1k}\alpha_{k}} & \sigma^2_{\beta_{1k}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for school k = 1,} \dots \text{,K} \\    
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\alpha_{l} \\
+          &\beta_{1l} \\
+          &\gamma_{3l}
+        \end{aligned}
+      \end{array}
+    \right)
+      &\sim N \left(
+    \left(
+      \begin{array}{c} 
+        \begin{aligned}
+          &\mu_{\alpha_{l}} \\
+          &\mu_{\beta_{1l}} \\
+          &\mu_{\gamma_{3l}}
+        \end{aligned}
+      \end{array}
+    \right)
+    , 
+    \left(
+      \begin{array}{ccc}
+         \sigma^2_{\alpha_{l}} & \rho_{\alpha_{l}\beta_{1l}} & \rho_{\alpha_{l}\gamma_{3l}} \\ 
+         \rho_{\beta_{1l}\alpha_{l}} & \sigma^2_{\beta_{1l}} & \rho_{\beta_{1l}\gamma_{3l}} \\ 
+         \rho_{\gamma_{3l}\alpha_{l}} & \rho_{\gamma_{3l}\beta_{1l}} & \sigma^2_{\gamma_{3l}}
+      \end{array}
+    \right)
+     \right)
+        \text{, for district l = 1,} \dots \text{,L}
+    \end{aligned}
+    $$
+
 # Math extraction works
 
     Code

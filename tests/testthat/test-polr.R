@@ -1,3 +1,21 @@
+test_that("colorizing works", {
+  mass_ologit <- MASS::polr(rating ~ temp * contact,
+                            data = ordinal::wine
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      mass_ologit,
+      wrap = TRUE, 
+      terms_per_line = 2,
+      var_colors = c(temp = "blue"),
+      var_subscript_colors = c(contact = "orange"),
+      greek_colors = rainbow(8),
+      subscript_colors = rev(rainbow(6))
+    )
+  )
+})
+
 test_that("Renaming Variables works", {
   df <- data.frame(
     outcome = factor(rep(LETTERS[1:3], 100),

@@ -1,3 +1,43 @@
+# colorizing works
+
+    $$
+    \begin{aligned}
+    \log\left[ \frac { P( {\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}} ) }{ 1 - P( {\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}} ) } \right] &= {\color{#FF0000}{\alpha}} + {\color{#00FF00}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#00FFFF}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#0000FF}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
+    &\quad {\color{#FF00FF}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#FFFF00}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})
+    \end{aligned}
+    $$
+
+---
+
+    $$
+    \begin{aligned}
+    {\color{#0073ff}{\operatorname{sex}}} &\sim Bernoulli\left(\operatorname{prob}_{{\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}}}= \hat{P}\right) \\
+     \log\left[ \frac { \hat{P} }{ 1 - \hat{P} } \right] 
+     &= {\color{#FF0000}{\alpha}} + {\color{#00FF00}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#00FFFF}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#0000FF}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
+    &\quad {\color{#FF00FF}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#FFFF00}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})
+    \end{aligned}
+    $$
+
+---
+
+    $$
+    \begin{aligned}
+    P( {\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}} ) &= \Phi[{\color{#FF0000}{\alpha}} + {\color{#00FF00}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#00FFFF}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#0000FF}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
+    &\qquad\ {\color{#FF00FF}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#FFFF00}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})]
+    \end{aligned}
+    $$
+
+---
+
+    $$
+    \begin{aligned}
+    {\color{#0073ff}{\operatorname{sex}}} &\sim Bernoulli\left(\operatorname{prob}_{{\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}}}= \hat{P}\right) \\
+     \hat{P} 
+     &= \Phi[{\color{#FF0000}{\alpha}} + {\color{#00FF00}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#00FFFF}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#0000FF}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
+    &\qquad\ {\color{#FF00FF}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#FFFF00}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})]
+    \end{aligned}
+    $$
+
 # Renaming Variables works
 
     $$
