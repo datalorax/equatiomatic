@@ -276,6 +276,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
+                               greek_colors = NULL, subscript_colors = NULL,
+                               var_colors = NULL, var_subscript_colors = NULL, 
                                raw_tex = FALSE, swap_var_names = NULL,
                                swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
@@ -287,16 +289,28 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                fix_signs = TRUE, 
                                font_size = NULL, mean_separate = NULL,
                                return_variances = FALSE, ...) {
+  if (!is.null(greek_colors)) {
+    warning(
+      paste0("Colorization of greek notation not currently ",
+             "implemented for merMod models"))
+  }
+  if (!is.null(subscript_colors)) {
+    warning(
+      paste0("Colorization of subscripts not currently ",
+             "implemented for merMod models"))
+  }
   l1 <- create_l1(model, mean_separate,
     ital_vars, wrap, terms_per_line,
     use_coefs, coef_digits, fix_signs,
     operator_location,
     sigma = "\\sigma^2", return_variances,
-    swap_var_names, swap_subscript_names
+    swap_var_names, swap_subscript_names,
+    var_colors, var_subscript_colors
   )
   vcv <- create_ranef_structure_merMod(
     model, ital_vars, use_coefs, coef_digits,
-    fix_signs, return_variances, swap_var_names, swap_subscript_names
+    fix_signs, return_variances, swap_var_names, swap_subscript_names,
+    var_colors, var_subscript_colors
   )
   
   # check for double line breaks

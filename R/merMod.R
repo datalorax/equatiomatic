@@ -336,7 +336,8 @@ create_slope_intercept <- function(term) {
 
 pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
                         order, use_coefs, coef_digits, fix_signs,
-                        swap_var_names, swap_subscript_names) {
+                        swap_var_names, swap_subscript_names,
+                        var_colors, var_subscript_colors) {
   if (is.null(splt_lev_fixed)) {
     return()
   }
@@ -363,7 +364,8 @@ pull_slopes <- function(model, splt_lev_fixed, splt_lev_random, ital_vars,
   # recreate terms
   cross_splt <- lapply(cross_splt, function(x) {
     x$terms <- create_term(x, ital_vars, swap_var_names, 
-                           swap_subscript_names)
+                           swap_subscript_names,
+                           var_colors, var_subscript_colors)
     
     x$terms <- vapply(x$terms, function(x) {
       if (nchar(x) == 0) {
@@ -430,7 +432,8 @@ rbind_named <- function(l) {
 #' @noRd
 create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
                                 use_coefs, coef_digits, fix_signs,
-                                swap_var_names, swap_subscript_names) {
+                                swap_var_names, swap_subscript_names,
+                                var_colors, var_subscript_colors) {
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   rhs_random <- rhs_random[rhs_random$group != "Residual" &
                              !grepl("^cor__", rhs_random$term), ]
@@ -439,7 +442,8 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   order <- get_order(rhs_random)
   
   fixed_greek_mermod$terms <- create_term(fixed_greek_mermod, ital_vars,
-                                          swap_var_names, swap_subscript_names)
+                                          swap_var_names, swap_subscript_names,
+                                          var_colors, var_subscript_colors)
   
   fixed_greek_mermod$terms <- vapply(fixed_greek_mermod$terms, function(x) {
     if (nchar(x) == 0) {
@@ -464,7 +468,8 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   slopes <- Map(function(fixed, rand) {
     pull_slopes(model, fixed, rand, ital_vars, order, 
                 use_coefs, coef_digits, fix_signs,
-                swap_var_names, swap_subscript_names)
+                swap_var_names, swap_subscript_names,
+                var_colors, var_subscript_colors)
   }, splt_fixed, splt_rand)
   slopes <- rbind_named(slopes)
   
@@ -589,7 +594,8 @@ create_vcov_merMod <- function(rhs_random_lev, means_merMod,
 create_ranef_structure_merMod <- function(model, ital_vars, use_coefs,
                                           coef_digits, fix_signs, 
                                           return_variances, swap_var_names, 
-                                          swap_subscript_names) {
+                                          swap_subscript_names,
+                                          var_colors, var_subscript_colors) {
   rhs <- extract_rhs(model, return_variances)
   rhs_random <- rhs[rhs$effect == "ran_pars", ]
   order <- get_order(rhs_random[rhs_random$group != "Residual", ])
@@ -599,7 +605,8 @@ create_ranef_structure_merMod <- function(model, ital_vars, use_coefs,
                                       model, ital_vars,
                                       use_coefs, coef_digits, 
                                       fix_signs, swap_var_names, 
-                                      swap_subscript_names)
+                                      swap_subscript_names,
+                                      var_colors, var_subscript_colors)
   
   means_splt <- split(means_merMod, means_merMod$group)[names(order)]
   names(means_splt) <- names(order)
@@ -673,12 +680,14 @@ convert_matrix <- function(mat) {
 create_l1_fixef <- function(model, ital_vars, use_coefs, coef_digits, 
                             mean_separate, fix_signs, wrap, terms_per_line, 
                             operator_location, return_variances, 
-                            swap_var_names, swap_subscript_names) {
+                            swap_var_names, swap_subscript_names,
+                            var_colors, var_subscript_colors) {
   rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
   greek <- create_fixef_greek_merMod(model, return_variances)
   terms <- create_term(greek, ital_vars, swap_var_names, 
-                       swap_subscript_names)
+                       swap_subscript_names,
+                       var_colors, var_subscript_colors)
   
   terms <- vapply(terms, function(x) {
     if (nchar(x) == 0) {
@@ -758,14 +767,16 @@ create_l1.lmerMod <- function(model, mean_separate,
                              use_coefs, coef_digits, fix_signs,
                              operator_location, sigma = "\\sigma^2",
                              return_variances, swap_var_names, 
-                             swap_subscript_names) {
+                             swap_subscript_names,
+                             var_colors, var_subscript_colors) {
   
   rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
                         operator_location, return_variances,
-                        swap_var_names, swap_subscript_names)
+                        swap_var_names, swap_subscript_names,
+                        var_colors, var_subscript_colors)
   if (is.null(mean_separate)) {
     mean_separate <- sum(rhs$l1) > 3
   }
@@ -784,14 +795,16 @@ create_l1.glmerMod <- function(model, mean_separate,
                               use_coefs, coef_digits, fix_signs,
                               operator_location, sigma = "\\sigma^2",
                               return_variances, swap_var_names, 
-                              swap_subscript_names) {
+                              swap_subscript_names,
+                              var_colors, var_subscript_colors) {
   
   rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs)
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
                         operator_location, return_variances,
-                        swap_var_names, swap_subscript_names)
+                        swap_var_names, swap_subscript_names,
+                        var_colors, var_subscript_colors)
   
   combo <- paste0(which_family(model), "-", which_link(model))
   
