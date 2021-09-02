@@ -345,7 +345,19 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 
 #' @export
 #' @noRd
-extract_eq.glmerMod <- function(...) {
+extract_eq.glmerMod <- function(..., 
+                                greek_colors = NULL, 
+                                subscript_colors = NULL) {
+  if (!is.null(greek_colors)) {
+    warning(
+      paste0("Colorization of greek notation not currently ",
+             "implemented for merMod models"))
+  }
+  if (!is.null(subscript_colors)) {
+    warning(
+      paste0("Colorization of subscripts not currently ",
+             "implemented for merMod models"))
+  }
   extract_eq.lmerMod(...)
 }
 
