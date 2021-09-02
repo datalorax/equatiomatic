@@ -314,12 +314,16 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
   if (!is.null(greek_colors)) {
     warning(
       paste0("Colorization of greek notation not currently ",
-             "implemented for merMod models"))
+             "implemented for merMod models"),
+      call. = FALSE
+    )
   }
   if (!is.null(subscript_colors)) {
     warning(
       paste0("Colorization of subscripts not currently ",
-             "implemented for merMod models"))
+             "implemented for merMod models"),
+      call. = FALSE
+      )
   }
   l1 <- create_l1(model, mean_separate,
     ital_vars, wrap, terms_per_line,
