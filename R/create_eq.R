@@ -140,10 +140,14 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex, index_factors,
+                          fix_signs, intercept, greek, 
+                          greek_colors, subscript_colors, 
+                          var_colors, var_subscript_colors,
+                          raw_tex, index_factors,
                           swap_var_names, swap_subscript_names) {
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+                                 swap_subscript_names,
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -159,7 +163,8 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, raw_tex)
   }
 
   splt <- split(rhs, rhs$coef.type)
@@ -720,16 +725,21 @@ add_greek.polr <- function(rhs, terms, greek, intercept, greek_colors,
     seq_along(x$coef.type)
   }))
 
-  ifelse(rhs$coef.type == "scale",
+  ifelse(
+    rhs$coef.type == "scale",
     anno_greek(
       "alpha", 
       rhs$idx, 
       greek_colors = greek_colors[1], 
       subscript_colors = subscript_colors[1]
     ),
-    anno_greek("beta", rhs$idx, terms, 
-               greek_colors = greek_colors[-1], 
-               subscript_colors = subscript_colors[-1])
+    anno_greek(
+      "beta", 
+      rhs$idx, 
+      terms,
+      greek_colors = greek_colors[-1],
+      subscript_colors = subscript_colors[-1]
+    )
   )
 }
 
@@ -737,14 +747,27 @@ add_greek.polr <- function(rhs, terms, greek, intercept, greek_colors,
 #' @keywords internal
 #' @noRd
 
-add_greek.clm <- function(rhs, terms, ...) {
+add_greek.clm <- function(rhs, terms, greek, intercept, greek_colors, 
+                          subscript_colors, raw_tex, ...) {
   rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
     seq_along(x$coef.type)
   }))
 
-  ifelse(rhs$coef.type == "intercept",
-    anno_greek("alpha", rhs$idx),
-    anno_greek("beta", rhs$idx, terms)
+  ifelse(
+    rhs$coef.type == "intercept",
+    anno_greek(
+      "alpha", 
+      rhs$idx, 
+      greek_colors = greek_colors[1], 
+      subscript_colors = subscript_colors[1]
+    ),
+    anno_greek(
+      "beta", 
+      rhs$idx, 
+      terms,
+      greek_colors = greek_colors[-1],
+      subscript_colors = subscript_colors[-1]
+    )
   )
 }
 
