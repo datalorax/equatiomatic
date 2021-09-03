@@ -36,7 +36,8 @@ test_that("colorizing works", {
       cl_long3,
       var_colors = c(
         wave = "blue", 
-        treatment = "red"
+        treatment = "red",
+        score = "#FF00CC"
       ),
       var_subscript_colors = c(
         group = "orange"
@@ -49,7 +50,8 @@ test_that("colorizing works", {
       cl_long3,
       var_colors = c(
         wave = "blue", 
-        treatment = "red"
+        treatment = "red",
+        score = "#FF00CC"
       ),
       var_subscript_colors = c(
         group = "orange"
@@ -63,7 +65,8 @@ test_that("colorizing works", {
       cl_long3,
       var_colors = c(
         wave = "blue", 
-        treatment = "red"
+        treatment = "red",
+        score = "#FF00CC"
       ),
       var_subscript_colors = c(
         group = "orange"
@@ -123,7 +126,8 @@ test_that("Renaming Variables works", {
       m5,
       swap_var_names = c(
         "wave" = "Wave",
-        "prop_low" = "P(low income)"),
+        "prop_low" = "P(low income)",
+        "score" = "Student Scores"),
       swap_subscript_names = c(
         "1" = ""
       )

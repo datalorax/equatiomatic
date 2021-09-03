@@ -683,7 +683,7 @@ create_l1_fixef <- function(model, ital_vars, use_coefs, coef_digits,
                             swap_var_names, swap_subscript_names,
                             var_colors, var_subscript_colors) {
   rhs <- extract_rhs(model, return_variances)
-  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  lhs <- extract_lhs(model, ital_vars, use_coefs, swap_var_names, var_colors)
   greek <- create_fixef_greek_merMod(model, return_variances)
   terms <- create_term(greek, ital_vars, swap_var_names, 
                        swap_subscript_names,
@@ -771,7 +771,7 @@ create_l1.lmerMod <- function(model, mean_separate,
                              var_colors, var_subscript_colors) {
   
   rhs <- extract_rhs(model, return_variances)
-  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  lhs <- extract_lhs(model, ital_vars, use_coefs, swap_var_names, var_colors)
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
                         operator_location, return_variances,
@@ -799,7 +799,7 @@ create_l1.glmerMod <- function(model, mean_separate,
                               var_colors, var_subscript_colors) {
   
   rhs <- extract_rhs(model, return_variances)
-  lhs <- extract_lhs(model, ital_vars, use_coefs)
+  lhs <- extract_lhs(model, ital_vars, use_coefs, swap_var_names, var_colors)
   l1 <- create_l1_fixef(model, ital_vars, use_coefs, coef_digits, 
                         mean_separate, fix_signs, wrap, terms_per_line, 
                         operator_location, return_variances,

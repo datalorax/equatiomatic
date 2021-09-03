@@ -2,7 +2,7 @@
 
     $$
     \begin{aligned}
-      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}({\color{blue}{\operatorname{wave}}}), \sigma^2 \right) \\    
+      {\color{#FF00CC}{\operatorname{score}}}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}({\color{blue}{\operatorname{wave}}}), \sigma^2 \right) \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}
@@ -291,7 +291,7 @@
 
     $$
     \begin{aligned}
-      \operatorname{score}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{Wave}), \sigma^2 \right) \\    
+      \operatorname{Student\ Scores}_{i}  &\sim N \left(\alpha_{j[i],k[i],l[i]} + \beta_{1j[i],k[i],l[i]}(\operatorname{Wave}), \sigma^2 \right) \\    
     \left(
       \begin{array}{c} 
         \begin{aligned}

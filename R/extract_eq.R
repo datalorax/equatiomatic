@@ -184,7 +184,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     stop("Coefficient estimates cannot be returned when factors are indexed.")
   }
   
-  lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs, var_colors)
+  lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs, 
+                     swap_var_names, var_colors)
   rhs <- extract_rhs(model, index_factors)
 
   eq_raw <- create_eq(

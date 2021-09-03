@@ -14,7 +14,8 @@ test_that("colorizing works", {
   
   expect_snapshot_output(
     extract_eq(
-      lr, 
+      lr,
+      swap_var_names = c(sex = "SEX"),
       var_colors = c(
         sex = "#0073ff",
         species = "green"
@@ -29,6 +30,7 @@ test_that("colorizing works", {
   expect_snapshot_output(
     extract_eq(
       lr, 
+      swap_var_names = c(sex = "SEX"),
       var_colors = c(
         sex = "#0073ff",
         species = "green"
@@ -44,6 +46,7 @@ test_that("colorizing works", {
   expect_snapshot_output(
     extract_eq(
       pr, 
+      swap_var_names = c(sex = "SEX"),
       var_colors = c(
         sex = "#0073ff",
         species = "green"
@@ -58,6 +61,7 @@ test_that("colorizing works", {
   expect_snapshot_output(
     extract_eq(
       pr, 
+      swap_var_names = c(sex = "SEX"),
       var_colors = c(
         sex = "#0073ff",
         species = "green"
