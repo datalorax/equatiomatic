@@ -716,12 +716,18 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   if (raw_tex & !(intercept %in% c("alpha", "beta"))) {
     int <- intercept
   }
-
+  
+  indices <- if ("(Intercept)" %in% rhs$term) {
+    seq_len(nrow(rhs)) - 1
+  } else {
+    seq_len(nrow(rhs))
+  } 
+  
   ifelse(rhs$term == "(Intercept)",
     colorize(greek_colors[1], int),
     anno_greek(
       greek, 
-      seq_len(nrow(rhs)) - 1, 
+      indices, 
       terms, 
       greek_colors, 
       subscript_colors, 

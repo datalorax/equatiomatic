@@ -1,3 +1,9 @@
+# Dropping intercept notation works
+
+    $$
+    \operatorname{bill\_depth\_mm} = \beta_{1}(\operatorname{flipper\_length\_mm}) + \beta_{2}(\operatorname{island}_{\operatorname{Biscoe}}) + \beta_{3}(\operatorname{island}_{\operatorname{Dream}}) + \beta_{4}(\operatorname{island}_{\operatorname{Torgersen}}) + \beta_{5}(\operatorname{flipper\_length\_mm} \times \operatorname{island}_{\operatorname{Dream}}) + \beta_{6}(\operatorname{flipper\_length\_mm} \times \operatorname{island}_{\operatorname{Torgersen}}) + \epsilon
+    $$
+
 # colorizing works
 
     $$
