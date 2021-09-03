@@ -1,9 +1,11 @@
 # equatiomatic (development version)
 * Export new `renderEq()` and `eqOutput()` functions for working with equatiomatic with shiny.
-* Now accommodates `lme4::glmer()` models.
-* Include new `return_variances` argument, which allows users to optionally return the variance/covariances in `lme4::lmer()` and `lme4::glmer()` models
+* Specific parts of the equation can now be colored with the new `greek_colors`, `subscript_colors`, `var_colors` and `var_subscript_colors` arguments.
 * Includes new `swap_var_names` and `swap_subscript_names` arguments to change
  the names of the variables or subscripts in the rendered equation
+* A new vignette documents the usage of colors and name swapping.
+* Now accommodates `lme4::glmer()` models.
+* Include new `return_variances` argument, which allows users to optionally return the variance/covariances in `lme4::lmer()` and `lme4::glmer()` models
 * Added new `font_size` argument, which takes any LaTeX font size (see [here](https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles))
 * Added new `label` argument, which allows for cross-referencing equation in-text
 with PDF outputs.
