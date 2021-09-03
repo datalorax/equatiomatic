@@ -2,7 +2,7 @@
 
     $$
     \begin{aligned}
-    \log\left[ \frac { P( {\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}} ) }{ 1 - P( {\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}} ) } \right] &= {\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#7570B3}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#E7298A}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
+    \log\left[ \frac { P( {\color{#0073ff}{\operatorname{SEX}}} = {\color{#0073ff}{\operatorname{male}}} ) }{ 1 - P( {\color{#0073ff}{\operatorname{SEX}}} = {\color{#0073ff}{\operatorname{male}}} ) } \right] &= {\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#7570B3}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#E7298A}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
     &\quad {\color{#66A61E}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#E6AB02}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})
     \end{aligned}
     $$
@@ -11,7 +11,7 @@
 
     $$
     \begin{aligned}
-    {\color{#0073ff}{\operatorname{sex}}} &\sim Bernoulli\left(\operatorname{prob}_{{\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}}}= \hat{P}\right) \\
+    {\color{#0073ff}{\operatorname{SEX}}} &\sim Bernoulli\left(\operatorname{prob}_{{\color{#0073ff}{\operatorname{SEX}}} = {\color{#0073ff}{\operatorname{male}}}}= \hat{P}\right) \\
      \log\left[ \frac { \hat{P} }{ 1 - \hat{P} } \right] 
      &= {\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#7570B3}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#E7298A}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
     &\quad {\color{#66A61E}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#E6AB02}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})
@@ -22,7 +22,7 @@
 
     $$
     \begin{aligned}
-    P( {\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}} ) &= \Phi[{\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#7570B3}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#E7298A}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
+    P( {\color{#0073ff}{\operatorname{SEX}}} = {\color{#0073ff}{\operatorname{male}}} ) &= \Phi[{\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#7570B3}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#E7298A}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
     &\qquad\ {\color{#66A61E}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#E6AB02}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})]
     \end{aligned}
     $$
@@ -31,7 +31,7 @@
 
     $$
     \begin{aligned}
-    {\color{#0073ff}{\operatorname{sex}}} &\sim Bernoulli\left(\operatorname{prob}_{{\color{#0073ff}{\operatorname{sex}}} = {\color{#0073ff}{\operatorname{male}}}}= \hat{P}\right) \\
+    {\color{#0073ff}{\operatorname{SEX}}} &\sim Bernoulli\left(\operatorname{prob}_{{\color{#0073ff}{\operatorname{SEX}}} = {\color{#0073ff}{\operatorname{male}}}}= \hat{P}\right) \\
      \hat{P} 
      &= \Phi[{\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{blue}{1}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}}) + {\color{#7570B3}{\beta}}_{{\color{blue}{2}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}}) + {\color{#E7298A}{\beta}}_{{\color{blue}{3}}}(\operatorname{bill\_length\_mm})\ + \\
     &\qquad\ {\color{#66A61E}{\beta}}_{{\color{blue}{4}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Chinstrap}}}} \times \operatorname{bill\_length\_mm}) + {\color{#E6AB02}{\beta}}_{{\color{blue}{5}}}({\color{green}{\operatorname{species}}}{\color{orange}{_{\operatorname{Gentoo}}}} \times \operatorname{bill\_length\_mm})]

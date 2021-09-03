@@ -26,11 +26,13 @@ test_that("colorizing works", {
     extract_eq(
       m,
       swap_var_names = c(
+        stops = "Stops",
         "eth" = "Ethnicity",
         "total_arrests" = "Total Arrests"
       ),
       var_colors = c(
-        eth = "red"
+        eth = "red",
+        stops = "blue"
       ),
       var_subscript_colors = c(
         eth = "purple"
@@ -42,10 +44,12 @@ test_that("colorizing works", {
     extract_eq(
       m,
       swap_var_names = c(
+        stops = "Stops",
         "eth" = "Ethnicity",
         "total_arrests" = "Total Arrests"
       ),
       var_colors = c(
+        stops = "blue",
         eth = "red"
       ),
       var_subscript_colors = c(
