@@ -3,6 +3,9 @@ test_that("colorizing works", {
                             data = ordinal::wine
   )
   
+  greek_col <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", 
+                 "#E6AB02", "#A6761D", "#666666")
+  
   expect_snapshot_output(
     extract_eq(
       mass_ologit,
@@ -10,8 +13,8 @@ test_that("colorizing works", {
       terms_per_line = 2,
       var_colors = c(temp = "blue"),
       var_subscript_colors = c(contact = "orange"),
-      greek_colors = rainbow(8),
-      subscript_colors = rev(rainbow(6))
+      greek_colors = greek_col,
+      subscript_colors = rev(greek_col)
     )
   )
 })

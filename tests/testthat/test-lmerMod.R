@@ -17,11 +17,13 @@ test_that("colorizing works", {
   # create a new df with dist_mean added
   d <- merge(sim_longitudinal, dist_mean, by = "district")
   
-  cl_long3 <- lme4::lmer(
-    score ~ wave * group * treatment + wave * prop_low * treatment +
-      (wave | sid) + (wave | school) +
-      (wave + treatment | district),
-    sim_longitudinal
+  suppressWarnings(
+    cl_long3 <- lme4::lmer(
+      score ~ wave * group * treatment + wave * prop_low * treatment +
+        (wave | sid) + (wave | school) +
+        (wave + treatment | district),
+      sim_longitudinal
+    )
   )
   
   expect_snapshot_output(

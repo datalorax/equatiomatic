@@ -4,14 +4,17 @@ test_that("colorizing works", {
                                  link = "logit"
   )
   
+  greek_col <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", 
+                 "#E6AB02", "#A6761D", "#666666")
+  
   expect_snapshot_output(
     extract_eq(
       ordinal_ologit,
       wrap = TRUE, 
       terms_per_line = 2,
       var_colors = c(temp = "blue"),
-      greek_colors = rainbow(8),
-      subscript_colors = rev(rainbow(6))
+      greek_colors = greek_col,
+      subscript_colors = rev(greek_col)
     )
   )
 })

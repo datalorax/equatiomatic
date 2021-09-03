@@ -2,10 +2,10 @@
 
     $$
     \begin{aligned}
-    {\color{#0f70f7}{\operatorname{bill\_depth\_mm}}} &= {\color{#FF0000}{\alpha}} + {\color{#FFDB00}{\beta}}_{{\color{#CCFF00}{1}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}})\ + \\
-    &\quad {\color{#49FF00}{\beta}}_{{\color{#00FF66}{2}}}({\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{super\ dreamy}}}}) + {\color{#00FF92}{\beta}}_{{\color{#0066FF}{3}}}({\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{Torgersen}}}})\ + \\
-    &\quad {\color{#0092FF}{\beta}}_{{\color{#CC00FF}{4}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}} \times {\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{super\ dreamy}}}}) + {\color{#4900FF}{\beta}}_{{\color{#FF0000}{5}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}} \times {\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{Torgersen}}}})\ + \\
-    &\quad {\color{#FF00DB}{\epsilon}}
+    {\color{#0f70f7}{\operatorname{bill\_depth\_mm}}} &= {\color{#1B9E77}{\alpha}} + {\color{#D95F02}{\beta}}_{{\color{#E6AB02}{1}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}})\ + \\
+    &\quad {\color{#7570B3}{\beta}}_{{\color{#66A61E}{2}}}({\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{super\ dreamy}}}}) + {\color{#E7298A}{\beta}}_{{\color{#E7298A}{3}}}({\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{Torgersen}}}})\ + \\
+    &\quad {\color{#66A61E}{\beta}}_{{\color{#7570B3}{4}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}} \times {\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{super\ dreamy}}}}) + {\color{#E6AB02}{\beta}}_{{\color{#D95F02}{5}}}({\color{#b22222}{\operatorname{Flipper\ Length\ (MM)}}} \times {\color{green}{\operatorname{ISLAND}}}{\color{cyan}{_{\operatorname{Torgersen}}}})\ + \\
+    &\quad {\color{#A6761D}{\epsilon}}
     \end{aligned}
     $$
 

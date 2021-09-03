@@ -9,6 +9,9 @@ test_that("colorizing works", {
             family = binomial(link = "probit")
   )
   
+  coef_colors <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", 
+                   "#E6AB02")
+  
   expect_snapshot_output(
     extract_eq(
       lr, 
@@ -17,7 +20,7 @@ test_that("colorizing works", {
         species = "green"
       ),
       var_subscript_colors = c(species = "orange"),
-      greek_colors = rainbow(6),
+      greek_colors = coef_colors,
       subscript_colors = "blue",
       wrap = TRUE
     )
@@ -31,7 +34,7 @@ test_that("colorizing works", {
         species = "green"
       ),
       var_subscript_colors = c(species = "orange"),
-      greek_colors = rainbow(6),
+      greek_colors = coef_colors,
       subscript_colors = "blue",
       wrap = TRUE,
       show_distribution = TRUE
@@ -46,7 +49,7 @@ test_that("colorizing works", {
         species = "green"
       ),
       var_subscript_colors = c(species = "orange"),
-      greek_colors = rainbow(6),
+      greek_colors = coef_colors,
       subscript_colors = "blue",
       wrap = TRUE
     )
@@ -60,7 +63,7 @@ test_that("colorizing works", {
         species = "green"
       ),
       var_subscript_colors = c(species = "orange"),
-      greek_colors = rainbow(6),
+      greek_colors = coef_colors,
       subscript_colors = "blue",
       wrap = TRUE,
       show_distribution = TRUE

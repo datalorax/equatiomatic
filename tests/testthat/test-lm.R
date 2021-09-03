@@ -1,8 +1,9 @@
 test_that("colorizing works", {
   m <- lm(bill_depth_mm ~ flipper_length_mm*island, penguins)
   
-  coef_colors <- rainbow(7)
-  ss_colors <- rainbow(5)
+  coef_colors <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", 
+                   "#E6AB02", "#A6761D")
+  ss_colors <- rev(coef_colors)
   
   expect_snapshot_output(
     extract_eq(
