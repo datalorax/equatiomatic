@@ -1,5 +1,10 @@
 library(lme4)
 
+test_that("Checking for random/fixed effects works", {
+  m <- lmer(score ~ wave + (group | sid), data = sim_longitudinal)
+  expect_error(extract_eq(m))
+})
+
 test_that("colorizing works", {
   # calculate district means
   dist_mean <- tapply(

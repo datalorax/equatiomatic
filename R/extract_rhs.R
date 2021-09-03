@@ -165,6 +165,23 @@ extract_rhs.lmerMod <- function(model, return_variances) {
     full_rhs$split[full_rhs$effect == "fixed"]
   )
   
+  randvars <- pull_randvar_names(full_rhs)
+  fixedvars <- unique(full_rhs$term[full_rhs$effect == "fixed"])
+  
+  if(any(!randvars %in% fixedvars)) {
+    stop(
+      paste(
+        paste0(
+          "{equatiomatic} only supports models where each random effect ",
+          "has a corresponding fixed effect. You specified the following ",
+          "variables as randomly varying without including the ",
+          "corresponding fixed effect:"), 
+        paste0(setdiff(randvars, fixedvars), collapse = ", ")
+      ),
+      call. = FALSE
+    )
+  }
+  
   group_coefs <- detect_group_coef(model, full_rhs)
   all_terms <- unique(unlist(full_rhs$primary[full_rhs$effect == "fixed"]))
   l1_terms <- setdiff(all_terms, names(group_coefs))
@@ -209,6 +226,13 @@ extract_rhs.lmerMod <- function(model, return_variances) {
 #' @export
 extract_rhs.glmerMod <- function(model, ...) {
   extract_rhs.lmerMod(model, ...)
+}
+
+pull_randvar_names <- function(rhs) {
+  rows_selected <- (rhs$effect == "ran_pars") & (rhs$group != "Residual")
+  random <- rhs[rows_selected, "term", drop = TRUE]
+  random <- random[!grepl("^cor", random)]
+  unique(gsub("sd__", "", random))
 }
 
 #' Extract right-hand side of an forecast::Arima object
