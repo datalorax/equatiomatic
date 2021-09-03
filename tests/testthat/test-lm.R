@@ -1,3 +1,8 @@
+test_that("Dropping intercept notation works", {
+  m <- lm(bill_depth_mm ~ 0 + flipper_length_mm*island, penguins)
+  expect_snapshot_output(extract_eq(m))
+})
+
 test_that("colorizing works", {
   m <- lm(bill_depth_mm ~ flipper_length_mm*island, penguins)
   
