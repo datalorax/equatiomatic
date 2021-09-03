@@ -105,6 +105,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/colors.html">Colorizing equations and swapping variable names</a>
+    </li>
+    <li>
       <a href="../articles/forecast-arima.html">forecast::Arima Models</a>
     </li>
     <li>
@@ -161,6 +164,10 @@
   <span class='no'>model</span>,
   <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='st'>"alpha"</span>,
   <span class='kw'>greek</span> <span class='kw'>=</span> <span class='st'>"beta"</span>,
+  <span class='kw'>greek_colors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>subscript_colors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>var_colors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>var_subscript_colors</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>raw_tex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>swap_var_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>swap_subscript_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -175,7 +182,7 @@
   <span class='kw'>use_coefs</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>coef_digits</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>fix_signs</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>font_size</span>,
+  <span class='kw'>font_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>mean_separate</span>,
   <span class='kw'>return_variances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
@@ -200,6 +207,38 @@ as beta zero.</p></td>
 coefficients? Currently only accepts <code>"beta"</code> (with plans for future
 development). Can be used in combination with <code>raw_tex</code> to use any
 notation, e.g., <code>"\hat{\beta}"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>greek_colors</th>
+      <td><p>The colors of the greek notation in the equation. Must
+be a single color (named or HTML hex code) or a vector of colors (which
+will be recycled if smaller than the number of terms in the model). When
+rendering to PDF, I suggest using HTML hex codes, as not all named colors
+are recognized by LaTeX, but equatiomatic will internally create the
+color definitions for you if HTML codes are supplied. Note that this is
+not yet implemented for mixed effects models (lme4).</p></td>
+    </tr>
+    <tr>
+      <th>subscript_colors</th>
+      <td><p>The colors of the subscripts for the greek notation.
+The argument structure is equivalent to <code>greek_colors</code> (i.e., see
+above for more detail).</p></td>
+    </tr>
+    <tr>
+      <th>var_colors</th>
+      <td><p>The color of the variable names. This takes a named vector
+of the form <code><a href='https://rdrr.io/r/base/c.html'>c("variable" = "color")</a></code>. For example
+<code><a href='https://rdrr.io/r/base/c.html'>c("bill_length_mm" = "#00d4fa", "island" = "#00fa85")</a></code>. Colors can
+be names (e.g., <code>"red"</code>) or HTML hex codes, as shown in the example.</p></td>
+    </tr>
+    <tr>
+      <th>var_subscript_colors</th>
+      <td><p>The colors of the factor subscripts for
+categorical variables. The interface for this is equivalent to
+<code>var_colors</code>, and all subscripts for a given variable will be
+displayed in the provided color. For example, the code
+<code><a href='https://rdrr.io/r/base/c.html'>c("island" = "green")</a></code> would result in the subscripts for "Dream"
+and "Torgersen" being green (assuming "Biscoe" was the reference group).</p></td>
     </tr>
     <tr>
       <th>raw_tex</th>

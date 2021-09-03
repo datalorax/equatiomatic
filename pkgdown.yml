@@ -2,11 +2,12 @@ pandoc: 2.7.3
 pkgdown: 1.5.0
 pkgdown_sha: 1401803e77fc756c31f71291843c8200265a4af5
 articles:
+  colors: colors.html
   forecast-arima: forecast-arima.html
   intro-equatiomatic: intro-equatiomatic.html
   lme4-lmer: lme4-lmer.html
   plotting-integration: plotting-integration.html
   tests_and_coverage: tests_and_coverage.html
   usage-shiny: usage-shiny.html
-last_built: 2021-08-31T20:53Z
+last_built: 2021-09-03T17:54Z
 
