@@ -36,3 +36,58 @@ mapply_dbl <- function(...) {
 distinct <- function(df, col) {
   df[!duplicated(df[col]), ]
 }
+
+colorize <- function(col, x) {
+  if(is.null(col)) {
+    return(x)
+  }
+  if(is_latex_output()) {
+    col <- strip_html_hash(col)
+  }
+  paste0("{\\color{", col, "}{", x, "}}")
+}
+
+colorize_terms <- function(colors, side_primary, primary_escaped) {
+  missing <- setdiff(
+    unique(names(unlist(side_primary))), 
+    names(colors)
+  )
+  names(missing) <- missing
+  full_name_vector <- c(colors, missing)
+  
+  color_matches <- lapply(side_primary, function(x) {
+    full_name_vector[match(names(x), names(full_name_vector))]
+  })
+  
+  color_matches <- lapply(color_matches, function(x) {
+    x[x != names(x)]
+  })
+  
+  Map(function(.x, .y) {
+    matched <- .x[match(names(.y), names(.x))]
+    out <- ifelse(is.na(matched), .y, colorize(matched, .y))
+    names(out) <- names(.y)
+    out
+  },
+  .x = color_matches, 
+  .y = primary_escaped)
+}
+
+is_html_colorcode <- function(cols) {
+  grepl("^#", cols)
+}
+
+strip_html_hash <- function(cols) {
+  is_hex <- is_html_colorcode(cols)
+  cols[is_hex] <- gsub("^#(.+)", "\\1", cols[is_hex])
+  cols
+}
+
+define_latex_html_colors <- function(cols) {
+  nms <- strip_html_hash(cols)
+  nms <- nms[is_html_colorcode(cols)]
+  vapply(nms, function(x) {
+    paste0("\\definecolor{", x, "}{HTML}{", x, "}")
+  }, FUN.VALUE = character(1))
+}
+

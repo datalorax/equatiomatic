@@ -1,4 +1,73 @@
 library(lme4)
+
+test_that("colorizing works", {
+  # calculate district means
+  dist_mean <- tapply(
+    sim_longitudinal$score,
+    sim_longitudinal$district,
+    mean
+  )
+  
+  # put them in a df to merge
+  dist_mean <- data.frame(
+    district = names(dist_mean),
+    dist_mean = dist_mean
+  )
+  
+  # create a new df with dist_mean added
+  d <- merge(sim_longitudinal, dist_mean, by = "district")
+  
+  suppressWarnings(
+    cl_long3 <- lme4::lmer(
+      score ~ wave * group * treatment + wave * prop_low * treatment +
+        (wave | sid) + (wave | school) +
+        (wave + treatment | district),
+      sim_longitudinal
+    )
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      cl_long3,
+      var_colors = c(
+        wave = "blue", 
+        treatment = "red"
+      ),
+      var_subscript_colors = c(
+        group = "orange"
+      )
+    )
+  )
+  
+  expect_warning(
+    extract_eq(
+      cl_long3,
+      var_colors = c(
+        wave = "blue", 
+        treatment = "red"
+      ),
+      var_subscript_colors = c(
+        group = "orange"
+      ),
+      greek_colors = rainbow(15)
+    )
+  )
+  
+  expect_warning(
+    extract_eq(
+      cl_long3,
+      var_colors = c(
+        wave = "blue", 
+        treatment = "red"
+      ),
+      var_subscript_colors = c(
+        group = "orange"
+      ),
+      subscript_colors = rev(rainbow(15))
+    )
+  )
+})
+
 test_that("Math extraction works", {
   expect_warning(
     m1 <- lmer(Reaction ~ log(Days + 1) + exp(Days) + poly(Days, 4) + 

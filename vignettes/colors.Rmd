@@ -1,0 +1,222 @@
+---
+title: "Colorizing equations and swapping variable names"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Colorizing equations and swapping variable names}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+colorize_text <- function(x, color) {
+  if (knitr::is_latex_output()) {
+    sprintf("\\textcolor{%s}{%s}", color, x)
+  } else if (knitr::is_html_output()) {
+    sprintf("<span style='color: %s;'>%s</span>", color,
+      x)
+  } else x
+}
+```
+
+Particularly when teaching, it can be helpful to highlight specific pieces of the equation. With **{equatiomatic}**, we can do this as part of the equation extraction.
+
+For example, imagine we have a simple linear regression model, like this
+
+```{r }
+library(equatiomatic)
+slr <- lm(bill_length_mm ~ body_mass_g, data = penguins)
+```
+
+We may want to start by highlighting the independent and dependent variables. We can do this with colors. For example:
+
+```{r }
+extract_eq(
+  model = slr, 
+  var_colors = c(
+    bill_length_mm = "cornflowerblue",
+    body_mass_g = "firebrick"
+  )
+)
+```
+
+and then we can use those same colors later in text, as in "The `r colorize_text("Dependent Variable", "cornflowerblue")` is the length of the penguins bill, which is predicted by the `r colorize_text("Indepenent Variable", "firebrick")`, the body mass of the penguin."
+
+Note that we colorize the variables through the `var_colors` argument, which takes a named vector. The name is equal to the variable you'd like to change the color of, and the element is the actual color.
+
+We could also take this further, to colorize the coefficients (the Greek notation). This argument structure is slightly different, taking either a single color, or a vector of colors. The notation includes three Greek characters, representing the model intercept, slope, and residual variance. We can just the intercept with code like this
+
+```{r }
+extract_eq(
+  model = slr, 
+  var_colors = c(
+    bill_length_mm = "cornflowerblue",
+    body_mass_g = "firebrick"
+  ),
+  greek_colors = c(
+    "#3bd100", rep("black", 2)
+  )
+)
+```
+
+Or all three with something like 
+
+```{r }
+greek_col <- c("#1b9e77", "#d95f02", "#7570b3")
+
+extract_eq(
+  model = slr, 
+  var_colors = c(
+    bill_length_mm = "cornflowerblue",
+    body_mass_g = "firebrick"
+  ),
+  greek_colors = greek_col
+)
+```
+
+Note that all of this works with more complicated models as well. For example, consider a model with an interaction. My coloring the variable names, we can follow both the main effects and the interaction. 
+
+```{r }
+m_interaction <- lm(bill_length_mm ~ body_mass_g * flipper_length_mm, 
+                    data = penguins)
+
+extract_eq(
+  m_interaction,
+  var_colors = c(
+    body_mass_g = "#ffa91f",
+    flipper_length_mm = "#00d1ab"
+  ),
+  greek_colors = c(
+    "black", "#3A21B3", "#58A1D9", "#FF7582", "black"
+  ),
+  wrap = TRUE,
+  terms_per_line = 3
+)
+```
+
+Here, we're using two different shades of blue to denote the main effects, and a pink color to denote the interaction. At the same time, we see how the variables combine. We can also change the subscripts. Perhaps we want to have them match the coefficients. The interface for the subscripts is exactly the same as the subscripts---either a single color or a vector of colors. One potentially confusing part of this, however, is that the colors still need to correspond to their position in the equation. If the term does not have a subscript, you can fill the positions with NA values or any other color (it won't matter because there are not subscripts for those terms).
+
+```{r }
+extract_eq(
+  m_interaction,
+  var_colors = c(
+    body_mass_g = "#ffa91f",
+    flipper_length_mm = "#00d1ab"
+  ),
+  greek_colors = c(
+    "black", "#3A21B3", "#58A1D9", "#FF7582", "black"
+  ),
+  subscript_colors = c(
+     NA_character_, "#3A21B3", "#58A1D9", "#FF7582", NA_character_
+  ),
+  wrap = TRUE,
+  terms_per_line = 3
+)
+```
+
+Again, we may want to use these colors in our explanation. For example
+
+In the above model, both the `r colorize_text("body mass", "#ffa91f")` and the `r colorize_text("flipper length", "#00d1ab")` of penguins are used to predict their bill length. We estimate the `r colorize_text("main effect of body mass", "#3A21B3")`, the `r colorize_text("main effect of flipper length", "#58A1D9")`, and their `r colorize_text("interaction", "#FF7582")`. The `r colorize_text("interaction", "#FF7582")` implies that the relation between body mass and bill length *depends upon* flipper length. Or, equivalently, that the relation between flipper length and bill length depends upon body mass.
+
+Finally, there's is one additional means by which we can control colors. By default, **{equatiomatic}** handles categorical variables by putting the corresponding levels in subscripts (relative to the reference group, which is omitted). We can also change the color of these variable subscripts, with the `var_subscript_colors` argument. 
+
+```{r }
+m_categorical <- lm(bill_length_mm ~ species + island, data = penguins)
+
+extract_eq(
+  model = m_categorical,
+  var_colors = c(
+    species = "#FB2C4B",
+    island = "#643B77"
+  ),
+  var_subscript_colors = c(
+    species = "#0274B2",
+    island = "#FBA640"
+  )
+)
+```
+
+Note that the colorization is at the variable level, not the subscript level. 
+
+## Changing variable names
+
+To make the the previous equations more human-readable, we might want to change the variable names i. We can do this through a similar interface while still keeping the colors intact. For example, our interaction model might look something like this
+
+```{r }
+extract_eq(
+  model = m_interaction,
+  swap_var_names = c(
+    "bill_length_mm" = "Bill Length (MM)",
+    "body_mass_g" = "Body Mass (grams)",
+    "flipper_length_mm" = "Flipper Length (MM)"
+  ),
+  var_colors = c(
+    flipper_length_mm = "firebrick",
+    body_mass_g = "cornflowerblue"
+  ),
+  wrap = TRUE,
+  terms_per_line = 3
+)
+```
+
+You can similarly change the variable subscript names. For example
+
+```{r }
+extract_eq(
+  model = m_categorical,
+  swap_var_names = c(
+    "bill_length_mm" = "Bill Length (MM)",
+    "species" = "Species",
+    "island" = "Island"
+  ),
+  swap_subscript_names = c(
+    Chinstrap = "little buddy",
+    Gentoo = "happy feet"
+  ),
+  var_colors = c(
+    species = "#FB2C4B",
+    island = "#643B77"
+  ),
+  var_subscript_colors = c(
+    species = "#0274B2",
+    island = "#FBA640"
+  ),
+  wrap = TRUE,
+  terms_per_line = 3
+)
+```
+
+## Current models and future plans
+Everything shown above is fully implemented in all model types handled by equatiomatic with the exception of mixed effect models (`lme4::lmer()` and `lme4::glmer()`) and time-series models. For mixed effects models, colorization has been partially implemented---you can use the interface shown above to change the color or names variables, as well as variable subscripts. However, Greek characters cannot be colored automatically at present. These models will be fully implemented in future a future release.
+
+Finally, you might have noticed that the number and length of arguments to equations can become rather long. Because of this, we are currently considering moving to a piped interface. The last example may then turn into something like
+
+```{r eval = FALSE}
+create_eq(m_categorical) %>% 
+  swap_var_names(
+    "bill_length_mm" = "Bill Length (MM)",
+    "species" = "Species",
+    "island" = "Island"
+  ) %>% 
+  swap_subscript_names(
+    Chinstrap = "little buddy",
+    Gentoo = "happy feet"
+  ) %>% 
+  colorize_variables(
+    species = "#FB2C4B",
+    island = "#643B77"
+  ) %>% 
+  colorize_variable_subscripts(
+    species = "#0274B2",
+    island = "#FBA640"
+  ) %>% 
+  wrap(terms_per_line = 3)
+```
+
+The length is perhaps not a whole lot less, but we think this *layering* approach might make building up equations easier and more intuitive, not unlike how you build-up a plot with [**{ggplot2}**](https://ggplot2.tidyverse.org/).
+
+If you have any feedback on this, or other features, please don't hesitate to get in touch.

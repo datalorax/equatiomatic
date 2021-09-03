@@ -1,3 +1,18 @@
+# colorizing works
+
+    $$
+    \begin{aligned}
+    \log\left[ \frac { P( \operatorname{1} \geq \operatorname{2} ) }{ 1 - P( \operatorname{1} \geq \operatorname{2} ) } \right] &= {\color{#1B9E77}{\alpha}}_{{\color{#666666}{1}}} + {\color{#E6AB02}{\beta}}_{{\color{#7570B3}{1}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}})\ + \\
+    &\quad {\color{#A6761D}{\beta}}_{{\color{#D95F02}{2}}}(\operatorname{contact}_{\operatorname{yes}}) + {\color{#666666}{\beta}}_{{\color{#1B9E77}{3}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
+    \log\left[ \frac { P( \operatorname{2} \geq \operatorname{3} ) }{ 1 - P( \operatorname{2} \geq \operatorname{3} ) } \right] &= {\color{#1B9E77}{\alpha}}_{{\color{#666666}{2}}} + {\color{#E6AB02}{\beta}}_{{\color{#7570B3}{1}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}})\ + \\
+    &\quad {\color{#A6761D}{\beta}}_{{\color{#D95F02}{2}}}(\operatorname{contact}_{\operatorname{yes}}) + {\color{#666666}{\beta}}_{{\color{#1B9E77}{3}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
+    \log\left[ \frac { P( \operatorname{3} \geq \operatorname{4} ) }{ 1 - P( \operatorname{3} \geq \operatorname{4} ) } \right] &= {\color{#1B9E77}{\alpha}}_{{\color{#666666}{3}}} + {\color{#E6AB02}{\beta}}_{{\color{#7570B3}{1}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}})\ + \\
+    &\quad {\color{#A6761D}{\beta}}_{{\color{#D95F02}{2}}}(\operatorname{contact}_{\operatorname{yes}}) + {\color{#666666}{\beta}}_{{\color{#1B9E77}{3}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}}) \\
+    \log\left[ \frac { P( \operatorname{4} \geq \operatorname{5} ) }{ 1 - P( \operatorname{4} \geq \operatorname{5} ) } \right] &= {\color{#1B9E77}{\alpha}}_{{\color{#666666}{4}}} + {\color{#E6AB02}{\beta}}_{{\color{#7570B3}{1}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}})\ + \\
+    &\quad {\color{#A6761D}{\beta}}_{{\color{#D95F02}{2}}}(\operatorname{contact}_{\operatorname{yes}}) + {\color{#666666}{\beta}}_{{\color{#1B9E77}{3}}}({\color{blue}{\operatorname{temp}}}_{\operatorname{warm}} \times \operatorname{contact}_{\operatorname{yes}})
+    \end{aligned}
+    $$
+
 # Renaming Variables works
 
     $$

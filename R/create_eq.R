@@ -16,11 +16,14 @@ create_eq <- function(lhs, ...) {
 #' @noRd
 
 create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                              fix_signs, intercept, greek, raw_tex,
-                              index_factors, swap_var_names, 
+                              fix_signs, intercept, greek, 
+                              greek_colors, subscript_colors, 
+                              var_colors, var_subscript_colors,
+                              raw_tex, index_factors, swap_var_names, 
                               swap_subscript_names) {
-  rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+  rhs$final_terms <- create_term(rhs, ital_vars, 
+                                 swap_var_names, swap_subscript_names, 
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -36,7 +39,9 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, 
+                                 raw_tex)
   }
 
   # Add error row or not in lm
@@ -44,6 +49,10 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
     error_row <- rhs[nrow(rhs) + 1, ]
     error_row$term <- "error"
     error_row$final_terms <- "\\epsilon"
+    error_row$final_terms <- colorize(
+      greek_colors[length(greek_colors)], 
+      error_row$final_terms
+    )
     rhs <- rbind(rhs, error_row)
   }
 
@@ -54,10 +63,14 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex, index_factors,
+                          fix_signs, intercept, greek, 
+                          greek_colors, subscript_colors, 
+                          var_colors, var_subscript_colors,
+                          raw_tex, index_factors,
                           swap_var_names, swap_subscript_names) {
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+                                 swap_subscript_names,
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -73,7 +86,8 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, raw_tex)
   }
   if (!is.null(model$offset)) {
     rhs <- rbind(rhs, c(
@@ -88,10 +102,14 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                           fix_signs, intercept, greek, raw_tex, index_factors,
+                           fix_signs, intercept, greek, 
+                           greek_colors, subscript_colors, 
+                           var_colors, var_subscript_colors,
+                           raw_tex, index_factors,
                            swap_var_names, swap_subscript_names) {
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+                                 swap_subscript_names,
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -107,7 +125,8 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, raw_tex)
   }
 
   splt <- split(rhs, rhs$coef.type)
@@ -121,10 +140,14 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
 #' @export
 #' @noRd
 create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
-                          fix_signs, intercept, greek, raw_tex, index_factors,
+                          fix_signs, intercept, greek, 
+                          greek_colors, subscript_colors, 
+                          var_colors, var_subscript_colors,
+                          raw_tex, index_factors,
                           swap_var_names, swap_subscript_names) {
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
-                                 swap_subscript_names)
+                                 swap_subscript_names,
+                                 var_colors, var_subscript_colors)
 
   if (use_coefs) {
     rhs$final_terms <- add_coefs(rhs, rhs$final_terms, coef_digits)
@@ -140,7 +163,8 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
       rhs$final_terms
     )
   } else {
-    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, raw_tex)
+    rhs$final_terms <- add_greek(rhs, rhs$final_terms, greek, intercept, 
+                                 greek_colors, subscript_colors, raw_tex)
   }
 
   splt <- split(rhs, rhs$coef.type)
@@ -281,29 +305,68 @@ create_term <- function(side, ...) {
 #' @noRd
 #' @export
 create_term.default <- function(side, ital_vars, swap_var_names, 
-                                swap_subscript_names) {
+                                swap_subscript_names, var_colors,
+                                var_subscript_colors) {
+  side$primary <- lapply(side$primary, function(x) {
+    names(x) <- x
+    x
+  })
+  
+  subscript_nms <- Map(function(.x, .y) {
+    names(.x) <- .y
+    .x
+    }, 
+    .x = side$subscripts,
+    .y = side$primary
+  )
+  
   if (!is.null(swap_var_names)) {
     side$primary <- swap_names(swap_var_names, side$primary)
   }
   if (!is.null(swap_subscript_names)) {
     side$subscripts <- swap_names(swap_subscript_names, side$subscripts)
+    side$subscripts <- Map(function(.x, .y) {
+      names(.x) <- names(.y)
+      .x
+    }, 
+    .x = side$subscripts,
+    .y = subscript_nms
+    )
   }
+  
   prim_escaped <- lapply(side$primary, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   prim_escaped <- add_math(prim_escaped, side$subscripts)
   prim <- lapply(prim_escaped, add_tex_ital_v, ital_vars)
   
+  if (!is.null(var_colors)) {
+    prim <- colorize_terms(var_colors, side$primary, prim)
+  }
+  
   drop_subscripts <- vapply(side$primary, 
                             function(x) any(grepl("poly|<|>", x)), 
                             FUN.VALUE = logical(1))
   
   subs <- ifelse(drop_subscripts, "", side$subscripts)
+  
   subs_escaped <- lapply(subs, function(x) {
     vapply(x, escape_tex, FUN.VALUE = character(1))
   })
   subs <- lapply(subs_escaped, add_tex_ital_v, ital_vars)
   subs <- lapply(subs, add_tex_subscripts_v)
+  
+  if (!is.null(var_subscript_colors)) {
+    subs <- Map(function(.x, .y) {
+      names(.x) <- names(.y)
+      .x
+    }, 
+    .x = subs,
+    .y = subscript_nms
+    )
+    
+    subs <- colorize_terms(var_subscript_colors, side$primary, subs)
+  }
 
   final <- Map(paste0, prim, subs)
 
@@ -644,6 +707,7 @@ add_greek <- function(rhs, ...) {
 #' @noRd
 
 add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
+                              greek_colors, subscript_colors,
                               raw_tex = FALSE) {
   int <- switch(intercept,
     "alpha" = "\\alpha",
@@ -654,8 +718,15 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   }
 
   ifelse(rhs$term == "(Intercept)",
-    int,
-    anno_greek(greek, seq_len(nrow(rhs)) - 1, terms, raw_tex)
+    colorize(greek_colors[1], int),
+    anno_greek(
+      greek, 
+      seq_len(nrow(rhs)) - 1, 
+      terms, 
+      greek_colors, 
+      subscript_colors, 
+      raw_tex
+    )
   )
 }
 
@@ -663,14 +734,27 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
 #' @keywords internal
 #' @noRd
 
-add_greek.polr <- function(rhs, terms, ...) {
+add_greek.polr <- function(rhs, terms, greek, intercept, greek_colors, 
+                           subscript_colors, raw_tex, ...) {
   rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
     seq_along(x$coef.type)
   }))
 
-  ifelse(rhs$coef.type == "scale",
-    anno_greek("alpha", rhs$idx),
-    anno_greek("beta", rhs$idx, terms)
+  ifelse(
+    rhs$coef.type == "scale",
+    anno_greek(
+      "alpha", 
+      rhs$idx, 
+      greek_colors = greek_colors[1], 
+      subscript_colors = subscript_colors[1]
+    ),
+    anno_greek(
+      "beta", 
+      rhs$idx, 
+      terms,
+      greek_colors = greek_colors[-1],
+      subscript_colors = subscript_colors[-1]
+    )
   )
 }
 
@@ -678,14 +762,27 @@ add_greek.polr <- function(rhs, terms, ...) {
 #' @keywords internal
 #' @noRd
 
-add_greek.clm <- function(rhs, terms, ...) {
+add_greek.clm <- function(rhs, terms, greek, intercept, greek_colors, 
+                          subscript_colors, raw_tex, ...) {
   rhs$idx <- unlist(lapply(split(rhs, rhs$coef.type), function(x) {
     seq_along(x$coef.type)
   }))
 
-  ifelse(rhs$coef.type == "intercept",
-    anno_greek("alpha", rhs$idx),
-    anno_greek("beta", rhs$idx, terms)
+  ifelse(
+    rhs$coef.type == "intercept",
+    anno_greek(
+      "alpha", 
+      rhs$idx, 
+      greek_colors = greek_colors[1], 
+      subscript_colors = subscript_colors[1]
+    ),
+    anno_greek(
+      "beta", 
+      rhs$idx, 
+      terms,
+      greek_colors = greek_colors[-1],
+      subscript_colors = subscript_colors[-1]
+    )
   )
 }
 
@@ -764,13 +861,18 @@ add_greek.forecast_ARIMA <- function(side, terms, regression, raw_tex = FALSE, s
 #'
 #' @keywords internal
 #' @noRd
-
-anno_greek <- function(greek, nums, terms = NULL, raw_tex = FALSE) {
+anno_greek <- function(greek, nums, terms = NULL, 
+                       greek_colors = NULL, subscript_colors = NULL, 
+                       raw_tex = FALSE) {
+  
   if (raw_tex) {
     out <- paste0(greek, "_{", nums, "}")
   } else {
-    out <- paste0("\\", greek, "_{", nums, "}")
+    coefs <- colorize(greek_colors, paste0("\\", greek))
+    subscripts <- colorize(subscript_colors, nums)
+    out <- paste0(coefs, "_{", subscripts, "}")
   }
+    
   if (!is.null(terms)) {
     out <- paste0(out, "(", terms, ")")
   }

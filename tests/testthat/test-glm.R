@@ -1,4 +1,76 @@
-# glms
+test_that("colorizing works", {
+  lr <- glm(sex ~ species * bill_length_mm,
+            data = penguins,
+            family = binomial(link = "logit")
+  )
+  
+  pr <- glm(sex ~ species * bill_length_mm,
+            data = penguins,
+            family = binomial(link = "probit")
+  )
+  
+  coef_colors <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", 
+                   "#E6AB02")
+  
+  expect_snapshot_output(
+    extract_eq(
+      lr, 
+      var_colors = c(
+        sex = "#0073ff",
+        species = "green"
+      ),
+      var_subscript_colors = c(species = "orange"),
+      greek_colors = coef_colors,
+      subscript_colors = "blue",
+      wrap = TRUE
+    )
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      lr, 
+      var_colors = c(
+        sex = "#0073ff",
+        species = "green"
+      ),
+      var_subscript_colors = c(species = "orange"),
+      greek_colors = coef_colors,
+      subscript_colors = "blue",
+      wrap = TRUE,
+      show_distribution = TRUE
+    )
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      pr, 
+      var_colors = c(
+        sex = "#0073ff",
+        species = "green"
+      ),
+      var_subscript_colors = c(species = "orange"),
+      greek_colors = coef_colors,
+      subscript_colors = "blue",
+      wrap = TRUE
+    )
+  )
+  
+  expect_snapshot_output(
+    extract_eq(
+      pr, 
+      var_colors = c(
+        sex = "#0073ff",
+        species = "green"
+      ),
+      var_subscript_colors = c(species = "orange"),
+      greek_colors = coef_colors,
+      subscript_colors = "blue",
+      wrap = TRUE,
+      show_distribution = TRUE
+    )
+  )
+})
+
 test_that("Renaming Variables works", {
   set.seed(1234)
   df <- data.frame(

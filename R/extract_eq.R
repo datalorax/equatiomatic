@@ -14,6 +14,26 @@
 #'   coefficients? Currently only accepts \code{"beta"} (with plans for future
 #'   development). Can be used in combination with \code{raw_tex} to use any
 #'   notation, e.g., \code{"\\hat{\\beta}"}.
+#' @param greek_colors The colors of the greek notation in the equation. Must
+#'   be a single color (named or HTML hex code) or a vector of colors (which
+#'   will be recycled if smaller than the number of terms in the model). When
+#'   rendering to PDF, I suggest using HTML hex codes, as not all named colors
+#'   are recognized by LaTeX, but equatiomatic will internally create the
+#'   color definitions for you if HTML codes are supplied. Note that this is 
+#'   not yet implemented for mixed effects models (lme4). 
+#' @param subscript_colors The colors of the subscripts for the greek notation.
+#'   The argument structure is equivalent to \code{greek_colors} (i.e., see
+#'   above for more detail).
+#' @param var_colors The color of the variable names. This takes a named vector
+#'   of the form \code{c("variable" = "color")}. For example 
+#'   \code{c("bill_length_mm" = "#00d4fa", "island" = "#00fa85")}. Colors can
+#'   be names (e.g., \code{"red"}) or HTML hex codes, as shown in the example.
+#' @param var_subscript_colors The colors of the factor subscripts for 
+#'   categorical variables. The interface for this is equivalent to 
+#'   \code{var_colors}, and all subscripts for a given variable will be 
+#'   displayed in the provided color. For example, the code 
+#'   \code{c("island" = "green")} would result in the subscripts for "Dream"
+#'   and "Torgersen" being green (assuming "Biscoe" was the reference group).
 #' @param raw_tex Logical. Is the greek code being passed to denote coefficients
 #' raw tex code?
 #' @param swap_var_names A vector of the form c("old_var_name" = "new name"). 
@@ -129,15 +149,17 @@
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
-                       raw_tex = FALSE, swap_var_names = NULL,
-                       swap_subscript_names = NULL,
+                       greek_colors = NULL, subscript_colors = NULL,
+                       var_colors = NULL, var_subscript_colors = NULL, 
+                       raw_tex = FALSE, 
+                       swap_var_names = NULL, swap_subscript_names = NULL,
                        ital_vars = FALSE, label = NULL,
                        index_factors = FALSE, show_distribution = FALSE,
                        wrap = FALSE, terms_per_line = 4,
                        operator_location = "end", align_env = "aligned",
-                       use_coefs = FALSE, coef_digits = 2, fix_signs = TRUE,
-                       font_size, mean_separate, return_variances = FALSE,
-                       ...) {
+                       use_coefs = FALSE, coef_digits = 2,
+                       fix_signs = TRUE, font_size = NULL,
+                       mean_separate, return_variances = FALSE, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -147,8 +169,10 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
-                               raw_tex = FALSE, swap_var_names = NULL,
-                               swap_subscript_names = NULL,
+                               greek_colors = NULL, subscript_colors = NULL,
+                               var_colors = NULL, var_subscript_colors = NULL, 
+                               raw_tex = FALSE, 
+                               swap_var_names = NULL, swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
                                index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
@@ -160,23 +184,14 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     stop("Coefficient estimates cannot be returned when factors are indexed.")
   }
   
-  lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs)
+  lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs, var_colors)
   rhs <- extract_rhs(model, index_factors)
 
   eq_raw <- create_eq(
-    model,
-    lhs,
-    rhs,
-    ital_vars,
-    use_coefs,
-    coef_digits,
-    fix_signs,
-    intercept,
-    greek,
-    raw_tex,
-    index_factors,
-    swap_var_names,
-    swap_subscript_names
+    model, lhs, rhs, ital_vars, use_coefs, coef_digits,
+    fix_signs, intercept, greek, 
+    greek_colors, subscript_colors, var_colors, var_subscript_colors, raw_tex,
+    index_factors, swap_var_names, swap_subscript_names
   )
 
   if (wrap) {
@@ -250,9 +265,27 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   if (!is.null(font_size)) {
     eq <- paste0("\\", font_size, "\n", eq)
   }
-
+  
+  if (
+    any(
+      !is.null(c(greek_colors, 
+                 subscript_colors, 
+                 var_colors, 
+                 var_subscript_colors))
+      )
+    ) {
+    
+    full_colors <- unique(
+      c(greek_colors, subscript_colors, var_colors, var_subscript_colors)
+    ) 
+  
+    attributes(eq) <- list(
+      latex_define_colors = define_latex_html_colors(full_colors)
+    )
+  }
+  
   class(eq) <- c("equation", "character")
-
+  
   return(eq)
 }
 
@@ -265,6 +298,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 #' @export
 #' @noRd
 extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
+                               greek_colors = NULL, subscript_colors = NULL,
+                               var_colors = NULL, var_subscript_colors = NULL, 
                                raw_tex = FALSE, swap_var_names = NULL,
                                swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
@@ -276,16 +311,32 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                fix_signs = TRUE, 
                                font_size = NULL, mean_separate = NULL,
                                return_variances = FALSE, ...) {
+  if (!is.null(greek_colors)) {
+    warning(
+      paste0("Colorization of greek notation not currently ",
+             "implemented for merMod models"),
+      call. = FALSE
+    )
+  }
+  if (!is.null(subscript_colors)) {
+    warning(
+      paste0("Colorization of subscripts not currently ",
+             "implemented for merMod models"),
+      call. = FALSE
+      )
+  }
   l1 <- create_l1(model, mean_separate,
     ital_vars, wrap, terms_per_line,
     use_coefs, coef_digits, fix_signs,
     operator_location,
     sigma = "\\sigma^2", return_variances,
-    swap_var_names, swap_subscript_names
+    swap_var_names, swap_subscript_names,
+    var_colors, var_subscript_colors
   )
   vcv <- create_ranef_structure_merMod(
     model, ital_vars, use_coefs, coef_digits,
-    fix_signs, return_variances, swap_var_names, swap_subscript_names
+    fix_signs, return_variances, swap_var_names, swap_subscript_names,
+    var_colors, var_subscript_colors
   )
   
   # check for double line breaks
@@ -320,7 +371,19 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
 
 #' @export
 #' @noRd
-extract_eq.glmerMod <- function(...) {
+extract_eq.glmerMod <- function(..., 
+                                greek_colors = NULL, 
+                                subscript_colors = NULL) {
+  if (!is.null(greek_colors)) {
+    warning(
+      paste0("Colorization of greek notation not currently ",
+             "implemented for merMod models"))
+  }
+  if (!is.null(subscript_colors)) {
+    warning(
+      paste0("Colorization of subscripts not currently ",
+             "implemented for merMod models"))
+  }
   extract_eq.lmerMod(...)
 }
 
@@ -328,18 +391,17 @@ extract_eq.glmerMod <- function(...) {
 #' @export
 #' @noRd
 extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
-                                      raw_tex = FALSE, swap_var_names = NULL,
-                                      swap_subscript_names = NULL,
-                                      ital_vars = FALSE,
-                                      label = NULL,
-                                      index_factors = FALSE, 
-                                      show_distribution = FALSE,
+                                      greek_colors = NULL, subscript_colors = NULL,
+                                      var_colors = NULL, var_subscript_colors = NULL, 
+                                      raw_tex = FALSE, 
+                                      swap_var_names = NULL, swap_subscript_names = NULL,
+                                      ital_vars = FALSE, label = NULL,
+                                      index_factors = FALSE, show_distribution = FALSE,
                                       wrap = FALSE, terms_per_line = 4,
                                       operator_location = "end", align_env = "aligned",
                                       use_coefs = FALSE, coef_digits = 2,
-                                      fix_signs = TRUE, 
-                                      font_size = NULL, mean_separate, 
-                                      return_variances = FALSE, ...) {
+                                      fix_signs = TRUE, font_size = NULL,
+                                      mean_separate, return_variances = FALSE, ...) {
 
   # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
