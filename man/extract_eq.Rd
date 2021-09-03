@@ -152,7 +152,7 @@ A character of class \dQuote{equation}.
 \details{
 Extract the variable names from a model to produce a 'LaTeX' equation, which is
 output to the screen. Supports any model supported by
-\link[broom:tidy]{broom::tidy}.
+\link[broom:reexports]{broom::tidy}.
 }
 \examples{
 # Simple model

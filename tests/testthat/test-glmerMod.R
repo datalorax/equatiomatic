@@ -1,5 +1,12 @@
 library(lme4)
 
+test_that("Checking for random/fixed effects works", {
+  m <- glmer(bush ~ 1 + edu + (black|state),
+             data = polls,
+             family = binomial(link = "logit"))
+  expect_error(extract_eq(m))
+})
+
 d <- arrests
 totes <- tapply(d$arrests, d$precinct, sum)
 tot_arrests <- data.frame(precinct = as.numeric(names(totes)),
