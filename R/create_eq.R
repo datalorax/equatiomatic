@@ -723,7 +723,7 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
       greek, 
       seq_len(nrow(rhs)) - 1, 
       terms, 
-      greek_colors[-1], 
+      greek_colors, 
       subscript_colors, 
       raw_tex
     )
