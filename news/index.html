@@ -160,9 +160,11 @@
 </h1>
 <ul>
 <li>Export new <code><a href="../reference/renderEq.html">renderEq()</a></code> and <code><a href="../reference/renderEq.html">eqOutput()</a></code> functions for working with equatiomatic with shiny.</li>
+<li>Specific parts of the equation can now be colored with the new <code>greek_colors</code>, <code>subscript_colors</code>, <code>var_colors</code> and <code>var_subscript_colors</code> arguments.</li>
+<li>Includes new <code>swap_var_names</code> and <code>swap_subscript_names</code> arguments to change the names of the variables or subscripts in the rendered equation</li>
+<li>A new vignette documents the usage of colors and name swapping.</li>
 <li>Now accommodates <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> models.</li>
 <li>Include new <code>return_variances</code> argument, which allows users to optionally return the variance/covariances in <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lme4::lmer()</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html">lme4::glmer()</a></code> models</li>
-<li>Includes new <code>swap_var_names</code> and <code>swap_subscript_names</code> arguments to change the names of the variables or subscripts in the rendered equation</li>
 <li>Added new <code>font_size</code> argument, which takes any LaTeX font size (see <a href="https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles">here</a>)</li>
 <li>Added new <code>label</code> argument, which allows for cross-referencing equation in-text with PDF outputs.</li>
 <li>Now includes rendering of <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>, and <code><a href="https://rdrr.io/r/base/Log.html">exp()</a></code> functions for in-line equations, and will drop the <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> for generic in-line equation operation</li>
