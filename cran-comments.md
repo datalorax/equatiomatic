@@ -6,6 +6,11 @@
 * win-builder (devel)
 
 ## R CMD check results
-
+Across all environment except win-builder
 0 errors | 0 warnings | 0 notes
+
+From win-builder
+0 errors | 0 warnings | 1 note
+
+Version contains leading zeroes (0.3.0.0000)
 
