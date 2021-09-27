@@ -1,4 +1,7 @@
-# equatiomatic (development version)
+# equatiomatic (development)
+* New license: CC-BY
+
+# equatiomatic 0.3.0
 * Export new `renderEq()` and `eqOutput()` functions for working with equatiomatic with shiny.
 * Specific parts of the equation can now be colored with the new `greek_colors`, `subscript_colors`, `var_colors` and `var_subscript_colors` arguments.
 * Includes new `swap_var_names` and `swap_subscript_names` arguments to change
