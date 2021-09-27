@@ -15,7 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-The equatiomatic package now exports `renderEq()` and `eqOutput()` functions
+# TL;DR
+See a working application [here](https://djanderson07.shinyapps.io/equatiomatic-shiny/)
+
+# More detail
+The equatiomatic package exports `renderEq()` and `eqOutput()` functions
 to make it's usage with shiny more straightforward.
 
 Imagine, for example, that we wanted to have an app that showed us the 
