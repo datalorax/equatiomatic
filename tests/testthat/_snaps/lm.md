@@ -1,3 +1,15 @@
+# Overlapping names don't result in an error
+
+    $$
+    \begin{aligned}
+    \operatorname{\widehat{body\_mass\_g}} &= -36659.51\ + \\
+    &\quad 1813.23(\operatorname{p})\ + \\
+    &\quad 197.51(\operatorname{gender\_cat})\ + \\
+    &\quad 7.8(\operatorname{ca})\ - \\
+    &\quad 8.82(\operatorname{p} \times \operatorname{gender\_cat})
+    \end{aligned}
+    $$
+
 # Dropping intercept notation works
 
     $$

@@ -1,3 +1,16 @@
+test_that("Overlapping names don't result in an error", {
+  penguins2 <- penguins
+  names(penguins2)[3:5] <- c("ca", "p", "gender_cat")
+  
+  #Model with the iris dataset variables renamed to show the problem
+  m2 <- lm(body_mass_g ~ p*gender_cat + ca, penguins2)
+  
+  expect_snapshot_output(
+    extract_eq(m2, wrap = TRUE, terms_per_line = 1,
+               use_coefs = TRUE)
+  )
+})
+
 test_that("Dropping intercept notation works", {
   m <- lm(bill_depth_mm ~ 0 + flipper_length_mm*island, penguins)
   expect_snapshot_output(extract_eq(m))
