@@ -566,12 +566,22 @@ detect_primary <- function(full_term, primary_term_v) {
   if (full_term %in% primary_term_v) {
     primary_term_v %in% full_term
   } else {
-    vapply(
-      primary_term_v, function(indiv_term) {
-        grepl(indiv_term, full_term, fixed = TRUE)
-      },
-      logical(1)
+    # escape parens
+    primary_term_v <- gsub("(", "\\(", primary_term_v, fixed = TRUE)
+    primary_term_v <- gsub(")", "\\)", primary_term_v, fixed = TRUE)
+    
+    splt <- strsplit(full_term, ":")[[1]]
+      
+    m_logical <- vapply(primary_term_v, function(indiv_term) {
+      vapply(splt, function(x) grepl(paste0("^", indiv_term), x),
+             FUN.VALUE = logical(1))
+    },
+    logical(length(splt))
     )
+    if (is.null(dim(m_logical))) {
+      return(m_logical)
+    }
+    apply(m_logical, 2, any)
   }
 }
 
