@@ -125,6 +125,29 @@ assign_l1_greek <- function(rhs_fixed, rhs_random) {
   l1  
 }
 
+#' Return a greek letter for the fixed effects coefs at the corresponding level
+#' @param level An integer from 1 to 9.
+#' @return A greek letter for the fixed effects for that level
+greek_level <- function(level) {
+  switch(as.character(level),
+    "1" = "\\beta",
+    "2" = "\\gamma",
+    "3" = "\\delta",
+    "4" = "\\theta",
+    "5" = "\\zeta",
+    "6" = "\\eta",
+    "7" = "\\lambda",
+    "8" = "\\psi",
+    "9" = "\\omega"
+  )
+}
+
+# lev_data = splt[[3]]
+# lev_data_name = names(splt)[3]
+# lev_num = 3
+# splt = splt
+# rhs_random = rhs_random
+
 #' Takes one level of the fixed effects data and assigns greek for that level
 #' @param lev_data One level of the data, e.g. \code{splt[[1]]} where 
 #'   \code{splt} is the \code{rhs_fixed} data split by the \code{predsplit} 
@@ -138,7 +161,7 @@ assign_l1_greek <- function(rhs_fixed, rhs_random) {
 #' @return The full data \code{rhs_fixed} data frame for that level with the
 #'   \code{greek} column filled in
 #' @noRd
-assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
+assign_higher_levels <- function(lev_data, lev_data_name, lev_num, splt, rhs_random) {
   if (is.null(lev_data)) {
     return()
   }
@@ -148,7 +171,7 @@ assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
   # create intercepts
   int_preds <- split_terms$`FALSE`
   ss <- lapply(int_preds$term, function(x) vary_higher_subscripts(x, rhs_random, lev_data_name))
-  int_preds$greek <- paste0("\\gamma_{", seq_len(nrow(int_preds)), ss, "}")
+  int_preds$greek <- paste0(greek_level(lev_num), "_{", seq_len(nrow(int_preds)), ss, "}")
   
   # Cross-level interactions
   slp_preds <- split_terms$`TRUE`
@@ -175,7 +198,10 @@ assign_higher_levels <- function(lev_data, lev_data_name, splt, rhs_random) {
     vary_higher_subscripts(x, rhs_random, lev_data_name)
   }, FUN.VALUE = character(1))
   
-  slp_preds$greek <- paste0("\\gamma^{", superscripts, "}_{", coef_number, subscripts, "}")
+  slp_preds$greek <- paste0(
+    greek_level(lev_num), 
+    "^{", superscripts, "}_{", coef_number, subscripts, "}"
+  )
   
   # return
   out <- rbind(int_preds, slp_preds)
@@ -206,7 +232,13 @@ create_fixef_greek_merMod <- function(model, return_variances) {
   splt <- splt[!vapply(splt, is.null, FUN.VALUE = logical(1))]
   
   for (i in seq_along(splt)[-1]) {
-    splt[[i]] <- assign_higher_levels(splt[[i]], names(splt)[i], splt, rhs_random) 
+    splt[[i]] <- assign_higher_levels(
+      splt[[i]], 
+      names(splt)[i], 
+      lev_num = i, 
+      splt, 
+      rhs_random
+    ) 
   }
   
   Reduce(rbind, splt)
@@ -270,7 +302,7 @@ check_interact_vary <- function(splt_lev_fixed, splt_lev_random, order) {
   as.logical(check %*% check_vary)
 }
 
-pull_intercept <- function(splt_lev_fixed, splt_lev_random, order, 
+pull_intercept <- function(splt_lev_fixed, splt_lev_random, lev_num, order, 
                            use_coefs, coef_digits, fix_signs) {
 
   int <- "\\alpha"
@@ -314,7 +346,10 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, order,
   } else {
     coef_terms <- paste0(nocross$greek, nocross$terms)
     # add intercept term
-    coef_terms <- c(paste0("\\gamma_{0}^{", int, "}"), coef_terms)
+    coef_terms <- c(
+      paste0(greek_level(lev_num), "_{0}^{", int, "}"), 
+      coef_terms
+    )
     out <- data.frame(term = "(Intercept)", 
                       greek = paste0(coef_terms, collapse = " + "),
                       stringsAsFactors = FALSE)
@@ -460,9 +495,9 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   splt_rand <- splt_rand[names(order)]
   names(splt_rand) <- names(order)
   
-  ints <- Map(function(fixed, rand) {
-    pull_intercept(fixed, rand, order, use_coefs, coef_digits, fix_signs)
-  }, splt_fixed, splt_rand)
+  ints <- Map(function(fixed, rand, lev_num) {
+    pull_intercept(fixed, rand, lev_num, order, use_coefs, coef_digits, fix_signs)
+  }, splt_fixed, splt_rand, seq_along(unique(rhs_random$group)) + 1)
   ints <- rbind_named(ints)
   
   slopes <- Map(function(fixed, rand) {
