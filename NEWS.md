@@ -1,5 +1,11 @@
 # equatiomatic (development)
 * New license: CC-BY
+* Bug fix: If names overlap, prior version had an error with the ordering and
+    construction of the coefficients.
+* Bug fix: Prior versions did not escape characters in multilevel models when
+  declaring the grouping factor (e.g., `for census_division l = 1` is now 
+  rendered as `for census\_division l = 1`).
+
 
 # equatiomatic 0.3.0
 * Export new `renderEq()` and `eqOutput()` functions for working with equatiomatic with shiny.
