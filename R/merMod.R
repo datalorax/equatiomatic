@@ -626,7 +626,7 @@ create_ranef_structure_merMod <- function(model, ital_vars, use_coefs,
   
   Map(function(lhs, dist, name, index) {
     paste0("\n    ", lhs, " \\sim ", dist,
-           "\n    \\text{, for ", name, " ", tolower(index), " = 1,}",
+           "\n    \\text{, for ", escape_tex(name), " ", tolower(index), " = 1,}",
            " \\dots ", "\\text{,", toupper(index), "}")
   }, lhs, distributed, names(lhs), letters[seq_along(lhs) + 9])
 }
