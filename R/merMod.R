@@ -142,18 +142,13 @@ greek_level <- function(level) {
   )
 }
 
-# lev_data = splt[[3]]
-# lev_data_name = names(splt)[3]
-# lev_num = 3
-# splt = splt
-# rhs_random = rhs_random
-
 #' Takes one level of the fixed effects data and assigns greek for that level
 #' @param lev_data One level of the data, e.g. \code{splt[[1]]} where 
 #'   \code{splt} is the \code{rhs_fixed} data split by the \code{predsplit} 
 #'   column.
 #' @param lev_data_name A character vector specifying the name of the level, 
 #'   e.g., \code{"sid"}, \code{"school"}, \code{"site"}.
+#' @param lev_num The number of the level, e.g. \code{1}, \code{3}.
 #' @param splt The \code{rhs_fixed} data split by the \code{predsplit} 
 #'   column.
 #' @param rhs_random output from \code{extract_rhs.lmerMod}, subset as 
@@ -849,5 +844,3 @@ create_l1.glmerMod <- function(model, mean_separate,
     "poisson-log" = poisson_log_l1(lhs, l1)
   )
 }
-
-
