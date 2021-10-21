@@ -297,37 +297,112 @@ check_interact_vary <- function(splt_lev_fixed, splt_lev_random, order) {
   as.logical(check %*% check_vary)
 }
 
-pull_intercept <- function(splt_lev_fixed, splt_lev_random, lev_num, order, 
-                           use_coefs, coef_digits, fix_signs) {
+fix_subscripts <- function(greek, index) {
+  body <- gsub("^(.+)_.+", "\\1", greek)
+  ss <- gsub(".+_\\{(.+)\\}$", "\\1", greek)
+  ss <- strsplit(ss, ",")[[1]]
+  coef_number <- gsub("\\D", "", ss[1])
+  if (grep(paste0("^\\d?\\d?", index), ss) == length(ss)) {
+    if (coef_number == "") {
+      return(body)
+    } else {
+      return(paste0(body, "_{", coef_number, "}"))
+    }
+  }
+  ss <- ss[(grep(paste0("^\\d?\\d?", index), ss) + 1):length(ss)]
 
-  int <- "\\alpha"
+  paste0(body, "_{", coef_number, paste0(ss, collapse = ","), "}")
+}
 
+create_intercepts <- function(rhs_random, fixed_greek_mermod) {
+  index_df <- data.frame(
+    group = unique(rhs_random$group),
+    index = letters[seq_along(unique(rhs_random$group)) + 9],
+    greek_fixed = vapply(
+      seq_along(unique(rhs_random$group)) + 1,
+      greek_level,
+      FUN.VALUE = character(1)
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  re <- merge(
+    rhs_random[c("term", "group")],
+    fixed_greek_mermod[c("term", "greek")],
+    by = "term"
+  )
+
+  re <- merge(re, index_df, by = "group")
+  re <- re[order(re$index), ]
+
+  re$int <- mapply_chr(function(grk, idx) {
+    fix_subscripts(grk, idx)
+  }, grk = re$greek, idx = re$index)
+
+  # swap existing greek for the fixed effect greek at that level
+  tmp <- gsub("^.{1}.+_(.+)", "\\1", re$int)
+  
+  # add zeros for intercepts
+  tmp[grepl("^\\{", tmp) & !grepl("^\\{\\d", tmp)] <- paste0(
+    substr(tmp[grepl("^\\{", tmp) & !grepl("^\\{\\d", tmp)], 1, 1),
+    0,
+    substr(
+      tmp[grepl("^\\{", tmp) & !grepl("^\\{\\d", tmp)], 
+      2, 
+      nchar(tmp[grepl("^\\{", tmp) & !grepl("^\\{\\d", tmp)])
+    )
+  ) 
+
+  # set terms that weren't replaced to nothing (get replaced later)
+  tmp[grepl("^\\\\", tmp)] <- ""
+
+  re$int <- paste0(re$greek_fixed, "_{", tmp, "}")
+
+  re[, c("group", "term", "index", "int")]
+}
+
+pull_intercept <- function(splt_lev_fixed, splt_lev_random, re, 
+                           lev_name, order, use_coefs, coef_digits, 
+                           fix_signs) {
   if (is.null(splt_lev_fixed)) {
     return()
   }
-  
+
   check <- check_interact_vary(splt_lev_fixed, splt_lev_random, order)
-  
+
   # Check if lower-level variable in cross-level interactions varies at this level
   splt_lev_fixed$crosslevel <- check & splt_lev_fixed$crosslevel
-    
+
   nocross <- splt_lev_fixed[!splt_lev_fixed$crosslevel, ]
-  
+
   # remove any previous superscripts
-  nocross$greek <- gsub("(.+)\\^.+(_\\{.+$)", "\\1\\2",  nocross$greek)
-  
+  nocross$greek <- gsub("(.+)\\^.+(_\\{.+$)", "\\1\\2", nocross$greek)
+
   # renumber
-  nocross$greek <- paste0(gsub("(.+_\\{).+", "\\1", nocross$greek),
-                          seq_along(nocross$greek),
-                          gsub(".+_\\{.{1}(.+)", "\\1", nocross$greek))
-  
+  nocross$greek <- paste0(
+    gsub("(.+_\\{).+", "\\1", nocross$greek),
+    seq_along(nocross$greek),
+    gsub(".+_\\{.{1}(.+)", "\\1", nocross$greek)
+  )
+
+  int_nocross <- re[
+    re$group == lev_name & re$term == "(Intercept)",
+    "int",
+    drop = TRUE
+  ]
+
+  # drop subscripts
+  int_nocross_ss <- gsub("^(.+)_.+$", "\\1", int_nocross)
+
   # add alpha superscript
-  nocross$greek <- paste0(nocross$greek, paste0("^{", int, "}"))
-  
+  nocross$greek <- paste0(nocross$greek, paste0("^{", int_nocross_ss, "}"))
+
   if (use_coefs) {
-    coef_terms <- paste0(round(nocross$estimate, coef_digits), 
-                         "_{", nocross$greek, "}",  
-                         nocross$terms)
+    coef_terms <- paste0(
+      round(nocross$estimate, coef_digits),
+      "_{", nocross$greek, "}",
+      nocross$terms
+    )
     if (length(coef_terms) == 0) {
       coef_terms <- 0
     }
@@ -335,19 +410,20 @@ pull_intercept <- function(splt_lev_fixed, splt_lev_random, lev_num, order,
     if (fix_signs) {
       coef_terms <- fix_coef_signs(coef_terms)
     }
-    out <- data.frame(term = "(Intercept)", 
-                      greek = coef_terms,
-                      stringsAsFactors = FALSE)
+    out <- data.frame(
+      term = "(Intercept)",
+      greek = coef_terms,
+      stringsAsFactors = FALSE
+    )
   } else {
     coef_terms <- paste0(nocross$greek, nocross$terms)
     # add intercept term
-    coef_terms <- c(
-      paste0(greek_level(lev_num), "_{0}^{", int, "}"), 
-      coef_terms
+    coef_terms <- c(int_nocross, coef_terms)
+    out <- data.frame(
+      term = "(Intercept)",
+      greek = paste0(coef_terms, collapse = " + "),
+      stringsAsFactors = FALSE
     )
-    out <- data.frame(term = "(Intercept)", 
-                      greek = paste0(coef_terms, collapse = " + "),
-                      stringsAsFactors = FALSE)
     if (nrow(out) == 0) {
       return()
     }
@@ -490,16 +566,18 @@ create_means_merMod <- function(rhs, fixed_greek_mermod, model, ital_vars,
   splt_rand <- splt_rand[names(order)]
   names(splt_rand) <- names(order)
   
-  ints <- Map(function(fixed, rand, lev_num) {
-    pull_intercept(fixed, rand, lev_num, order, use_coefs, coef_digits, fix_signs)
-  }, splt_fixed, splt_rand, seq_along(unique(rhs_random$group)) + 1)
+  re_ints <- create_intercepts(rhs_random, fixed_greek_mermod)
+
+  ints <- Map(function(fixed, rand, lev_name) {
+    pull_intercept(fixed, rand, re_ints, lev_name, order, use_coefs, coef_digits, fix_signs)
+  }, splt_fixed, splt_rand, names(splt_fixed))
   ints <- rbind_named(ints)
   
   slopes <- Map(function(fixed, rand) {
     pull_slopes(model, fixed, rand, ital_vars, order, 
                 use_coefs, coef_digits, fix_signs,
-                swap_var_names, swap_subscript_names,
-                var_colors, var_subscript_colors)
+                swap_var_names = NULL, swap_subscript_names = NULL,
+                var_colors = NULL, var_subscript_colors = NULL)
   }, splt_fixed, splt_rand)
   slopes <- rbind_named(slopes)
   
