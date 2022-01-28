@@ -1,6 +1,6 @@
 #' Display equations in shiny apps
 #' 
-#' \Sexpr[results=rd, stage=render]{rlang:::lifecycle("experimental")}
+#' `r lifecycle::badge("experimental")`
 #' 
 #' These are a set of functions designed to help render equations in 
 #' [shiny][shiny] applications. For a complete example see

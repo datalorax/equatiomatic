@@ -22,7 +22,7 @@ eqOutput(outputId)
 passed as a string.}
 }
 \description{
-\Sexpr[results=rd, stage=render]{rlang:::lifecycle("experimental")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
 These are a set of functions designed to help render equations in

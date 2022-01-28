@@ -1,6 +1,6 @@
 #' Print 'LaTeX' equations
 #' 
-#' \Sexpr[results=rd, stage=render]{rlang:::lifecycle("stable")}
+#' lifecycle::badge("stable")`
 #' 
 #' Print 'LaTeX' equations built with \code{\link{extract_eq}}.
 #'

@@ -12,7 +12,7 @@
 \item{...}{not used}
 }
 \description{
-\Sexpr[results=rd, stage=render]{rlang:::lifecycle("stable")}
+lifecycle::badge("stable")`
 }
 \details{
 Print 'LaTeX' equations built with \code{\link{extract_eq}}.
