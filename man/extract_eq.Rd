@@ -147,9 +147,7 @@ and correlations are returned instead.}
 A character of class \dQuote{equation}.
 }
 \description{
-\Sexpr[results=rd, stage=render]{rlang:::lifecycle("maturing")}
-}
-\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 Extract the variable names from a model to produce a 'LaTeX' equation, which is
 output to the screen. Supports any model supported by
 \link[broom:reexports]{broom::tidy}.
