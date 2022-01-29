@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -138,7 +138,7 @@
   <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span>(<span class="st">"equatiomatic w/Shiny"</span>),
   <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span>(
     <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span>(
-      <span class="fu"><a href="https://rdrr.io/pkg/shinyWidgets/man/multiInput.html">multiInput</a></span>(
+      <span class="fu"><a href="https://dreamrs.github.io/shinyWidgets/reference/multiInput.html">multiInput</a></span>(
         <span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"xvars"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"Select predictor variables :"</span>,
         <span class="kw">choices</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">penguins</span>)[-<span class="fl">3</span>],
         <span class="kw">selected</span> <span class="kw">=</span> <span class="st">"island"</span>
@@ -157,7 +157,7 @@
   })
 
   <span class="no">output</span>$<span class="no">tbl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://gt.rstudio.com/reference/render_gt.html">render_gt</a></span>({
-    <span class="fu"><a href="http://www.danieldsjoberg.com/gtsummary//reference/as_gt.html">as_gt</a></span>(<span class="fu"><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_regression.html">tbl_regression</a></span>(<span class="fu">model</span>()))
+    <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html">as_gt</a></span>(<span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span>(<span class="fu">model</span>()))
   })
 
 }
@@ -175,7 +175,7 @@
   <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/withMathJax.html">withMathJax</a></span>(), <span class="co"># Initialize mathJax so the equation renders properly</span>
   <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span>(
     <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span>(
-      <span class="fu"><a href="https://rdrr.io/pkg/shinyWidgets/man/multiInput.html">multiInput</a></span>(
+      <span class="fu"><a href="https://dreamrs.github.io/shinyWidgets/reference/multiInput.html">multiInput</a></span>(
         <span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"xvars"</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="st">"Select predictor variables :"</span>,
         <span class="kw">choices</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">penguins</span>)[-<span class="fl">3</span>],
         <span class="kw">selected</span> <span class="kw">=</span> <span class="st">"island"</span>
@@ -199,7 +199,7 @@
   )
 
   <span class="no">output</span>$<span class="no">tbl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://gt.rstudio.com/reference/render_gt.html">render_gt</a></span>({
-    <span class="fu"><a href="http://www.danieldsjoberg.com/gtsummary//reference/as_gt.html">as_gt</a></span>(<span class="fu"><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_regression.html">tbl_regression</a></span>(<span class="fu">model</span>()))
+    <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html">as_gt</a></span>(<span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span>(<span class="fu">model</span>()))
   })
 
 }
@@ -218,7 +218,7 @@
   <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/withMathJax.html">withMathJax</a></span>(),
   <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span>(
     <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span>(
-      <span class="fu"><a href="https://rdrr.io/pkg/shinyWidgets/man/multiInput.html">multiInput</a></span>(
+      <span class="fu"><a href="https://dreamrs.github.io/shinyWidgets/reference/multiInput.html">multiInput</a></span>(
         <span class="kw">inputId</span> <span class="kw">=</span> <span class="st">"xvars"</span>,
         <span class="kw">label</span> <span class="kw">=</span> <span class="st">"Select predictor variables :"</span>,
         <span class="kw">choices</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">penguins</span>)[-<span class="fl">3</span>],
@@ -250,7 +250,7 @@
   )
 
   <span class="no">output</span>$<span class="no">tbl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://gt.rstudio.com/reference/render_gt.html">render_gt</a></span>({
-    <span class="fu"><a href="http://www.danieldsjoberg.com/gtsummary//reference/as_gt.html">as_gt</a></span>(<span class="fu"><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_regression.html">tbl_regression</a></span>(<span class="fu">model</span>()))
+    <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/as_gt.html">as_gt</a></span>(<span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span>(<span class="fu">model</span>()))
   })
 
 }
