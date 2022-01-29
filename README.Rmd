@@ -42,7 +42,7 @@ usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 
 [![R build status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
 
-[![Codecov test coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic?branch=master)
+[![Codecov test coverage](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with writing LaTeX
