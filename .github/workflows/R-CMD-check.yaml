@@ -67,7 +67,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          devtools::install_github('cran/nloptr@1.2.2.3')
+          remotes::install_github('cran/nloptr@1.2.2.3')
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
