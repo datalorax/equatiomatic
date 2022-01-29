@@ -64,13 +64,10 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
-          
-      - name: Get CMake
-        uses: symbitic/install-cmake@master
 
       - name: Install dependencies
         run: |
-          remotes::install_github("astamm/nloptr")
+          devtools::install_github('cran/nloptr@1.2.2.3')
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
