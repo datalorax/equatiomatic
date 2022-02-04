@@ -15,7 +15,10 @@ Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
 
 [![Codecov test
-coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic?branch=master)
+coverage](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)
+
+[![](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)
+
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
@@ -230,8 +233,8 @@ extract_eq(mod1, use_coefs = TRUE)
 <img src="man/figures/README-use-coefs-preview-1.png" width="100%" />
 
 By default, it will remove doubled operators like “+ -”, but you can
-keep those in (which is often useful for teaching) with `fix_signs =
-FALSE`:
+keep those in (which is often useful for teaching) with
+`fix_signs = FALSE`:
 
 ``` r
 extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
@@ -263,7 +266,7 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
 
 ## Beyond `lm()`
 
-You’re not limited to just `lm` models\! **equatiomatic** supports many
+You’re not limited to just `lm` models! **equatiomatic** supports many
 other models, including logistic regression, probit regression, and
 ordered logistic regression (with `MASS::polr()`).
 
@@ -384,7 +387,7 @@ extract_eq(model_oprobit, wrap = TRUE)
 ## Extension
 
 This project is brand new. If you would like to contribute, we’d love
-your help\! We are particularly interested in extending to more models.
+your help! We are particularly interested in extending to more models.
 We hope to support any model supported by
 [**broom**](https://cran.r-project.org/package=broom) in the future.
 
