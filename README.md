@@ -16,6 +16,9 @@ status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.sv
 
 [![Codecov test
 coverage](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)
+
+[![](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)
+
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
