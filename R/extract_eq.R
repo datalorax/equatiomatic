@@ -159,7 +159,8 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2,
                        fix_signs = TRUE, font_size = NULL,
-                       mean_separate, return_variances = FALSE, ...) {
+                       mean_separate, return_variances = FALSE,
+                       se_subscripts = FALSE, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -179,7 +180,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
-                               mean_separate, return_variances = FALSE, ...) {
+                               mean_separate, return_variances = FALSE, 
+                               se_subscripts = FALSE, ...) {
   if (index_factors & use_coefs) {
     stop("Coefficient estimates cannot be returned when factors are indexed.")
   }
@@ -194,6 +196,10 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
     greek_colors, subscript_colors, var_colors, var_subscript_colors, raw_tex,
     index_factors, swap_var_names, swap_subscript_names
   )
+  
+  if (se_subscripts) {
+    eq_raw$rhs[[1]] <- add_se(eq_raw$rhs[[1]], model)
+  }
 
   if (wrap) {
     if (operator_location == "start") {
@@ -289,6 +295,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   
   return(eq)
 }
+
+
 
 # These args still need to be incorporated
 # intercept, greek, raw_tex
@@ -500,4 +508,23 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
 
   # Explicit return
   return(eq)
+}
+
+#' Add Standard Errors Below Coefficients
+#' 
+#' @param coef vector of model coefficients (from output of the function create_eq)
+#' @param model a fitted model 
+#' 
+#' @return a character vector adding the errors beneath each term 
+add_se <- function(coef, model) {
+  errors <- summary(model)$coefficients[,"Std. Error"]
+  errors <- as.character(round(errors, 3))
+  if (length(coef) != length(errors)) {
+    result <- paste0("\\underset{(", errors, ")}{", coef[-length(coef)], "}")
+    result <- c(result, coef[length(coef)])
+  }
+  else {
+    result <- paste0("\\underset{(", errors, ")}{", coef, "}")
+  }
+  return(result)
 }
