@@ -6,6 +6,8 @@
 \alias{equatiomatic-package}
 \title{equatiomatic: Transform Models into 'LaTeX' Equations}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 The goal of 'equatiomatic' is to reduce the pain associated with writing 'LaTeX' formulas from fitted models. The primary function of the package, extract_eq(), takes a fitted model object as its input and returns the corresponding 'LaTeX' code for the model.
 }
 \seealso{
@@ -34,6 +36,7 @@ Other contributors:
   \item Thomas Fung \email{thomas.fung.dr@gmail.com} (\href{https://orcid.org/0000-0003-2601-0728}{ORCID}) [contributor]
   \item Reza Norouzian \email{rnorouzian@gmail.com} (\href{https://orcid.org/0000-0002-0531-6886}{ORCID}) [contributor]
   \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) (@patilindrajeets) [contributor]
+  \item Quinn White \email{quinnarlise@gmail.com} (\href{https://orcid.org/0000-0001-5399-0237}{ORCID}) [contributor]
 }
 
 }
