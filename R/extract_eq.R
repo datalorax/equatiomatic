@@ -72,7 +72,7 @@
 #'   estimates be included in the equation instead of math symbols?
 #' @param coef_digits Integer, defaults to 2. The number of decimal places to
 #'   round to when displaying model estimates.
-#' @param fix_signs Logical, defaults to \code{FALSE}. If disabled,
+#' @param fix_signs Logical, defaults to \code{TRUE}. If disabled,
 #'   coefficient estimates that are negative are preceded with a "+" (e.g.
 #'   `5(x) + -3(z)`). If enabled, the "+ -" is replaced with a "-" (e.g.
 #'   `5(x) - 3(z)`).
@@ -90,6 +90,9 @@
 #'   effects model (e.g., \code{lme4::lmer()}), should the variances and
 #'   co-variances be returned? If \code{FALSE} (the default) standard deviations
 #'   and correlations are returned instead.
+#' @param se_subscripts Logical. If \code{se_subscripts = TRUE} then the 
+#'   equation will include the standard errors below each coefficient. 
+#'   This is supported for lm and glm models.
 #' @param ... Additional arguments (for future development; not currently used).
 #' @export
 #'
@@ -159,7 +162,8 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2,
                        fix_signs = TRUE, font_size = NULL,
-                       mean_separate, return_variances = FALSE, ...) {
+                       mean_separate, return_variances = FALSE,
+                       se_subscripts = FALSE, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -179,7 +183,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
-                               mean_separate, return_variances = FALSE, ...) {
+                               mean_separate, return_variances = FALSE, 
+                               se_subscripts = FALSE, ...) {
   if (index_factors & use_coefs) {
     stop("Coefficient estimates cannot be returned when factors are indexed.")
   }
@@ -187,13 +192,17 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs, 
                      swap_var_names, var_colors)
   rhs <- extract_rhs(model, index_factors)
-
+  
   eq_raw <- create_eq(
     model, lhs, rhs, ital_vars, use_coefs, coef_digits,
     fix_signs, intercept, greek, 
     greek_colors, subscript_colors, var_colors, var_subscript_colors, raw_tex,
     index_factors, swap_var_names, swap_subscript_names
   )
+  
+  if (se_subscripts) {
+    eq_raw$rhs[[1]] <- add_se(eq_raw$rhs[[1]], model)
+  }
 
   if (wrap) {
     if (operator_location == "start") {
@@ -244,6 +253,10 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   if (use_coefs && fix_signs) {
     eq <- lapply(eq, fix_coef_signs)
   }
+  
+  if (use_coefs && fix_signs && se_subscripts) {
+    eq <- lapply(eq, fix_coef_signs_se)
+  }
 
   if (length(eq) > 1) {
     eq <- paste(eq, collapse = " \\\\\n")
@@ -289,6 +302,8 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
   
   return(eq)
 }
+
+
 
 # These args still need to be incorporated
 # intercept, greek, raw_tex
@@ -500,4 +515,40 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
 
   # Explicit return
   return(eq)
+}
+
+#' Add Standard Errors Below Coefficients
+#' 
+#' @param coef character vector of model coefficients (from output of the function create_eq)
+#' @param model a fitted model 
+#' 
+#' @return a character vector adding the errors beneath each term 
+add_se <- function(coef, model) {
+  errors <- summary(model)$coefficients[,"Std. Error"]
+  errors <- as.character(round(errors, 3))
+  if (length(coef) != length(errors)) {
+    result <- paste0("\\underset{(", errors, ")}{", coef[-length(coef)], "}")
+    result <- c(result, coef[length(coef)])
+  }
+  else {
+    result <- paste0("\\underset{(", errors, ")}{", coef, "}")
+  }
+  return(result)
+}
+
+
+
+#' Fixes the Signs When Using se_subscripts Argument
+#' 
+#' @param equation list that contains the equation
+#' 
+#' @return a list containing the equation with fixed signs  
+fix_coef_signs_se <- function(equation) {
+  components <- strsplit(equation, " + ", fixed = TRUE)
+  components <- unlist(components)
+  terms <- components[2:length(components)]
+  negative <- ifelse(grepl(terms, pattern = "-"), " - ", " + ")
+  terms <- lapply(X = terms, FUN = gsub,  pattern = "-", replacement = "")
+  terms <- paste0(negative, terms, collapse="")
+  list(paste(components[1], terms))
 }

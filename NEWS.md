@@ -6,6 +6,7 @@
 * Bug fix: Prior versions did not escape characters in multilevel models when
   declaring the grouping factor (e.g., `for census_division l = 1` is now 
   rendered as `for census\_division l = 1`).
+* Feature addition: added `se_subscripts` argument, which allows the standard error for each coefficient to be included in parentheses below the coefficient when `se_subscripts = TRUE`. This is supported for `lm` and `glm` models.
 
 # equatiomatic 0.3.0
 * Export new `renderEq()` and `eqOutput()` functions for working with equatiomatic with shiny.

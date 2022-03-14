@@ -29,6 +29,7 @@ extract_eq(
   font_size = NULL,
   mean_separate,
   return_variances = FALSE,
+  se_subscripts = FALSE,
   ...
 )
 }
@@ -119,7 +120,7 @@ estimates be included in the equation instead of math symbols?}
 \item{coef_digits}{Integer, defaults to 2. The number of decimal places to
 round to when displaying model estimates.}
 
-\item{fix_signs}{Logical, defaults to \code{FALSE}. If disabled,
+\item{fix_signs}{Logical, defaults to \code{TRUE}. If disabled,
 coefficient estimates that are negative are preceded with a "+" (e.g.
 \code{5(x) + -3(z)}). If enabled, the "+ -" is replaced with a "-" (e.g.
 \code{5(x) - 3(z)}).}
@@ -140,6 +141,10 @@ same equation would be outcome ~ N(alpha + beta, sigma).}
 effects model (e.g., \code{lme4::lmer()}), should the variances and
 co-variances be returned? If \code{FALSE} (the default) standard deviations
 and correlations are returned instead.}
+
+\item{se_subscripts}{Logical. If \code{se_subscripts = TRUE} then the
+equation will include the standard errors below each coefficient.
+This is supported for lm and glm models.}
 
 \item{...}{Additional arguments (for future development; not currently used).}
 }
