@@ -97,7 +97,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -163,6 +163,7 @@
 <li>New license: CC-BY</li>
 <li>Bug fix: If names overlap, prior version had an error with the ordering and construction of the coefficients.</li>
 <li>Bug fix: Prior versions did not escape characters in multilevel models when declaring the grouping factor (e.g., <code>for census_division l = 1</code> is now rendered as <code>for census\_division l = 1</code>).</li>
+<li>Feature addition: added <code>se_subscripts</code> argument, which allows the standard error for each coefficient to be included in parentheses below the coefficient when <code>se_subscripts = TRUE</code>. This is supported for <code>lm</code> and <code>glm</code> models.</li>
 </ul>
 </div>
     <div id="equatiomatic-030" class="section level1">

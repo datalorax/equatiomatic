@@ -101,7 +101,7 @@ broom::tidy." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -191,6 +191,7 @@ output to the screen. Supports any model supported by
   <span class='kw'>font_size</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>mean_separate</span>,
   <span class='kw'>return_variances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>se_subscripts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -325,7 +326,7 @@ round to when displaying model estimates.</p></td>
     </tr>
     <tr>
       <th>fix_signs</th>
-      <td><p>Logical, defaults to <code>FALSE</code>. If disabled,
+      <td><p>Logical, defaults to <code>TRUE</code>. If disabled,
 coefficient estimates that are negative are preceded with a "+" (e.g.
 <code>5(x) + -3(z)</code>). If enabled, the "+ -" is replaced with a "-" (e.g.
 <code>5(x) - 3(z)</code>).</p></td>
@@ -352,6 +353,12 @@ same equation would be outcome ~ N(alpha + beta, sigma).</p></td>
 effects model (e.g., <code><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lme4::lmer()</a></code>), should the variances and
 co-variances be returned? If <code>FALSE</code> (the default) standard deviations
 and correlations are returned instead.</p></td>
+    </tr>
+    <tr>
+      <th>se_subscripts</th>
+      <td><p>Logical. If <code>se_subscripts = TRUE</code> then the
+equation will include the standard errors below each coefficient.
+This is supported for lm and glm models.</p></td>
     </tr>
     <tr>
       <th>...</th>

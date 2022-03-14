@@ -55,7 +55,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -150,7 +150,7 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">um_long3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">score</span> ~ <span class="fl">1</span> + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">sid</span>) + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">school</span>) + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">district</span>),
   <span class="kw">data</span> <span class="kw">=</span> <span class="no">sim_longitudinal</span>
 )
-<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span>
+<span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span>
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">um_long3</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
@@ -371,7 +371,7 @@
   (<span class="no">wave</span> <span class="kw">|</span> <span class="no">sid</span>) + (<span class="no">wave</span> <span class="kw">|</span> <span class="no">school</span>) + (<span class="no">wave</span> <span class="kw">|</span> <span class="no">district</span>),
 <span class="kw">data</span> <span class="kw">=</span> <span class="no">d</span>
 )
-<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span>
+<span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span>
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">group_preds_m1</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
@@ -490,7 +490,7 @@
   (<span class="fl">1</span> <span class="kw">|</span> <span class="no">district</span>),
 <span class="kw">data</span> <span class="kw">=</span> <span class="no">sim_longitudinal</span>
 )
-<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span>
+<span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span>
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">cl_long1</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
@@ -549,7 +549,7 @@
     (<span class="no">wave</span> + <span class="no">treatment</span> <span class="kw">|</span> <span class="no">district</span>),
   <span class="no">sim_longitudinal</span>
 )
-<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span>
+<span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span>
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">cl_long3</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
@@ -645,7 +645,7 @@
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">hsb_varsonly</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="no">math</span> ~ <span class="no">minority</span> * <span class="no">female</span> + (<span class="no">minority</span> * <span class="no">female</span> <span class="kw">||</span> <span class="no">sch.id</span>),
   <span class="kw">data</span> <span class="kw">=</span> <span class="no">hsb</span>
 )
-<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span>
+<span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span>
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">hsb_varsonly</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
@@ -757,7 +757,7 @@
     (<span class="no">wave</span> <span class="kw">||</span> <span class="no">sid</span>) + (<span class="no">wave</span> <span class="kw">|</span> <span class="no">school</span>) + (<span class="fl">1</span> <span class="kw">|</span> <span class="no">school</span>) + (<span class="no">wave</span> <span class="kw">||</span> <span class="no">district</span>),
   <span class="no">sim_longitudinal</span>
 )
-<span class="co">#&gt; boundary (singular) fit: see ?isSingular</span>
+<span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span>
 <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span>(<span class="no">long_mixed_ranef</span>)</pre></body></html></div>
 <p><span class="math display">\[
 \begin{aligned}
