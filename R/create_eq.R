@@ -1,5 +1,5 @@
-create_eq <- function(lhs, ...) {
-  UseMethod("create_eq", lhs)
+create_eq <- function(model, lhs, ...) {
+  UseMethod("create_eq", model)
 }
 
 #' Create the full equation
@@ -20,7 +20,9 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
                               greek_colors, subscript_colors, 
                               var_colors, var_subscript_colors,
                               raw_tex, index_factors, swap_var_names, 
-                              swap_subscript_names) {
+                              swap_subscript_names, ...) {
+
+   check_dots(...)
   rhs$final_terms <- create_term(rhs, ital_vars, 
                                  swap_var_names, swap_subscript_names, 
                                  var_colors, var_subscript_colors)
@@ -67,7 +69,8 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                           greek_colors, subscript_colors, 
                           var_colors, var_subscript_colors,
                           raw_tex, index_factors,
-                          swap_var_names, swap_subscript_names) {
+                          swap_var_names, swap_subscript_names, ...) {
+  check_dots(...)
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
                                  swap_subscript_names,
                                  var_colors, var_subscript_colors)
@@ -106,7 +109,9 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                            greek_colors, subscript_colors, 
                            var_colors, var_subscript_colors,
                            raw_tex, index_factors,
-                           swap_var_names, swap_subscript_names) {
+                           swap_var_names, swap_subscript_names, ...) {
+
+  check_dots(...)
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
                                  swap_subscript_names,
                                  var_colors, var_subscript_colors)
@@ -144,7 +149,8 @@ create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                           greek_colors, subscript_colors, 
                           var_colors, var_subscript_colors,
                           raw_tex, index_factors,
-                          swap_var_names, swap_subscript_names) {
+                          swap_var_names, swap_subscript_names, ...) {
+  check_dots(...)
   rhs$final_terms <- create_term(rhs, ital_vars, swap_var_names, 
                                  swap_subscript_names,
                                  var_colors, var_subscript_colors)
@@ -306,7 +312,8 @@ create_term <- function(side, ...) {
 #' @export
 create_term.default <- function(side, ital_vars, swap_var_names, 
                                 swap_subscript_names, var_colors,
-                                var_subscript_colors) {
+                                var_subscript_colors, ...) {
+  check_dots(...)
   side$primary <- lapply(side$primary, function(x) {
     names(x) <- x
     x
@@ -398,7 +405,8 @@ check_math <- function(primary, subscripts) {
 #' @noRd
 #' @export
 create_term.forecast_ARIMA <- function(side, ital_vars, swap_var_names,
-                                       swap_subscript_names) {
+                                       swap_subscript_names, ...) {
+  check_dots(...)
   if (!is.null(swap_var_names)) {
     side$primary <- swap_names(swap_var_names, side$primary)
   }
@@ -632,7 +640,8 @@ add_coefs <- function(rhs, ...) {
 #' @keywords internal
 #' @noRd
 
-add_coefs.default <- function(rhs, term, coef_digits) {
+add_coefs.default <- function(rhs, term, coef_digits, ...) {
+  check_dots(...)
   ests <- round(rhs$estimate, coef_digits)
   ifelse(
     rhs$term == "(Intercept)",
@@ -645,7 +654,8 @@ add_coefs.default <- function(rhs, term, coef_digits) {
 #' @keywords internal
 #' @noRd
 
-add_coefs.polr <- function(rhs, term, coef_digits) {
+add_coefs.polr <- function(rhs, term, coef_digits, ...) {
+  check_dots(...)
   ests <- round(rhs$estimate, coef_digits)
   ifelse(
     rhs$coef.type == "scale",
@@ -658,7 +668,8 @@ add_coefs.polr <- function(rhs, term, coef_digits) {
 #' @keywords internal
 #' @noRd
 
-add_coefs.clm <- function(rhs, term, coef_digits) {
+add_coefs.clm <- function(rhs, term, coef_digits, ...) {
+  check_dots(...)
   ests <- round(rhs$estimate, coef_digits)
   ifelse(
     rhs$coef.type == "intercept",
@@ -671,7 +682,8 @@ add_coefs.clm <- function(rhs, term, coef_digits) {
 #'
 #' @keywords internal
 #' @noRd
-add_coefs.forecast_ARIMA <- function(side, term, coef_digits, side_sign = 1) {
+add_coefs.forecast_ARIMA <- function(side, term, coef_digits, side_sign = 1, ...) {
+  check_dots(...)
   # Round the estimates and turn to a character vector
   ests <- round(side$estimate, coef_digits)
 
@@ -708,7 +720,8 @@ add_greek <- function(rhs, ...) {
 
 add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
                               greek_colors, subscript_colors,
-                              raw_tex = FALSE) {
+                              raw_tex = FALSE, ...) {
+  check_dots(...)
   int <- switch(intercept,
     "alpha" = "\\alpha",
     "beta" = "\\beta_{0}"

@@ -768,7 +768,8 @@ create_l1.lmerMod <- function(model, mean_separate,
                              operator_location, sigma = "\\sigma^2",
                              return_variances, swap_var_names, 
                              swap_subscript_names,
-                             var_colors, var_subscript_colors) {
+                             var_colors, var_subscript_colors, ...) {
+  check_dots(...)
   
   rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs, swap_var_names, var_colors)
@@ -796,7 +797,8 @@ create_l1.glmerMod <- function(model, mean_separate,
                               operator_location, sigma = "\\sigma^2",
                               return_variances, swap_var_names, 
                               swap_subscript_names,
-                              var_colors, var_subscript_colors) {
+                              var_colors, var_subscript_colors, ...) {
+  check_dots(...)
   
   rhs <- extract_rhs(model, return_variances)
   lhs <- extract_lhs(model, ital_vars, use_coefs, swap_var_names, var_colors)

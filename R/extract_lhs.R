@@ -23,7 +23,9 @@ extract_lhs <- function(model, ...) {
 #' @noRd
 
 extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs, 
-                           swap_var_names, var_colors) {
+                           swap_var_names, var_colors, ...) {
+
+  check_dots(...)
   lhs <- rownames(attr(model$terms, "factors"))[1]
   lhs_nm <- lhs
   names(lhs) <- lhs_nm
@@ -55,6 +57,7 @@ extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs,
 #' @noRd
 extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, swap_var_names, 
                                 var_colors, ...) {
+  check_dots(...)
   lhs <- all.vars(formula(model))[1]
   lhs_nm <- lhs
   names(lhs) <- lhs_nm
@@ -356,7 +359,8 @@ modify_lhs_for_link <- function(model, ...) {
 #' @export
 #' @keywords internal
 #' @noRd
-modify_lhs_for_link.glm <- function(model, lhs) {
+modify_lhs_for_link.glm <- function(model, lhs, ...) {
+  check_dots(...)
   if (!(any(grepl(model$family$link, link_function_df$link_name)))) {
     message("This link function is not presently supported; using an identity
               function instead")
@@ -373,7 +377,8 @@ modify_lhs_for_link.glm <- function(model, lhs) {
 #' @export
 #' @keywords internal
 #' @noRd
-modify_lhs_for_link.polr <- function(model, lhs) {
+modify_lhs_for_link.polr <- function(model, lhs, ...) {
+  check_dots(...)
   matched_row_bool <- grepl(model$method, link_function_df$link_name)
   filtered_link_formula <- link_function_df[matched_row_bool, "link_formula"]
 
@@ -383,7 +388,9 @@ modify_lhs_for_link.polr <- function(model, lhs) {
 #' @export
 #' @keywords internal
 #' @noRd
-modify_lhs_for_link.clm <- function(model, lhs) {
+modify_lhs_for_link.clm <- function(model, lhs, ...) {
+
+  check_dots(...)
   if (!(any(grepl(model$info$link, link_function_df$link_name)))) {
     message("This link function is not presently supported; using an identity
               function instead")

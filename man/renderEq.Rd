@@ -30,8 +30,8 @@ These are a set of functions designed to help render equations in
 }
 \section{Functions}{
 \itemize{
-\item \code{renderEq}: Rendering function
+\item \code{renderEq()}: Rendering function
 
-\item \code{eqOutput}: Output function
+\item \code{eqOutput()}: Output function
+
 }}
-
