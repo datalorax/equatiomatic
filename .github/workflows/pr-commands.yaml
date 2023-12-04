@@ -28,6 +28,12 @@ jobs:
         with:
           extra-packages: any::roxygen2
           needs: pr-document
+      
+      - name: Install lme4 from source
+        run: |
+          install.packages("Matrix", type = "source", repos = "https://cloud.r-project.org/")
+          install.packages("lme4", type = "source", repos = "https://cloud.r-project.org/")
+        shell: Rscript {0}
 
       - name: Document
         run: roxygen2::roxygenise()
