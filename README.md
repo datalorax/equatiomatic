@@ -58,14 +58,16 @@ library(equatiomatic)
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
 # Give the results to extract_eq
-extract_eq(mod1) 
+extract_eq(mod1)
 ```
 
     #> $$
     #> \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
     #> $$
 
-<img src="man/figures/README-example-basic-preview-1.png" width="100%" />
+$$
+\operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon
+$$
 
 The model can be built in any standard way—it can handle shortcut
 syntax:
@@ -79,7 +81,9 @@ extract_eq(mod2)
     #> \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
     #> $$
 
-<img src="man/figures/README-example-shortcut-preview-1.png" width="100%" />
+$$
+\operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
+$$
 
 When using categorical variables, it will include the levels of the
 variables as subscripts. Here, we use data from the
@@ -95,7 +99,9 @@ extract_eq(mod3)
     #> \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
     #> $$
 
-<img src="man/figures/README-example-categorical-preview-1.png" width="100%" />
+$$
+\operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon
+$$
 
 It helpfully preserves the order the variables are supplied in the
 formula:
@@ -115,7 +121,9 @@ extract_eq(mod4)
     #> \operatorname{out} = \alpha + \beta_{1}(\operatorname{cont1}) + \beta_{2}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{4}(\operatorname{cont2}) + \beta_{5}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{6}(\operatorname{cat1}_{\operatorname{c}}) + \epsilon
     #> $$
 
-<img src="man/figures/README-example-preserve-order-preview-1.png" width="100%" />
+$$
+\operatorname{out} = \alpha + \beta_{1}(\operatorname{cont1}) + \beta_{2}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{4}(\operatorname{cont2}) + \beta_{5}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{6}(\operatorname{cat1}_{\operatorname{c}}) + \epsilon
+$$
 
 ## Appearance
 
@@ -135,7 +143,13 @@ extract_eq(mod2, wrap = TRUE)
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-wrap-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\operatorname{mpg} &= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\ + \\
+&\quad \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\ + \\
+&\quad \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
+\end{aligned}
+$$
 
 ``` r
 extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
@@ -148,7 +162,12 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 6)
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-wrap-longer-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\operatorname{mpg} &= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt})\ + \\
+&\quad \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
+\end{aligned}
+$$
 
 When wrapping, you can change whether the lines end with trailing math
 operators like `+` (the default), or if they should begin with them
@@ -166,7 +185,13 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-wrap-longer-location-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\operatorname{mpg} &= \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp})\\
+&\quad + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs})\\
+&\quad + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon
+\end{aligned}
+$$
 
 By default, all text in the equation is wrapped in `\operatorname{}`.
 You can optionally have the variables themselves be italicized (i.e. not
@@ -184,7 +209,13 @@ extract_eq(mod2, wrap = TRUE, ital_vars = TRUE)
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-italics-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+mpg &= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
+&\quad \beta_{4}(drat) + \beta_{5}(wt) + \beta_{6}(qsec) + \beta_{7}(vs)\ + \\
+&\quad \beta_{8}(am) + \beta_{9}(gear) + \beta_{10}(carb) + \epsilon
+\end{aligned}
+$$
 
 ## R Markdown and previewing
 
@@ -208,7 +239,7 @@ you can do something like this:
 ``` r
 library(magrittr)  # or library(tidyverse) or any other package that exports %>%
 
-extract_eq(mod1) %>% 
+extract_eq(mod1) %>%
   tex_preview()
 ```
 
@@ -230,7 +261,9 @@ extract_eq(mod1, use_coefs = TRUE)
     #> \operatorname{\widehat{mpg}} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp})
     #> $$
 
-<img src="man/figures/README-use-coefs-preview-1.png" width="100%" />
+$$
+\operatorname{\widehat{mpg}} = 34.66 - 1.59(\operatorname{cyl}) - 0.02(\operatorname{disp})
+$$
 
 By default, it will remove doubled operators like “+ -”, but you can
 keep those in (which is often useful for teaching) with
@@ -244,7 +277,9 @@ extract_eq(mod1, use_coefs = TRUE, fix_signs = FALSE)
     #> \operatorname{\widehat{mpg}} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp})
     #> $$
 
-<img src="man/figures/README-fix-signs-preview-1.png" width="100%" />
+$$
+\operatorname{\widehat{mpg}} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp})
+$$
 
 This works in longer wrapped equations:
 
@@ -262,7 +297,14 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-fix-signs-long-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\operatorname{\widehat{mpg}} &= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\
+&\quad -0.02(\operatorname{hp}) + 0.79(\operatorname{drat}) + -3.72(\operatorname{wt})\ + \\
+&\quad 0.82(\operatorname{qsec}) + 0.32(\operatorname{vs}) + 2.52(\operatorname{am})\ + \\
+&\quad 0.66(\operatorname{gear}) + -0.2(\operatorname{carb})
+\end{aligned}
+$$
 
 ## Beyond `lm()`
 
@@ -273,7 +315,7 @@ ordered logistic regression (with `MASS::polr()`).
 ### Logistic regression with `glm()`
 
 ``` r
-model_logit <- glm(sex ~ bill_length_mm + species, 
+model_logit <- glm(sex ~ bill_length_mm + species,
                    data = penguins, family = binomial(link = "logit"))
 extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ```
@@ -285,12 +327,17 @@ extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-logit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\log\left[ \frac { P( \operatorname{sex} = \operatorname{male} ) }{ 1 - P( \operatorname{sex} = \operatorname{male} ) } \right] &= \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
+&\quad \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}})
+\end{aligned}
+$$
 
 ### Probit regression with `glm()`
 
 ``` r
-model_probit <- glm(sex ~ bill_length_mm + species, 
+model_probit <- glm(sex ~ bill_length_mm + species,
                     data = penguins, family = binomial(link = "probit"))
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 ```
@@ -302,7 +349,12 @@ extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-probit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+P( \operatorname{sex} = \operatorname{male} ) &= \Phi[\alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}})\ + \\
+&\qquad\ \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}})]
+\end{aligned}
+$$
 
 ### Ordered logistic regression with `MASS::polr()`
 
@@ -314,9 +366,9 @@ df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                  continuous_1 = rnorm(300, 100, 1),
                  continuous_2 = rnorm(300, 50, 5))
 
-model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
                            data = df, Hess = TRUE, method = "logistic")
-model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
                             data = df, Hess = TRUE, method = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
@@ -324,12 +376,17 @@ extract_eq(model_ologit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-    #> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-ologit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+\end{aligned}
+$$
 
 ``` r
 extract_eq(model_oprobit, wrap = TRUE)
@@ -337,12 +394,17 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-polr-probit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+\end{aligned}
+$$
 
 ### Ordered regression (logit and probit) with `ordinal::clm()`
 
@@ -354,9 +416,9 @@ df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                  continuous_1 = rnorm(300, 1, 1),
                  continuous_2 = rnorm(300, 5, 5))
 
-model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
                              data = df, link = "logit")
-model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
                               data = df, link = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
@@ -364,12 +426,17 @@ extract_eq(model_ologit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-    #> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-clm-ologit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+\end{aligned}
+$$
 
 ``` r
 extract_eq(model_oprobit, wrap = TRUE)
@@ -377,12 +444,17 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-clm-oprobit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+\end{aligned}
+$$
 
 ## Extension
 

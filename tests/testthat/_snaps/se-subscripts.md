@@ -129,7 +129,7 @@
     \end{aligned}
     $$
 
-# se_arguments works with factor variable
+# se_subscripts works with factor variable
 
     $$
     \widehat{E( \operatorname{disp} )} = \underset{(224.642)}{427.66}  + \underset{(12.253)}{21.95(\operatorname{cyl})} - \underset{(61.235)}{120.45(\operatorname{\log(mpg)})} + \underset{(0.32)}{0.38(\operatorname{hp})} - \underset{(26.627)}{58.06(\operatorname{factor(gear)}_{\operatorname{4}})} - \underset{(35.762)}{66.88(\operatorname{factor(gear)}_{\operatorname{5}})}
