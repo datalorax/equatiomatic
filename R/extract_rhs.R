@@ -75,7 +75,8 @@ extract_rhs <- function(model, ...) {
 #' # >   .. ..- attr(*, "names")= chr [1:2] "species" "flipper_length_mm"
 #' }
 #'
-extract_rhs.default <- function(model, index_factors) {
+extract_rhs.default <- function(model, index_factors, ...) {
+  check_dots(...)
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))
 
@@ -113,7 +114,10 @@ extract_rhs.default <- function(model, index_factors) {
 
 #' @noRd
 #' @export
-extract_rhs.lmerMod <- function(model, return_variances) {
+extract_rhs.lmerMod <- function(model, return_variances, ...) {
+
+  check_dots(...)
+    
   # Extract RHS from formula
   formula_rhs <- labels(terms(formula(model)))
 
