@@ -1,7 +1,7 @@
 Package: equatiomatic
 Title: Transform Models into 'LaTeX' Equations
 Version: 0.3.1
-Authors@R: 
+Authors@R:
     c(person(given = "Daniel",
              family = "Anderson",
              role = c("aut", "cre"),
@@ -57,19 +57,19 @@ Description: The goal of 'equatiomatic' is to reduce the pain
     object as its input and returns the corresponding 'LaTeX' code for the
     model.
 License: CC BY 4.0
-Depends: 
+Depends:
     R (>= 3.3.0)
 URL: https://github.com/datalorax/equatiomatic,
     https://datalorax.github.io/equatiomatic/
 BugReports: https://github.com/datalorax/equatiomatic/issues
-Imports: 
+Imports:
     broom (>= 0.7.0),
     broom.mixed,
     shiny,
     knitr,
     stats,
     utils
-Suggests: 
+Suggests:
     covr,
     shinyWidgets,
     forecast (>= 8.13),
@@ -82,7 +82,7 @@ Suggests:
     testthat (>= 3.0.0),
     texPreview (>= 2.0.0),
     gtsummary
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 LazyData: true
@@ -90,5 +90,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Remotes:  
+Remotes:
     yonicd/texPreview

@@ -58,7 +58,7 @@ library(equatiomatic)
 mod1 <- lm(mpg ~ cyl + disp, mtcars)
 
 # Give the results to extract_eq
-extract_eq(mod1) 
+extract_eq(mod1)
 ```
 
     #> $$
@@ -208,7 +208,7 @@ you can do something like this:
 ``` r
 library(magrittr)  # or library(tidyverse) or any other package that exports %>%
 
-extract_eq(mod1) %>% 
+extract_eq(mod1) %>%
   tex_preview()
 ```
 
@@ -273,7 +273,7 @@ ordered logistic regression (with `MASS::polr()`).
 ### Logistic regression with `glm()`
 
 ``` r
-model_logit <- glm(sex ~ bill_length_mm + species, 
+model_logit <- glm(sex ~ bill_length_mm + species,
                    data = penguins, family = binomial(link = "logit"))
 extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ```
@@ -290,7 +290,7 @@ extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ### Probit regression with `glm()`
 
 ``` r
-model_probit <- glm(sex ~ bill_length_mm + species, 
+model_probit <- glm(sex ~ bill_length_mm + species,
                     data = penguins, family = binomial(link = "probit"))
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 ```
@@ -314,9 +314,9 @@ df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                  continuous_1 = rnorm(300, 100, 1),
                  continuous_2 = rnorm(300, 50, 5))
 
-model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
                            data = df, Hess = TRUE, method = "logistic")
-model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2, 
+model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
                             data = df, Hess = TRUE, method = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
@@ -324,8 +324,8 @@ extract_eq(model_ologit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-    #> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
     #> \end{aligned}
     #> $$
 
@@ -337,8 +337,8 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
@@ -354,9 +354,9 @@ df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
                  continuous_1 = rnorm(300, 1, 1),
                  continuous_2 = rnorm(300, 5, 5))
 
-model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
                              data = df, link = "logit")
-model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2, 
+model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
                               data = df, link = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
@@ -364,12 +364,17 @@ extract_eq(model_ologit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-    #> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-clm-ologit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+\end{aligned}
+$$
 
 ``` r
 extract_eq(model_oprobit, wrap = TRUE)
@@ -377,12 +382,17 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
-<img src="man/figures/README-example-clm-oprobit-preview-1.png" width="100%" />
+$$
+\begin{aligned}
+P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+\end{aligned}
+$$
 
 ## Extension
 

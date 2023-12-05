@@ -1,6 +1,7 @@
 ^equatiomatic\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^README\.html$
 ^LICENSE\.md$
 ^\.travis\.yml$
 ^CODE_OF_CONDUCT\.md$
