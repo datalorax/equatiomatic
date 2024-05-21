@@ -5,25 +5,24 @@
 
 <!-- badges: start -->
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
-
-[![Covrpage
-Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://tinyurl.com/y43gpto4)
-<!-- [![codecov](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://codecov.io/gh/datalorax/equatiomatic) -->
+[![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 [![R build
 status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions)
 
 [![Codecov test
-coverage](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)
+coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master)
+
+[![Covrpage
+Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://github.com/datalorax/equatiomatic/tree/master/tests)
 
 [![](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)
 
 <!-- badges: end -->
 
 The goal of **equatiomatic** is to reduce the pain associated with
-writing LaTeX code from a fitted model. In the future, the package aims
-to support any model supported by
+writing LaTeX code from a fitted model. The package aims to support any
+model supported by
 [**broom**](https://cran.r-project.org/package=broom). See the
 [introduction to
 equatiomatic](https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1)
@@ -67,7 +66,7 @@ extract_eq(mod1)
 
 <img src="man/figures/README-example-basic-preview-1.png" width="100%" />
 
-The model can be built in any standard way—it can handle shortcut
+The model can be built in any standard way. It can handle shortcut
 syntax:
 
 ``` r
@@ -102,8 +101,8 @@ formula:
 
 ``` r
 set.seed(8675309)
-d <- data.frame(cat1 = rep(letters[1:3], 100),
-                cat2 = rep(LETTERS[1:3], each = 100),
+d <- data.frame(cat1  = rep(letters[1:3], 100),
+                cat2  = rep(LETTERS[1:3], each = 100),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5),
                 out   = rnorm(300, 10, 0.5))
@@ -215,7 +214,7 @@ extract_eq(mod1) %>%
 ## Extra options
 
 There are several extra options you can enable with additional arguments
-to `extract_eq()`
+to `extract_eq()`.
 
 ### Actual coefficients
 
@@ -324,8 +323,8 @@ extract_eq(model_ologit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+    #> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+    #> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
     #> \end{aligned}
     #> $$
 
@@ -337,8 +336,8 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
@@ -364,15 +363,15 @@ extract_eq(model_ologit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-    #> \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+    #> \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+    #> \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
     #> \end{aligned}
     #> $$
 
 $$
 \begin{aligned}
-\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+\log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+\log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
 \end{aligned}
 $$
 
@@ -382,23 +381,23 @@ extract_eq(model_oprobit, wrap = TRUE)
 
     #> $$
     #> \begin{aligned}
-    #> P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-    #> P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+    #> P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+    #> P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
     #> \end{aligned}
     #> $$
 
 $$
 \begin{aligned}
-P( \operatorname{outcome}  \leq  \operatorname{A} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+P( \operatorname{A} \geq \operatorname{B} ) &= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+P( \operatorname{B} \geq \operatorname{C} ) &= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
 \end{aligned}
 $$
 
 ## Extension
 
-This project is brand new. If you would like to contribute, we’d love
-your help! We are particularly interested in extending to more models.
-We hope to support any model supported by
+If you would like to contribute to this package, we’d love your help! We
+are particularly interested in extending to more models. We hope to
+support any model supported by
 [**broom**](https://cran.r-project.org/package=broom) in the future.
 
 ## Code of Conduct

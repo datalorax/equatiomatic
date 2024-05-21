@@ -17,3 +17,4 @@
 ^CRAN-RELEASE$
 ^\.lintr
 ^data-raw$
+^TODO\.md$
