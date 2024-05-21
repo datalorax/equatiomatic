@@ -1,3 +1,7 @@
+# equatiomatic 0.3.2
+* New maintainer (Philippe Grosjean phgrosjean@sciviews.org).
+* Remotes to yonicd/texPreview eliminated because a suitable version is on CRAN.
+
 # equatiomatic 0.3.1
 * Minor bug fix related to lifecycle badges
 * New license: CC-BY
