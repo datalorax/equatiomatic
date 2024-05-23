@@ -44,6 +44,14 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: lme4 and Matrix from source for R before v4.4.0
+        run: |
+          if (getRversion() < "4.4.0") {
+            install.packages("Matrix", type = "source", repos = "https://cloud.r-project.org/")
+            install.packages("lme4", type = "source", repos = "https://cloud.r-project.org/")
+          }
+        shell: Rscript {0}
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
