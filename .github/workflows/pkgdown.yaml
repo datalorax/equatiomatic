@@ -40,19 +40,6 @@ jobs:
       - name: Install texlibs
         run: tlmgr install standalone xcolor booktabs multirow amsmath listings setspace caption graphics tools psnfss varwidth colortbl epstopdf-pkg pgf
 
-# PhG: trail without covrpage
-#      - name: covrpage
-#        if: github.ref == 'refs/heads/master'
-#        run: |
-#          git config --local user.email "actions@github.com"
-#          git config --local user.name "GitHub Actions"
-#          Rscript -e 'install.packages("remotes")' \
-#                  -e 'remotes::install_deps(dependencies = TRUE)' \
-#                  -e 'remotes::install_github("yonicd/covrpage@actions")' \
-#                  -e 'covrpage::covrpage_ci()'
-#          git commit tests/README.md -m 'Update tests/README.Rmd' || echo "No changes to commit"
-#          git push https://${{github.actor}}:${{secrets.GH_PAT}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
-
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
