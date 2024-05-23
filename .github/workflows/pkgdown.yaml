@@ -36,9 +36,6 @@ jobs:
         with:
           extra-packages: any::pkgdown, any::remotes, local::.
           needs: website
-
-      - name: Install magick
-        run: brew install imagemagick
         
       - name: Install texlibs
         run: tlmgr install standalone xcolor booktabs multirow amsmath listings setspace caption graphics tools psnfss varwidth colortbl epstopdf-pkg pgf
