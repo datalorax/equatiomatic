@@ -1,6 +1,6 @@
-pandoc: 2.7.3
-pkgdown: 1.5.0
-pkgdown_sha: 1401803e77fc756c31f71291843c8200265a4af5
+pandoc: 3.1.11
+pkgdown: 2.0.9
+pkgdown_sha: ~
 articles:
   colors: colors.html
   forecast-arima: forecast-arima.html
@@ -9,5 +9,5 @@ articles:
   plotting-integration: plotting-integration.html
   tests_and_coverage: tests_and_coverage.html
   usage-shiny: usage-shiny.html
-last_built: 2022-03-14T16:45Z
+last_built: 2024-05-23T08:48Z
 
