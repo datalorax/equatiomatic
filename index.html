@@ -20,7 +20,7 @@
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Transform Models into LaTeX Equations">
 <meta property="og:description" content="The goal of equatiomatic is to reduce the pain associated with writing LaTeX formulas from fitted models. The primary function of the package, extract_eq(), takes a fitted model object as its input and returns the corresponding LaTeX code for the model.">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://datalorax.github.io/equatiomatic/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,12 +41,15 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="articles/equatiomatic.html">Get started</a>
+</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -62,9 +65,6 @@
     </li>
     <li>
       <a href="articles/forecast-arima.html">forecast::Arima Models</a>
-    </li>
-    <li>
-      <a href="articles/intro-equatiomatic.html">Introduction to {equatiomatic}</a>
     </li>
     <li>
       <a href="articles/lme4-lmer.html">lme4::lmer Models</a>
@@ -108,12 +108,8 @@
 </h1></div>
 <!-- badges: start -->
 
-
-
-
-
 <!-- badges: end -->
-<p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. The package aims to support any model supported by <a href="https://cran.r-project.org/package=broom" class="external-link"><strong>broom</strong></a>. See the <a href="https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1" class="external-link">introduction to equatiomatic</a> for currently supported models.</p>
+<p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. The package aims to support any model supported by <a href="https://cran.r-project.org/package=broom" class="external-link"><strong>broom</strong></a>. See the <a href="https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1">introduction to equatiomatic</a> for currently supported models.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -327,8 +323,8 @@
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_ologit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\</span></span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})</span></span>
 <span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-ologit-preview-1.png" width="100%"></p>
@@ -336,8 +332,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_oprobit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{A} \geq \operatorname{B} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{B} \geq \operatorname{C} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{outcome}  \leq  \operatorname{A} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{outcome}  \leq  \operatorname{B} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
 <span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-polr-probit-preview-1.png" width="100%"></p>
@@ -362,28 +358,28 @@
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_ologit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\</span></span>
-<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})</span></span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\</span></span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a><span class="co">#&gt; \log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})</span></span>
 <span id="cb36-5"><a href="#cb36-5" tabindex="-1"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb36-6"><a href="#cb36-6" tabindex="-1"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><span class="math display">$$
 \begin{aligned}
-\log\left[ \frac { P( \operatorname{A} \geq \operatorname{B} ) }{ 1 - P( \operatorname{A} \geq \operatorname{B} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
-\log\left[ \frac { P( \operatorname{B} \geq \operatorname{C} ) }{ 1 - P( \operatorname{B} \geq \operatorname{C} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{A} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{A} ) } \right] &amp;= \alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2}) \\
+\log\left[ \frac { P( \operatorname{outcome}  \leq  \operatorname{B} ) }{ 1 - P( \operatorname{outcome}  \leq  \operatorname{B} ) } \right] &amp;= \alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})
 \end{aligned}
 $$</span></p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_oprobit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
-<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{A} \geq \operatorname{B} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
-<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{B} \geq \operatorname{C} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{outcome}  \leq  \operatorname{A} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\</span></span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="co">#&gt; P( \operatorname{outcome}  \leq  \operatorname{B} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]</span></span>
 <span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="co">#&gt; \end{aligned}</span></span>
 <span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="co">#&gt; $$</span></span></code></pre></div>
 <p><span class="math display">$$
 \begin{aligned}
-P( \operatorname{A} \geq \operatorname{B} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
-P( \operatorname{B} \geq \operatorname{C} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
+P( \operatorname{outcome}  \leq  \operatorname{A} ) &amp;= \Phi[\alpha_{1} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})] \\
+P( \operatorname{outcome}  \leq  \operatorname{B} ) &amp;= \Phi[\alpha_{2} + \beta_{1}(\operatorname{continuous\_1}) + \beta_{2}(\operatorname{continuous\_2})]
 \end{aligned}
 $$</span></p>
 </div>

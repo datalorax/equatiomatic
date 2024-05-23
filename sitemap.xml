@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/404.html</loc>
   </url>
   <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/TODO.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/TODO.html</loc>
   </url>
   <url>
-    <loc>/articles/colors.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/colors.html</loc>
   </url>
   <url>
-    <loc>/articles/forecast-arima.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/equatiomatic.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/forecast-arima.html</loc>
   </url>
   <url>
-    <loc>/articles/intro-equatiomatic.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/lme4-lmer.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/lme4-lmer.html</loc>
   </url>
   <url>
-    <loc>/articles/plotting-integration.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/plotting-integration.html</loc>
   </url>
   <url>
-    <loc>/articles/tests_and_coverage.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/tests_and_coverage.html</loc>
   </url>
   <url>
-    <loc>/articles/usage-shiny.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/articles/usage-shiny.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/add_se.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/add_se.html</loc>
   </url>
   <url>
-    <loc>/reference/arrests.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/arrests.html</loc>
   </url>
   <url>
-    <loc>/reference/equatiomatic-package.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/equatiomatic-package.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_eq.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/extract_eq.html</loc>
   </url>
   <url>
-    <loc>/reference/fix_coef_signs_se.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/fix_coef_signs_se.html</loc>
   </url>
   <url>
-    <loc>/reference/hsb.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/hsb.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/penguins.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/penguins.html</loc>
   </url>
   <url>
-    <loc>/reference/polls.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/polls.html</loc>
   </url>
   <url>
-    <loc>/reference/print.equation.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/print.equation.html</loc>
   </url>
   <url>
-    <loc>/reference/renderEq.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/renderEq.html</loc>
   </url>
   <url>
-    <loc>/reference/sim_longitudinal.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/sim_longitudinal.html</loc>
   </url>
   <url>
-    <loc>/reference/simple_ts.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/simple_ts.html</loc>
   </url>
   <url>
-    <loc>/reference/ts_reg_list.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/ts_reg_list.html</loc>
   </url>
 </urlset>

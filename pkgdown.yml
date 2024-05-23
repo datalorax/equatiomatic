@@ -3,11 +3,14 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   colors: colors.html
+  equatiomatic: equatiomatic.html
   forecast-arima: forecast-arima.html
-  intro-equatiomatic: intro-equatiomatic.html
   lme4-lmer: lme4-lmer.html
   plotting-integration: plotting-integration.html
   tests_and_coverage: tests_and_coverage.html
   usage-shiny: usage-shiny.html
-last_built: 2024-05-23T15:20Z
+last_built: 2024-05-23T15:27Z
+urls:
+  reference: https://datalorax.github.io/equatiomatic/reference
+  article: https://datalorax.github.io/equatiomatic/articles
 
