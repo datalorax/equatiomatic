@@ -1,6 +1,9 @@
 # equatiomatic 0.3.2
 * New maintainer (Philippe Grosjean phgrosjean@sciviews.org).
 * Remotes to yonicd/texPreview eliminated because a suitable version is on CRAN.
+* Respect of the arguments of the generic functions for
+    `add_greek.forecast_ARIMA` and `add_coefs.forecast_ARIMA` (first argument
+    `side=` is renamed `rhs=`).
 
 # equatiomatic 0.3.1
 * Minor bug fix related to lifecycle badges
