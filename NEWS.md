@@ -1,3 +1,7 @@
+# equatiomatic 0.3.3
+* Vignette 'intro-equatiomatic' renamed 'equatiomatic' to enable a "Getting
+    Started" entry in the pkgdown site.
+
 # equatiomatic 0.3.2
 * New maintainer (Philippe Grosjean phgrosjean@sciviews.org).
 * Remotes to yonicd/texPreview eliminated because a suitable version is on CRAN.

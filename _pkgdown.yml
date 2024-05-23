@@ -1,6 +1,8 @@
 title: equatiomatic
+url: https://datalorax.github.io/equatiomatic/
 development:
   mode: release
 template:
   params:
     bootswatch: lumen
+    mathjax: true
