@@ -41,7 +41,8 @@ usrPackages <- "\\renewcommand*\\familydefault{\\rmdefault}"
 
 The goal of **equatiomatic** is to reduce the pain associated with writing LaTeX
 code from a fitted model. The package aims to support any model
-supported by [**broom**](https://cran.r-project.org/package=broom). See the [introduction to equatiomatic](https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1) for currently supported models.
+supported by [**broom**](https://cran.r-project.org/package=broom). See the [introduction to equatiomatic](https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models) for currently supported models.
+
 
 ## Installation
 
@@ -437,6 +438,6 @@ Please note that the 'equatiomatic' project is released with a
 By contributing to this project, you agree to abide by its terms.
 
 ## A note of appreciation
-We'd like to thank the authors of the [{palmerpenguin}](https://allisonhorst.github.io/palmerpenguins/index.html) dataset for generously allowing us to incorporate the `penguins` dataset in our package for example usage.
+We'd like to thank the authors of the [{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/index.html) dataset for generously allowing us to incorporate the `penguins` dataset in our package for example usage.
 
 Horst AM, Hill AP, Gorman KB (2020). *palmerpenguins: Palmer Archipelago (Antarctica) penguin data*. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/

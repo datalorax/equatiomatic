@@ -21,7 +21,7 @@ writing LaTeX code from a fitted model. The package aims to support any
 model supported by
 [**broom**](https://cran.r-project.org/package=broom). See the
 [introduction to
-equatiomatic](https://datalorax.github.io/equatiomatic/articles/intro-equatiomatic.html#other-models-1)
+equatiomatic](https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models)
 for currently supported models.
 
 ## Installation
@@ -406,7 +406,7 @@ By contributing to this project, you agree to abide by its terms.
 ## A note of appreciation
 
 We’d like to thank the authors of the
-[{palmerpenguin}](https://allisonhorst.github.io/palmerpenguins/index.html)
+[{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/index.html)
 dataset for generously allowing us to incorporate the `penguins` dataset
 in our package for example usage.
 
