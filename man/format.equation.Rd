@@ -12,7 +12,7 @@
 \item{...}{not used}
 
 \item{latex}{Logical, whether the output is LaTeX or not. The default
-value uses {knitr} to determine the current output format.}
+value uses \code{\link[knitr:output_type]{knitr::is_latex_output()}} to determine the current output format.}
 }
 \value{
 A character string with the equation formatted either as proper

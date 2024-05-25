@@ -76,7 +76,7 @@ is_texPreview_installed <- function() {
 #' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
 #' @param latex Logical, whether the output is LaTeX or not. The default
-#'   value uses {knitr} to determine the current output format.
+#'   value uses [knitr::is_latex_output()] to determine the current output format.
 #' @return A character string with the equation formatted either as proper
 #'   LaTeX code, or as a display equation tag (surrounded by `$$...$$`) for R
 #'   Markdown or Quarto documents.
