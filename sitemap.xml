@@ -46,9 +46,6 @@
     <loc>https://datalorax.github.io/equatiomatic/news/index.html</loc>
   </url>
   <url>
-    <loc>https://datalorax.github.io/equatiomatic/reference/add_se.html</loc>
-  </url>
-  <url>
     <loc>https://datalorax.github.io/equatiomatic/reference/arrests.html</loc>
   </url>
   <url>
@@ -58,13 +55,16 @@
     <loc>https://datalorax.github.io/equatiomatic/reference/extract_eq.html</loc>
   </url>
   <url>
-    <loc>https://datalorax.github.io/equatiomatic/reference/fix_coef_signs_se.html</loc>
+    <loc>https://datalorax.github.io/equatiomatic/reference/format.equation.html</loc>
   </url>
   <url>
     <loc>https://datalorax.github.io/equatiomatic/reference/hsb.html</loc>
   </url>
   <url>
     <loc>https://datalorax.github.io/equatiomatic/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://datalorax.github.io/equatiomatic/reference/knit_print.equation.html</loc>
   </url>
   <url>
     <loc>https://datalorax.github.io/equatiomatic/reference/penguins.html</loc>
