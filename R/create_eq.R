@@ -4,7 +4,6 @@ create_eq <- function(model, lhs, ...) {
 
 #' Create the full equation
 #'
-#' @export
 #' @keywords internal
 #'
 #' @param lhs A character string of the left-hand side variable extracted with
@@ -61,7 +60,6 @@ create_eq.default <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits
   list(lhs = list(lhs), rhs = list(rhs$final_terms))
 }
 
-#' @export
 #' @noRd
 #' @inheritParams extract_eq
 create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
@@ -102,7 +100,6 @@ create_eq.glm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
   list(lhs = list(lhs), rhs = list(rhs$final_terms))
 }
 
-#' @export
 #' @noRd
 create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                            fix_signs, intercept, greek, 
@@ -142,7 +139,6 @@ create_eq.polr <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
   list(lhs = lhs, rhs = rhs_final)
 }
 
-#' @export
 #' @noRd
 create_eq.clm <- function(model, lhs, rhs, ital_vars, use_coefs, coef_digits,
                           fix_signs, intercept, greek, 
@@ -309,7 +305,6 @@ create_term <- function(side, ...) {
 }
 
 #' @noRd
-#' @export
 create_term.default <- function(side, ital_vars, swap_var_names, 
                                 swap_subscript_names, var_colors,
                                 var_subscript_colors, ...) {
@@ -403,7 +398,6 @@ check_math <- function(primary, subscripts) {
 #'
 #' @inheritParams extract_eq
 #' @noRd
-#' @export
 create_term.forecast_ARIMA <- function(side, ital_vars, swap_var_names,
                                        swap_subscript_names, ...) {
   check_dots(...)
@@ -636,7 +630,6 @@ add_coefs <- function(rhs, ...) {
 
 #' Add coefficient values to the equation
 #'
-#' @export
 #' @keywords internal
 #' @noRd
 
@@ -650,7 +643,6 @@ add_coefs.default <- function(rhs, term, coef_digits, ...) {
   )
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 
@@ -664,7 +656,6 @@ add_coefs.polr <- function(rhs, term, coef_digits, ...) {
   )
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 
@@ -714,7 +705,6 @@ add_greek <- function(rhs, ...) {
 
 #' Adds greek symbols to the equation
 #'
-#' @export
 #' @keywords internal
 #' @noRd
 
@@ -749,7 +739,6 @@ add_greek.default <- function(rhs, terms, greek = "beta", intercept = "alpha",
   )
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 
@@ -777,7 +766,6 @@ add_greek.polr <- function(rhs, terms, greek, intercept, greek_colors,
   )
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 

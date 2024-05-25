@@ -1,33 +1,37 @@
 #' Print 'LaTeX' equations
 #' 
-#' lifecycle::badge("stable")`
-#' 
 #' Print 'LaTeX' equations built with \code{\link{extract_eq}}.
 #'
+#' @method print equation
 #' @export
 #'
 #' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
-#'
+#' @return The unmodified object 'x' is returned invisibly. The function is
+#'   used for its side effect of printing the equation.
 
 print.equation <- function(x, ...) {
   cat(format(x), sep = "")
+  invisible(x)
 }
 
-#' Print 'LaTeX' equations in Rmarkdown environments
+#' Print 'LaTeX' equations in R Markdown environments
 #'
-#' Print 'LaTeX' equations built with \code{\link{extract_eq}} nicely in Rmarkdown environments.
+#' Print 'LaTeX' equations built with \code{\link{extract_eq}} nicely in R Markdown environments.
 #'
-#' @keywords internal
+#' @method knit_print equation
 #' @export
 #'
 #' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
-#'
-#' @method knit_print equation
+#' @param tex_packages A string with LaTeX code to include in the header,
+#'   usually to include LaTeX packages in the output.
+#' 
+#' @return A string with the equation formatted according to R Markdown's output
+#'   format (different output for HTML, PDF, docx, gfm, markdown_strict). The
+#'   format is detected automatically, so, you do not have to worry about it.
 #'
 #' @importFrom knitr knit_print asis_output
-#' @noRd
 #'
 knit_print.equation <- function(x, ..., tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}") {
   eq <- format(x)
@@ -62,17 +66,23 @@ is_texPreview_installed <- function() {
 }
 
 
-#' format 'LaTeX' equations
+#' Format 'LaTeX' equations
 #'
-#' format 'LaTeX' equations built with \code{\link{extract_eq}}.
+#' Format 'LaTeX' equations built with \code{\link{extract_eq}}.
 #'
 #' @export
+#' @method format equation
 #'
 #' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
 #' @param ... not used
-#' @noRd
-format.equation <- function(x, ...) {
-  if (is_latex_output()) {
+#' @param latex Logical, whether the output is LaTeX or not. The default
+#'   value uses {knitr} to determine the current output format.
+#' @return A character string with the equation formatted either as proper
+#'   LaTeX code, or as a display equation tag (surrounded by `$$...$$`) for R
+#'   Markdown or Quarto documents.
+#'
+format.equation <- function(x, ..., latex = knitr::is_latex_output()) {
+  if (isTRUE(latex)) {
     header <- paste0(attr(x, "latex_define_colors"), collapse = "\n")
     eq <- paste0(c("\n\n\\begin{equation}\n", x, "\n\\end{equation}"))
     paste0(c(header, eq))

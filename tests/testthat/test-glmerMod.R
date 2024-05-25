@@ -40,6 +40,7 @@ test_that("colorizing works", {
     )
   )
   
+  suppressWarnings(
   expect_warning(
     extract_eq(
       m,
@@ -57,6 +58,7 @@ test_that("colorizing works", {
       ),
       greek_colors = rainbow(7)
     )
+  )
   )
 })
 

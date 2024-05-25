@@ -1,10 +1,20 @@
-#' 'LaTeX' code for R models
-#' 
-#' `r lifecycle::badge("maturing")`
+# PhG: I am not a fan of stating all the possible arguments in the generic
+# function like it is currently the case for extract_eq(). May be keep only the
+# common and most used ones and allow for varying arguments with ... However,
+# changing this could possibly break backward compatibility. So, I leave it as
+# it is for now... but I had to homogenize for all methods, otherwise CRAN would
+# reject the package!
 
-#' Extract the variable names from a model to produce a 'LaTeX' equation, which is
-#' output to the screen. Supports any model supported by
-#' [broom::tidy][broom::tidy].
+#' 'LaTeX' equation for R models
+#' 
+#' Extract the variable names from a model to produce a 'LaTeX' equation.
+#' Supports any model where there is a [broom::tidy()] method. This is a generic
+#' function with methods for lmerMod objects obtained with [lme4::lmer()],
+#' glmerMod objects with [lme4::glmer()], forecast_ARIMA with
+#' [forecast::Arima()] and default, with the later further covering most "base"
+#' R models implemented in [broom::tidy()] like lm objects with [stats::lm()],
+#' glm objects with [stats::glm()] or polr objects with [MASS::polr()]. The
+#' default method also supports clm objects obtained with [ordinal::clm()].
 #'
 #' @param model A fitted model
 #' @param intercept How should the intercept be displayed? Default is \code{"alpha"},
@@ -97,7 +107,12 @@
 #' @export
 #'
 #' @return A character of class \dQuote{equation}.
-#'
+#' 
+#' @details
+#' The different methods all use the same arguments, but not all arguments are
+#' suitable to all models. Check here above to determine if a feature is
+#' implemented for a given model.
+#' 
 #' @examples
 #' # Simple model
 #' mod1 <- lm(mpg ~ cyl + disp, mtcars)
@@ -162,11 +177,12 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        operator_location = "end", align_env = "aligned",
                        use_coefs = FALSE, coef_digits = 2,
                        fix_signs = TRUE, font_size = NULL,
-                       mean_separate, return_variances = FALSE,
+                       mean_separate = NULL, return_variances = FALSE,
                        se_subscripts = FALSE, ...) {
   UseMethod("extract_eq", model)
 }
 
+# PhG: we do not want to repeat usage, so no @describeIn extract_eq default `extract_eq()` method
 #' Default function for extracting an equation from a model object
 #'
 #' @keywords internal
@@ -183,7 +199,7 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
-                               mean_separate, return_variances = FALSE, 
+                               mean_separate = NULL, return_variances = FALSE, 
                                se_subscripts = FALSE, ...) {
   if (index_factors & use_coefs) {
     stop("Coefficient estimates cannot be returned when factors are indexed.")
@@ -310,23 +326,28 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
 # I haven't incorporated wrap yet either and we should think about if we want to
 # It might be better to have an alternative for matrix notation
 
-#' Equation generator for lme4::lmer models
+# PhG: we do not want to repeat usage, so no @describeIn extract_eq lmerMod `extract_eq()` method
 #' @export
 #' @noRd
 extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                greek_colors = NULL, subscript_colors = NULL,
                                var_colors = NULL, var_subscript_colors = NULL, 
-                               raw_tex = FALSE, swap_var_names = NULL,
-                               swap_subscript_names = NULL,
+                               raw_tex = FALSE,
+                               swap_var_names = NULL, swap_subscript_names = NULL,
                                ital_vars = FALSE, label = NULL,
                                index_factors = FALSE, show_distribution = FALSE,
                                wrap = FALSE, terms_per_line = 4,
-                               operator_location = "end",
-                               align_env = "aligned",
+                               operator_location = "end", align_env = "aligned",
                                use_coefs = FALSE, coef_digits = 2,
-                               fix_signs = TRUE, 
-                               font_size = NULL, mean_separate = NULL,
-                               return_variances = FALSE, ...) {
+                               fix_signs = TRUE, font_size = NULL,
+                               mean_separate = NULL, return_variances = FALSE,
+                               se_subscripts = FALSE, ...) {
+  if (isTRUE(se_subscripts)) {
+    warning("Standard errors are not supported for mixed effects models",
+      call. = FALSE
+    )
+  }
+  
   if (!is.null(greek_colors)) {
     warning(
       paste0("Colorization of greek notation not currently ",
@@ -385,11 +406,22 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
   eq
 }
 
+# PhG: we do not want to repeat usage, so no @describeIn extract_eq glmerMod `extract_eq()` method
 #' @export
 #' @noRd
-extract_eq.glmerMod <- function(..., 
-                                greek_colors = NULL, 
-                                subscript_colors = NULL) {
+extract_eq.glmerMod <- function(model, intercept = "alpha", greek = "beta",
+                                greek_colors = NULL, subscript_colors = NULL,
+                                var_colors = NULL, var_subscript_colors = NULL, 
+                                raw_tex = FALSE,
+                                swap_var_names = NULL, swap_subscript_names = NULL,
+                                ital_vars = FALSE, label = NULL,
+                                index_factors = FALSE, show_distribution = FALSE,
+                                wrap = FALSE, terms_per_line = 4,
+                                operator_location = "end", align_env = "aligned",
+                                use_coefs = FALSE, coef_digits = 2,
+                                fix_signs = TRUE, font_size = NULL,
+                                mean_separate = NULL, return_variances = FALSE,
+                                se_subscripts = FALSE, ...) {
   if (!is.null(greek_colors)) {
     warning(
       paste0("Colorization of greek notation not currently ",
@@ -400,10 +432,20 @@ extract_eq.glmerMod <- function(...,
       paste0("Colorization of subscripts not currently ",
              "implemented for merMod models"))
   }
-  extract_eq.lmerMod(...)
+  extract_eq.lmerMod(model, intercept = intercept, greek = greek,
+    greek_colors = greek_colors, subscript_colors = subscript_colors,
+    var_colors = var_colors, var_subscript_colors = var_subscript_colors,
+    raw_tex = raw_tex, swap_var_names = swap_var_names,
+    swap_subscript_names = swap_subscript_names, ital_vars = ital_vars,
+    label = label, index_factors = index_factors,
+    show_distribution = show_distribution, wrap = wrap,
+    terms_per_line = terms_per_line, operator_location = operator_location,
+    align_env = align_env, use_coefs = use_coefs, coef_digits = coef_digits,
+    fix_signs = fix_signs, font_size = font_size, mean_separate = mean_separate,
+    return_variances = return_variances, se_subscripts = se_subscripts, ...)
 }
 
-#' Equation generator for forecast::Arima
+# PhG: we do not want to repeat usage, so no @describeIn extract_eq forecast_ARIMA `extract_eq()` method
 #' @export
 #' @noRd
 extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta",
@@ -417,8 +459,15 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
                                       operator_location = "end", align_env = "aligned",
                                       use_coefs = FALSE, coef_digits = 2,
                                       fix_signs = TRUE, font_size = NULL,
-                                      mean_separate, return_variances = FALSE, ...) {
+                                      mean_separate = NULL, return_variances = FALSE,
+                                      se_subscripts = FALSE, ...) {
 
+  if (isTRUE(se_subscripts)) {
+    warning("Standard errors are not supported for mixed effects models",
+      call. = FALSE
+    )
+  }
+  
   # Determine if we are working on Regression w/ Arima Errors
   regression <- helper_arima_is_regression(model)
 
@@ -522,7 +571,8 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
 #' @param coef character vector of model coefficients (from output of the function create_eq)
 #' @param model a fitted model 
 #' 
-#' @return a character vector adding the errors beneath each term 
+#' @return a character vector adding the errors beneath each term
+#' @noRd
 add_se <- function(coef, model) {
   errors <- summary(model)$coefficients[,"Std. Error"]
   errors <- as.character(round(errors, 3))
@@ -542,13 +592,14 @@ add_se <- function(coef, model) {
 #' 
 #' @param equation list that contains the equation
 #' 
-#' @return a list containing the equation with fixed signs  
+#' @return a list containing the equation with fixed signs
+#' @noRd
 fix_coef_signs_se <- function(equation) {
   components <- strsplit(equation, " + ", fixed = TRUE)
   components <- unlist(components)
   terms <- components[2:length(components)]
   negative <- ifelse(grepl(terms, pattern = "-"), " - ", " + ")
   terms <- lapply(X = terms, FUN = gsub,  pattern = "-", replacement = "")
-  terms <- paste0(negative, terms, collapse="")
+  terms <- paste0(negative, terms, collapse = "")
   list(paste(components[1], terms))
 }

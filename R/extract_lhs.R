@@ -14,7 +14,6 @@ extract_lhs <- function(model, ...) {
 #'
 #' Extract a string of the outcome/dependent/y variable of a model
 #'
-#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -48,7 +47,6 @@ extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs,
 #'
 #' Extract a string of the outcome/dependent/y variable of a model
 #'
-#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -81,7 +79,6 @@ extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, swap_var_names,
 #'
 #' Extract a string of the outcome/dependent/y variable of a model
 #'
-#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -97,7 +94,6 @@ extract_lhs.glmerMod <- function(model, ital_vars, use_coefs, ...) {
 #' Extract a string of the outcome/dependent/y variable with the appropriate
 #' link function.
 #'
-#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -298,7 +294,6 @@ extract_lhs2_binomial <- function(model, ital_vars, use_coefs, swap_var_names,
 #' Extract a string of the outcome/dependent/y variable with the appropriate
 #' link function.
 #'
-#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -333,7 +328,6 @@ extract_lhs.polr <- function(model, ital_vars, ...) {
 #' Extract a string of the outcome/dependent/y variable with the appropriate
 #' link function.
 #'
-#' @export
 #' @keywords internal
 #'
 #' @inheritParams extract_eq
@@ -370,7 +364,6 @@ modify_lhs_for_link <- function(model, ...) {
   UseMethod("modify_lhs_for_link", model)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 modify_lhs_for_link.glm <- function(model, lhs, ...) {
@@ -388,7 +381,6 @@ modify_lhs_for_link.glm <- function(model, lhs, ...) {
   gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 modify_lhs_for_link.polr <- function(model, lhs, ...) {
@@ -399,7 +391,6 @@ modify_lhs_for_link.polr <- function(model, lhs, ...) {
   gsub("y", lhs, filtered_link_formula, fixed = TRUE)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 modify_lhs_for_link.clm <- function(model, lhs, ...) {

@@ -1,6 +1,9 @@
 # equatiomatic 0.3.3
 * Vignette 'intro-equatiomatic' renamed 'equatiomatic' to enable a "Getting
     Started" entry in the pkgdown site.
+* Documentation was cleaned up. In particular, methods for internal generics are
+    not exported any more. All methods for `extract_eq()` are now properly
+    documented in the `extract_eq()` help page.
 
 # equatiomatic 0.3.2
 * New maintainer (Philippe Grosjean phgrosjean@sciviews.org).

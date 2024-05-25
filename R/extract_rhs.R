@@ -23,7 +23,6 @@ extract_rhs <- function(model, ...) {
 #'   like subscripts are nested inside each list element. List elements with two
 #'   or more terms are interactions.
 #' @noRd
-#' @export
 #' @examples
 #' \dontrun{
 #' library(palmerpenguins)
@@ -113,7 +112,6 @@ extract_rhs.default <- function(model, index_factors, ...) {
 }
 
 #' @noRd
-#' @export
 extract_rhs.lmerMod <- function(model, return_variances, ...) {
 
   check_dots(...)
@@ -227,7 +225,6 @@ extract_rhs.lmerMod <- function(model, return_variances, ...) {
 }
 
 #' @noRd
-#' @export
 extract_rhs.glmerMod <- function(model, ...) {
   extract_rhs.lmerMod(model, ...)
 }
@@ -672,14 +669,12 @@ wrap_rhs <- function(model, tex, ...) {
   UseMethod("wrap_rhs", model)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 wrap_rhs.default <- function(model, tex, ...) {
   return(tex)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 wrap_rhs.glm <- function(model, tex, ...) {
@@ -692,7 +687,6 @@ wrap_rhs.glm <- function(model, tex, ...) {
   return(rhs)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 wrap_rhs.polr <- function(model, tex, ...) {
@@ -705,7 +699,6 @@ wrap_rhs.polr <- function(model, tex, ...) {
   return(rhs)
 }
 
-#' @export
 #' @keywords internal
 #' @noRd
 wrap_rhs.clm <- function(model, tex, ...) {

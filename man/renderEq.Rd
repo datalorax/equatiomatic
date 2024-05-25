@@ -21,12 +21,14 @@ eqOutput(outputId)
 \item{outputId}{The identifier of the output from the server. Should be
 passed as a string.}
 }
+\value{
+Render the equation in a suitable way for Shiny for \code{\link[=renderEq]{renderEq()}} in
+an \code{\link[=eqOutput]{eqOutput()}} equation output element that can be included in a panel.
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-}
-\details{
 These are a set of functions designed to help render equations in
-\link{shiny} applications. For a complete example see
+\link{shiny} applications (see the vignette about Shiny).
 }
 \section{Functions}{
 \itemize{

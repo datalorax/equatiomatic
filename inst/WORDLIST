@@ -33,6 +33,7 @@ columbia
 covr
 covrpage
 darwin
+docx
 edu
 eq
 equatiomatic’
@@ -40,8 +41,10 @@ expresion
 frac
 gelman
 geoms
+gfm
 ggplot
 glm
+glmerMod
 greek
 http
 knitr
@@ -50,6 +53,7 @@ lifecycle
 lm
 lme
 lmer
+lmerMod
 macOS
 magrittr
 mapply

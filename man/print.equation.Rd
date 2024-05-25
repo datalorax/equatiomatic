@@ -11,9 +11,10 @@
 
 \item{...}{not used}
 }
-\description{
-lifecycle::badge("stable")`
+\value{
+The unmodified object 'x' is returned invisibly. The function is
+used for its side effect of printing the equation.
 }
-\details{
+\description{
 Print 'LaTeX' equations built with \code{\link{extract_eq}}.
 }
