@@ -603,3 +603,47 @@ fix_coef_signs_se <- function(equation) {
   terms <- paste0(negative, terms, collapse = "")
   list(paste(components[1], terms))
 }
+
+#' @export
+#' @noRd
+extract_eq.model_fit <- 
+  function(model, intercept = "alpha", greek = "beta",
+           greek_colors = NULL, subscript_colors = NULL,
+           var_colors = NULL, var_subscript_colors = NULL, 
+           raw_tex = FALSE, 
+           swap_var_names = NULL, swap_subscript_names = NULL,
+           ital_vars = FALSE, label = NULL,
+           index_factors = FALSE, show_distribution = FALSE,
+           wrap = FALSE, terms_per_line = 4,
+           operator_location = "end", align_env = "aligned",
+           use_coefs = FALSE, coef_digits = 2,
+           fix_signs = TRUE, font_size = NULL,
+           mean_separate = NULL, return_variances = FALSE, 
+           se_subscripts = FALSE, ...) {
+    
+    if (inherits(model, c("model_fit", "workflow"))) {
+      if ("fit" %in% names(model)) {
+        model <- model$fit
+      }
+    }
+    
+    extract_eq(model, intercept = intercept, greek = greek,
+               greek_colors = greek_colors, subscript_colors = subscript_colors,
+               var_colors = var_colors, 
+               var_subscript_colors = var_subscript_colors, 
+               raw_tex = raw_tex, 
+               swap_var_names = swap_var_names, 
+               swap_subscript_names = swap_subscript_names,
+               ital_vars = ital_vars, label = label,
+               index_factors = index_factors, 
+               show_distribution = show_distribution,
+               wrap = wrap, terms_per_line = terms_per_line,
+               operator_location = operator_location, 
+               align_env = align_env,
+               use_coefs = use_coefs, coef_digits = coef_digits,
+               fix_signs = fix_signs, font_size = font_size,
+               mean_separate = mean_separate, 
+               return_variances = return_variances, 
+               se_subscripts = se_subscripts, ...)
+}
+
