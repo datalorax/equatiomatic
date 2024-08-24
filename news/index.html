@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -75,6 +75,10 @@
       <small>Source: <a href="https://github.com/datalorax/equatiomatic/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.3.4" id="equatiomatic-034">equatiomatic 0.3.4<a class="anchor" aria-label="anchor" href="#equatiomatic-034"></a></h2>
+<ul><li>{tidymodels} compatibility: method <code><a href="../reference/extract_eq.html">extract_eq()</a></code> added for <strong>model_fit</strong> objects of the {parsnip} package, see <a href="https://github.com/datalorax/equatiomatic/pull/237" class="external-link">#237</a>. Previously, the model object had to be extracted using <code>parsnip::fit()</code> before using <code><a href="../reference/extract_eq.html">extract_eq()</a></code>. This not necessary any more, but still valid (no breaking changes). Note that <code><a href="../reference/extract_eq.html">extract_eq()</a></code> cannot handle yet <strong>workflow</strong> objects from the {workflows} package, due to the particular way variables are handled there.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="equatiomatic-033">equatiomatic 0.3.3<small>2024-05-26</small><a class="anchor" aria-label="anchor" href="#equatiomatic-033"></a></h2>
 <ul><li>Vignette ‘intro-equatiomatic’ renamed ‘equatiomatic’ to enable a “Getting Started” entry in the pkgdown site.</li>
