@@ -1,6 +1,6 @@
 Package: equatiomatic
 Title: Transform Models into 'LaTeX' Equations
-Version: 0.3.3
+Version: 0.3.4
 Authors@R:
     c(person(given = "Daniel",
              family = "Anderson",
@@ -51,6 +51,10 @@ Authors@R:
              role = "ctb",
              email = "quinnarlise@gmail.com",
              comment = c(ORCID = "https://orcid.org/0000-0001-5399-0237")),
+      person(given = "David",
+             family = "Kane",
+             role = "ctb",
+             email = "dave.kane@gmail.com"),
       person(given = "Philippe",
              family = "Grosjean",
              role = "cre",
@@ -94,7 +98,7 @@ VignetteBuilder:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Language: en-US

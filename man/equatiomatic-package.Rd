@@ -38,6 +38,7 @@ Other contributors:
   \item Reza Norouzian \email{rnorouzian@gmail.com} (\href{https://orcid.org/0000-0002-0531-6886}{ORCID}) [contributor]
   \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) (@patilindrajeets) [contributor]
   \item Quinn White \email{quinnarlise@gmail.com} (\href{https://orcid.org/0000-0001-5399-0237}{ORCID}) [contributor]
+  \item David Kane \email{dave.kane@gmail.com} [contributor]
 }
 
 }

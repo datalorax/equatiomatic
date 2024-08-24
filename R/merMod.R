@@ -788,6 +788,8 @@ create_l1.lmerMod <- function(model, mean_separate,
   }
 }
 
+#' @export
+#' @noRd
 create_l1.glmerMod <- function(model, mean_separate,
                               ital_vars, wrap, terms_per_line,
                               use_coefs, coef_digits, fix_signs,

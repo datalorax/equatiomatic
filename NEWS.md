@@ -1,3 +1,13 @@
+# equatiomatic 0.3.4
+* {tidymodels} compatibility: method `extract_eq()` added for **model_fit**
+    objects of the {parsnip} package, see
+    [#237](https://github.com/datalorax/equatiomatic/pull/237). Previously,
+    the model object had to be extracted using `parsnip::fit()` before using
+    `extract_eq()`. This not necessary any more, but still valid (no breaking
+    changes). Note that `extract_eq()` cannot handle yet **workflow** objects
+    from the {workflows} package, due to the particular way variables are
+    handled there.
+
 # equatiomatic 0.3.3
 * Vignette 'intro-equatiomatic' renamed 'equatiomatic' to enable a "Getting
     Started" entry in the pkgdown site.
