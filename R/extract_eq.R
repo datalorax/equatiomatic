@@ -621,8 +621,53 @@ extract_eq.model_fit <-
            mean_separate = NULL, return_variances = FALSE, 
            se_subscripts = FALSE, ...) {
     
-    if ("fit" %in% names(model)) {
-      fitted_model <- model$fit
+  if ("fit" %in% names(model)) {
+    fitted_model <- model$fit
+    extract_eq(fitted_model, intercept = intercept, greek = greek,
+      greek_colors = greek_colors, subscript_colors = subscript_colors,
+      var_colors = var_colors, 
+      var_subscript_colors = var_subscript_colors, 
+      raw_tex = raw_tex, 
+      swap_var_names = swap_var_names, 
+      swap_subscript_names = swap_subscript_names,
+      ital_vars = ital_vars, label = label,
+      index_factors = index_factors, 
+      show_distribution = show_distribution,
+      wrap = wrap, terms_per_line = terms_per_line,
+      operator_location = operator_location, 
+      align_env = align_env,
+      use_coefs = use_coefs, coef_digits = coef_digits,
+      fix_signs = fix_signs, font_size = font_size,
+      mean_separate = mean_separate, 
+      return_variances = return_variances, 
+      se_subscripts = se_subscripts, ...)  
+  } else {
+    stop("The 'model' does not appear to be a proper **model_fit** object ",
+      "because it does not have a 'fit' component.")
+  }
+}
+
+#' @export
+#' @noRd
+extract_eq.workflow <- 
+  function(model, intercept = "alpha", greek = "beta",
+           greek_colors = NULL, subscript_colors = NULL,
+           var_colors = NULL, var_subscript_colors = NULL, 
+           raw_tex = FALSE, 
+           swap_var_names = NULL, swap_subscript_names = NULL,
+           ital_vars = FALSE, label = NULL,
+           index_factors = FALSE, show_distribution = FALSE,
+           wrap = FALSE, terms_per_line = 4,
+           operator_location = "end", align_env = "aligned",
+           use_coefs = FALSE, coef_digits = 2,
+           fix_signs = TRUE, font_size = NULL,
+           mean_separate = NULL, return_variances = FALSE, 
+           se_subscripts = FALSE, ...) {
+    
+  if ("fit" %in% names(model)) {
+    fitted_stage <- model$fit
+    if ("fit" %in% names(fitted_stage)) {
+      fitted_model <- fitted_stage$fit
       extract_eq(fitted_model, intercept = intercept, greek = greek,
         greek_colors = greek_colors, subscript_colors = subscript_colors,
         var_colors = var_colors, 
@@ -640,9 +685,13 @@ extract_eq.model_fit <-
         fix_signs = fix_signs, font_size = font_size,
         mean_separate = mean_separate, 
         return_variances = return_variances, 
-        se_subscripts = se_subscripts, ...)  
+        se_subscripts = se_subscripts, ...) 
     } else {
-      stop("The 'model' does not appear to be a proper **model_fit** object ",
-        "because it does not have a 'fit' component.")
+      stop("The 'model' does not appear to be a proper **workflow** object ",
+        "because it does not have a proper 'fit' component.")
     }
+  } else {
+    stop("The 'model' does not appear to be a proper **workflow** object ",
+      "because it does not have a 'fit' component.")
+  }
 }
