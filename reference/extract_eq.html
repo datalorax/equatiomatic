@@ -10,7 +10,7 @@ default method also supports clm objects obtained with ordinal::clm()."><meta pr
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -38,7 +38,7 @@ default method also supports clm objects obtained with ordinal::clm()."><meta pr
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -66,20 +66,20 @@ default method also supports clm objects obtained with ordinal::clm()."><meta pr
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/datalorax/equatiomatic/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>'LaTeX' equation for R models</h1>
-    <small class="dont-index">Source: <a href="https://github.com/datalorax/equatiomatic/blob/HEAD/R/extract_eq.R" class="external-link"><code>R/extract_eq.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/datalorax/equatiomatic/blob/master/R/extract_eq.R" class="external-link"><code>R/extract_eq.R</code></a></small>
     <div class="hidden name"><code>extract_eq.Rd</code></div>
     </div>
 
@@ -127,24 +127,26 @@ default method also supports clm objects obtained with <code><a href="https://rd
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>model</dt>
+
+
+<dl><dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
 <dd><p>A fitted model</p></dd>
 
 
-<dt>intercept</dt>
+<dt id="arg-intercept">intercept<a class="anchor" aria-label="anchor" href="#arg-intercept"></a></dt>
 <dd><p>How should the intercept be displayed? Default is <code>"alpha"</code>,
 but can also accept <code>"beta"</code>, in which case the it will be displayed
 as beta zero.</p></dd>
 
 
-<dt>greek</dt>
+<dt id="arg-greek">greek<a class="anchor" aria-label="anchor" href="#arg-greek"></a></dt>
 <dd><p>What notation should be used for
 coefficients? Currently only accepts <code>"beta"</code> (with plans for future
 development). Can be used in combination with <code>raw_tex</code> to use any
 notation, e.g., <code>"\hat{\beta}"</code>.</p></dd>
 
 
-<dt>greek_colors</dt>
+<dt id="arg-greek-colors">greek_colors<a class="anchor" aria-label="anchor" href="#arg-greek-colors"></a></dt>
 <dd><p>The colors of the greek notation in the equation. Must
 be a single color (named or HTML hex code) or a vector of colors (which
 will be recycled if smaller than the number of terms in the model). When
@@ -154,20 +156,20 @@ color definitions for you if HTML codes are supplied. Note that this is
 not yet implemented for mixed effects models (lme4).</p></dd>
 
 
-<dt>subscript_colors</dt>
+<dt id="arg-subscript-colors">subscript_colors<a class="anchor" aria-label="anchor" href="#arg-subscript-colors"></a></dt>
 <dd><p>The colors of the subscripts for the greek notation.
 The argument structure is equivalent to <code>greek_colors</code> (i.e., see
 above for more detail).</p></dd>
 
 
-<dt>var_colors</dt>
+<dt id="arg-var-colors">var_colors<a class="anchor" aria-label="anchor" href="#arg-var-colors"></a></dt>
 <dd><p>The color of the variable names. This takes a named vector
 of the form <code>c("variable" = "color")</code>. For example
 <code>c("bill_length_mm" = "#00d4fa", "island" = "#00fa85")</code>. Colors can
 be names (e.g., <code>"red"</code>) or HTML hex codes, as shown in the example.</p></dd>
 
 
-<dt>var_subscript_colors</dt>
+<dt id="arg-var-subscript-colors">var_subscript_colors<a class="anchor" aria-label="anchor" href="#arg-var-subscript-colors"></a></dt>
 <dd><p>The colors of the factor subscripts for
 categorical variables. The interface for this is equivalent to
 <code>var_colors</code>, and all subscripts for a given variable will be
@@ -176,28 +178,28 @@ displayed in the provided color. For example, the code
 and "Torgersen" being green (assuming "Biscoe" was the reference group).</p></dd>
 
 
-<dt>raw_tex</dt>
+<dt id="arg-raw-tex">raw_tex<a class="anchor" aria-label="anchor" href="#arg-raw-tex"></a></dt>
 <dd><p>Logical. Is the greek code being passed to denote coefficients
 raw tex code?</p></dd>
 
 
-<dt>swap_var_names</dt>
+<dt id="arg-swap-var-names">swap_var_names<a class="anchor" aria-label="anchor" href="#arg-swap-var-names"></a></dt>
 <dd><p>A vector of the form c("old_var_name" = "new name").
 For example: c("bill_length_mm" = "Bill Length (MM)").</p></dd>
 
 
-<dt>swap_subscript_names</dt>
+<dt id="arg-swap-subscript-names">swap_subscript_names<a class="anchor" aria-label="anchor" href="#arg-swap-subscript-names"></a></dt>
 <dd><p>A vector of the form
 c("old_subscript_name" = "new name"). For example:
 c("f" = "Female").</p></dd>
 
 
-<dt>ital_vars</dt>
+<dt id="arg-ital-vars">ital_vars<a class="anchor" aria-label="anchor" href="#arg-ital-vars"></a></dt>
 <dd><p>Logical, defaults to <code>FALSE</code>. Should the variable names
 not be wrapped in the <code>\operatorname{}</code> command?</p></dd>
 
 
-<dt>label</dt>
+<dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
 <dd><p>A label for the equation, which can then be used for in-text
 references. See example <a href="https://www.overleaf.com/learn/latex/Cross_referencing_sections,_equations_and_floats#Referencing_equations.2C_figures_and_tables" class="external-link">here</a>.
 Note that this <strong>only works for PDF output</strong>. The in-text references also
@@ -207,29 +209,29 @@ specific label. Notice the space after the colon before the label. This
 also must be there, or the cross-reference will fail.</p></dd>
 
 
-<dt>index_factors</dt>
+<dt id="arg-index-factors">index_factors<a class="anchor" aria-label="anchor" href="#arg-index-factors"></a></dt>
 <dd><p>Logical, defaults to <code>FALSE</code>. Should the factors
 be indexed, rather than using subscripts to display all levels?</p></dd>
 
 
-<dt>show_distribution</dt>
+<dt id="arg-show-distribution">show_distribution<a class="anchor" aria-label="anchor" href="#arg-show-distribution"></a></dt>
 <dd><p>Logical. When fitting a logistic or probit
 regression, should the binomial distribution be displayed? Defaults to
 <code>FALSE</code>.</p></dd>
 
 
-<dt>wrap</dt>
+<dt id="arg-wrap">wrap<a class="anchor" aria-label="anchor" href="#arg-wrap"></a></dt>
 <dd><p>Logical, defaults to <code>FALSE</code>. Should the terms on the
 right-hand side of the equation be split into multiple lines? This is
 helpful with models with many terms.</p></dd>
 
 
-<dt>terms_per_line</dt>
+<dt id="arg-terms-per-line">terms_per_line<a class="anchor" aria-label="anchor" href="#arg-terms-per-line"></a></dt>
 <dd><p>Integer, defaults to 4. The number of right-hand side
 terms to include per line. Used only when <code>wrap</code> is <code>TRUE</code>.</p></dd>
 
 
-<dt>operator_location</dt>
+<dt id="arg-operator-location">operator_location<a class="anchor" aria-label="anchor" href="#arg-operator-location"></a></dt>
 <dd><p>Character, one of “end” (the default) or
 “start”. When terms are split across multiple lines, they are split
 at mathematical operators like <code>+</code>. If set to “end”, each line will
@@ -237,36 +239,36 @@ end with a trailing operator (<code>+</code> or <code>-</code>). If set to “st
 line will begin with an operator.</p></dd>
 
 
-<dt>align_env</dt>
+<dt id="arg-align-env">align_env<a class="anchor" aria-label="anchor" href="#arg-align-env"></a></dt>
 <dd><p>TeX environment to wrap around equation. Must be one of
 <code>aligned</code>, <code>aligned*</code>, <code>align</code>, or <code>align*</code>. Defaults
 to <code>aligned</code>.</p></dd>
 
 
-<dt>use_coefs</dt>
+<dt id="arg-use-coefs">use_coefs<a class="anchor" aria-label="anchor" href="#arg-use-coefs"></a></dt>
 <dd><p>Logical, defaults to <code>FALSE</code>. Should the actual model
 estimates be included in the equation instead of math symbols?</p></dd>
 
 
-<dt>coef_digits</dt>
+<dt id="arg-coef-digits">coef_digits<a class="anchor" aria-label="anchor" href="#arg-coef-digits"></a></dt>
 <dd><p>Integer, defaults to 2. The number of decimal places to
 round to when displaying model estimates.</p></dd>
 
 
-<dt>fix_signs</dt>
+<dt id="arg-fix-signs">fix_signs<a class="anchor" aria-label="anchor" href="#arg-fix-signs"></a></dt>
 <dd><p>Logical, defaults to <code>TRUE</code>. If disabled,
 coefficient estimates that are negative are preceded with a "+" (e.g.
 <code>5(x) + -3(z)</code>). If enabled, the "+ -" is replaced with a "-" (e.g.
 <code>5(x) - 3(z)</code>).</p></dd>
 
 
-<dt>font_size</dt>
+<dt id="arg-font-size">font_size<a class="anchor" aria-label="anchor" href="#arg-font-size"></a></dt>
 <dd><p>The font size of the equation. Defaults to default of
 the output format. Takes any of the standard LaTeX arguments (see
 <a href="https://www.overleaf.com/learn/latex/Font_sizes,_families,_and_styles#Font_styles" class="external-link">here</a>).</p></dd>
 
 
-<dt>mean_separate</dt>
+<dt id="arg-mean-separate">mean_separate<a class="anchor" aria-label="anchor" href="#arg-mean-separate"></a></dt>
 <dd><p>Currently only support for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></code>
 models. Should the mean structure be inside or separated from the
 normal distribution? Defaults to <code>NULL</code>, in which case it will become
@@ -276,28 +278,26 @@ outcome ~ N(mu, sigma); mu = alpha + beta_1(wave). If <code>FALSE</code>, this
 same equation would be outcome ~ N(alpha + beta, sigma).</p></dd>
 
 
-<dt>return_variances</dt>
+<dt id="arg-return-variances">return_variances<a class="anchor" aria-label="anchor" href="#arg-return-variances"></a></dt>
 <dd><p>Logical. When <code>use_coefs = TRUE</code> with a mixed
 effects model (e.g., <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code>), should the variances and
 co-variances be returned? If <code>FALSE</code> (the default) standard deviations
 and correlations are returned instead.</p></dd>
 
 
-<dt>se_subscripts</dt>
+<dt id="arg-se-subscripts">se_subscripts<a class="anchor" aria-label="anchor" href="#arg-se-subscripts"></a></dt>
 <dd><p>Logical. If <code>se_subscripts = TRUE</code> then the
 equation will include the standard errors below each coefficient.
 This is supported for lm and glm models.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments (for future development; not currently used).</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A character of class “equation”.</p>
+    <p>A character of class “equation”.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -433,15 +433,15 @@ implemented for a given model.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
