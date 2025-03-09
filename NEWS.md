@@ -1,3 +1,6 @@
+# equatiomatic 0.3.6
+* Correction of the Authors@R field in the DESCRIPTION file (required by CRAN).
+
 # equatiomatic 0.3.5
 * The penguins dataset is now explicitly loaded from {equatiomatic} : another
     version appears in the {datasets} package version 4.5.0 with different

@@ -36,7 +36,7 @@ Other contributors:
   \item Ellis Hughes \email{ellishughes@live.com} (\href{https://orcid.org/0000-0003-0637-4436}{ORCID}) [contributor]
   \item Thomas Fung \email{thomas.fung.dr@gmail.com} (\href{https://orcid.org/0000-0003-2601-0728}{ORCID}) [contributor]
   \item Reza Norouzian \email{rnorouzian@gmail.com} (\href{https://orcid.org/0000-0002-0531-6886}{ORCID}) [contributor]
-  \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) (@patilindrajeets) [contributor]
+  \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) [contributor]
   \item Quinn White \email{quinnarlise@gmail.com} (\href{https://orcid.org/0000-0001-5399-0237}{ORCID}) [contributor]
   \item David Kane \email{dave.kane@gmail.com} [contributor]
 }
