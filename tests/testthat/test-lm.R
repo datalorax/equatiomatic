@@ -1,4 +1,5 @@
 test_that("Overlapping names don't result in an error", {
+  data("penguins", package = "equatiomatic")
   penguins2 <- penguins
   names(penguins2)[3:5] <- c("ca", "p", "gender_cat")
   

@@ -32,6 +32,8 @@ library(shinyWidgets)
 library(gtsummary)
 library(gt)
 
+data("penguins", package = "equatiomatic")
+
 ui <- fluidPage(
   titlePanel("equatiomatic w/Shiny"),
   sidebarLayout(

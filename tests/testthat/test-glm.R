@@ -1,4 +1,8 @@
 test_that("colorizing works", {
+  # Required for R >= 4.5.0, which provides another version of the penguins
+  # dataset with different column names!
+  data("penguins", package = "equatiomatic")
+  
   lr <- glm(sex ~ species * bill_length_mm,
             data = penguins,
             family = binomial(link = "logit")

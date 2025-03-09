@@ -1,3 +1,10 @@
+# equatiomatic 0.3.5
+* The penguins dataset is now explicitly loaded from {equatiomatic} : another
+    version appears in the {datasets} package version 4.5.0 with different
+    column names and it causes some tests to fail and confusion in the examples.
+    
+* Correction of an URL (https instead of http) in the lme4-lmer vignette.
+
 # equatiomatic 0.3.4
 * {tidymodels} *partial* compatibility: method `extract_eq()` added for
     **model_fit** objects of the {parsnip} package, and for **workflow** objects

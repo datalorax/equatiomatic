@@ -34,6 +34,7 @@ library(equatiomatic)
 Next, we'll need a model. Let's fit a simple linear model to the [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/) dataset (which is exported from **{equatiomatic}**) using bill length to predict body mass. 
 
 ```{r model_setup}
+data("penguins", package = "equatiomatic")
 # Fit an lm model
 m <- lm(body_mass_g ~ bill_length_mm, penguins)
 ```

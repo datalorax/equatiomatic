@@ -77,11 +77,10 @@ extract_eq(mod2)
 <img src="man/figures/README-example-shortcut-preview-1.png" width="100%" />
 
 When using categorical variables, it will include the levels of the
-variables as subscripts. Here, we use data from the
-[{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/index.html)
-dataset.
+variables as subscripts.
 
 ``` r
+data("penguins", package = "equatiomatic")
 mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
 extract_eq(mod3)
 ```

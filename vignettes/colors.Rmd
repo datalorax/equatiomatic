@@ -29,6 +29,7 @@ For example, imagine we have a simple linear regression model, like this
 
 ```{r }
 library(equatiomatic)
+data("penguins", package = "equatiomatic")
 slr <- lm(bill_length_mm ~ body_mass_g, data = penguins)
 ```
 

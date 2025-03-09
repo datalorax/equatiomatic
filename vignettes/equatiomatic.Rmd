@@ -25,6 +25,7 @@ length using data from the [{palmerpenguins}](https://github.com/allisonhorst/pa
 package:
 
 ```{r, warning = FALSE, results = 'markup'}
+data("penguins", package = "equatiomatic")
 lm(bill_length_mm ~ bill_depth_mm, penguins)
 ```
 

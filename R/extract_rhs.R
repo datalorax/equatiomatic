@@ -25,7 +25,7 @@ extract_rhs <- function(model, ...) {
 #' @noRd
 #' @examples
 #' \dontrun{
-#' library(palmerpenguins)
+#' data("penguins", package = "equatiomatic")
 #' mod1 <- lm(body_mass_g ~ bill_length_mm + species * flipper_length_mm, penguins)
 #'
 #' extract_rhs(mod1)
