@@ -2,7 +2,7 @@
 #' 
 #' `r lifecycle::badge("experimental")`
 #' These are a set of functions designed to help render equations in 
-#' [shiny][shiny] applications (see the vignette about Shiny).
+#' Shiny applications (see the vignette about Shiny).
 #'
 #' @param expr An R expression, specifically a call to [extract_eq()]
 #' @param outputId The identifier of the output from the server. Should be

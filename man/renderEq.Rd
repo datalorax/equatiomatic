@@ -28,7 +28,7 @@ an \code{\link[=eqOutput]{eqOutput()}} equation output element that can be inclu
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 These are a set of functions designed to help render equations in
-\link{shiny} applications (see the vignette about Shiny).
+Shiny applications (see the vignette about Shiny).
 }
 \section{Functions}{
 \itemize{
