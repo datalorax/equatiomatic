@@ -24,7 +24,7 @@ default method also supports clm objects obtained with ordinal::clm()."><meta pr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
       </span>
     </div>
 
@@ -323,6 +323,7 @@ implemented for a given model.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Works for categorical variables too, putting levels as subscripts</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"penguins"</span>, package <span class="op">=</span> <span class="st">"equatiomatic"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>, <span class="va">penguins</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">extract_eq</span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
