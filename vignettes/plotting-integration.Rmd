@@ -84,8 +84,8 @@ ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) +
   geom_point() +
   geom_smooth(method = "lm", color = "#ab00fa") +
   annotate("text",
-    label = TeX(prep_eq), x = 35, y = 2500, hjust = 0,
-    color = "#ab00fa"
+    label = as.character(TeX(prep_eq)), x = 35, y = 2500, hjust = 0,
+    color = "#ab00fa", parse = TRUE
   ) +
   labs(title = "Relation between bill length and body mass") +
   ylim(2000, 6500)
