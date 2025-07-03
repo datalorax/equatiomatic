@@ -1,3 +1,6 @@
+# equatiomatic 0.3.7
+* Extracts equations for `summary.lm`.
+
 # equatiomatic 0.3.6
 * Correction of the Authors@R field in the DESCRIPTION file (required by CRAN).
 

@@ -10,7 +10,7 @@ extract_lhs <- function(model, ...) {
   UseMethod("extract_lhs", model)
 }
 
-#' Extract left-hand side of an lm object
+#' Extract left-hand side of an lm object object
 #'
 #' Extract a string of the outcome/dependent/y variable of a model
 #'
@@ -42,6 +42,19 @@ extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs,
   lhs_escaped <- add_tex_ital_v(lhs_escaped, ital_vars)
   colorize_terms(var_colors, list(lhs), list(lhs_escaped))
 }
+
+#' Extract left-hand side of an summary.lm object object
+#'
+#' Extract a string of the outcome/dependent/y variable of a model
+#'
+#' @keywords internal
+#'
+#' @inheritParams extract_eq
+#'
+#' @return A character string
+#' @noRd
+
+extract_lhs.summary.lm <- extract_lhs.lm
 
 #' Extract left-hand side of an lme4::lmer object
 #'
