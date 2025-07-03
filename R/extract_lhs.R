@@ -43,7 +43,7 @@ extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs,
   colorize_terms(var_colors, list(lhs), list(lhs_escaped))
 }
 
-#' Extract left-hand side of an summary.lm object object
+#' Extract left-hand side of an summary.lm object
 #'
 #' Extract a string of the outcome/dependent/y variable of a model
 #'
