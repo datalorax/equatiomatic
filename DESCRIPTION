@@ -59,7 +59,17 @@ Authors@R:
              family = "Grosjean",
              role = "cre",
              email = "phgrosjean@sciviews.org",
-             comment = c(ORCID = "0000-0002-2694-9471")))
+             comment = c(ORCID = "0000-0002-2694-9471")),
+      person(given = "Teun",
+             family = "van den Brand",
+             role = "ctb",
+             email = "t.vandenbrand@nki.nl",
+             comment = c(ORCID = "0000-0002-9335-7468")),
+      person(given = "Guyliann",
+             family = "Engels",
+             role = "ctb",
+             email = "guyliann.engels@umons.ac.be",
+             comment = c(ORCID = "0000-0001-9514-1014")))
 Maintainer: Philippe Grosjean <phgrosjean@sciviews.org>
 Description: The goal of 'equatiomatic' is to reduce the pain
     associated with writing 'LaTeX' formulas from fitted models. The

@@ -39,6 +39,8 @@ Other contributors:
   \item Indrajeet Patil \email{patilindrajeet.science@gmail.com} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) [contributor]
   \item Quinn White \email{quinnarlise@gmail.com} (\href{https://orcid.org/0000-0001-5399-0237}{ORCID}) [contributor]
   \item David Kane \email{dave.kane@gmail.com} [contributor]
+  \item Teun van den Brand \email{t.vandenbrand@nki.nl} (\href{https://orcid.org/0000-0002-9335-7468}{ORCID}) [contributor]
+  \item Guyliann Engels \email{guyliann.engels@umons.ac.be} (\href{https://orcid.org/0000-0001-9514-1014}{ORCID}) [contributor]
 }
 
 }
