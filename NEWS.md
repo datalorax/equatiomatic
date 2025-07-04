@@ -1,5 +1,10 @@
 # equatiomatic 0.3.7
-* Extracts equations for `summary.lm`.
+* Extracts equations for `summary.lm`
+    [PR #245](https://github.com/datalorax/equatiomatic/pull/245).
+
+* Correction in the plotting-integration vignette: ggplot2 now requires a vector
+    for text annotation, so, use `as.character()` and specify `parse = TRUE` ()
+    [PR #244](https://github.com/datalorax/equatiomatic/pull/244).
 
 # equatiomatic 0.3.6
 * Correction of the Authors@R field in the DESCRIPTION file (required by CRAN).
