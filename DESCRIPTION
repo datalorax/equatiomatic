@@ -1,6 +1,6 @@
 Package: equatiomatic
 Title: Transform Models into 'LaTeX' Equations
-Version: 0.3.7
+Version: 0.3.8
 Authors@R:
     c(person(given = "Daniel",
              family = "Anderson",
@@ -87,6 +87,7 @@ Imports:
     broom.mixed,
     shiny,
     knitr,
+    rmarkdown,
     stats,
     utils
 Suggests:
@@ -98,9 +99,7 @@ Suggests:
     lme4,
     MASS,
     ordinal,
-    rmarkdown,
     testthat (>= 3.0.0),
-    texPreview (>= 2.0.0),
     gtsummary,
     spelling
 VignetteBuilder:

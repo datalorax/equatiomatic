@@ -1,3 +1,7 @@
+# equatiomatic 0.3.8
+* A new function `preview_eq()` uses rmarkdown and pandoc to generate a preview
+    of the equation. The package no longer needs the texPreview package now.
+
 # equatiomatic 0.3.7
 * Extracts equations for `summary.lm`
     [PR #245](https://github.com/datalorax/equatiomatic/pull/245).

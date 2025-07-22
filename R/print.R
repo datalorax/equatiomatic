@@ -35,36 +35,13 @@ print.equation <- function(x, ...) {
 #'
 knit_print.equation <- function(x, ..., tex_packages = "\\renewcommand*\\familydefault{\\rmdefault}") {
   eq <- format(x)
-  if (isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") %in% c("gfm", "markdown_strict"))) {
-    if (!is_texPreview_installed()) {
-      message(
-        paste(
-          "Please install \"{texPreview}\" with",
-          "`install.packages(\"texPreview\")` for equations to render with",
-          "GitHub flavored markdown. Defaulting to raw TeX code."), 
-        call. = FALSE)
-      print(eq)
-    } else {
-      knit_print(texPreview::tex_preview(eq, usrPackages = tex_packages))
-      if (knitr::opts_knit$get("rmarkdown.pandoc.to") == "markdown_strict") {
-        knit_print(texPreview::tex_preview(eq,
-          usrPackages = tex_packages,
-          returnType = "html",
-          density = 300
-        ))
-      }
-    }
+  if (isTRUE(knitr::opts_knit$get("rmarkdown.pandoc.to") %in% "markdown_strict")) {
+    # Just print raw LaTeX
+    print(eq)
   } else {
     return(asis_output(eq))
   }
 }
-
-#' @keywords internal
-#' @noRd
-is_texPreview_installed <- function() {
-  requireNamespace("texPreview", quietly = TRUE)
-}
-
 
 #' Format 'LaTeX' equations
 #'
@@ -89,4 +66,43 @@ format.equation <- function(x, ..., latex = knitr::is_latex_output()) {
   } else {
     paste0(c("$$\n", x, "\n$$\n"), collapse = "")
   }
+}
+
+#' Preview an equation in a web browser
+#'
+#' Preview 'LaTeX' equations built with \code{\link{extract_eq}}.
+#'
+#' @param x 'LaTeX' equation built with \code{\link{extract_eq}}
+#' @param ... not used
+#'
+#' @returns The path to the temporary html file that was created to preview the
+#'   equation is returned invisibly.
+#' @export
+#'
+#' @examples
+#' mod1 <- lm(mpg ~ cyl + disp, mtcars)
+#' eq1 <- extract_eq(mod1)
+#' eq1 # Not that nice
+#' preview_eq(eq1)
+#' # or easier...
+#' preview_eq(mod1)
+preview_eq <- function(x, ...) {
+  if (!rmarkdown::pandoc_available())
+    stop("Pandoc is not available. Please install it to use this function.",
+      call. = FALSE)
+  
+  if (!inherits(x, "equation"))
+    x <- extract_eq(x)
+  
+  rmd <- tempfile(fileext = ".Rmd")
+  cat(sprintf("---\ntitle: \"&nbsp;\"\n---\n$$\n%s\n$$\n", x), file = rmd)
+  rmarkdown::render(rmd, output_format = rmarkdown::html_document(...),
+    quiet = TRUE)
+  
+  file_out <- sub("\\.Rmd$", ".html", rmd)
+  viewer <- getOption("viewer", default = getOption("browser", NULL))
+  if (!is.function(viewer))
+    viewer <- utils::browseURL
+  viewer(file_out)
+  invisible(file_out)
 }
