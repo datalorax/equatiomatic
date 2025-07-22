@@ -1,3 +1,7 @@
+# equatiomatic 0.4.1
+* `format.equation()` now works for several equations in the **equation**
+    object (solve issue #207).
+
 # equatiomatic 0.4.0
 * The new functions `equation()`, `eq_()` and `eq__()` ease the inclusion of
     LaTeX equations in R Markdown or Quarto documents. They also allow to

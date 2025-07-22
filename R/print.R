@@ -61,10 +61,10 @@ knit_print.equation <- function(x, ..., tex_packages = "\\renewcommand*\\familyd
 format.equation <- function(x, ..., latex = knitr::is_latex_output()) {
   if (isTRUE(latex)) {
     header <- paste0(attr(x, "latex_define_colors"), collapse = "\n")
-    eq <- paste0(c("\n\n\\begin{equation}\n", x, "\n\\end{equation}"))
-    paste0(c(header, eq))
+    eq <- paste0("\n\n\\begin{equation}\n", x, "\n\\end{equation}")
+    paste0(header, eq)
   } else {
-    paste0(c("$$\n", x, "\n$$\n"), collapse = "")
+    paste0("$$\n", x, "\n$$\n")
   }
 }
 
