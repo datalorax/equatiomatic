@@ -1,3 +1,14 @@
+# equatiomatic 0.4.0
+* The new functions `equation()`, `eq_()` and `eq__()` ease the inclusion of
+    LaTeX equations in R Markdown or Quarto documents. They also allow to
+    provide the LaTeX code of the equation directly, and they use 'label' and
+    'units' attributes from the original dataset automatically to rename the
+    variables in the equations. `equation()` just returns the LaTeX code.
+    `eq_()` is meant to easily include inline equation using an inline chunk
+    like `r eq_(mod1)`. `eq__()` (with two underscores) is meant to be used in a
+    code chunk inside a `$$...$$` Markdown construct, possibly with a label
+    (`$$...$${#eq-label}`) where `...` is something like `eq__(mod1)`.
+
 # equatiomatic 0.3.8
 * A new function `preview_eq()` uses rmarkdown and pandoc to generate a preview
     of the equation. The package no longer needs the texPreview package now.
