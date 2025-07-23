@@ -53,6 +53,9 @@
       <a href="../articles/tests_and_coverage.html">Tests and Coverage</a>
     </li>
     <li>
+      <a href="../articles/tidymodels.html">Tidymodels with {equatiomatic}</a>
+    </li>
+    <li>
       <a href="../articles/usage-shiny.html">Usage with shiny</a>
     </li>
   </ul></li>
@@ -80,7 +83,8 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.4.2" id="equatiomatic-042">equatiomatic 0.4.2<a class="anchor" aria-label="anchor" href="#equatiomatic-042"></a></h2>
-<ul><li><p>New vignette “Equations in R Markdown and Quarto” that explain how to use the three functions <code><a href="../reference/equation.html">equation()</a></code>, <code><a href="../reference/equation.html">eq_()</a></code> and <code><a href="../reference/equation.html">eq__()</a></code> to ease inclusion of equations in R Markdown and Quarto documents.</p></li>
+<ul><li><p>New vignette “Tidymodels with {equatiomatic}” illustrating that <code><a href="../reference/extract_eq.html">extract_eq()</a></code> also works with fitted Tidymodels, including with {workflows} objects.</p></li>
+<li><p>New vignette “Equations in R Markdown and Quarto” that explain how to use the three functions <code><a href="../reference/equation.html">equation()</a></code>, <code><a href="../reference/equation.html">eq_()</a></code> and <code><a href="../reference/equation.html">eq__()</a></code> to ease inclusion of equations in R Markdown and Quarto documents.</p></li>
 <li><p><code><a href="../reference/extract_eq.html">extract_eq()</a></code> can now extract equations from a list of models. There is an example of an application at the end of the “Introduction to {equatiomatic}” vignette.</p></li>
 <li><p>Proofreading of the README.Rmd/.md files and the vignettes to homogenize style and conventions (e.g., {package} not <strong>{package}</strong> or <strong>package</strong>).</p></li>
 <li><p>Replacement of {magrittr} pipe <code>%&gt;%</code> by the native R pipe <code>|&gt;</code> everywhere and elimination of the dependency to {magrittr} (less dependencies is better).</p></li>
@@ -114,7 +118,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.4" id="equatiomatic-034">equatiomatic 0.3.4<a class="anchor" aria-label="anchor" href="#equatiomatic-034"></a></h2>
-<ul><li>{tidymodels} <em>partial</em> compatibility: method <code><a href="../reference/extract_eq.html">extract_eq()</a></code> added for <strong>model_fit</strong> objects of the {parsnip} package, and for <strong>workflow</strong> objects of the {workflows} package, see <a href="https://github.com/datalorax/equatiomatic/pull/237" class="external-link">#237</a>. Previously, the model object had to be extracted using <code>parsnip::fit()</code> before using <code><a href="../reference/extract_eq.html">extract_eq()</a></code>. This is not necessary any more, but still valid (no breaking changes). Note that <code><a href="../reference/extract_eq.html">extract_eq()</a></code> cannot handle yet <em>all</em> {tidymodels}. For instance, it can handle <code>reg_linear()</code>, but cannot handle <code>reg_linear() |&gt; set_engine("stan")</code>. There is currently no plan to support <em>all</em> {tidymodels} models, but pull requests will be considered if you find and solve a problematic case by yourself.</li>
+<ul><li>{tidymodels} <em>partial</em> compatibility: method <code><a href="../reference/extract_eq.html">extract_eq()</a></code> added for <strong>model_fit</strong> objects of the {parsnip} package, and for <strong>workflow</strong> objects of the {workflows} package, see <a href="https://github.com/datalorax/equatiomatic/pull/237" class="external-link">#237</a>. Previously, the model object had to be extracted using <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">parsnip::fit()</a></code> before using <code><a href="../reference/extract_eq.html">extract_eq()</a></code>. This is not necessary any more, but still valid (no breaking changes). Note that <code><a href="../reference/extract_eq.html">extract_eq()</a></code> cannot handle yet <em>all</em> {tidymodels}. For instance, it can handle <code>reg_linear()</code>, but cannot handle <code>reg_linear() |&gt; set_engine("stan")</code>. There is currently no plan to support <em>all</em> {tidymodels} models, but pull requests will be considered if you find and solve a problematic case by yourself.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.3.3" id="equatiomatic-033">equatiomatic 0.3.3<small>2024-05-26</small><a class="anchor" aria-label="anchor" href="#equatiomatic-033"></a></h2>
