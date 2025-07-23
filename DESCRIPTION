@@ -99,6 +99,9 @@ Suggests:
     lme4,
     MASS,
     ordinal,
+    parsnip,
+    recipes,
+    workflows,
     testthat (>= 3.0.0),
     gtsummary,
     spelling

@@ -1,5 +1,8 @@
 # equatiomatic 0.4.2
 
+* New vignette "Tidymodels with {equatiomatic}" illustrating that `extract_eq()`
+    also works with fitted Tidymodels, including with {workflows} objects.
+
 * New vignette "Equations in R Markdown and Quarto" that explain how to use the
     three functions `equation()`, `eq_()` and `eq__()` to ease inclusion of
     equations in R Markdown and Quarto documents.

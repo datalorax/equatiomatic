@@ -1,0 +1,98 @@
+---
+title: "Tidymodels with {equatiomatic}"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tidymodels with {equatiomatic}}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+library(equatiomatic)
+library(recipes)
+library(parsnip)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+To paraphrase its web site, [Tidymodels](https://www.tidymodels.org) provides a series of packages for modeling and machine learning using the [tidyverse](https://www.tidyverse.org) principles. {equatiomatic} is now partly compatible with it, meaning that it can extract the equation of certain models.
+
+Here is an example (adapted from the {workflows} main page):
+
+```{r cars}
+# Preparation of the dataset using {recipes}
+spline_cars <- recipe(mpg ~ ., data = mtcars) |>
+  step_ns(disp, deg_free = 10)
+spline_cars_prepped <- prep(spline_cars, mtcars)
+```
+
+Here is a simple (tidy)model:
+
+```{r lm}
+# Fitting of a least-square linear model
+lm_fit <- linear_reg() |>
+  fit(mpg ~ ., data = juice(spline_cars_prepped))
+```
+
+We can extract the equation of this model with `extract_eq()`:
+
+```{r lm_equation}
+extract_eq(lm_fit, wrap = TRUE)
+```
+
+## Working with workflows
+
+The {equatiomatic} `extract_eq()` also works with models fitted using the {workflows} package.
+
+```{r wflow}
+library(workflows)
+
+# A model compatible with {equatiomatic}
+linear_lm <- linear_reg()
+
+# A workflow object
+car_wflow <- workflow() |>
+  add_recipe(spline_cars) |>
+  add_model(linear_lm)
+```
+
+Now you can prepare the recipe and estimate the model via a single call to `fit()`:
+
+```{r wflow_fit}
+wflow_fit <- fit(car_wflow, data = mtcars)
+```
+
+You can also extract the equation from `wflow_fit`:
+
+```{r wflow_equation}
+extract_eq(wflow_fit, wrap = TRUE)
+```
+
+You notice that the original name of the dependent variable is lost, but you can reset it manually using `swapt_var_names=`:
+
+```{r wflow_equation2}
+extract_eq(wflow_fit, wrap = TRUE, swap_var_names = c(..y = "mpg"))
+```
+
+## Models requiring {broom.mixed}
+
+For some models, {broom} is not enough. You need also to `library(broom.mixed)` before you can extract the equation. This is the case of a Bayes linear model using `"stan"`. Note: this code is not run in the vignette to avoid heavy extra-dependencies, but you can run this code in your R process.
+
+```{r bayes_fit, eval=FALSE}
+library(broom.mixed) # Required for some models, or extract_eq() will choke!
+
+bayes_fit <- linear_reg() |>
+  set_engine("stan") |>
+  fit(mpg ~ hp + drat, data = mtcars)
+```
+
+And the equation would be obtained with:
+
+```{r bayes_equation, eval=FALSE}
+extract_eq(bayes_fit)
+```
+
+```{r bayes_equation2, echo=FALSE}
+equation("E( \\operatorname{mpg} ) = \\alpha + \\beta_{1}(\\operatorname{hp}) + \\beta_{2}(\\operatorname{drat})")
+```
+
+
