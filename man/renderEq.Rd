@@ -14,7 +14,7 @@ eqOutput(outputId)
 
 \item{env}{The environment}
 
-\item{quoted}{Is the expresion quoted?}
+\item{quoted}{Is the expression quoted?}
 
 \item{outputArgs}{list of output arguments}
 

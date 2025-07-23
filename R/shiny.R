@@ -8,7 +8,7 @@
 #' @param outputId The identifier of the output from the server. Should be
 #'   passed as a string.
 #' @param env The environment
-#' @param quoted Is the expresion quoted?
+#' @param quoted Is the expression quoted?
 #' @param outputArgs list of output arguments
 #' 
 #' @return Render the equation in a suitable way for Shiny for [renderEq()] in

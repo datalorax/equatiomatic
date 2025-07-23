@@ -1,5 +1,9 @@
 # equatiomatic 0.4.2
 
+* New vignette "Equations in R Markdown and Quarto" that explain how to use the
+    three functions `equation()`, `eq_()` and `eq__()` to ease inclusion of
+    equations in R Markdown and Quarto documents.
+
 * `extract_eq()` can now extract equations from a list of models. There is an
     example of an application at the end of the "Introduction to {equatiomatic}"
     vignette.
