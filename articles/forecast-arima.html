@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -145,11 +145,8 @@ to illustrate that the corresponding equations are parsed correctly.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Build Arima (no regression)</span></span>
-<span><span class="va">simple_ts_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pkg.robjhyndman.com/forecast/reference/Arima.html" class="external-link">Arima</a></span><span class="op">(</span><span class="va">simple_ts</span>,</span>
-<span>  order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  include.constant <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">simple_ts_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pkg.robjhyndman.com/forecast/reference/Arima.html" class="external-link">Arima</a></span><span class="op">(</span><span class="va">simple_ts</span>, order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  include.constant <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="extracting-the-equation">Extracting the equation<a class="anchor" aria-label="anchor" href="#extracting-the-equation"></a>
@@ -170,8 +167,7 @@ following.</p>
 </h3>
 <p>Next, we’ll illustrate a slightly more complicated example that
 includes a linear regression. We’ll use the <code>ts_reg_list</code>
-object that is exported from <strong>{equatiomatic}</strong> to build up
-our data.</p>
+object that is exported from {equatiomatic} to build up our data.</p>
 <div class="section level4">
 <h4 id="setup-1">Setup<a class="anchor" aria-label="anchor" href="#setup-1"></a>
 </h4>
@@ -183,12 +179,8 @@ our data.</p>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Build Regression Model</span></span>
-<span><span class="va">ts_reg_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pkg.robjhyndman.com/forecast/reference/Arima.html" class="external-link">Arima</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="va">ts_reg_list</span><span class="op">$</span><span class="va">ts_rnorm</span>, freq <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span>
-<span>  order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  xreg <span class="op">=</span> <span class="va">xregs</span>,</span>
-<span>  include.constant <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">ts_reg_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pkg.robjhyndman.com/forecast/reference/Arima.html" class="external-link">Arima</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="va">ts_reg_list</span><span class="op">$</span><span class="va">ts_rnorm</span>, freq <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  seasonal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, xreg <span class="op">=</span> <span class="va">xregs</span>, include.constant <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="extracting-the-equation-1">Extracting the equation<a class="anchor" aria-label="anchor" href="#extracting-the-equation-1"></a>
@@ -225,7 +217,7 @@ you run into any issues.</p>
 <li><p>Testing additional functionality from <code><a href="../reference/extract_eq.html">extract_eq()</a></code>
 for <code>lm</code> objects.</p></li>
 <li><p>Implementation of arguments that will allow the user to rename
-variables and/or specify a set of greek letters.</p></li>
+variables and/or specify a set of Greek letters.</p></li>
 <li><p>If there is interest, the ability to switch to an expanded
 version of the equation. However, this could potentially generate
 extremely long and difficult to read equations.</p></li>

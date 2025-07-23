@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -123,7 +123,8 @@ bills relates to their bill length using data from the <a href="https://github.c
 package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"penguins"</span>, package <span class="op">=</span> <span class="st">"equatiomatic"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">bill_depth_mm</span>, <span class="va">penguins</span><span class="op">)</span></span>
+<span><span class="va">penguins_lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">bill_depth_mm</span>, <span class="va">penguins</span><span class="op">)</span></span>
+<span><span class="va">penguins_lm</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; lm(formula = bill_length_mm ~ bill_depth_mm, data = penguins)</span></span>
@@ -139,13 +140,12 @@ like this:</p>
 </annotation></semantics></math></p>
 <p>The purpose of <a href="https://datalorax.github.io/equatiomatic/">{equatiomatic}</a> is
 to help you go from model output, like the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output
-above, to the equation we just saw.</p>
-<p>As we detail in this vignette, {equatiomatic} provides the underlying
-equation corresponding to the statistical model output. It does this
-through the use of the <a href="https://en.wikipedia.org/wiki/TeX" class="external-link">TeX</a> equation formatting
+above, to the equation we just saw. As we detail in this vignette,
+{equatiomatic} provides the underlying equation corresponding to the
+statistical model output. It does this through the use of the <a href="https://en.wikipedia.org/wiki/TeX" class="external-link">TeX</a> equation formatting
 system, which can then be included in documents written in a number of
-formats, including (importantly) R Markdown documents rendered to either
-HTML or PDF formats.</p>
+formats, including (importantly) R Markdown or Quarto documents rendered
+to either HTML or PDF formats.</p>
 </div>
 <div class="section level2">
 <h2 id="example-usage">Example Usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
@@ -153,21 +153,22 @@ HTML or PDF formats.</p>
 <div class="section level3">
 <h3 id="a-basic-example-for-a-multiple-linear-regression">A basic example for a multiple linear regression<a class="anchor" aria-label="anchor" href="#a-basic-example-for-a-multiple-linear-regression"></a>
 </h3>
-<p>Let’s look at another basic example, again using the {palmerpenguins}
-data:</p>
+<p>Let’s look at another basic example, again using the
+<code>palmerpenguins</code> data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datalorax/equatiomatic" class="external-link">equatiomatic</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># fit a basic multiple linear regression model</span></span>
-<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">bill_depth_mm</span> <span class="op">+</span> <span class="va">flipper_length_mm</span>, <span class="va">penguins</span><span class="op">)</span></span></code></pre></div>
-<p>Now we can pull the TeX code with <code>extract_eq</code></p>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">bill_depth_mm</span> <span class="op">+</span> <span class="va">flipper_length_mm</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span></code></pre></div>
+<p>Now we can pull the TeX code with <code>extract_eq</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>bill_length_mm</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>flipper_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{flipper\_length\_mm}) + \epsilon
 </annotation></semantics></math></p>
-<p>You can of course set <code>echo = FALSE</code> as well, and then
-you’ll get just the equation, which will look like the below.</p>
+<p>You can, of course, set <code>echo=FALSE</code> as well in the chunk
+header, and then you’ll get just the equation, which will look like the
+below.</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>bill_length_mm</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>flipper_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{flipper\_length\_mm}) + \epsilon
 </annotation></semantics></math></p>
@@ -181,19 +182,19 @@ with lots of levels and interactions, which can make the output of your
 models (and writing a model equation for your models) a bit more
 complicated. {equatiomatic} is intended to “smooth out” some of these
 issues, requiring the same process as in the above example to extract
-(and present) the model’s equation:</p>
-<p>For example, here is an example using a categorical variable
+(and present) the model’s equation.</p>
+<p>For instance, here is an example using a categorical variable
 (<code>island</code>) in an interaction with the
-<code>bill_depth_mm</code> variable we used in the example above:</p>
+<code>bill_depth_mm</code> variable we used in the regression above:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">bill_depth_mm</span> <span class="op">*</span> <span class="va">island</span>, <span class="va">penguins</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">bill_depth_mm</span> <span class="op">*</span> <span class="va">island</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>bill_length_mm</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{bill\_length\_mm} = \alpha + \beta_{1}(\operatorname{bill\_depth\_mm}) + \beta_{2}(\operatorname{island}_{\operatorname{Dream}}) + \beta_{3}(\operatorname{island}_{\operatorname{Torgersen}}) + \beta_{4}(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Dream}}) + \beta_{5}(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Torgersen}}) + \epsilon
 </annotation></semantics></math></p>
-<p>Sometimes, for such models, the equations can get overly long.</p>
-<p>That’s where the <code>wrap</code> and <code>terms_per_line</code>
-arguments come in.</p>
+<p>Sometimes, for such models, the equations can get overly long. That’s
+where the <code>wrap=</code> and <code>terms_per_line=</code> arguments
+come in.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># default terms_per_line = 4</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo>bill_length_mm</mo></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
@@ -214,8 +215,8 @@ arguments come in.</p>
 </annotation></semantics></math></p>
 <p>Maybe you want different intercept notation, such as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mn>0</mn></msub><annotation encoding="application/x-tex">\beta_0</annotation></semantics></math>?
-Simply pass “beta” to the <code>intercept</code> argument, as
-follows.</p>
+Simply pass <code>"beta"</code> to the <code>intercept=</code> argument,
+as follows.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, intercept <span class="op">=</span> <span class="st">"beta"</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo>bill_length_mm</mo></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
@@ -224,9 +225,10 @@ follows.</p>
 &amp;\quad \beta_{4}(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Dream}}) + \beta_{5}(\operatorname{bill\_depth\_mm} \times \operatorname{island}_{\operatorname{Torgersen}}) + \epsilon
 \end{aligned}
 </annotation></semantics></math></p>
-<p>We also wrap all the variable names in <code>\operatorname</code> by
-default so they show up as plain text, but if you’d like your variable
-names to be italicized just set <code>ital_vars = TRUE</code>.</p>
+<p>We also wrap all the variable names in <code>\operatorname{}</code>
+by default so they show up as plain text, but if you’d like your
+variable names to be italicized just set
+<code>ital_vars = TRUE</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, ital_vars <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>b</mi><mi>i</mi><mi>l</mi><mi>l</mi><mi>_</mi><mi>l</mi><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><mi>h</mi><mi>_</mi><mi>m</mi><mi>m</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mi>i</mi><mi>l</mi><mi>l</mi><mi>_</mi><mi>d</mi><mi>e</mi><mi>p</mi><mi>t</mi><mi>h</mi><mi>_</mi><mi>m</mi><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>n</mi><msub><mi>d</mi><mrow><mi>D</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>n</mi><msub><mi>d</mi><mrow><mi>T</mi><mi>o</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>e</mi><mi>n</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mi>i</mi><mi>l</mi><mi>l</mi><mi>_</mi><mi>d</mi><mi>e</mi><mi>p</mi><mi>t</mi><mi>h</mi><mi>_</mi><mi>m</mi><mi>m</mi><mo>×</mo><mi>i</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>n</mi><msub><mi>d</mi><mrow><mi>D</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>m</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>b</mi><mi>i</mi><mi>l</mi><mi>l</mi><mi>_</mi><mi>d</mi><mi>e</mi><mi>p</mi><mi>t</mi><mi>h</mi><mi>_</mi><mi>m</mi><mi>m</mi><mo>×</mo><mi>i</mi><mi>s</mi><mi>l</mi><mi>a</mi><mi>n</mi><msub><mi>d</mi><mrow><mi>T</mi><mi>o</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>e</mi><mi>n</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
@@ -239,19 +241,15 @@ bill\_length\_mm &amp;= \alpha + \beta_{1}(bill\_depth\_mm) + \beta_{2}(island_{
 <div class="section level3">
 <h3 id="raw-tex-code">Raw TeX code<a class="anchor" aria-label="anchor" href="#raw-tex-code"></a>
 </h3>
-<p>Currently, the <code>intercept</code> argument defaults to
+<p>Currently, the <code>intercept=</code> argument defaults to
 <code>"alpha"</code> and only takes one additional argument,
-<code>"beta"</code>. However, the <code>raw_tex</code> and
-<code>greek</code> arguments allows you to specify whatever syntax you
+<code>"beta"</code>. However, the <code>raw_tex=</code> and
+<code>greek=</code> arguments allows you to specify whatever syntax you
 would like both for the intercept and for the coefficients. For
-example</p>
+example:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span>,</span>
-<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  intercept <span class="op">=</span> <span class="st">"\\hat{\\phi}"</span>,</span>
-<span>  greek <span class="op">=</span> <span class="st">"\\hat{\\gamma}"</span>,</span>
-<span>  raw_tex <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, intercept <span class="op">=</span> <span class="st">"\\hat{\\phi}"</span>, greek <span class="op">=</span> <span class="st">"\\hat{\\gamma}"</span>,</span>
+<span>  raw_tex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo>bill_length_mm</mo></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mover><mi>ϕ</mi><mo accent="true">̂</mo></mover><mo>+</mo><msub><mover><mi>γ</mi><mo accent="true">̂</mo></mover><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mover><mi>γ</mi><mo accent="true">̂</mo></mover><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mover><mi>γ</mi><mo accent="true">̂</mo></mover><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mover><mi>γ</mi><mo accent="true">̂</mo></mover><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mover><mi>γ</mi><mo accent="true">̂</mo></mover><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 \operatorname{bill\_length\_mm} &amp;= \hat{\phi} + \hat{\gamma}_{1}(\operatorname{bill\_depth\_mm}) + \hat{\gamma}_{2}(\operatorname{island}_{\operatorname{Dream}}) + \hat{\gamma}_{3}(\operatorname{island}_{\operatorname{Torgersen}})\ + \\
@@ -266,7 +264,7 @@ example</p>
 estimates (e.g., <code>3.04</code>), than the Greek symbols (e.g., <span class="math inline">$\\beta\_1$</span>). This may be helpful for
 communicating the results of a model (and, possibly, for teaching about
 the statistical model). To do this, simply change the
-<code>use_coefs</code> argument:</p>
+<code>use_coefs=</code> argument:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, use_coefs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mover><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">m</mi></mrow><mo accent="true">̂</mo></mover></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mn>63.72</mn><mo>−</mo><mn>1.16</mn><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mn>54.12</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mn>35.13</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><mn>3.05</mn><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Dream</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mn>1.73</mn><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_depth_mm</mo><mo>×</mo><msub><mo>island</mo><mo>Torgersen</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
@@ -335,10 +333,8 @@ average errors</td>
 <h3 id="logistic-regression">Logistic Regression<a class="anchor" aria-label="anchor" href="#logistic-regression"></a>
 </h3>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">species</span> <span class="op">*</span> <span class="va">bill_length_mm</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">penguins</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">lr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">species</span> <span class="op">*</span> <span class="va">bill_length_mm</span>, data <span class="op">=</span> <span class="va">penguins</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">lr</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo>log</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>sex</mo><mo>=</mo><mo>male</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>sex</mo><mo>=</mo><mo>male</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Chinstrap</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Gentoo</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Chinstrap</mo></msub><mo>×</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Gentoo</mo></msub><mo>×</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
@@ -365,10 +361,8 @@ distributed.</p>
 </h3>
 <p>Probit regression works similarly to logistic regression:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">species</span> <span class="op">*</span> <span class="va">bill_length_mm</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">penguins</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">species</span> <span class="op">*</span> <span class="va">bill_length_mm</span>, data <span class="op">=</span> <span class="va">penguins</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">pr</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>sex</mo><mo>=</mo><mo>male</mo><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>Φ</mi><mo stretchy="false" form="prefix">[</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Chinstrap</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Gentoo</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="2.0em"></mspace><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Chinstrap</mo></msub><mo>×</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>5</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>species</mo><mo>Gentoo</mo></msub><mo>×</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">]</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
@@ -394,10 +388,10 @@ distributed.</p>
 <h3 id="ordinal-regression">Ordinal Regression<a class="anchor" aria-label="anchor" href="#ordinal-regression"></a>
 </h3>
 <p>For these examples, we’ll use wine tasting data from the <a href="https://github.com/runehaubo/ordinal" class="external-link">{ordinal}</a> package. If
-you don’t already have this package, you can download it with</p>
+you don’t already have this package, you can download it with:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ordinal"</span><span class="op">)</span></span></code></pre></div>
-<p>The data look like this</p>
+<p>The data look like this:</p>
 <table class="table">
 <thead><tr class="header">
 <th align="left">response</th>
@@ -460,10 +454,10 @@ you don’t already have this package, you can download it with</p>
 </table>
 <p>We’ll fit a model from the documentation, with the ordinal rating
 response predicted by an interaction between the temperature and and
-contact.</p>
-<p>You can fit ordinal response models with either
-<code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr</a></code> or <code><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">ordinal::clm</a></code>, and {equatiomatic}
-works with either, and with logistic or probit link functions.</p>
+contact. You can fit ordinal response models with either
+<code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr()</a></code> or <code><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">ordinal::clm()</a></code>, and
+{equatiomatic} works with either, and with logistic or probit link
+functions.</p>
 <div class="section level4">
 <h4 id="mass">{MASS}<a class="anchor" aria-label="anchor" href="#mass"></a>
 </h4>
@@ -471,10 +465,7 @@ works with either, and with logistic or probit link functions.</p>
 <h5 id="logit-method">Logit method<a class="anchor" aria-label="anchor" href="#logit-method"></a>
 </h5>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mass_ologit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">polr</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>,</span>
-<span>  data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span></span>
-<span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="va">mass_ologit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">polr</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>, data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mass_ologit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Re-fitting to get Hessian</span></span>
@@ -498,11 +489,8 @@ works with either, and with logistic or probit link functions.</p>
 <h5 id="probit-method">Probit method<a class="anchor" aria-label="anchor" href="#probit-method"></a>
 </h5>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mass_oprobit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">polr</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>,</span>
-<span>  data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"probit"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="va">mass_oprobit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">polr</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>, data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mass_oprobit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Re-fitting to get Hessian</span></span>
@@ -526,16 +514,13 @@ P( \operatorname{rating}  \leq  \operatorname{4} ) &amp;= \Phi[\alpha_{4} + \bet
 <div class="section level4">
 <h4 id="ordinal">{ordinal}<a class="anchor" aria-label="anchor" href="#ordinal"></a>
 </h4>
-<p>And we can do the same thing with the {ordinal} package</p>
+<p>And we can do the same thing with the {ordinal} package.</p>
 <div class="section level5">
 <h5 id="logit-method-1">Logit method<a class="anchor" aria-label="anchor" href="#logit-method-1"></a>
 </h5>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ordinal_ologit</span> <span class="op">&lt;-</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">clm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>,</span>
-<span>  data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span>,</span>
-<span>  link <span class="op">=</span> <span class="st">"logit"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="va">ordinal_ologit</span> <span class="op">&lt;-</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">clm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>, data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span>,</span>
+<span>  link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">ordinal_ologit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mo>log</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>1</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>1</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo>log</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>2</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>2</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>α</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo>log</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>3</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>3</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>α</mi><mn>3</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mo>log</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>4</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mn>1</mn><mo>−</mo><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>4</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>α</mi><mn>4</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
@@ -554,11 +539,8 @@ P( \operatorname{rating}  \leq  \operatorname{4} ) &amp;= \Phi[\alpha_{4} + \bet
 <h5 id="probit-method-1">Probit method<a class="anchor" aria-label="anchor" href="#probit-method-1"></a>
 </h5>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ordinal_probit</span> <span class="op">&lt;-</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">clm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>,</span>
-<span>  data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span>,</span>
-<span>  link <span class="op">=</span> <span class="st">"probit"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="va">ordinal_probit</span> <span class="op">&lt;-</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">clm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">temp</span> <span class="op">*</span> <span class="va">contact</span>, data <span class="op">=</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/ordinal/man/wine.html" class="external-link">wine</a></span>,</span>
+<span>  link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">ordinal_probit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>1</mo><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>Φ</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>α</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="2.0em"></mspace><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">]</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>2</mo><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>Φ</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>α</mi><mn>2</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="2.0em"></mspace><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">]</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>3</mo><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>Φ</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>α</mi><mn>3</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="2.0em"></mspace><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">]</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>rating</mo><mo>≤</mo><mo>4</mo><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>Φ</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>α</mi><mn>4</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="2.0em"></mspace><mspace width="0.222em"></mspace><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mo>temp</mo><mo>warm</mo></msub><mo>×</mo><msub><mo>contact</mo><mo>yes</mo></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">]</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
@@ -589,25 +571,26 @@ hope to add later. These include:</p>
 models</li>
 </ul>
 <p>Regarding this last point, we are hopeful that we can incorporate
-essentially all the models covered by <a href="https://broom.tidymodels.org" class="external-link">broom</a>. Multilevel models are
+essentially all the models covered by <a href="https://broom.tidymodels.org" class="external-link">{broom}</a>. Multilevel models are
 particularly high on our wish list. But we have not yet had the time to
 develop these.</p>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
 </h2>
-<p>We would LOVE to have you as a contributor! Is there a model that we
-don’t currently fit that you want implemented? There are a few ways to
-go about this. You can either (a) fork the repository and implement the
-method on your own, then submit a PR, or (b) file an issue.</p>
+<p>We would <strong>love</strong> to have you as a contributor! Is there
+a model that we don’t currently fit that you want implemented? There are
+a few ways to go about this. You can either (a) fork the repository and
+implement the method on your own, then submit a PR, or (b) file an
+issue.</p>
 <p>If you file an issue it would be <em>really</em> helpful if you could
 provide an example of a fitted model and what the equation for that
 model should look like. We will try to get to these as soon as
 possible.</p>
 <p>Also, the next planned vignette (at this particular moment) is on
 contributing to the package, with a step-by-step example of implementing
-a new method. So stay tuned for that, if you’re interested in (a) but
-not yet sure how to get started.</p>
+a new method. So stay tuned for that, if you’re interested in, but not
+yet sure how to get started.</p>
 </div>
   </div>
 

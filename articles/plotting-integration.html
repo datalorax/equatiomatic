@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -111,39 +111,38 @@
 
     
     
-<p>The {equatiomatic} package does not integrate natively with the <a href="https://ggplot2.tidyverse.org/" class="external-link"><strong>{ggplot2}</strong></a>
-package because <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> requires a an <em>expression</em>,
-rather than raw LaTeX. The output of <code>extract_eq</code>, however,
-can be converted to a character vector, which can then be converted to
-an expression via the <strong>{latex2exp}</strong> package by <a href="https://cran.r-project.org/package=latex2exp" class="external-link">Stefano
+<p>The {equatiomatic} package does not integrate natively with the <a href="https://ggplot2.tidyverse.org/" class="external-link">{ggplot2}</a> package because
+<code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code> requires a an <em>expression</em>, rather than raw
+LaTeX. The output of <code><a href="../reference/extract_eq.html">extract_eq()</a></code>, however, can be
+converted to a character vector, which can then be converted to an
+expression via the {latex2exp} package by <a href="https://cran.r-project.org/package=latex2exp" class="external-link">Stefano
 Meschiari</a> (or manual parsing from LaTeX to <a href="https://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/plotmath.html" class="external-link">plotmath</a>
 using your favorite string manipulation tools).</p>
 <div class="section level2">
 <h2 id="a-simple-use-case">A simple use case<a class="anchor" aria-label="anchor" href="#a-simple-use-case"></a>
 </h2>
-<p>First, let’s load the libraries we’ll use here.</p>
+<p>First, let’s load the packages we’ll use here.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.stefanom.io/latex2exp/" class="external-link">latex2exp</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datalorax/equatiomatic" class="external-link">equatiomatic</a></span><span class="op">)</span></span></code></pre></div>
 <p>Next, we’ll need a model. Let’s fit a simple linear model to the <a href="https://allisonhorst.github.io/palmerpenguins/" class="external-link">palmerpenguins</a>
-dataset (which is exported from <strong>{equatiomatic}</strong>) using
-bill length to predict body mass.</p>
+dataset (which is exported from {equatiomatic}) using bill length to
+predict body mass.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"penguins"</span>, package <span class="op">=</span> <span class="st">"equatiomatic"</span><span class="op">)</span></span>
 <span><span class="co"># Fit an lm model</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">bill_length_mm</span>, <span class="va">penguins</span><span class="op">)</span></span></code></pre></div>
 <p>Now that we have our model, we can extract the equation using
-<strong>{equatiomatic}</strong>. We’ll do this showing the actual
-coefficients, since we’ll be using this to communicate the results in a
-figure.</p>
+{equatiomatic}. We’ll do this showing the actual coefficients, since
+we’ll be using this to communicate the results in a figure.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m</span>, use_coefs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">g</mi></mrow><mo accent="true">̂</mo></mover><mo>=</mo><mn>362.31</mn><mo>+</mo><mn>87.42</mn><mrow><mo stretchy="true" form="prefix">(</mo><mo>bill_length_mm</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 \operatorname{\widehat{body\_mass\_g}} = 362.31 + 87.42(\operatorname{bill\_length\_mm})
 </annotation></semantics></math></p>
 <p>Great! we can also show the relationship between these variables
-using <strong>{ggplot2}</strong> as follows.</p>
+using {ggplot2} as follows.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bill_length_mm</span>, y <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -153,18 +152,17 @@ using <strong>{ggplot2}</strong> as follows.</p>
 incorporated <em>into</em> the figure? First, let’s store the equation
 into an object. <strong>Importantly, we must also extract the equation
 with <code>ital_vars = TRUE</code>.</strong> Using this option will
-prevent the use of <code>\operatorname</code>, which cannot be parsed by
-<strong>{latex2exp}</strong>. Additionally, there are a few other things
-that <strong>{latex2exp}</strong> tends to have difficulty handling. In
-this case, for example, we have underscores in our variable names, and
-<strong>{latex2exp}</strong> doesn’t like that (let’s replace them with
-dashes). <strong>{latex2exp}</strong> also doesn’t like the
-<em>display</em> version of equations when there are escaped greek
-letters in the equation (double <code>$</code>). We’ll therefore convert
-the display equation to an inline equation (replacing the
-<code>$$</code> with <code>$</code>).</p>
+prevent the use of <code>\operatorname{}</code>, which cannot be parsed
+by <strong>{latex2exp}</strong>. Additionally, there are a few other
+things that {latex2exp} tends to have difficulty handling. In this case,
+for example, we have underscores in our variable names, and {latex2exp}
+doesn’t like that (let’s replace them with dashes). {latex2exp} also
+doesn’t like the <em>display</em> version of equations when there are
+escaped greek letters in the equation (double <code>$</code>). We’ll
+therefore convert the display equation to an inline equation (replacing
+the <code>$$</code> with <code>$</code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># extract equation with `ital_vars = TRUE` to avoid the use of `\operatorname`</span></span>
+<code class="sourceCode R"><span><span class="co"># extract equation with `ital_vars = TRUE` to avoid the use of `\operatorname{}`</span></span>
 <span><span class="va">m_eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m</span>, use_coef <span class="op">=</span> <span class="cn">TRUE</span>, ital_vars <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># swap escaped underscores for dashes</span></span>
@@ -179,9 +177,8 @@ different examples.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Relation between bill length and body mass"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>    title    <span class="op">=</span> <span class="st">"Relation between bill length and body mass"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bill_length_mm</span>, y <span class="op">=</span> <span class="va">body_mass_g</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -189,45 +186,30 @@ different examples.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, color <span class="op">=</span> <span class="st">"#ab00fa"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html" class="external-link">annotate</a></span><span class="op">(</span><span class="st">"text"</span>,</span>
 <span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span><span class="op">)</span>, x <span class="op">=</span> <span class="fl">35</span>, y <span class="op">=</span> <span class="fl">2500</span>, hjust <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>    color <span class="op">=</span> <span class="st">"#ab00fa"</span>, parse <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>    color <span class="op">=</span> <span class="st">"#ab00fa"</span>, parse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Relation between bill length and body mass"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">6500</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>A more complete overview of <strong>{latex2exp}</strong> is available
-through <a href="https://cran.r-project.org/package=latex2exp" class="external-link">the
-associated vignette shipped with the package</a>.</p>
+<p>A more complete overview of {latex2exp} is available through <a href="https://cran.r-project.org/package=latex2exp" class="external-link">the associated
+vignette shipped with the package</a>.</p>
 <div class="section level3">
 <h3 id="base-graphics">Base graphics<a class="anchor" aria-label="anchor" href="#base-graphics"></a>
 </h3>
-<p>In addition to <strong>{ggplot2}</strong>, we can use
-<strong>{equatiomatic}</strong> with base graphics using a similar
-approach. For example:</p>
+<p>In addition to {ggplot2}, we can use {equatiomatic} with base
+graphics using a similar approach. For example:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">$</span><span class="va">bill_length_mm</span>, <span class="va">penguins</span><span class="op">$</span><span class="va">body_mass_g</span>,</span>
-<span>  pch <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  col <span class="op">=</span> <span class="st">"gray80"</span>,</span>
-<span>  xlab <span class="op">=</span> <span class="st">"Bill length"</span>,</span>
-<span>  ylab <span class="op">=</span> <span class="st">"Body Mass"</span>,</span>
+<span>  pch <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="st">"gray80"</span>, xlab <span class="op">=</span> <span class="st">"Bill length"</span>, ylab <span class="op">=</span> <span class="st">"Body Mass"</span>,</span>
 <span>  main <span class="op">=</span> <span class="st">"Relation between bill length and body mass"</span>,</span>
-<span>  sub <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">$</span><span class="va">bill_length_mm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>,</span>
-<span>  col <span class="op">=</span> <span class="st">"#ab00fa"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span>  sub <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">$</span><span class="va">bill_length_mm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"#ab00fa"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-integration_files/figure-html/base_graphics-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">$</span><span class="va">bill_length_mm</span>, <span class="va">penguins</span><span class="op">$</span><span class="va">body_mass_g</span>,</span>
-<span>  pch <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  col <span class="op">=</span> <span class="st">"gray80"</span>,</span>
-<span>  xlab <span class="op">=</span> <span class="st">"Bill length"</span>,</span>
-<span>  ylab <span class="op">=</span> <span class="st">"Body Mass"</span>,</span>
-<span>  main <span class="op">=</span> <span class="st">"Relation between bill length and body mass"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">$</span><span class="va">bill_length_mm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>,</span>
-<span>  col <span class="op">=</span> <span class="st">"#ab00fa"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">40</span>, y <span class="op">=</span> <span class="fl">6000</span>, <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  pch <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="st">"gray80"</span>, xlab <span class="op">=</span> <span class="st">"Bill length"</span>, ylab <span class="op">=</span> <span class="st">"Body Mass"</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Relation between bill length and body mass"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">penguins</span><span class="op">$</span><span class="va">bill_length_mm</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"#ab00fa"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">41</span>, y <span class="op">=</span> <span class="fl">6000</span>, <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html" class="external-link">TeX</a></span><span class="op">(</span><span class="va">prep_eq</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting-integration_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 </div>
@@ -247,11 +229,11 @@ details and/or may be added as a built-in conversion function.</p>
 </h3>
 <p>Converting to a single line is a good solution when text size is the
 driving factor to wrapping. To convert to a single line, you can run
-<code>extract_eq</code> with <code>wrap = FALSE</code> (the default),
+<code><a href="../reference/extract_eq.html">extract_eq()</a></code> with <code>wrap = FALSE</code> (the default),
 which would be the simplest approach. If the equation always has new
 lines (e.g. <code><a href="https://pkg.robjhyndman.com/forecast/reference/Arima.html" class="external-link">forecast::Arima()</a></code> models that are regression
-models with arima errors), then the equation will need parsed. The exact
-parsing will depend on how you want the equation to read. Common
+models with arima errors), then the equation will need to be parsed. The
+exact parsing will depend on how you want the equation to read. Common
 replacements for new lines are
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtext mathvariant="normal">where</mtext><annotation encoding="application/x-tex">\text{where}</annotation></semantics></math>
 or
@@ -303,7 +285,7 @@ be split using <code><a href="https://rdrr.io/r/base/strsplit.html" class="exter
 (<code>\\</code>) for multi-line equations. You can then manually place
 each line using <code><a href="https://rdrr.io/r/graphics/text.html" class="external-link">graphics::text()</a></code> or
 <code><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">graphics::mtext()</a></code> in base R or <code><a href="https://ggplot2.tidyverse.org/reference/annotate.html" class="external-link">annotate()</a></code> in
-<strong>{ggplot2}</strong>.</p>
+{ggplot2}.</p>
 </div>
 <div class="section level3">
 <h3 id="limitations-and-future-development">Limitations and future development<a class="anchor" aria-label="anchor" href="#limitations-and-future-development"></a>
@@ -311,26 +293,24 @@ each line using <code><a href="https://rdrr.io/r/graphics/text.html" class="exte
 <p>For simple equations, it’s fairly straightforward to incorporate the
 equation into the plot. The difficulty of incorporating equations into
 figures increases as the equation becomes more complicated. As mentioned
-above, <code>\operatorname</code> is unfortunately not supported by
+above, <code>\operatorname{}</code> is unfortunately not supported by
 <code>latex2exp::Tex()</code> so if you are getting an error or missing
 operators, check that <code>ital_vars = TRUE</code> is set in
 <code>equatiomatic::extract:eq()</code>. Additionally, as shown above,
 underscores and other parts of the equation may not directly translate.
 If you run into issues, please do file an issue.</p>
 <p>Much of the above is fairly “manual”, and at this point we don’t have
-plans to build out a full parser for <strong>{equatiomatic}</strong>
-because <strong>{latex2exp}</strong> should work for many use cases.
-However, we do hope to include helper functions in the future to make
-some of the above a little easier (e.g., fixing the the underscore
-issue, or moving to inline equations). Please let us know if there is
-something you can’t do with <strong>{latex2exp}</strong> by submitting
-an issue.</p>
-<p>Thanks again to the R community. The <strong>{latex2exp}</strong>
-package is a great compliment to <strong>{equatiomatic}</strong>. We
-also appreciate the feedback from <strong>{equatiomatic}</strong> users.
-Please let us know if you run into any issues (preferably with a
-reproducible example) in the issues section of the package GitHub
-page.</p>
+plans to build out a full parser for {equatiomatic} because {latex2exp}
+should work for many use cases. However, we do hope to include helper
+functions in the future to make some of the above a little easier (e.g.,
+fixing the the underscore issue, or moving to inline equations). Please
+let us know if there is something you can’t do with {latex2exp} by
+submitting an issue.</p>
+<p>Thanks again to the R community. The {latex2exp} package is a great
+compliment to {equatiomatic}. We also appreciate the feedback from
+{equatiomatic} users. Please let us know if you run into any issues
+(preferably with a reproducible example) in the issues section of the
+package GitHub page.</p>
 </div>
 </div>
   </div>

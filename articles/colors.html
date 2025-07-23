@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -113,10 +113,9 @@ names</h1>
     
     
 <p>Particularly when teaching, it can be helpful to highlight specific
-pieces of the equation. With <strong>{equatiomatic}</strong>, we can do
-this as part of the equation extraction.</p>
-<p>For example, imagine we have a simple linear regression model, like
-this</p>
+pieces of the equation. With {equatiomatic}, we can do this as part of
+the equation extraction. For example, imagine we have a simple linear
+regression model, like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datalorax/equatiomatic" class="external-link">equatiomatic</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -129,11 +128,10 @@ this</p>
 <p>We may want to start by highlighting the independent and dependent
 variables. We can do this with colors. For example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  model <span class="op">=</span> <span class="va">slr</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">slr</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    bill_length_mm <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
-<span>    body_mass_g <span class="op">=</span> <span class="st">"firebrick"</span></span>
+<span>    body_mass_g    <span class="op">=</span> <span class="st">"firebrick"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
@@ -141,24 +139,23 @@ variables. We can do this with colors. For example:</p>
 \beta_{1}({\color{firebrick}{\operatorname{body\_mass\_g}}}) + \epsilon
 $$</span></p>
 <p>and then we can use those same colors later in text, as in “The <span style="color: cornflowerblue;">Dependent Variable</span> is the length
-of the penguins bill, which is predicted by the <span style="color: firebrick;">Indepenent Variable</span>, the body mass of
+of the penguins bill, which is predicted by the <span style="color: firebrick;">Independent Variable</span>, the body mass of
 the penguin.”</p>
 <p>Note that we colorize the variables through the
-<code>var_colors</code> argument, which takes a named vector. The name
+<code>var_colors=</code> argument, which takes a named vector. The name
 is equal to the variable you’d like to change the color of, and the
 element is the actual color.</p>
 <p>We could also take this further, to colorize the coefficients (the
 Greek notation). This argument structure is slightly different, taking
 either a single color, or a vector of colors. The notation includes
 three Greek characters, representing the model intercept, slope, and
-residual variance. We can just the intercept with code like this</p>
+residual variance. We can just colorize the intercept with code like
+this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  model <span class="op">=</span> <span class="va">slr</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">slr</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    bill_length_mm <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
-<span>    body_mass_g <span class="op">=</span> <span class="st">"firebrick"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    body_mass_g    <span class="op">=</span> <span class="st">"firebrick"</span><span class="op">)</span>,</span>
 <span>  greek_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"#3bd100"</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -169,16 +166,14 @@ residual variance. We can just the intercept with code like this</p>
 {\color{black}{\beta}}_{1}({\color{firebrick}{\operatorname{body\_mass\_g}}})
 + {\color{black}{\epsilon}}
 $$</span></p>
-<p>Or all three with something like</p>
+<p>Or all three with something like:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">greek_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1b9e77"</span>, <span class="st">"#d95f02"</span>, <span class="st">"#7570b3"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  model <span class="op">=</span> <span class="va">slr</span>, </span>
+<span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">slr</span>, </span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    bill_length_mm <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
-<span>    body_mass_g <span class="op">=</span> <span class="st">"firebrick"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    body_mass_g    <span class="op">=</span> <span class="st">"firebrick"</span><span class="op">)</span>,</span>
 <span>  greek_colors <span class="op">=</span> <span class="va">greek_col</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
@@ -188,23 +183,19 @@ $$</span></p>
 + {\color{#7570b3}{\epsilon}}
 $$</span></p>
 <p>Note that all of this works with more complicated models as well. For
-example, consider a model with an interaction. My coloring the variable
+example, consider a model with an interaction. By coloring the variable
 names, we can follow both the main effects and the interaction.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m_interaction</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">body_mass_g</span> <span class="op">*</span> <span class="va">flipper_length_mm</span>, </span>
-<span>                    data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">m_interaction</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">body_mass_g</span> <span class="op">*</span> <span class="va">flipper_length_mm</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  <span class="va">m_interaction</span>,</span>
+<span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m_interaction</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    body_mass_g <span class="op">=</span> <span class="st">"#ffa91f"</span>,</span>
-<span>    flipper_length_mm <span class="op">=</span> <span class="st">"#00d1ab"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    body_mass_g       <span class="op">=</span> <span class="st">"#ffa91f"</span>,</span>
+<span>    flipper_length_mm <span class="op">=</span> <span class="st">"#00d1ab"</span><span class="op">)</span>,</span>
 <span>  greek_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"black"</span>, <span class="st">"#3A21B3"</span>, <span class="st">"#58A1D9"</span>, <span class="st">"#FF7582"</span>, <span class="st">"black"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
+<span>    <span class="st">"black"</span>, <span class="st">"#3A21B3"</span>, <span class="st">"#58A1D9"</span>, <span class="st">"#FF7582"</span>, <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
 \begin{aligned}
@@ -230,20 +221,15 @@ in the equation. If the term does not have a subscript, you can fill the
 positions with NA values or any other color (it won’t matter because
 there are not subscripts for those terms).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  <span class="va">m_interaction</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m_interaction</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    body_mass_g <span class="op">=</span> <span class="st">"#ffa91f"</span>,</span>
-<span>    flipper_length_mm <span class="op">=</span> <span class="st">"#00d1ab"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    body_mass_g       <span class="op">=</span> <span class="st">"#ffa91f"</span>,</span>
+<span>    flipper_length_mm <span class="op">=</span> <span class="st">"#00d1ab"</span><span class="op">)</span>,</span>
 <span>  greek_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"black"</span>, <span class="st">"#3A21B3"</span>, <span class="st">"#58A1D9"</span>, <span class="st">"#FF7582"</span>, <span class="st">"black"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    <span class="st">"black"</span>, <span class="st">"#3A21B3"</span>, <span class="st">"#58A1D9"</span>, <span class="st">"#FF7582"</span>, <span class="st">"black"</span><span class="op">)</span>,</span>
 <span>  subscript_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>     <span class="cn">NA_character_</span>, <span class="st">"#3A21B3"</span>, <span class="st">"#58A1D9"</span>, <span class="st">"#FF7582"</span>, <span class="cn">NA_character_</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
+<span>     <span class="cn">NA_character_</span>, <span class="st">"#3A21B3"</span>, <span class="st">"#58A1D9"</span>, <span class="st">"#FF7582"</span>, <span class="cn">NA_character_</span><span class="op">)</span>,</span>
+<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
 \begin{aligned}
@@ -268,24 +254,21 @@ between body mass and bill length <em>depends upon</em> flipper length.
 Or, equivalently, that the relation between flipper length and bill
 length depends upon body mass.</p>
 <p>Finally, there’s is one additional means by which we can control
-colors. By default, <strong>{equatiomatic}</strong> handles categorical
-variables by putting the corresponding levels in subscripts (relative to
-the reference group, which is omitted). We can also change the color of
+colors. By default, {equatiomatic} handles categorical variables by
+putting the corresponding levels in subscripts (relative to the
+reference group, which is omitted). We can also change the color of
 these variable subscripts, with the <code>var_subscript_colors</code>
 argument.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m_categorical</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bill_length_mm</span> <span class="op">~</span> <span class="va">species</span> <span class="op">+</span> <span class="va">island</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  model <span class="op">=</span> <span class="va">m_categorical</span>,</span>
+<span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m_categorical</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    species <span class="op">=</span> <span class="st">"#FB2C4B"</span>,</span>
-<span>    island <span class="op">=</span> <span class="st">"#643B77"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    island  <span class="op">=</span> <span class="st">"#643B77"</span><span class="op">)</span>,</span>
 <span>  var_subscript_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    species <span class="op">=</span> <span class="st">"#0274B2"</span>,</span>
-<span>    island <span class="op">=</span> <span class="st">"#FBA640"</span></span>
-<span>  <span class="op">)</span></span>
+<span>    island  <span class="op">=</span> <span class="st">"#FBA640"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
 \operatorname{bill\_length\_mm} = \alpha +
@@ -303,64 +286,54 @@ subscript level.</p>
 <div class="section level2">
 <h2 id="changing-variable-names">Changing variable names<a class="anchor" aria-label="anchor" href="#changing-variable-names"></a>
 </h2>
-<p>To make the the previous equations more human-readable, we might want
-to change the variable names i. We can do this through a similar
-interface while still keeping the colors intact. For example, our
-interaction model might look something like this</p>
+<p>To make the previous equations more human-readable, we might want to
+change the variable names. We can do this through a similar interface
+while still keeping the colors intact. For example, our interaction
+model might look something like this:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  model <span class="op">=</span> <span class="va">m_interaction</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m_interaction</span>,</span>
 <span>  swap_var_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"bill_length_mm"</span> <span class="op">=</span> <span class="st">"Bill Length (MM)"</span>,</span>
-<span>    <span class="st">"body_mass_g"</span> <span class="op">=</span> <span class="st">"Body Mass (grams)"</span>,</span>
-<span>    <span class="st">"flipper_length_mm"</span> <span class="op">=</span> <span class="st">"Flipper Length (MM)"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    <span class="st">"bill_length_mm"</span>    <span class="op">=</span> <span class="st">"Bill Length [mm]"</span>,</span>
+<span>    <span class="st">"body_mass_g"</span>       <span class="op">=</span> <span class="st">"Body Mass [g])"</span>,</span>
+<span>    <span class="st">"flipper_length_mm"</span> <span class="op">=</span> <span class="st">"Flipper Length [mm]"</span><span class="op">)</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    flipper_length_mm <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
-<span>    body_mass_g <span class="op">=</span> <span class="st">"cornflowerblue"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
+<span>    flipper_length_mm   <span class="op">=</span> <span class="st">"firebrick"</span>,</span>
+<span>    body_mass_g         <span class="op">=</span> <span class="st">"cornflowerblue"</span><span class="op">)</span>,</span>
+<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
 \begin{aligned}
-\operatorname{Bill\ Length\ (MM)} &amp;= \alpha +
-\beta_{1}({\color{cornflowerblue}{\operatorname{Body\ Mass\ (grams)}}})
-+ \beta_{2}({\color{firebrick}{\operatorname{Flipper\ Length\ (MM)}}})\
-+ \\
+\operatorname{Bill\ Length\ [mm]} &amp;= \alpha +
+\beta_{1}({\color{cornflowerblue}{\operatorname{Body\ Mass\ [g])}}}) +
+\beta_{2}({\color{firebrick}{\operatorname{Flipper\ Length\ [mm]}}})\ +
+\\
 &amp;\quad \beta_{3}({\color{cornflowerblue}{\operatorname{Body\ Mass\
-(grams)}}} \times {\color{firebrick}{\operatorname{Flipper\ Length\
-(MM)}}}) + \epsilon
+[g])}}} \times {\color{firebrick}{\operatorname{Flipper\ Length\
+[mm]}}}) + \epsilon
 \end{aligned}
 $$</span></p>
 <p>You can similarly change the variable subscript names. For
-example</p>
+example:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span></span>
-<span>  model <span class="op">=</span> <span class="va">m_categorical</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">m_categorical</span>,</span>
 <span>  swap_var_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"bill_length_mm"</span> <span class="op">=</span> <span class="st">"Bill Length (MM)"</span>,</span>
-<span>    <span class="st">"species"</span> <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span>    <span class="st">"island"</span> <span class="op">=</span> <span class="st">"Island"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    <span class="st">"bill_length_mm"</span> <span class="op">=</span> <span class="st">"Bill Length [mm]"</span>,</span>
+<span>    <span class="st">"species"</span>        <span class="op">=</span> <span class="st">"Species"</span>,</span>
+<span>    <span class="st">"island"</span>         <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span>,</span>
 <span>  swap_subscript_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    Chinstrap <span class="op">=</span> <span class="st">"little buddy"</span>,</span>
-<span>    Gentoo <span class="op">=</span> <span class="st">"happy feet"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    Chinstrap        <span class="op">=</span> <span class="st">"little buddy"</span>,</span>
+<span>    Gentoo           <span class="op">=</span> <span class="st">"happy feet"</span><span class="op">)</span>,</span>
 <span>  var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    species <span class="op">=</span> <span class="st">"#FB2C4B"</span>,</span>
-<span>    island <span class="op">=</span> <span class="st">"#643B77"</span></span>
-<span>  <span class="op">)</span>,</span>
+<span>    species          <span class="op">=</span> <span class="st">"#FB2C4B"</span>,</span>
+<span>    island           <span class="op">=</span> <span class="st">"#643B77"</span><span class="op">)</span>,</span>
 <span>  var_subscript_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    species <span class="op">=</span> <span class="st">"#0274B2"</span>,</span>
-<span>    island <span class="op">=</span> <span class="st">"#FBA640"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
+<span>    species          <span class="op">=</span> <span class="st">"#0274B2"</span>,</span>
+<span>    island           <span class="op">=</span> <span class="st">"#FBA640"</span><span class="op">)</span>,</span>
+<span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">$$
 \begin{aligned}
-\operatorname{Bill\ Length\ (MM)} &amp;= \alpha +
+\operatorname{Bill\ Length\ [mm]} &amp;= \alpha +
 \beta_{1}({\color{#FB2C4B}{\operatorname{Species}}}{\color{#0274B2}{_{\operatorname{little\
 buddy}}}}) +
 \beta_{2}({\color{#FB2C4B}{\operatorname{Species}}}{\color{#0274B2}{_{\operatorname{happy\
@@ -377,40 +350,40 @@ $$</span></p>
 <h2 id="current-models-and-future-plans">Current models and future plans<a class="anchor" aria-label="anchor" href="#current-models-and-future-plans"></a>
 </h2>
 <p>Everything shown above is fully implemented in all model types
-handled by equatiomatic with the exception of mixed effect models
+handled by {equatiomatic} with the exception of mixed effect models
 (<code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code>) and
 time-series models. For mixed effects models, colorization has been
 partially implemented—you can use the interface shown above to change
 the color or names variables, as well as variable subscripts. However,
 Greek characters cannot be colored automatically at present. These
-models will be fully implemented in future a future release.</p>
+models will be fully implemented in a future release.</p>
 <p>Finally, you might have noticed that the number and length of
 arguments to equations can become rather long. Because of this, we are
 currently considering moving to a piped interface. The last example may
-then turn into something like</p>
+then turn into something like:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">create_eq</span><span class="op">(</span><span class="va">m_categorical</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu">create_eq</span><span class="op">(</span><span class="va">m_categorical</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">swap_var_names</span><span class="op">(</span></span>
-<span>    <span class="st">"bill_length_mm"</span> <span class="op">=</span> <span class="st">"Bill Length (MM)"</span>,</span>
-<span>    <span class="st">"species"</span> <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span>    <span class="st">"island"</span> <span class="op">=</span> <span class="st">"Island"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="st">"bill_length_mm"</span> <span class="op">=</span> <span class="st">"Bill Length [mm]"</span>,</span>
+<span>    <span class="st">"species"</span>        <span class="op">=</span> <span class="st">"Species"</span>,</span>
+<span>    <span class="st">"island"</span>         <span class="op">=</span> <span class="st">"Island"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">swap_subscript_names</span><span class="op">(</span></span>
-<span>    Chinstrap <span class="op">=</span> <span class="st">"little buddy"</span>,</span>
-<span>    Gentoo <span class="op">=</span> <span class="st">"happy feet"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    Chinstrap        <span class="op">=</span> <span class="st">"little buddy"</span>,</span>
+<span>    Gentoo           <span class="op">=</span> <span class="st">"happy feet"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">colorize_variables</span><span class="op">(</span></span>
-<span>    species <span class="op">=</span> <span class="st">"#FB2C4B"</span>,</span>
-<span>    island <span class="op">=</span> <span class="st">"#643B77"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    species          <span class="op">=</span> <span class="st">"#FB2C4B"</span>,</span>
+<span>    island           <span class="op">=</span> <span class="st">"#643B77"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">colorize_variable_subscripts</span><span class="op">(</span></span>
-<span>    species <span class="op">=</span> <span class="st">"#0274B2"</span>,</span>
-<span>    island <span class="op">=</span> <span class="st">"#FBA640"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    species          <span class="op">=</span> <span class="st">"#0274B2"</span>,</span>
+<span>    island           <span class="op">=</span> <span class="st">"#FBA640"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">wrap</span><span class="op">(</span>terms_per_line <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>The length is perhaps not a whole lot less, but we think this
 <em>layering</em> approach might make building up equations easier and
-more intuitive, not unlike how you build-up a plot with <a href="https://ggplot2.tidyverse.org/" class="external-link"><strong>{ggplot2}</strong></a>.</p>
+more intuitive, not unlike how you build-up a plot with <a href="https://ggplot2.tidyverse.org/" class="external-link">{ggplot2}</a>.</p>
 <p>If you have any feedback on this, or other features, please don’t
 hesitate to get in touch.</p>
 </div>

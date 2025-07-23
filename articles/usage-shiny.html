@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -120,11 +120,11 @@
 <h2 id="more-detail">More detail<a class="anchor" aria-label="anchor" href="#more-detail"></a>
 </h2>
 <p>The equatiomatic package exports <code><a href="../reference/renderEq.html">renderEq()</a></code> and
-<code><a href="../reference/renderEq.html">eqOutput()</a></code> functions to make it’s usage with shiny more
+<code><a href="../reference/renderEq.html">eqOutput()</a></code> functions to make it’s usage with Shiny more
 straightforward.</p>
 <p>Imagine, for example, that we wanted to have an app that showed us
 the coefficients of a model in a nice table. We could do that with
-something like</p>
+something like:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datalorax/equatiomatic" class="external-link">equatiomatic</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
@@ -164,7 +164,7 @@ something like</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 <p>But, naturally, we’d probably also want the equation rendered too. We
-can extend The above with <strong>equatiomatic</strong> as follows.</p>
+can extend the above with {equatiomatic} as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datalorax/equatiomatic" class="external-link">equatiomatic</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>

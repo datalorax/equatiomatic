@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -76,7 +76,17 @@
 
 <div id="equatiomatic---to-do-list" class="section level1">
 
-<ul><li>[] Check the two last tests in test-lmerMod.R that produce different roundings on a silicon processor in macOS. For now these tests are skipped.</li>
+<ul><li><p>Check the two last tests in test-lmerMod.R that produce different roundings on a silicon processor in macOS. For now these tests are skipped.</p></li>
+<li><p>Implement the Greek characters colorization for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code>.</p></li>
+<li><p>Refactor <code><a href="reference/extract_eq.html">extract_eq()</a></code> to ease development of the support of new models (one method per file, do not place all possible arguments in the generic, but use <code>...</code> instead).</p></li>
+<li><p>Write a vignette on how to contribute new models (after refactoring, see here above).</p></li>
+<li><p>Implement the piped version of <code><a href="reference/extract_eq.html">extract_eq()</a></code> (<code>create_eq()</code> as proposed at the end of the colors vignette).</p></li>
+<li><p>Support Math functions (e.g., <code>log</code>, <code>exp</code>, <code>sqrt</code>) in equations.</p></li>
+<li><p>Support polynomial (e.g., <code>lm(y ~ poly(x, 3))</code>).</p></li>
+<li><p>Implement a range of other models, including multi-level (or mixed effects) models (all models supported by {broom}).</p></li>
+<li><p>In <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer</a></code> models, implement <code>intercept=</code>, and <code>raw_tex=</code>.</p></li>
+<li><p>Allow replacing <code>\operatorname{}</code> by <code>\mathrm{}</code> in the equations for cases where <code>operatorname{}</code> is not supported (transformation into an expression), but there is a proposal to use <code>\mathop{\textrm{}}</code> instead (see <a href="https://tex.stackexchange.com/questions/48459/whats-the-difference-between-mathrm-and-operatorname" class="external-link uri">https://tex.stackexchange.com/questions/48459/whats-the-difference-between-mathrm-and-operatorname</a>).</p></li>
+<li><p>A function that manages all the little problems when converting equations into expressions with {latex2exp} (<code>operatorname{}</code>, underscore in names, double $$, etc).</p></li>
 </ul></div>
 
   </div>

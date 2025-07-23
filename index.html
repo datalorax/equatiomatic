@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -107,15 +107,14 @@
 </h1></div>
 <!-- badges: start -->
 
-<!-- badges: end -->
-<p>The goal of <strong>equatiomatic</strong> is to reduce the pain associated with writing LaTeX code from a fitted model. The package aims to support any model supported by <a href="https://cran.r-project.org/package=broom" class="external-link"><strong>broom</strong></a>. See the <a href="https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models">introduction to equatiomatic</a> for currently supported models.</p>
+<p>The goal of {equatiomatic} is to reduce the pain associated with writing LaTeX code from a fitted model. The package aims to support any model supported by <a href="https://cran.r-project.org/package=broom" class="external-link">{broom}</a>. See the <a href="https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models">introduction to equatiomatic</a> for currently supported models.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Install from CRAN with</p>
+<p>Install from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"equatiomatic"</span><span class="op">)</span></span></code></pre></div>
-<p>Or get the development version from GitHub with</p>
+<p>Or get the development version from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"datalorax/equatiomatic"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -129,7 +128,7 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/datalorax/equatiomatic" class="external-link">equatiomatic</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fit a simple model</span></span>
-<span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">disp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Give the results to extract_eq</span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></code></pre></div>
@@ -139,7 +138,7 @@
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>mpg</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>cyl</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>disp</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon</annotation></semantics></math></p>
 <p>The model can be built in any standard way. It can handle shortcut syntax:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, <span class="va">mtcars</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt; \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \beta_{3}(\operatorname{hp}) + \beta_{4}(\operatorname{drat}) + \beta_{5}(\operatorname{wt}) + \beta_{6}(\operatorname{qsec}) + \beta_{7}(\operatorname{vs}) + \beta_{8}(\operatorname{am}) + \beta_{9}(\operatorname{gear}) + \beta_{10}(\operatorname{carb}) + \epsilon</span></span>
@@ -148,7 +147,7 @@
 <p>When using categorical variables, it will include the levels of the variables as subscripts.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"penguins"</span>, package <span class="op">=</span> <span class="st">"equatiomatic"</span><span class="op">)</span></span>
-<span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>, <span class="va">penguins</span><span class="op">)</span></span>
+<span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>, data <span class="op">=</span> <span class="va">penguins</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; \operatorname{body\_mass\_g} = \alpha + \beta_{1}(\operatorname{bill\_length\_mm}) + \beta_{2}(\operatorname{species}_{\operatorname{Chinstrap}}) + \beta_{3}(\operatorname{species}_{\operatorname{Gentoo}}) + \epsilon</span></span>
@@ -162,7 +161,7 @@
 <span>                cont1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                cont2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span><span class="op">)</span>,</span>
 <span>                out   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">10</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">mod4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">out</span> <span class="op">~</span> <span class="va">cont1</span> <span class="op">+</span> <span class="va">cat2</span> <span class="op">+</span> <span class="va">cont2</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">d</span><span class="op">)</span></span>
+<span><span class="va">mod4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">out</span> <span class="op">~</span> <span class="va">cont1</span> <span class="op">+</span> <span class="va">cat2</span> <span class="op">+</span> <span class="va">cont2</span> <span class="op">+</span> <span class="va">cat1</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod4</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; \operatorname{out} = \alpha + \beta_{1}(\operatorname{cont1}) + \beta_{2}(\operatorname{cat2}_{\operatorname{B}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{4}(\operatorname{cont2}) + \beta_{5}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{6}(\operatorname{cat1}_{\operatorname{c}}) + \epsilon</span></span>
@@ -233,16 +232,16 @@ mpg &amp;= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
 <div class="section level2">
 <h2 id="r-markdown-and-previewing">R Markdown and previewing<a class="anchor" aria-label="anchor" href="#r-markdown-and-previewing"></a>
 </h2>
-<p>If you include <code><a href="reference/extract_eq.html">extract_eq()</a></code> in an R Markdown chunk, <strong>knitr</strong> will render the equation. If you’d like to see the LaTeX code wrap the call in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p>
+<p>If you include <code><a href="reference/extract_eq.html">extract_eq()</a></code> in an R Markdown chunk, {knitr} will render the equation. If you’d like to see the LaTeX code wrap the call in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>.</p>
 <p>You can also use the <code><a href="reference/preview_eq.html">preview_eq()</a></code> function to preview the equation in RStudio:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/preview_eq.html">preview_eq</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/preview1.png"></p>
-<p>Both <code><a href="reference/extract_eq.html">extract_eq()</a></code> and <code><a href="reference/preview_eq.html">preview_eq()</a></code> work with <strong>magrittr</strong> pipes, so you can do something like this:</p>
+<p>Both <code><a href="reference/extract_eq.html">extract_eq()</a></code> and <code><a href="reference/preview_eq.html">preview_eq()</a></code> work with base R or {magrittr} pipes, so you can do something like this:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>  <span class="co"># or library(tidyverse) or any other package that exports %&gt;%</span></span>
+<code class="sourceCode R"><span><span class="co">#library(magrittr)  # if you want to use %&gt;% instead of |&gt;</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/preview_eq.html">preview_eq</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># Or simply: preview_eq(mod1)</span></span></code></pre></div>
 </div>
@@ -269,8 +268,8 @@ mpg &amp;= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">g</mi></mrow><mo accent="true">̂</mo></mover><mo>=</mo><mn>34.66</mn><mo>+</mo><mo>−</mo><mn>1.59</mn><mrow><mo stretchy="true" form="prefix">(</mo><mo>cyl</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mo>−</mo><mn>0.02</mn><mrow><mo stretchy="true" form="prefix">(</mo><mo>disp</mo><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\operatorname{\widehat{mpg}} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\operatorname{disp})</annotation></semantics></math></p>
 <p>This works in longer wrapped equations:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>           use_coefs <span class="op">=</span> <span class="cn">TRUE</span>, fix_signs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod2</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span>, use_coefs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  fix_signs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
 <span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="co">#&gt; \operatorname{\widehat{mpg}} &amp;= 12.3 + -0.11(\operatorname{cyl}) + 0.01(\operatorname{disp})\ + \\</span></span>
@@ -291,14 +290,14 @@ mpg &amp;= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
 <h2 id="beyond-lm">Beyond <code>lm()</code>
 <a class="anchor" aria-label="anchor" href="#beyond-lm"></a>
 </h2>
-<p>You’re not limited to just <code>lm</code> models! <strong>equatiomatic</strong> supports many other models, including logistic regression, probit regression, and ordered logistic regression (with <code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr()</a></code>).</p>
+<p>You’re not limited to just <code>lm</code> models! {equatiomatic} supports many other models, including logistic regression, probit regression, and ordered logistic regression (with <code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr()</a></code>).</p>
 <div class="section level3">
 <h3 id="logistic-regression-with-glm">Logistic regression with <code>glm()</code>
 <a class="anchor" aria-label="anchor" href="#logistic-regression-with-glm"></a>
 </h3>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model_logit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>,</span>
-<span>                   data <span class="op">=</span> <span class="va">penguins</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">model_logit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>, data <span class="op">=</span> <span class="va">penguins</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_logit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
@@ -316,8 +315,8 @@ mpg &amp;= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
 <a class="anchor" aria-label="anchor" href="#probit-regression-with-glm"></a>
 </h3>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model_probit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>,</span>
-<span>                    data <span class="op">=</span> <span class="va">penguins</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">model_probit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">~</span> <span class="va">bill_length_mm</span> <span class="op">+</span> <span class="va">species</span>, data <span class="op">=</span> <span class="va">penguins</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_probit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
 <span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="co">#&gt; \begin{aligned}</span></span>
@@ -336,16 +335,15 @@ P( \operatorname{sex} = \operatorname{male} ) &amp;= \Phi[\alpha + \beta_{1}(\op
 </h3>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">100</span><span class="op">)</span>,</span>
-<span>                                  levels <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span>
-<span>                                  ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>                 continuous_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                 continuous_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  outcome      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">100</span><span class="op">)</span>, levels <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  continuous_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  continuous_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">50</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">model_ologit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">polr</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">continuous_1</span> <span class="op">+</span> <span class="va">continuous_2</span>,</span>
-<span>                           data <span class="op">=</span> <span class="va">df</span>, Hess <span class="op">=</span> <span class="cn">TRUE</span>, method <span class="op">=</span> <span class="st">"logistic"</span><span class="op">)</span></span>
+<span>  data <span class="op">=</span> <span class="va">df</span>, Hess <span class="op">=</span> <span class="cn">TRUE</span>, method <span class="op">=</span> <span class="st">"logistic"</span><span class="op">)</span></span>
 <span><span class="va">model_oprobit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">polr</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">continuous_1</span> <span class="op">+</span> <span class="va">continuous_2</span>,</span>
-<span>                            data <span class="op">=</span> <span class="va">df</span>, Hess <span class="op">=</span> <span class="cn">TRUE</span>, method <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
+<span>  data <span class="op">=</span> <span class="va">df</span>, Hess <span class="op">=</span> <span class="cn">TRUE</span>, method <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_ologit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
@@ -377,16 +375,15 @@ P( \operatorname{outcome}  \leq  \operatorname{B} ) &amp;= \Phi[\alpha_{2} + \be
 </h3>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">100</span><span class="op">)</span>,</span>
-<span>                                  levels <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span>
-<span>                                  ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>                 continuous_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>                 continuous_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  outcome      <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">100</span><span class="op">)</span>, levels <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  continuous_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  continuous_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">model_ologit</span> <span class="op">&lt;-</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">clm</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">continuous_1</span> <span class="op">+</span> <span class="va">continuous_2</span>,</span>
-<span>                             data <span class="op">=</span> <span class="va">df</span>, link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
+<span>  data <span class="op">=</span> <span class="va">df</span>, link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span></span>
 <span><span class="va">model_oprobit</span> <span class="op">&lt;-</span> <span class="fu">ordinal</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ordinal/man/clm.html" class="external-link">clm</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">continuous_1</span> <span class="op">+</span> <span class="va">continuous_2</span>,</span>
-<span>                              data <span class="op">=</span> <span class="va">df</span>, link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
+<span>  data <span class="op">=</span> <span class="va">df</span>, link <span class="op">=</span> <span class="st">"probit"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">model_ologit</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#&gt; $$</span></span>
@@ -416,7 +413,7 @@ P( \operatorname{outcome}  \leq  \operatorname{B} ) &amp;= \Phi[\alpha_{2} + \be
 <div class="section level2">
 <h2 id="extension">Extension<a class="anchor" aria-label="anchor" href="#extension"></a>
 </h2>
-<p>If you would like to contribute to this package, we’d love your help! We are particularly interested in extending to more models. We hope to support any model supported by <a href="https://cran.r-project.org/package=broom" class="external-link"><strong>broom</strong></a> in the future.</p>
+<p>If you would like to contribute to this package, we’d love your help! We are particularly interested in extending to more models. We hope to support any model supported by <a href="https://cran.r-project.org/package=broom" class="external-link">{broom}</a> in the future.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
