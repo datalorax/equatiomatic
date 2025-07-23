@@ -696,3 +696,46 @@ extract_eq.workflow <-
       "because it does not have a 'fit' component.")
   }
 }
+
+# PhG: we do not want to repeat usage, so no @describeIn extract_eq list `extract_eq()` method
+#' Extracting a series of equations from a list of models
+#' @keywords internal
+#' @export
+#' @noRd
+extract_eq.list <- function(model, intercept = "alpha", greek = "beta",
+  greek_colors = NULL, subscript_colors = NULL,
+  var_colors = NULL, var_subscript_colors = NULL, 
+  raw_tex = FALSE, 
+  swap_var_names = NULL, swap_subscript_names = NULL,
+  ital_vars = FALSE, label = NULL,
+  index_factors = FALSE, show_distribution = FALSE,
+  wrap = FALSE, terms_per_line = 4,
+  operator_location = "end", align_env = "aligned",
+  use_coefs = FALSE, coef_digits = 2,
+  fix_signs = TRUE, font_size = NULL,
+  mean_separate = NULL, return_variances = FALSE, 
+  se_subscripts = FALSE, ...) {
+  
+  res <- sapply(model, extract_eq, intercept = intercept, greek = greek,
+    greek_colors = greek_colors, subscript_colors = subscript_colors,
+    var_colors = var_colors, 
+    var_subscript_colors = var_subscript_colors, 
+    raw_tex = raw_tex, 
+    swap_var_names = swap_var_names, 
+    swap_subscript_names = swap_subscript_names,
+    ital_vars = ital_vars, label = label,
+    index_factors = index_factors, 
+    show_distribution = show_distribution,
+    wrap = wrap, terms_per_line = terms_per_line,
+    operator_location = operator_location, 
+    align_env = align_env,
+    use_coefs = use_coefs, coef_digits = coef_digits,
+    fix_signs = fix_signs, font_size = font_size,
+    mean_separate = mean_separate, 
+    return_variances = return_variances, 
+    se_subscripts = se_subscripts, ...)
+  res <- as.character(res) # Make sure it is a character vector
+  names(res) <- names(model)
+  class(res) <- c("equation", "character")
+  res
+}

@@ -1,5 +1,9 @@
 # equatiomatic 0.4.2
 
+* `extract_eq()` can now extract equations from a list of models. There is an
+    example of an application at the end of the "Introduction to {equatiomatic}"
+    vignette.
+
 * Proofreading of the README.Rmd/.md files and the vignettes to homogenize style
     and conventions (e.g., {package} not **{package}** or **package**).
 

@@ -222,6 +222,27 @@ ordinal_probit <- ordinal::clm(rating ~ temp * contact, data = ordinal::wine,
 extract_eq(ordinal_probit, wrap = TRUE, terms_per_line = 2)
 ```
 
+# Working with a list of models
+
+Starting from version 0.4.2 {equatiomatic} can also extract equations from a list of models. Here is an example:
+
+```{r list}
+# Create a series of regressions and place results in a data.frame
+# (note: this is much better handled with a tibble, but we avoid
+# extra dependencies here)
+data(iris)
+res <- data.frame(name = c("lm1", "lm2", "lm3"))
+models <- list(
+  lm1 = lm(Sepal.Length ~ Sepal.Width, data = iris),
+  lm2 = lm(Sepal.Length ~ Sepal.Width + Petal.Length, data = iris),
+  lm3 = lm(Sepal.Length ~ Sepal.Width * Petal.Length, data = iris)
+)
+# Add a column in the data.frame with the three corresponding equations
+res$equation <- extract_eq(models)
+knitr::kable(res)
+```
+
+
 # Things the package does not yet do
 
 We are aware of a few things the package doesn't yet do, but that we hope to add later. These include:
