@@ -559,6 +559,56 @@ P( \operatorname{rating}  \leq  \operatorname{4} ) &amp;= \Phi[\alpha_{4} + \bet
 </div>
 </div>
 <div class="section level2">
+<h2 id="working-with-a-list-of-models">Working with a list of models<a class="anchor" aria-label="anchor" href="#working-with-a-list-of-models"></a>
+</h2>
+<p>Starting from version 0.4.2 {equatiomatic} can also extract equations
+from a list of models. Here is an example:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create a series of regressions and place results in a data.frame</span></span>
+<span><span class="co"># (note: this is much better handled with a tibble, but we avoid</span></span>
+<span><span class="co"># extra dependencies here)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lm1"</span>, <span class="st">"lm2"</span>, <span class="st">"lm3"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  lm1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>,</span>
+<span>  lm2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>,</span>
+<span>  lm3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Add a column in the data.frame with the three corresponding equations</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">equation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="97%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">name</th>
+<th align="left">equation</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">lm1</td>
+<td align="left"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>Sepal.Length</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Sepal.Width</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+\operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \epsilon
+</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td align="left">lm2</td>
+<td align="left"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>Sepal.Length</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Sepal.Width</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Petal.Length</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+\operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Petal.Length}) + \epsilon
+</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td align="left">lm3</td>
+<td align="left"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>Sepal.Length</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Sepal.Width</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Petal.Length</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Sepal.Width</mo><mo>×</mo><mo>Petal.Length</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+\operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \beta_{2}(\operatorname{Petal.Length}) + \beta_{3}(\operatorname{Sepal.Width} \times \operatorname{Petal.Length}) + \epsilon
+</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
 <h2 id="things-the-package-does-not-yet-do">Things the package does not yet do<a class="anchor" aria-label="anchor" href="#things-the-package-does-not-yet-do"></a>
 </h2>
 <p>We are aware of a few things the package doesn’t yet do, but that we
