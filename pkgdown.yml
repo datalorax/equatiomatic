@@ -6,10 +6,11 @@ articles:
   equatiomatic: equatiomatic.html
   forecast-arima: forecast-arima.html
   lme4-lmer: lme4-lmer.html
+  markdown-quarto: markdown-quarto.html
   plotting-integration: plotting-integration.html
   tests_and_coverage: tests_and_coverage.html
   usage-shiny: usage-shiny.html
-last_built: 2025-07-23T09:13Z
+last_built: 2025-07-23T10:24Z
 urls:
   reference: https://datalorax.github.io/equatiomatic/reference
   article: https://datalorax.github.io/equatiomatic/articles
