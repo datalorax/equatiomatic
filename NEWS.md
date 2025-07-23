@@ -1,3 +1,11 @@
+# equatiomatic 0.4.2
+
+* Proofreading of the README.Rmd/.md files and the vignettes to homogenize style
+    and conventions (e.g., {package} not **{package}** or **package**).
+
+* Replacement of {magrittr} pipe `%>%` by the native R pipe `|>` everywhere and
+    elimination of the dependency to {magrittr} (less dependencies is better).
+
 # equatiomatic 0.4.1
 * `format.equation()` now works for several equations in the **equation**
     object (solve issue #207).

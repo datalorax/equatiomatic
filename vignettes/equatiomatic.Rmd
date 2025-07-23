@@ -7,67 +7,53 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r, include=FALSE}
 library(equatiomatic)
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 # Background and Motivation
 
-If you use R to statistically analyze your data, you might be used to seeing and 
-interpreting the output from functions for models, like `lm()` and `glm()`. For example,
-here is the code and output for a single regression model, fit using the `lm()`
-function. We'll examine how the depth of penguin's bills relates to their bill
-length using data from the [{palmerpenguins}](https://github.com/allisonhorst/palmerpenguins)
-package:
+If you use R to statistically analyze your data, you might be used to seeing and interpreting the output from functions for models, like `lm()` and `glm()`. For example, here is the code and output for a single regression model, fit using the `lm()` function. We'll examine how the depth of penguin's bills relates to their bill length using data from the [{palmerpenguins}](https://github.com/allisonhorst/palmerpenguins) package:
 
-```{r, warning = FALSE, results = 'markup'}
+```{r, warning=FALSE, results='markup'}
 data("penguins", package = "equatiomatic")
-lm(bill_length_mm ~ bill_depth_mm, penguins)
+penguins_lm <- lm(bill_length_mm ~ bill_depth_mm, penguins)
+penguins_lm
 ```
 
-At the same time, you might have come across---or written!---equations that
-appear in books, journal articles, and reports. Equations that look like this:
+At the same time, you might have come across---or written!---equations that appear in books, journal articles, and reports. Equations that look like this:
 
-```{r, echo = FALSE}
+```{r, echo=FALSE}
 library(equatiomatic)
-extract_eq(lm(bill_length_mm ~ bill_depth_mm, penguins))
+extract_eq(penguins_lm)
 ```
 
-The purpose of  [{equatiomatic}](https://datalorax.github.io/equatiomatic/) is to help you go from model output, like the `lm()` output above,
-to the equation we just saw. 
-
-As we detail in this vignette, {equatiomatic} provides the underlying equation
-corresponding to the statistical model output. It does this through the use of
-the [TeX](https://en.wikipedia.org/wiki/TeX) equation formatting system, which
-can then be included in documents written in a number of formats, including 
-(importantly) R Markdown documents rendered to either HTML or PDF formats.
+The purpose of [{equatiomatic}](https://datalorax.github.io/equatiomatic/) is to help you go from model output, like the `lm()` output above,
+to the equation we just saw. As we detail in this vignette, {equatiomatic} provides the underlying equation corresponding to the statistical model output. It does this through the use of the [TeX](https://en.wikipedia.org/wiki/TeX) equation formatting system, which can then be included in documents written in a number of formats, including (importantly) R Markdown or Quarto documents rendered to either HTML or PDF formats.
 
 # Example Usage
 
 ## A basic example for a multiple linear regression
 
-Let's look at another basic example, again using the {palmerpenguins} data:
+Let's look at another basic example, again using the `palmerpenguins` data:
 
 ```{r fit-m1}
 library(equatiomatic)
 
 # fit a basic multiple linear regression model
-m <- lm(bill_length_mm ~ bill_depth_mm + flipper_length_mm, penguins)
+m <- lm(bill_length_mm ~ bill_depth_mm + flipper_length_mm, data = penguins)
 ```
 
-Now we can pull the TeX code with `extract_eq`
+Now we can pull the TeX code with `extract_eq`:
 
 ```{r extract_eq1}
 extract_eq(m)
 ```
 
-You can of course set `echo = FALSE` as well, and then you'll get just the equation, which will look like the below.
+You can, of course, set `echo=FALSE` as well in the chunk header, and then you'll get just the equation, which will look like the below.
 
-```{r extract_eq1-no-echo, echo = FALSE}
+```{r extract_eq1-no-echo, echo=FALSE}
 extract_eq(m)
 ```
 
@@ -75,39 +61,29 @@ Let's dive into a bit more complex example.
 
 ## An example with a slightly more complicated model
 
-The above was super simple, but---often---you have categorical variables with lots of
-levels and interactions, which can make the output of your models (and writing a 
-model equation for your models) a bit more complicated. {equatiomatic} is 
-intended to "smooth out" some of these issues, requiring the same process as in 
-the above example to extract (and present) the model's equation:
+The above was super simple, but---often---you have categorical variables with lots of levels and interactions, which can make the output of your models (and writing a model equation for your models) a bit more complicated. {equatiomatic} is  intended to "smooth out" some of these issues, requiring the same process as in the above example to extract (and present) the model's equation.
 
-For example, here is an example using a categorical variable (`island`) in an
-interaction with the `bill_depth_mm` variable we used in the example above:
+For instance, here is an example using a categorical variable (`island`) in an interaction with the `bill_depth_mm` variable we used in the regression above:
 
 ```{r eq2}
-m2 <- lm(bill_length_mm ~ bill_depth_mm * island, penguins)
+m2 <- lm(bill_length_mm ~ bill_depth_mm * island, data = penguins)
 extract_eq(m2)
 ```
 
-Sometimes, for such models, the equations can get overly long. 
-
-That's where the `wrap` and `terms_per_line` arguments come in.
+Sometimes, for such models, the equations can get overly long. That's where the `wrap=` and `terms_per_line=` arguments come in.
 
 ```{r eq2-wrap}
 extract_eq(m2, wrap = TRUE) # default terms_per_line = 4
 extract_eq(m2, wrap = TRUE, terms_per_line = 2)
 ```
 
-Maybe you want different intercept notation, such as $\beta_0$? Simply pass
-"beta" to the `intercept` argument, as follows. 
+Maybe you want different intercept notation, such as $\beta_0$? Simply pass `"beta"` to the `intercept=` argument, as follows. 
 
 ```{r eq2-intercept-beta}
 extract_eq(m2, wrap = TRUE, intercept = "beta")
 ```
 
-We also wrap all the variable names in `\operatorname` by default so they show
-up as plain text, but if you'd like your variable names to be italicized just
-set `ital_vars = TRUE`.
+We also wrap all the variable names in `\operatorname{}` by default so they show up as plain text, but if you'd like your variable names to be italicized just set `ital_vars = TRUE`.
 
 ```{r eq2-ital-vars}
 extract_eq(m2, wrap = TRUE, ital_vars = TRUE)
@@ -115,24 +91,16 @@ extract_eq(m2, wrap = TRUE, ital_vars = TRUE)
 
 ## Raw TeX code
 
-Currently, the `intercept` argument defaults to `"alpha"` and only takes one
-additional argument, `"beta"`. However, the `raw_tex` and `greek` arguments
-allows you to specify whatever syntax you would like both for the intercept and for the coefficients. For example
+Currently, the `intercept=` argument defaults to `"alpha"` and only takes one additional argument, `"beta"`. However, the `raw_tex=` and `greek=` arguments allows you to specify whatever syntax you would like both for the intercept and for the coefficients. For example:
 
 ```{r raw-tex}
-extract_eq(m2,
-  wrap = TRUE,
-  intercept = "\\hat{\\phi}",
-  greek = "\\hat{\\gamma}",
-  raw_tex = TRUE
-)
+extract_eq(m2, wrap = TRUE, intercept = "\\hat{\\phi}", greek = "\\hat{\\gamma}",
+  raw_tex = TRUE)
 ```
 
 ## Coefficients
-In many cases, you're interested more in including the coefficient estimates
-(e.g., `3.04`), than the Greek symbols (e.g., $\\beta\_1$). This may be
-helpful for communicating the results of a model (and, possibly, for teaching 
-about the statistical model). To do this, simply change the `use_coefs` argument:
+
+In many cases, you're interested more in including the coefficient estimates (e.g., `3.04`), than the Greek symbols (e.g., $\\beta\_1$). This may be helpful for communicating the results of a model (and, possibly, for teaching  about the statistical model). To do this, simply change the `use_coefs=` argument:
 
 ```{r use_coefs}
 extract_eq(m2, wrap = TRUE, use_coefs = TRUE)
@@ -140,10 +108,9 @@ extract_eq(m2, wrap = TRUE, use_coefs = TRUE)
 
 # Other models
 
-While the above examples focused on regression models (and the `lm()` function), 
-{equatiomatic} supports output from other model types as well, specifically:
+While the above examples focused on regression models (and the `lm()` function), {equatiomatic} supports output from other model types as well, specifically:
 
-```{r echo = FALSE}
+```{r echo=FALSE}
 supported <- data.frame(
   model = c(
     "linear regression",
@@ -171,11 +138,10 @@ knitr::kable(supported, col.names = c("Model", "Packages/Functions"))
 Here are a few basic examples using these supported model types:
 
 ## Logistic Regression
+
 ```{r log-reg1}
-lr <- glm(sex ~ species * bill_length_mm,
-  data = penguins,
-  family = binomial(link = "logit")
-)
+lr <- glm(sex ~ species * bill_length_mm, data = penguins,
+  family = binomial(link = "logit"))
 
 extract_eq(lr, wrap = TRUE)
 ```
@@ -189,11 +155,10 @@ extract_eq(lr, wrap = TRUE, show_distribution = TRUE)
 ## Probit Regression
 
 Probit regression works similarly to logistic regression:
+
 ```{r prob-reg1}
-pr <- glm(sex ~ species * bill_length_mm,
-  data = penguins,
-  family = binomial(link = "probit")
-)
+pr <- glm(sex ~ species * bill_length_mm, data = penguins,
+  family = binomial(link = "probit"))
 
 extract_eq(pr, wrap = TRUE)
 ```
@@ -205,94 +170,72 @@ extract_eq(pr, wrap = TRUE, show_distribution = TRUE)
 ```
 
 ## Ordinal Regression
-For these examples, we'll use wine tasting data from the [{ordinal}](https://github.com/runehaubo/ordinal) package. If you don't already have this package, you can download it with
 
-```{r install-ordinal, eval = FALSE}
+For these examples, we'll use wine tasting data from the [{ordinal}](https://github.com/runehaubo/ordinal) package. If you don't already have this package, you can download it with:
+
+```{r install-ordinal, eval=FALSE}
 install.packages("ordinal")
 ```
 
-The data look like this
+The data look like this:
 
-```{r wine-data, echo = FALSE}
+```{r wine-data, echo=FALSE}
 knitr::kable(head(ordinal::wine), align = "l")
 ```
 
-We'll fit a model from the documentation, with the ordinal rating response predicted by an interaction between the temperature and and contact. 
-
-You can fit ordinal response models with either `MASS::polr` or `ordinal::clm`, and {equatiomatic} works with either, and with logistic or probit link functions.
+We'll fit a model from the documentation, with the ordinal rating response predicted by an interaction between the temperature and and contact. You can fit ordinal response models with either `MASS::polr()` or `ordinal::clm()`, and {equatiomatic} works with either, and with logistic or probit link functions.
 
 ### {MASS}
+
 #### Logit method
 
 ```{r mass-ologit}
-mass_ologit <- MASS::polr(rating ~ temp * contact,
-  data = ordinal::wine
-)
-
+mass_ologit <- MASS::polr(rating ~ temp * contact, data = ordinal::wine)
 extract_eq(mass_ologit, wrap = TRUE, terms_per_line = 2)
 ```
 
 #### Probit method
 
 ```{r mass-oprobit}
-mass_oprobit <- MASS::polr(rating ~ temp * contact,
-  data = ordinal::wine,
-  method = "probit"
-)
-
+mass_oprobit <- MASS::polr(rating ~ temp * contact, data = ordinal::wine,
+  method = "probit")
 extract_eq(mass_oprobit, wrap = TRUE, terms_per_line = 2)
 ```
 
-### {ordinal} 
-And we can do the same thing with the {ordinal} package
+### {ordinal}
+
+And we can do the same thing with the {ordinal} package.
 
 #### Logit method
-```{r ordinal-ologit}
-ordinal_ologit <- ordinal::clm(rating ~ temp * contact,
-  data = ordinal::wine,
-  link = "logit"
-)
 
+```{r ordinal-ologit}
+ordinal_ologit <- ordinal::clm(rating ~ temp * contact, data = ordinal::wine,
+  link = "logit")
 extract_eq(ordinal_ologit, wrap = TRUE, terms_per_line = 2)
 ```
 
 #### Probit method
 
 ```{r ordinal-oprobit}
-ordinal_probit <- ordinal::clm(rating ~ temp * contact,
-  data = ordinal::wine,
-  link = "probit"
-)
-
+ordinal_probit <- ordinal::clm(rating ~ temp * contact, data = ordinal::wine,
+  link = "probit")
 extract_eq(ordinal_probit, wrap = TRUE, terms_per_line = 2)
 ```
 
 # Things the package does not yet do
 
-We are aware of a few things the package doesn't yet do, but that we hope to add
-later. These include:
+We are aware of a few things the package doesn't yet do, but that we hope to add later. These include:
 
-  - Math functions (e.g., `log`, `exp`, `sqrt`)
-  - Polynomial (e.g., `lm(y ~ poly(x, 3))`)
-  - A range of other models, including multi-level (or mixed effects) models
+- Math functions (e.g., `log`, `exp`, `sqrt`)
+- Polynomial (e.g., `lm(y ~ poly(x, 3))`)
+- A range of other models, including multi-level (or mixed effects) models
 
-Regarding this last point, we are hopeful that we can incorporate essentially
-all the models covered by [broom](https://broom.tidymodels.org). Multilevel
-models are particularly high on our wish list. But we have not yet had the time
-to develop these.
+Regarding this last point, we are hopeful that we can incorporate essentially all the models covered by [{broom}](https://broom.tidymodels.org). Multilevel models are particularly high on our wish list. But we have not yet had the time to develop these.
 
 # Contributing
 
-We would LOVE to have you as a contributor! Is there a model that we don't
-currently fit that you want implemented? There are a few ways to go about this.
-You can either (a) fork the repository and implement the method on your own, then
-submit a PR, or (b) file an issue.
+We would **love** to have you as a contributor! Is there a model that we don't currently fit that you want implemented? There are a few ways to go about this. You can either (a) fork the repository and implement the method on your own, then submit a PR, or (b) file an issue.
 
-If you file an issue it would be *really* helpful if you could provide an
-example of a fitted model and what the equation for that model should look like.
-We will try to get to these as soon as possible.
+If you file an issue it would be *really* helpful if you could provide an example of a fitted model and what the equation for that model should look like. We will try to get to these as soon as possible.
 
-Also, the next planned vignette (at this particular moment) is on contributing
-to the package, with a step-by-step example of implementing a new method. So
-stay tuned for that, if you're interested in (a) but not yet sure how to get
-started.
+Also, the next planned vignette (at this particular moment) is on contributing to the package, with a step-by-step example of implementing a new method. So stay tuned for that, if you're interested in, but not yet sure how to get started.

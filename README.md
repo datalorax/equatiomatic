@@ -13,26 +13,24 @@ coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge
 [![Covrpage
 Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://github.com/datalorax/equatiomatic/tree/master/tests)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)
-
 <!-- badges: end -->
 
-The goal of **equatiomatic** is to reduce the pain associated with
-writing LaTeX code from a fitted model. The package aims to support any
-model supported by
-[**broom**](https://cran.r-project.org/package=broom). See the
-[introduction to
+The goal of {equatiomatic} is to reduce the pain associated with writing
+LaTeX code from a fitted model. The package aims to support any model
+supported by [{broom}](https://cran.r-project.org/package=broom). See
+the [introduction to
 equatiomatic](https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models)
 for currently supported models.
 
 ## Installation
 
-Install from CRAN with
+Install from CRAN with:
 
 ``` r
 install.packages("equatiomatic")
 ```
 
-Or get the development version from GitHub with
+Or get the development version from GitHub with:
 
 ``` r
 remotes::install_github("datalorax/equatiomatic")
@@ -50,7 +48,7 @@ To convert a model to LaTeX, feed a model object to `extract_eq()`:
 library(equatiomatic)
 
 # Fit a simple model
-mod1 <- lm(mpg ~ cyl + disp, mtcars)
+mod1 <- lm(mpg ~ cyl + disp, data = mtcars)
 
 # Give the results to extract_eq
 extract_eq(mod1)
@@ -66,7 +64,7 @@ The model can be built in any standard way. It can handle shortcut
 syntax:
 
 ``` r
-mod2 <- lm(mpg ~ ., mtcars)
+mod2 <- lm(mpg ~ ., data = mtcars)
 extract_eq(mod2)
 ```
 
@@ -81,7 +79,7 @@ variables as subscripts.
 
 ``` r
 data("penguins", package = "equatiomatic")
-mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, data = penguins)
 extract_eq(mod3)
 ```
 
@@ -101,7 +99,7 @@ d <- data.frame(cat1  = rep(letters[1:3], 100),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5),
                 out   = rnorm(300, 10, 0.5))
-mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
+mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, data = d)
 extract_eq(mod4)
 ```
 
@@ -197,7 +195,7 @@ mpg &= \alpha + \beta_{1}(cyl) + \beta_{2}(disp) + \beta_{3}(hp)\ + \\
 
 ## R Markdown and previewing
 
-If you include `extract_eq()` in an R Markdown chunk, **knitr** will
+If you include `extract_eq()` in an R Markdown chunk, {knitr} will
 render the equation. If you’d like to see the LaTeX code wrap the call
 in `print()`.
 
@@ -210,13 +208,13 @@ preview_eq(mod1)
 
 ![](man/figures/preview1.png)
 
-Both `extract_eq()` and `preview_eq()` work with **magrittr** pipes, so
-you can do something like this:
+Both `extract_eq()` and `preview_eq()` work with base R or {magrittr}
+pipes, so you can do something like this:
 
 ``` r
-library(magrittr)  # or library(tidyverse) or any other package that exports %>%
+#library(magrittr)  # if you want to use %>% instead of |>
 
-extract_eq(mod1) %>%
+extract_eq(mod1) |>
   preview_eq()
 # Or simply: preview_eq(mod1)
 ```
@@ -258,8 +256,8 @@ $$\operatorname{\widehat{mpg}} = 34.66 + -1.59(\operatorname{cyl}) + -0.02(\oper
 This works in longer wrapped equations:
 
 ``` r
-extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
-           use_coefs = TRUE, fix_signs = FALSE)
+extract_eq(mod2, wrap = TRUE, terms_per_line = 3, use_coefs = TRUE,
+  fix_signs = FALSE)
 ```
 
     #> $$
@@ -280,15 +278,15 @@ $$\begin{aligned}
 
 ## Beyond `lm()`
 
-You’re not limited to just `lm` models! **equatiomatic** supports many
+You’re not limited to just `lm` models! {equatiomatic} supports many
 other models, including logistic regression, probit regression, and
 ordered logistic regression (with `MASS::polr()`).
 
 ### Logistic regression with `glm()`
 
 ``` r
-model_logit <- glm(sex ~ bill_length_mm + species,
-                   data = penguins, family = binomial(link = "logit"))
+model_logit <- glm(sex ~ bill_length_mm + species, data = penguins,
+  family = binomial(link = "logit"))
 extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ```
 
@@ -307,8 +305,8 @@ $$\begin{aligned}
 ### Probit regression with `glm()`
 
 ``` r
-model_probit <- glm(sex ~ bill_length_mm + species,
-                    data = penguins, family = binomial(link = "probit"))
+model_probit <- glm(sex ~ bill_length_mm + species, data = penguins,
+  family = binomial(link = "probit"))
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 ```
 
@@ -328,16 +326,15 @@ P( \operatorname{sex} = \operatorname{male} ) &= \Phi[\alpha + \beta_{1}(\operat
 
 ``` r
 set.seed(1234)
-df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
-                                  levels = LETTERS[1:3],
-                                  ordered = TRUE),
-                 continuous_1 = rnorm(300, 100, 1),
-                 continuous_2 = rnorm(300, 50, 5))
+df <- data.frame(
+  outcome      = ordered(rep(LETTERS[1:3], 100), levels = LETTERS[1:3]),
+  continuous_1 = rnorm(300, 100, 1),
+  continuous_2 = rnorm(300, 50, 5))
 
 model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
-                           data = df, Hess = TRUE, method = "logistic")
+  data = df, Hess = TRUE, method = "logistic")
 model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
-                            data = df, Hess = TRUE, method = "probit")
+  data = df, Hess = TRUE, method = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
 ```
@@ -374,16 +371,15 @@ P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{
 
 ``` r
 set.seed(1234)
-df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
-                                  levels = LETTERS[1:3],
-                                  ordered = TRUE),
-                 continuous_1 = rnorm(300, 1, 1),
-                 continuous_2 = rnorm(300, 5, 5))
+df <- data.frame(
+  outcome      = ordered(rep(LETTERS[1:3], 100), levels = LETTERS[1:3]),
+  continuous_1 = rnorm(300, 1, 1),
+  continuous_2 = rnorm(300, 5, 5))
 
 model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
-                             data = df, link = "logit")
+  data = df, link = "logit")
 model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
-                              data = df, link = "probit")
+  data = df, link = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
 ```
@@ -421,7 +417,7 @@ P( \operatorname{outcome}  \leq  \operatorname{B} ) &= \Phi[\alpha_{2} + \beta_{
 If you would like to contribute to this package, we’d love your help! We
 are particularly interested in extending to more models. We hope to
 support any model supported by
-[**broom**](https://cran.r-project.org/package=broom) in the future.
+[{broom}](https://cran.r-project.org/package=broom) in the future.
 
 ## Code of Conduct
 

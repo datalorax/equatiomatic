@@ -5,42 +5,32 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r setup, include=FALSE}
-library(magrittr)
-
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>",
+  fig.path = "man/figures/README-", out.width = "100%")
 ```
 
 # equatiomatic <img src="man/figures/logo.png" align="right"/>
 
 <!-- badges: start -->
 [![lifecycle](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable) [![R build status](https://github.com/datalorax/equatiomatic/workflows/R-CMD-check/badge.svg)](https://github.com/datalorax/equatiomatic/actions) [![Codecov test coverage](https://codecov.io/gh/datalorax/equatiomatic/branch/master/graph/badge.svg)](https://app.codecov.io/gh/datalorax/equatiomatic?branch=master) [![Covrpage Summary](https://img.shields.io/badge/covrpage-Last_Build_2020_08_24-brightgreen.svg)](https://github.com/datalorax/equatiomatic/tree/master/tests) [![](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)](https://cranlogs.r-pkg.org/badges/grand-total/equatiomatic)
-
 <!-- badges: end -->
 
-The goal of **equatiomatic** is to reduce the pain associated with writing LaTeX
-code from a fitted model. The package aims to support any model
-supported by [**broom**](https://cran.r-project.org/package=broom). See the [introduction to equatiomatic](https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models) for currently supported models.
-
+The goal of {equatiomatic} is to reduce the pain associated with writing LaTeX code from a fitted model. The package aims to support any model
+supported by [{broom}](https://cran.r-project.org/package=broom). See the [introduction to equatiomatic](https://datalorax.github.io/equatiomatic/articles/equatiomatic.html#other-models) for currently supported models.
 
 ## Installation
 
-Install from CRAN with
+Install from CRAN with:
 
 ```{r install-cran, eval=FALSE}
 install.packages("equatiomatic")
 ```
 
-Or get the development version from GitHub with
+Or get the development version from GitHub with:
 
 ```{r install-command, eval=FALSE}
 remotes::install_github("datalorax/equatiomatic")
 ```
-
 
 ## Basic usage
 
@@ -54,7 +44,7 @@ To convert a model to LaTeX, feed a model object to `extract_eq()`:
 library(equatiomatic)
 
 # Fit a simple model
-mod1 <- lm(mpg ~ cyl + disp, mtcars)
+mod1 <- lm(mpg ~ cyl + disp, data = mtcars)
 
 # Give the results to extract_eq
 extract_eq(mod1)
@@ -62,7 +52,7 @@ extract_eq(mod1)
 
 ```{r example-basic-preview, echo=FALSE}
 library(equatiomatic)
-mod1 <- lm(mpg ~ cyl + disp, mtcars)
+mod1 <- lm(mpg ~ cyl + disp, data = mtcars)
 
 eq1 <- extract_eq(mod1)
 print(eq1)
@@ -72,12 +62,12 @@ eq1
 The model can be built in any standard way. It can handle shortcut syntax:
 
 ```{r example-shortcut, eval=FALSE}
-mod2 <- lm(mpg ~ ., mtcars)
+mod2 <- lm(mpg ~ ., data = mtcars)
 extract_eq(mod2)
 ```
 
 ```{r example-shortcut-preview, echo=FALSE}
-mod2 <- lm(mpg ~ ., mtcars)
+mod2 <- lm(mpg ~ ., data = mtcars)
 
 eq2 <- extract_eq(mod2)
 print(eq2)
@@ -88,12 +78,12 @@ When using categorical variables, it will include the levels of the variables as
 
 ```{r example-categorical, eval=FALSE}
 data("penguins", package = "equatiomatic")
-mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, data = penguins)
 extract_eq(mod3)
 ```
 
 ```{r example-categorical-preview, echo=FALSE}
-mod3 <- lm(body_mass_g ~ bill_length_mm + species, penguins)
+mod3 <- lm(body_mass_g ~ bill_length_mm + species, data = penguins)
 
 eq3 <- extract_eq(mod3)
 print(eq3)
@@ -109,7 +99,7 @@ d <- data.frame(cat1  = rep(letters[1:3], 100),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5),
                 out   = rnorm(300, 10, 0.5))
-mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
+mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, data = d)
 extract_eq(mod4)
 ```
 
@@ -120,7 +110,7 @@ d <- data.frame(cat1  = rep(letters[1:3], 100),
                 cont1 = rnorm(300, 100, 1),
                 cont2 = rnorm(300, 50, 5),
                 out   = rnorm(300, 10, 0.5))
-mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, d)
+mod4 <- lm(out ~ cont1 + cat2 + cont2 + cat1, data = d)
 
 eq4 <- extract_eq(mod4)
 print(eq4)
@@ -158,7 +148,8 @@ extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
 ```
 
 ```{r example-wrap-longer-location-preview, echo=FALSE}
-eq2 <- extract_eq(mod2, wrap = TRUE, terms_per_line = 4, operator_location = "start")
+eq2 <- extract_eq(mod2, wrap = TRUE, terms_per_line = 4,
+  operator_location = "start")
 print(eq2)
 eq2
 ```
@@ -178,7 +169,7 @@ eq2
 
 ## R Markdown and previewing
 
-If you include `extract_eq()` in an R Markdown chunk, **knitr** will render the equation. If you'd like to see the LaTeX code wrap the call in `print()`.
+If you include `extract_eq()` in an R Markdown chunk, {knitr} will render the equation. If you'd like to see the LaTeX code wrap the call in `print()`.
 
 You can also use the `preview_eq()` function to preview the equation in RStudio:
 
@@ -188,12 +179,12 @@ preview_eq(mod1)
 
 ![](man/figures/preview1.png)
 
-Both `extract_eq()` and `preview_eq()` work with **magrittr** pipes, so you can do something like this:
+Both `extract_eq()` and `preview_eq()` work with base R or {magrittr} pipes, so you can do something like this:
 
 ```{r pipe-example, eval=FALSE}
-library(magrittr)  # or library(tidyverse) or any other package that exports %>%
+#library(magrittr)  # if you want to use %>% instead of |>
 
-extract_eq(mod1) %>%
+extract_eq(mod1) |>
   preview_eq()
 # Or simply: preview_eq(mod1)
 ```
@@ -232,33 +223,32 @@ eq1
 This works in longer wrapped equations:
 
 ```{r fix-signs-long, eval=FALSE}
-extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
-           use_coefs = TRUE, fix_signs = FALSE)
+extract_eq(mod2, wrap = TRUE, terms_per_line = 3, use_coefs = TRUE,
+  fix_signs = FALSE)
 ```
 
 ```{r fix-signs-long-preview, echo=FALSE}
-eq2 <- extract_eq(mod2, wrap = TRUE, terms_per_line = 3,
-                  use_coefs = TRUE, fix_signs = FALSE)
+eq2 <- extract_eq(mod2, wrap = TRUE, terms_per_line = 3, use_coefs = TRUE,
+  fix_signs = FALSE)
 print(eq2)
 eq2
 ```
 
-
 ## Beyond `lm()`
 
-You're not limited to just `lm` models! **equatiomatic** supports many other models, including logistic regression, probit regression, and ordered logistic regression (with `MASS::polr()`).
+You're not limited to just `lm` models! {equatiomatic} supports many other models, including logistic regression, probit regression, and ordered logistic regression (with `MASS::polr()`).
 
 ### Logistic regression with `glm()`
 
 ```{r example-logit, eval=FALSE}
-model_logit <- glm(sex ~ bill_length_mm + species,
-                   data = penguins, family = binomial(link = "logit"))
+model_logit <- glm(sex ~ bill_length_mm + species, data = penguins,
+  family = binomial(link = "logit"))
 extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 ```
 
 ```{r example-logit-preview, echo=FALSE}
-model_logit <- glm(sex ~ bill_length_mm + species,
-                   data = penguins, family = binomial(link = "logit"))
+model_logit <- glm(sex ~ bill_length_mm + species, data = penguins,
+  family = binomial(link = "logit"))
 
 eq_logit <- extract_eq(model_logit, wrap = TRUE, terms_per_line = 3)
 print(eq_logit)
@@ -268,14 +258,14 @@ eq_logit
 ### Probit regression with `glm()`
 
 ```{r example-probit, eval=FALSE}
-model_probit <- glm(sex ~ bill_length_mm + species,
-                    data = penguins, family = binomial(link = "probit"))
+model_probit <- glm(sex ~ bill_length_mm + species, data = penguins,
+  family = binomial(link = "probit"))
 extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 ```
 
 ```{r example-probit-preview, echo=FALSE}
-model_probit <- glm(sex ~ bill_length_mm + species,
-                    data = penguins, family = binomial(link = "probit"))
+model_probit <- glm(sex ~ bill_length_mm + species, data = penguins,
+  family = binomial(link = "probit"))
 
 eq_probit <- extract_eq(model_probit, wrap = TRUE, terms_per_line = 3)
 print(eq_probit)
@@ -286,32 +276,30 @@ eq_probit
 
 ```{r example-polr, eval=FALSE}
 set.seed(1234)
-df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
-                                  levels = LETTERS[1:3],
-                                  ordered = TRUE),
-                 continuous_1 = rnorm(300, 100, 1),
-                 continuous_2 = rnorm(300, 50, 5))
+df <- data.frame(
+  outcome      = ordered(rep(LETTERS[1:3], 100), levels = LETTERS[1:3]),
+  continuous_1 = rnorm(300, 100, 1),
+  continuous_2 = rnorm(300, 50, 5))
 
 model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
-                           data = df, Hess = TRUE, method = "logistic")
+  data = df, Hess = TRUE, method = "logistic")
 model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
-                            data = df, Hess = TRUE, method = "probit")
+  data = df, Hess = TRUE, method = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
 ```
 
 ```{r example-ologit-preview, echo=FALSE}
 set.seed(1234)
-df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
-                                  levels = LETTERS[1:3],
-                                  ordered = TRUE),
-                 continuous_1 = rnorm(300, 100, 1),
-                 continuous_2 = rnorm(300, 50, 5))
+df <- data.frame(
+  outcome      = ordered(rep(LETTERS[1:3], 100), levels = LETTERS[1:3]),
+  continuous_1 = rnorm(300, 100, 1),
+  continuous_2 = rnorm(300, 50, 5))
 
 model_ologit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
-                           data = df, Hess = TRUE, method = "logistic")
+  data = df, Hess = TRUE, method = "logistic")
 model_oprobit <- MASS::polr(outcome ~ continuous_1 + continuous_2,
-                            data = df, Hess = TRUE, method = "probit")
+  data = df, Hess = TRUE, method = "probit")
 
 eq_ologit <- extract_eq(model_ologit, wrap = TRUE)
 print(eq_ologit)
@@ -333,32 +321,30 @@ eq_oprobit
 
 ```{r example-clm, eval=FALSE}
 set.seed(1234)
-df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
-                                  levels = LETTERS[1:3],
-                                  ordered = TRUE),
-                 continuous_1 = rnorm(300, 1, 1),
-                 continuous_2 = rnorm(300, 5, 5))
+df <- data.frame(
+  outcome      = ordered(rep(LETTERS[1:3], 100), levels = LETTERS[1:3]),
+  continuous_1 = rnorm(300, 1, 1),
+  continuous_2 = rnorm(300, 5, 5))
 
 model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
-                             data = df, link = "logit")
+  data = df, link = "logit")
 model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
-                              data = df, link = "probit")
+  data = df, link = "probit")
 
 extract_eq(model_ologit, wrap = TRUE)
 ```
 
 ```{r example-clm-ologit-preview, echo=FALSE}
 set.seed(1234)
-df <- data.frame(outcome = factor(rep(LETTERS[1:3], 100),
-                                  levels = LETTERS[1:3],
-                                  ordered = TRUE),
-                 continuous_1 = rnorm(300, 1, 1),
-                 continuous_2 = rnorm(300, 5, 5))
+df <- data.frame(
+  outcome      = ordered(rep(LETTERS[1:3], 100), levels = LETTERS[1:3]),
+  continuous_1 = rnorm(300, 1, 1),
+  continuous_2 = rnorm(300, 5, 5))
 
 model_ologit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
-                             data = df, link = "logit")
+  data = df, link = "logit")
 model_oprobit <- ordinal::clm(outcome ~ continuous_1 + continuous_2,
-                              data = df, link = "probit")
+  data = df, link = "probit")
 
 eq_ologit <- extract_eq(model_ologit, wrap = TRUE)
 print(eq_ologit)
@@ -375,22 +361,17 @@ print(eq_oprobit)
 eq_oprobit
 ```
 
-
 ## Extension
 
-If you would like to contribute to this package, we'd love your help!
-We are particularly interested in extending to more models. We hope to support
-any model supported by [**broom**](https://cran.r-project.org/package=broom) in
-the future.
-
+If you would like to contribute to this package, we'd love your help! We are particularly interested in extending to more models. We hope to support
+any model supported by [{broom}](https://cran.r-project.org/package=broom) in the future.
 
 ## Code of Conduct
 
-Please note that the 'equatiomatic' project is released with a
-[Contributor Code of Conduct](https://github.com/datalorax/equatiomatic/blob/master/CODE_OF_CONDUCT.md).
-By contributing to this project, you agree to abide by its terms.
+Please note that the 'equatiomatic' project is released with a [Contributor Code of Conduct](https://github.com/datalorax/equatiomatic/blob/master/CODE_OF_CONDUCT.md). By contributing to this project, you agree to abide by its terms.
 
 ## A note of appreciation
+
 We'd like to thank the authors of the [{palmerpenguins}](https://allisonhorst.github.io/palmerpenguins/index.html) dataset for generously allowing us to incorporate the `penguins` dataset in our package for example usage.
 
 Horst AM, Hill AP, Gorman KB (2020). *palmerpenguins: Palmer Archipelago (Antarctica) penguin data*. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/

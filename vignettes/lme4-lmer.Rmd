@@ -8,13 +8,10 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-This vignette is intended to show the wide variety of `lme4::lmer` models that can be handled by {equatiomatic}. The output uses the notation from [Gelman and Hill](https://sites.stat.columbia.edu/gelman/arm/). If you notice any errors in the notation, please [file an issue](https://github.com/datalorax/equatiomatic/issues). Similarly, if you try to use {equatiomatic} with an lmer model and end up with an error (either in notation or code) I would *really* appreciate if you could file an issue with a reproducible example.
+This vignette is intended to show the wide variety of `lme4::lmer` models that can be handled by {equatiomatic}. The output uses the notation from [Gelman and Hill](https://sites.stat.columbia.edu/gelman/arm/). If you notice any errors in the notation, please [file an issue](https://github.com/datalorax/equatiomatic/issues). Similarly, if you try to use {equatiomatic} with an **lmer** model and end up with an error (either in notation or code) I would *really* appreciate if you could file an issue with a reproducible example.
 
 This vignette displays many of the models that are covered by the package tests. It also illustrates many of the features of {equatiomatic}, including
 
@@ -30,7 +27,9 @@ library(lme4)
 ```
 
 ## Unconditional models
+
 A basic two-level unconditional model:
+
 ```{r unconditional1}
 um_hsb <- lmer(math ~ 1 + (1 | sch.id), data = hsb)
 extract_eq(um_hsb)
@@ -40,34 +39,33 @@ And a model with multiple levels:
 
 ```{r unconditional2}
 um_long3 <- lmer(score ~ 1 + (1 | sid) + (1 | school) + (1 | district),
-  data = sim_longitudinal
-)
+  data = sim_longitudinal)
 extract_eq(um_long3)
 ```
 
 ## Models with predictors at level 1
 ```{r l1-preds}
-lev1_hsb <- lmer(math ~ female + ses + minority + (1 | sch.id), hsb)
+lev1_hsb <- lmer(math ~ female + ses + minority + (1 | sch.id), data = hsb)
 extract_eq(lev1_hsb)
 ```
 
 Note that in the above, the mean structure at level 1 is broken out into a separate line. You can override this with the `mean_separate` argument.
+
 ```{r mean_separate}
 extract_eq(lev1_hsb, mean_separate = FALSE)
 ```
 
-Similarly, just like with standard `lm` models, you can specify wrapping, and how many terms per line
+Similarly, just like with standard `lm` models, you can specify wrapping, and how many terms per line:
 
 ```{r wrapping}
 extract_eq(lev1_hsb, wrap = TRUE, terms_per_line = 2)
 ```
 
-And one more example with multiple levels
+And one more example with multiple levels.
 
 ```{r l1-preds2}
 lev1_long <- lmer(score ~ wave + (1 | sid) + (1 | school) + (1 | district),
-  data = sim_longitudinal
-)
+  data = sim_longitudinal)
 extract_eq(lev1_long)
 ```
 
@@ -76,31 +74,24 @@ extract_eq(lev1_long)
 This should generally work regardless of the complexity.
 
 ```{r unstructured-vcv1}
-hsb1 <- lmer(
-  math ~ female + ses + minority + (minority | sch.id),
-  hsb
-)
+hsb1 <- lmer(math ~ female + ses + minority + (minority | sch.id),
+  data = hsb)
 extract_eq(hsb1)
 ```
 
 Notice that it correctly parses which variable is randomly varying here. We can also make it more complicated.
 
 ```{r unstructured-vcv2}
-hsb2 <- lmer(
-  math ~ female + ses + minority + (female + ses | sch.id),
-  hsb
-)
+hsb2 <- lmer(math ~ female + ses + minority + (female + ses | sch.id),
+  data = hsb)
 extract_eq(hsb2)
 ```
 
 And even really complicated. Note the model below gives a warning.
 
 ```{r unstructured-vcv3}
-hsb3 <- lmer(
-  math ~ female * ses + minority +
-    (ses * female + minority | sch.id),
-  hsb
-)
+hsb3 <- lmer(math ~ female * ses + minority + (ses * female + minority | sch.id),
+  data = hsb)
 extract_eq(hsb3)
 ```
 
@@ -110,15 +101,11 @@ In the `sim_longitudinal` data that comes with the package, the only level 1 pre
 
 ```{r group-level-preds-prep}
 # calculate district means
-dist_mean <- tapply(
-  sim_longitudinal$score,
-  sim_longitudinal$district,
-  mean
-)
+dist_mean <- tapply(sim_longitudinal$score, sim_longitudinal$district, mean)
 
 # put them in a df to merge
 dist_mean <- data.frame(
-  district = names(dist_mean),
+  district  = names(dist_mean),
   dist_mean = dist_mean
 )
 
@@ -130,21 +117,18 @@ Now we can fit a model that should have predictors at every level. We'll allow `
 
 ```{r group-preds-model1}
 group_preds_m1 <- lmer(score ~ wave + group + treatment + prop_low + dist_mean +
-  (wave | sid) + (wave | school) + (wave | district),
-data = d
-)
+  (wave | sid) + (wave | school) + (wave | district), data = d)
 extract_eq(group_preds_m1)
 ```
 
 ## Interactions
+
 Interactions with multilevel models can be tricky because they can be within or across levels, and the notation changes depending on whether the random effect for the lower level (in the interaction term) is specified as varying randomly within the given level. Luckily, {equatiomatic} handles all of this for you.
 
 First, let's look at a model with interactions only at level 1.
 
 ```{r l1-interaction}
-l1_hsb_int <- lmer(math ~ minority * female + (1 | sch.id),
-  data = hsb
-)
+l1_hsb_int <- lmer(math ~ minority * female + (1 | sch.id), data = hsb)
 extract_eq(l1_hsb_int)
 ```
 
@@ -161,9 +145,7 @@ But more complicated are cross level interactions. Here's a quick example.
 
 ```{r cross-level1}
 cl_long1 <- lmer(score ~ wave * treatment + (wave | sid) + (1 | school) +
-  (1 | district),
-data = sim_longitudinal
-)
+  (1 | district), data = sim_longitudinal)
 extract_eq(cl_long1)
 ```
 
@@ -171,31 +153,26 @@ Note that the `treatement` variable is shown as a predictor of the level 1 inter
 
 ```{r cross-level2}
 cl_long2 <- lmer(score ~ wave * treatment + (1 | sid) + (1 | school) +
-  (1 | district),
-data = sim_longitudinal
-)
+  (1 | district), data = sim_longitudinal)
 extract_eq(cl_long2)
 ```
 
-This works even for really complicated models, including three-way interactions that contain a cross-level interaction. For example
+This works even for really complicated models, including three-way interactions that contain a cross-level interaction. For example:
 
 ```{r cross-level3}
-cl_long3 <- lmer(
-  score ~ wave * group * treatment + wave * prop_low * treatment +
-    (wave | sid) + (wave | school) +
-    (wave + treatment | district),
-  sim_longitudinal
-)
+cl_long3 <- lmer(score ~ wave * group * treatment + wave * prop_low * treatment +
+  (wave | sid) + (wave | school) + (wave + treatment | district),
+  data = sim_longitudinal)
 extract_eq(cl_long3)
 ```
 
 ## Alternative variance-covariance specifications
+
 Finally, there is some support for alternative variance-covariance specifications. For example, you may want to specify a model with only the variance terms estimated, and not the covariances.
 
 ```{r vars-only}
 hsb_varsonly <- lmer(math ~ minority * female + (minority * female || sch.id),
-  data = hsb
-)
+  data = hsb)
 extract_eq(hsb_varsonly)
 ```
 
@@ -203,37 +180,33 @@ Or maybe you want to group by the same thing multiple times. In this exact model
 
 ```{r doublegroup}
 hsb_doublegroup <- lmer(math ~ minority * female +
-  (minority | sch.id) + (female | sch.id),
-data = hsb
-)
+  (minority | sch.id) + (female | sch.id), data = hsb)
 extract_eq(hsb_doublegroup)
 ```
 
 And finally, you can have a mix of different things and it should generally still work.
 
 ```{r mix}
-long_mixed_ranef <- lmer(
-  score ~ wave +
-    (wave || sid) + (wave | school) + (1 | school) + (wave || district),
-  sim_longitudinal
-)
+long_mixed_ranef <- lmer(score ~ wave + (wave || sid) + (wave | school) +
+  (1 | school) + (wave || district), data = sim_longitudinal)
 extract_eq(long_mixed_ranef)
 ```
 
-With that said, this is the part of the code that I would consider the most "experimental" at this point, so please do reach out if you have issues or run into use cases that are not supported.
+With that said, this is the part of the code that I would consider the most "experimental" at this point, so please, do reach out if you have issues or run into use cases that are not supported.
 
 ## Using estimated coefficients 
-Because of the multilevel nature of the notation used by **{equatiomatic}**, tracking the estimated coefficients can at times be a little difficult. To help with this, we keep the Greek notation with the estimated coefficients as subscripts. For example, let's extract the equation from our model with group-level predictors.
 
-```{r }
+Because of the multilevel nature of the notation used by {equatiomatic}, tracking the estimated coefficients can at times be a little difficult. To help with this, we keep the Greek notation with the estimated coefficients as subscripts. For example, let's extract the equation from our model with group-level predictors.
+
+```{r}
 extract_eq(group_preds_m1, use_coef = TRUE)
 ```
 
-
 ## Future developments
-There are still a few things I'm planning to implement that I haven't quite gotten around to yet. These include
 
-* Implementation of other features currently included in the `lm` extraction, including `intercept`, and `raw_tex` 
+There are still a few things I'm planning to implement that I haven't quite gotten around to yet. These include:
+
+* Implementation of other features currently included in the `lm` extraction, including `intercept=`, and `raw_tex=` 
 * Inevitable bug fixes
 
 Additionally, the Greek notation as subscripts may not always be desirable, particularly if the model is fairly simple. Future developments will likely make this optional.

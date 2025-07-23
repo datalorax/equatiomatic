@@ -8,22 +8,18 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", eval = FALSE)
 ```
 
 # TL;DR
+
 See a working application [here](https://djanderson07.shinyapps.io/equatiomatic-shiny/)
 
 # More detail
-The equatiomatic package exports `renderEq()` and `eqOutput()` functions
-to make it's usage with shiny more straightforward.
 
-Imagine, for example, that we wanted to have an app that showed us the 
-coefficients of a model in a nice table. We could do that with something like
+The equatiomatic package exports `renderEq()` and `eqOutput()` functions to make it's usage with Shiny more straightforward.
+
+Imagine, for example, that we wanted to have an app that showed us the coefficients of a model in a nice table. We could do that with something like:
 
 ```{r}
 library(equatiomatic)
@@ -65,8 +61,7 @@ server <- function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
-But, naturally, we'd probably also want the equation rendered too. We can extend
-The above with **equatiomatic** as follows.
+But, naturally, we'd probably also want the equation rendered too. We can extend the above with {equatiomatic} as follows.
 
 ```{r}
 library(equatiomatic)
@@ -114,8 +109,7 @@ shinyApp(ui = ui, server = server)
 
 Note that, beyond the `renderEq()` and `eqOutput()` function, we also have to initialize mathJax with the `shiny::withMathJax()` function somewhere in the UI. Without this line, you'll get the text version of the equation.
 
-Finally, we can of course add additional arguments `extract_eq()`, and it all 
-works as expected.
+Finally, we can of course add additional arguments `extract_eq()`, and it all works as expected.
 
 ```{r}
 library(equatiomatic)
