@@ -80,12 +80,14 @@ format.equation <- function(x, ..., latex = knitr::is_latex_output()) {
 #' @export
 #'
 #' @examples
-#' mod1 <- lm(mpg ~ cyl + disp, mtcars)
-#' eq1 <- extract_eq(mod1)
-#' eq1 # Not that nice
-#' preview_eq(eq1)
-#' # or easier...
-#' preview_eq(mod1)
+#' if (interactive()) {
+#'   mod1 <- lm(mpg ~ cyl + disp, mtcars)
+#'   eq1 <- extract_eq(mod1)
+#'   eq1 # Not that nice
+#'   preview_eq(eq1)
+#'   # or easier...
+#'   preview_eq(mod1)
+#' }
 preview_eq <- function(x, ...) {
   if (!rmarkdown::pandoc_available())
     stop("Pandoc is not available. Please install it to use this function.",

@@ -95,12 +95,14 @@ eq1 <- equation(r"(S^2_y = \sum_{i=1}^{n-1} \frac{(y_i - \bar{Y})^2}{n})")
 # Print raw text:
 eq1
 # Get a preview of the equation
-eq__(eq1)
+if (interactive())
+  eq__(eq1)
 # The same function can be used inside a `$$...$$ {#eq-label}` construct in
 # R Markdown or Quarto to calcule a display equation that is also recognized
 # by the cross referencing system of Quarto.
 # Get a string suitable for inclusion inline in R Markdown with `r eq__(eq1)`
 # (inside Markdown text and without the dollar signs around it)
 # For inline equations in a Markdown text, you are better to use `r eq_(eq1)`
-eq_(eq1)
+if (interactive())
+  eq_(eq1)
 }

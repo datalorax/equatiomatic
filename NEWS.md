@@ -1,3 +1,8 @@
+# equatiomatic 0.4.4
+
+* Adding `if (interactive())` where a preview of the equation is generated in a
+    Web browser to avoid a note in CRAN check.
+
 # equatiomatic 0.4.3
 
 * Correction of an URL that has no valid certificate in lme4-lmer vignette.

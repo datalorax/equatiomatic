@@ -19,10 +19,12 @@ equation is returned invisibly.
 Preview 'LaTeX' equations built with \code{\link{extract_eq}}.
 }
 \examples{
-mod1 <- lm(mpg ~ cyl + disp, mtcars)
-eq1 <- extract_eq(mod1)
-eq1 # Not that nice
-preview_eq(eq1)
-# or easier...
-preview_eq(mod1)
+if (interactive()) {
+  mod1 <- lm(mpg ~ cyl + disp, mtcars)
+  eq1 <- extract_eq(mod1)
+  eq1 # Not that nice
+  preview_eq(eq1)
+  # or easier...
+  preview_eq(mod1)
+}
 }
