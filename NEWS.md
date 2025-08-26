@@ -1,3 +1,7 @@
+# equatiomatic 0.4.3
+
+* Correction of an URL that has no valid certificate in lme4-lmer vignette.
+
 # equatiomatic 0.4.2
 
 * New vignette "Tidymodels with {equatiomatic}" illustrating that `extract_eq()`

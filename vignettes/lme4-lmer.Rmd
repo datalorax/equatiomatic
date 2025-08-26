@@ -11,7 +11,8 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-This vignette is intended to show the wide variety of `lme4::lmer` models that can be handled by {equatiomatic}. The output uses the notation from [Gelman and Hill](https://sites.stat.columbia.edu/gelman/arm/). If you notice any errors in the notation, please [file an issue](https://github.com/datalorax/equatiomatic/issues). Similarly, if you try to use {equatiomatic} with an **lmer** model and end up with an error (either in notation or code) I would *really* appreciate if you could file an issue with a reproducible example.
+This vignette is intended to show the wide variety of `lme4::lmer` models that can be handled by {equatiomatic}. The output uses the notation from [Gelman and Hill](
+https://doi.org/10.1017/CBO9780511790942). If you notice any errors in the notation, please [file an issue](https://github.com/datalorax/equatiomatic/issues). Similarly, if you try to use {equatiomatic} with an **lmer** model and end up with an error (either in notation or code) I would *really* appreciate if you could file an issue with a reproducible example.
 
 This vignette displays many of the models that are covered by the package tests. It also illustrates many of the features of {equatiomatic}, including
 
