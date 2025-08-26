@@ -21,7 +21,7 @@ of the variable names."><meta property="og:image" content="https://datalorax.git
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -226,14 +226,16 @@ you use <code>$$...$$ {#eq-label}</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> S^2_y = \sum_{i=1}^{n-1} \frac{(y_i - \bar{Y})^2}{n}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
 <span class="r-in"><span><span class="co"># Get a preview of the equation</span></span></span>
-<span class="r-in"><span><span class="fu">eq__</span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">eq__</span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># The same function can be used inside a `$$...$$ {#eq-label}` construct in</span></span></span>
 <span class="r-in"><span><span class="co"># R Markdown or Quarto to calcule a display equation that is also recognized</span></span></span>
 <span class="r-in"><span><span class="co"># by the cross referencing system of Quarto.</span></span></span>
 <span class="r-in"><span><span class="co"># Get a string suitable for inclusion inline in R Markdown with `r eq__(eq1)`</span></span></span>
 <span class="r-in"><span><span class="co"># (inside Markdown text and without the dollar signs around it)</span></span></span>
 <span class="r-in"><span><span class="co"># For inline equations in a Markdown text, you are better to use `r eq_(eq1)`</span></span></span>
-<span class="r-in"><span><span class="fu">eq_</span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">eq_</span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>

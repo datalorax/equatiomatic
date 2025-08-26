@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
       </span>
     </div>
 
@@ -110,15 +110,14 @@ equation is returned invisibly.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">eq1</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">eq1</span> <span class="co"># Not that nice</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> \operatorname{mpg} = \alpha + \beta_{1}(\operatorname{cyl}) + \beta_{2}(\operatorname{disp}) + \epsilon</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
-<span class="r-in"><span><span class="fu">preview_eq</span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># or easier...</span></span></span>
-<span class="r-in"><span><span class="fu">preview_eq</span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">eq1</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">eq1</span> <span class="co"># Not that nice</span></span></span>
+<span class="r-in"><span>  <span class="fu">preview_eq</span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># or easier...</span></span></span>
+<span class="r-in"><span>  <span class="fu">preview_eq</span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
