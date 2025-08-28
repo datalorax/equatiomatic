@@ -1,5 +1,8 @@
 # equatiomatic - to do list
 
+- Should we depend on generics for the definition of equation()? Currently, it
+    is (re)defined here.
+
 - Check the two last tests in test-lmerMod.R that produce different roundings
     on a silicon processor in macOS. For now these tests are skipped.
     
