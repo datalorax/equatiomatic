@@ -82,7 +82,8 @@
 
 <div id="equatiomatic---to-do-list" class="section level1">
 
-<ul><li><p>Check the two last tests in test-lmerMod.R that produce different roundings on a silicon processor in macOS. For now these tests are skipped.</p></li>
+<ul><li><p>Should we depend on generics for the definition of equation()? Currently, it is (re)defined here.</p></li>
+<li><p>Check the two last tests in test-lmerMod.R that produce different roundings on a silicon processor in macOS. For now these tests are skipped.</p></li>
 <li><p>Implement the Greek characters colorization for <code><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lme4::lmer()</a></code> and <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">lme4::glmer()</a></code>.</p></li>
 <li><p>Refactor <code><a href="reference/extract_eq.html">extract_eq()</a></code> to ease development of the support of new models (one method per file, do not place all possible arguments in the generic, but use <code>...</code> instead).</p></li>
 <li><p>Write a vignette on how to contribute new models (after refactoring, see here above).</p></li>
