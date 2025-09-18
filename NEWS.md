@@ -1,3 +1,8 @@
+# equatiomatic 0.4.5
+
+* Correction in a bug in `.labels()` that caused incorrect labels for polynomial
+    equations when no units are defined.
+
 # equatiomatic 0.4.4
 
 * Adding `if (interactive())` where a preview of the equation is generated in a

@@ -189,7 +189,7 @@ print.inline_equation <- function(x, ...) {
         # extract the exponent of I()
         vec <- sub("^I\\(.*(\\^.*)\\).*", "\\1", names(labels)[i])
         
-        if (isTRUE(units)) {
+        if (isTRUE(units) && grepl("\n", labels[i])) {
           # vec[i] <- sub(" \\n", paste0(sous_chaine, "\\\n"), vec[i])
           labels[i] <- gsub("(.*)(\\n \\[)(.*)(\\])",
             paste0("\\1", vec, "\\2", "\\3", vec,"\\4"), labels[i])
