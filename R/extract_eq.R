@@ -103,6 +103,8 @@
 #' @param se_subscripts Logical. If \code{se_subscripts = TRUE} then the 
 #'   equation will include the standard errors below each coefficient. 
 #'   This is supported for lm and glm models.
+#' @param logit_notation Logical. If \code{TRUE}, then the equation uses an more
+#'   compact notation for a logistic regression.
 #' @param ... Additional arguments (for future development; not currently used).
 #' @export
 #'
@@ -167,6 +169,8 @@
 #' )
 #' mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 #' extract_eq(mod5, wrap = TRUE)
+#' # More compact logit notation
+#' extract_eq(mod5, wrap = TRUE, logit_notation = TRUE)
 extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        greek_colors = NULL, subscript_colors = NULL,
                        var_colors = NULL, var_subscript_colors = NULL, 
@@ -179,7 +183,7 @@ extract_eq <- function(model, intercept = "alpha", greek = "beta",
                        use_coefs = FALSE, coef_digits = 2,
                        fix_signs = TRUE, font_size = NULL,
                        mean_separate = NULL, return_variances = FALSE,
-                       se_subscripts = FALSE, ...) {
+                       se_subscripts = FALSE, logit_notation = FALSE, ...) {
   UseMethod("extract_eq", model)
 }
 
@@ -201,13 +205,14 @@ extract_eq.default <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
                                mean_separate = NULL, return_variances = FALSE, 
-                               se_subscripts = FALSE, ...) {
+                               se_subscripts = FALSE, logit_notation = FALSE,
+                               ...) {
   if (index_factors & use_coefs) {
     stop("Coefficient estimates cannot be returned when factors are indexed.")
   }
   
   lhs <- extract_lhs(model, ital_vars, show_distribution, use_coefs, 
-                     swap_var_names, var_colors)
+    swap_var_names, var_colors, logit_notation = logit_notation)
   rhs <- extract_rhs(model, index_factors)
   
   eq_raw <- create_eq(
@@ -342,7 +347,8 @@ extract_eq.lmerMod <- function(model, intercept = "alpha", greek = "beta",
                                use_coefs = FALSE, coef_digits = 2,
                                fix_signs = TRUE, font_size = NULL,
                                mean_separate = NULL, return_variances = FALSE,
-                               se_subscripts = FALSE, ...) {
+                               se_subscripts = FALSE, logit_notation = FALSE,
+                               ...) {
   if (isTRUE(se_subscripts)) {
     warning("Standard errors are not supported for mixed effects models",
       call. = FALSE
@@ -422,7 +428,8 @@ extract_eq.glmerMod <- function(model, intercept = "alpha", greek = "beta",
                                 use_coefs = FALSE, coef_digits = 2,
                                 fix_signs = TRUE, font_size = NULL,
                                 mean_separate = NULL, return_variances = FALSE,
-                                se_subscripts = FALSE, ...) {
+                                se_subscripts = FALSE, logit_notation = FALSE,
+                                ...) {
   if (!is.null(greek_colors)) {
     warning(
       paste0("Colorization of greek notation not currently ",
@@ -461,7 +468,7 @@ extract_eq.forecast_ARIMA <- function(model, intercept = "alpha", greek = "beta"
                                       use_coefs = FALSE, coef_digits = 2,
                                       fix_signs = TRUE, font_size = NULL,
                                       mean_separate = NULL, return_variances = FALSE,
-                                      se_subscripts = FALSE, ...) {
+                                      se_subscripts = FALSE, logit_notation = FALSE, ...) {
 
   if (isTRUE(se_subscripts)) {
     warning("Standard errors are not supported for mixed effects models",
@@ -620,7 +627,7 @@ extract_eq.model_fit <-
            use_coefs = FALSE, coef_digits = 2,
            fix_signs = TRUE, font_size = NULL,
            mean_separate = NULL, return_variances = FALSE, 
-           se_subscripts = FALSE, ...) {
+           se_subscripts = FALSE, logit_notation = FALSE, ...) {
     
   if ("fit" %in% names(model)) {
     fitted_model <- model$fit
@@ -641,7 +648,7 @@ extract_eq.model_fit <-
       fix_signs = fix_signs, font_size = font_size,
       mean_separate = mean_separate, 
       return_variances = return_variances, 
-      se_subscripts = se_subscripts, ...)  
+      se_subscripts = se_subscripts, logit_notation = logit_notation, ...)  
   } else {
     stop("The 'model' does not appear to be a proper **model_fit** object ",
       "because it does not have a 'fit' component.")
@@ -663,7 +670,7 @@ extract_eq.workflow <-
            use_coefs = FALSE, coef_digits = 2,
            fix_signs = TRUE, font_size = NULL,
            mean_separate = NULL, return_variances = FALSE, 
-           se_subscripts = FALSE, ...) {
+           se_subscripts = FALSE, logit_notation = FALSE, ...) {
     
   if ("fit" %in% names(model)) {
     fitted_stage <- model$fit
@@ -686,7 +693,7 @@ extract_eq.workflow <-
         fix_signs = fix_signs, font_size = font_size,
         mean_separate = mean_separate, 
         return_variances = return_variances, 
-        se_subscripts = se_subscripts, ...) 
+        se_subscripts = se_subscripts, logit_notation = logit_notation, ...) 
     } else {
       stop("The 'model' does not appear to be a proper **workflow** object ",
         "because it does not have a proper 'fit' component.")
@@ -714,7 +721,7 @@ extract_eq.list <- function(model, intercept = "alpha", greek = "beta",
   use_coefs = FALSE, coef_digits = 2,
   fix_signs = TRUE, font_size = NULL,
   mean_separate = NULL, return_variances = FALSE, 
-  se_subscripts = FALSE, ...) {
+  se_subscripts = FALSE, logit_noation = FALSE, ...) {
   
   res <- sapply(model, extract_eq, intercept = intercept, greek = greek,
     greek_colors = greek_colors, subscript_colors = subscript_colors,
@@ -733,7 +740,7 @@ extract_eq.list <- function(model, intercept = "alpha", greek = "beta",
     fix_signs = fix_signs, font_size = font_size,
     mean_separate = mean_separate, 
     return_variances = return_variances, 
-    se_subscripts = se_subscripts, ...)
+    se_subscripts = se_subscripts, logit_notation = logit_notation, ...)
   res <- as.character(res) # Make sure it is a character vector
   names(res) <- names(model)
   class(res) <- c("equation", "character")

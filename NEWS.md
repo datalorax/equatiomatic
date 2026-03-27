@@ -1,3 +1,7 @@
+# equatiomatic 0.4.6
+
+* Equation for logit glm models now allows for a compact form with `logit_notation = TRUE`. Thanks Michael Friendly for the suggestion.
+
 # equatiomatic 0.4.5
 
 * Correction in a bug in `.labels()` that caused incorrect labels for polynomial

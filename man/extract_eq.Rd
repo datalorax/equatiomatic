@@ -30,6 +30,7 @@ extract_eq(
   mean_separate = NULL,
   return_variances = FALSE,
   se_subscripts = FALSE,
+  logit_notation = FALSE,
   ...
 )
 }
@@ -146,6 +147,9 @@ and correlations are returned instead.}
 equation will include the standard errors below each coefficient.
 This is supported for lm and glm models.}
 
+\item{logit_notation}{Logical. If \code{TRUE}, then the equation uses an more
+compact notation for a logistic regression.}
+
 \item{...}{Additional arguments (for future development; not currently used).}
 }
 \value{
@@ -220,4 +224,6 @@ d <- data.frame(
 )
 mod5 <- glm(out ~ ., data = d, family = binomial(link = "logit"))
 extract_eq(mod5, wrap = TRUE)
+# More compact logit notation
+extract_eq(mod5, wrap = TRUE, logit_notation = TRUE)
 }
