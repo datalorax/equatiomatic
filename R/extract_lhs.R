@@ -204,7 +204,7 @@ extract_lhs_binomial <- function(model, ital_vars, use_coefs,
   ss_escaped <- escape_tex(ss)
   ss_escaped <- add_tex_ital_v(ss_escaped, ital_vars)
 
-  if(!is.null(var_colors)) {
+  if (!is.null(var_colors)) {
     names(outcome) <- outcome_nm
     names(outcome_escaped) <- outcome_nm
     outcome_escaped <- colorize_terms(var_colors, list(outcome), list(outcome_escaped))
@@ -251,8 +251,8 @@ extract_lhs2_binomial <- function(model, ital_vars, use_coefs, swap_var_names,
   if (length(n) > 1) {
     warning(paste(
       "Unsure of how to handle a vector of weights in creation",
-      "of the distrubtion portion of the equation. Please inspect",
-      "carefully and modify by hand if neccessary."
+      "of the distribution portion of the equation. Please inspect",
+      "carefully and modify by hand if necessary."
     ))
   }
 
@@ -268,7 +268,7 @@ extract_lhs2_binomial <- function(model, ital_vars, use_coefs, swap_var_names,
   ss_escaped <- escape_tex(ss)
   ss_escaped <- add_tex_ital_v(ss_escaped, ital_vars)
 
-  if(!is.null(var_colors)) {
+  if (!is.null(var_colors)) {
     names(outcome) <- outcome_nm
     names(outcome_escaped) <- outcome_nm
     outcome_escaped <- colorize_terms(var_colors, list(outcome), list(outcome_escaped))
