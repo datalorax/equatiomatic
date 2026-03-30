@@ -22,7 +22,8 @@ extract_lhs <- function(model, ...) {
 #' @noRd
 
 extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs,
-                           swap_var_names, var_colors, ...) {
+                           swap_var_names, var_colors, logit_notation = FALSE,
+                           ...) {
 
   check_dots(...)
   lhs <- rownames(attr(model$terms, "factors"))[1]
@@ -67,7 +68,7 @@ extract_lhs.summary.lm <- extract_lhs.lm
 #' @return A character string
 #' @noRd
 extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, swap_var_names,
-                                var_colors, ...) {
+                                var_colors, logit_notation = FALSE,...) {
   check_dots(...)
   lhs <- all.vars(formula(model))[1]
   lhs_nm <- lhs
@@ -99,7 +100,7 @@ extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, swap_var_names,
 #' @return A character string
 #' @noRd
 extract_lhs.glmerMod <- function(model, ital_vars, use_coefs, ...) {
-  extract_lhs.lmerMod(model, ital_vars, use_coefs, ...)
+  extract_lhs.lmerMod(model, ital_vars, use_coefs, logit_notation = FALSE, ...)
 }
 
 #' Extract left-hand side of a glm object
@@ -117,11 +118,10 @@ extract_lhs.glmerMod <- function(model, ital_vars, use_coefs, ...) {
 extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs,
 swap_var_names, var_colors, logit_notation = FALSE, ...) {
   
-  if (!isFALSE(logit_notation))
-    message("logit_notation = TRUE ignored when show_distribution is TRUE.")
-  
   if (show_distribution) {
     if (model$family$family == "binomial") {
+      if (!isFALSE(logit_notation))
+        message("logit_notation = TRUE ignored when show_distribution is TRUE.")
       return(extract_lhs2_binomial(model, ital_vars, use_coefs,
         swap_var_names, var_colors, logit_notation = logit_notation))
     } else {

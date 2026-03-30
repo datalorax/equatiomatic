@@ -721,7 +721,7 @@ extract_eq.list <- function(model, intercept = "alpha", greek = "beta",
   use_coefs = FALSE, coef_digits = 2,
   fix_signs = TRUE, font_size = NULL,
   mean_separate = NULL, return_variances = FALSE, 
-  se_subscripts = FALSE, logit_noation = FALSE, ...) {
+  se_subscripts = FALSE, logit_notation = FALSE, ...) {
   
   res <- sapply(model, extract_eq, intercept = intercept, greek = greek,
     greek_colors = greek_colors, subscript_colors = subscript_colors,
