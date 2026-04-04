@@ -2,6 +2,8 @@
 
 * Equation for logit glm models now allows for a compact form with `logit_notation = TRUE`. Thanks Michael Friendly for the suggestion.
 
+$ `preview_eq()` now can preview lists of equations.
+
 # equatiomatic 0.4.5
 
 * Correction in a bug in `.labels()` that caused incorrect labels for polynomial
