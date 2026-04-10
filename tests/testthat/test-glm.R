@@ -102,7 +102,7 @@ test_that("logit_notation works for logistic glm", {
   # use_coefs changes LHS to use \hat{outcome}
   expect_snapshot(extract_eq(model_logit, logit_notation = TRUE, use_coefs = TRUE))
 
-  # logit_notation is silently ignored when show_distribution = TRUE
+  # logit_notation emits a message and is ignored when show_distribution = TRUE
   expect_message(
     extract_eq(model_logit, logit_notation = TRUE, show_distribution = TRUE),
     "logit_notation = TRUE ignored when show_distribution is TRUE"
