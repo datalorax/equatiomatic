@@ -147,7 +147,7 @@ and correlations are returned instead.}
 equation will include the standard errors below each coefficient.
 This is supported for lm and glm models.}
 
-\item{logit_notation}{Logical. If \code{TRUE}, then the equation uses an more
+\item{logit_notation}{Logical. If \code{TRUE}, then the equation uses a more
 compact notation for a logistic regression.}
 
 \item{...}{Additional arguments (for future development; not currently used).}
