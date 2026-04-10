@@ -14,7 +14,7 @@ library(parsnip)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-To paraphrase its web site, [Tidymodels](https://www.tidymodels.org/) provides a series of packages for modeling and machine learning using the [tidyverse](https://www.tidyverse.org/) principles. {equatiomatic} is now partly compatible with it, meaning that it can extract the equation of certain models.
+To paraphrase its web site, [Tidymodels](https://www.tidymodels.org/) provides a series of packages for modeling and machine learning using the [tidyverse](https://tidyverse.org/) principles. {equatiomatic} is now partly compatible with it, meaning that it can extract the equation of certain models.
 
 Here is an example (adapted from the {workflows} main page):
 

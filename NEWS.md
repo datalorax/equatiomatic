@@ -1,3 +1,7 @@
+# equatiomatic 0.4.8
+
+* Another correction for the URL for CRAN resubmission.
+
 # equatiomatic 0.4.7
 
 * An URL was not accepted by CRAN and was corrected for a resubmission.
