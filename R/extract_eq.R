@@ -103,7 +103,7 @@
 #' @param se_subscripts Logical. If \code{se_subscripts = TRUE} then the 
 #'   equation will include the standard errors below each coefficient. 
 #'   This is supported for lm and glm models.
-#' @param logit_notation Logical. If \code{TRUE}, then the equation uses an more
+#' @param logit_notation Logical. If \code{TRUE}, then the equation uses a more
 #'   compact notation for a logistic regression.
 #' @param ... Additional arguments (for future development; not currently used).
 #' @export
