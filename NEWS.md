@@ -1,3 +1,7 @@
+# equatiomatic 0.4.7
+
+* An URL was not accepted by CRAN and was corrected for a resubmission.
+
 # equatiomatic 0.4.6
 
 * Equation for logit glm models now allows for a compact form with `logit_notation = TRUE`. Thanks Michael Friendly for the suggestion.
