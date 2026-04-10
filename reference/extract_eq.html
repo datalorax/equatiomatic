@@ -24,7 +24,7 @@ default method also supports clm objects obtained with ordinal::clm()."><meta pr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.6</span>
       </span>
     </div>
 
@@ -127,6 +127,7 @@ default method also supports clm objects obtained with <code><a href="https://rd
 <span>  mean_separate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  return_variances <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  se_subscripts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  logit_notation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -297,6 +298,11 @@ equation will include the standard errors below each coefficient.
 This is supported for lm and glm models.</p></dd>
 
 
+<dt id="arg-logit-notation">logit_notation<a class="anchor" aria-label="anchor" href="#arg-logit-notation"></a></dt>
+<dd><p>Logical. If <code>TRUE</code>, then the equation uses a more
+compact notation for a logistic regression.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments (for future development; not currently used).</p></dd>
 
@@ -423,6 +429,14 @@ implemented for a given model.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \begin{aligned}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \log\left[ \frac { P( \operatorname{out} = \operatorname{1} ) }{ 1 - P( \operatorname{out} = \operatorname{1} ) } \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \end{aligned}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
+<span class="r-in"><span><span class="co"># More compact logit notation</span></span></span>
+<span class="r-in"><span><span class="fu">extract_eq</span><span class="op">(</span><span class="va">mod5</span>, wrap <span class="op">=</span> <span class="cn">TRUE</span>, logit_notation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \begin{aligned}</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> \operatorname{logit}\left[ P(\operatorname{out}) \right] &amp;= \alpha + \beta_{1}(\operatorname{cat1}_{\operatorname{b}}) + \beta_{2}(\operatorname{cat1}_{\operatorname{c}}) + \beta_{3}(\operatorname{cat2}_{\operatorname{B}})\ + \\</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &amp;\quad \beta_{4}(\operatorname{cat2}_{\operatorname{C}}) + \beta_{5}(\operatorname{cont1}) + \beta_{6}(\operatorname{cont2})</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> \end{aligned}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $$</span>
