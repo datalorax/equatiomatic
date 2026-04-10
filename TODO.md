@@ -4,7 +4,7 @@
     is (re)defined here.
 
 - Check the two last tests in test-lmerMod.R that produce different roundings
-    on a silicon processor in macOS. For now these tests are skipped.
+    on several systems, and with R 4.6.0. For now these tests are skipped.
     
 - Implement the Greek characters colorization for `lme4::lmer()` and
     `lme4::glmer()`.

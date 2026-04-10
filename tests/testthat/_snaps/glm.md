@@ -38,6 +38,36 @@
     \end{aligned}
     $$
 
+# logit_notation works for logistic glm
+
+    Code
+      extract_eq(model_logit, logit_notation = TRUE)
+    Output
+      $$
+      \operatorname{logit}\left[ P(\operatorname{outcome}) \right] = \alpha + \beta_{1}(\operatorname{categorical}_{\operatorname{b}}) + \beta_{2}(\operatorname{categorical}_{\operatorname{c}}) + \beta_{3}(\operatorname{continuous\_1}) + \beta_{4}(\operatorname{continuous\_2})
+      $$
+
+---
+
+    Code
+      extract_eq(model_logit, logit_notation = TRUE, wrap = TRUE)
+    Output
+      $$
+      \begin{aligned}
+      \operatorname{logit}\left[ P(\operatorname{outcome}) \right] &= \alpha + \beta_{1}(\operatorname{categorical}_{\operatorname{b}}) + \beta_{2}(\operatorname{categorical}_{\operatorname{c}}) + \beta_{3}(\operatorname{continuous\_1})\ + \\
+      &\quad \beta_{4}(\operatorname{continuous\_2})
+      \end{aligned}
+      $$
+
+---
+
+    Code
+      extract_eq(model_logit, logit_notation = TRUE, use_coefs = TRUE)
+    Output
+      $$
+      \operatorname{logit}\left[ P(\hat{\operatorname{outcome}}) \right] = 5.33 + 0.33(\operatorname{categorical}_{\operatorname{b}}) - 0.12(\operatorname{categorical}_{\operatorname{c}}) - 0.06(\operatorname{continuous\_1}) + 0.01(\operatorname{continuous\_2})
+      $$
+
 # Renaming Variables works
 
     $$

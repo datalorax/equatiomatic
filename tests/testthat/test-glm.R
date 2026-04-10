@@ -79,6 +79,35 @@ test_that("colorizing works", {
   )
 })
 
+test_that("logit_notation works for logistic glm", {
+  set.seed(1234)
+  df <- data.frame(
+    outcome = sample(0:1, 300, replace = TRUE),
+    categorical = rep(letters[1:3], 100),
+    continuous_1 = rnorm(300, 100, 1),
+    continuous_2 = rnorm(300, 50, 5)
+  )
+
+  model_logit <- glm(outcome ~ .,
+    data = df,
+    family = binomial(link = "logit")
+  )
+
+  # basic compact logit notation
+  expect_snapshot(extract_eq(model_logit, logit_notation = TRUE))
+
+  # wrapping works with logit notation
+  expect_snapshot(extract_eq(model_logit, logit_notation = TRUE, wrap = TRUE))
+
+  # use_coefs changes LHS to use \hat{outcome}
+  expect_snapshot(extract_eq(model_logit, logit_notation = TRUE, use_coefs = TRUE))
+
+  # logit_notation emits a message and is ignored when show_distribution = TRUE
+  expect_message(
+    extract_eq(model_logit, logit_notation = TRUE, show_distribution = TRUE),
+    "logit_notation = TRUE ignored when show_distribution is TRUE"
+  )
+})
 test_that("Renaming Variables works", {
   set.seed(1234)
   df <- data.frame(

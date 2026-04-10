@@ -93,7 +93,7 @@ preview_eq <- function(x, ...) {
     stop("Pandoc is not available. Please install it to use this function.",
       call. = FALSE)
   
-  if (!inherits(x, "equation"))
+  if (!inherits(x, c("equation", "list")))
     x <- extract_eq(x)
   
   rmd <- tempfile(fileext = ".Rmd")

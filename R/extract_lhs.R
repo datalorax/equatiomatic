@@ -22,7 +22,8 @@ extract_lhs <- function(model, ...) {
 #' @noRd
 
 extract_lhs.lm <- function(model, ital_vars, show_distribution, use_coefs,
-                           swap_var_names, var_colors, ...) {
+                           swap_var_names, var_colors, logit_notation = FALSE,
+                           ...) {
 
   check_dots(...)
   lhs <- rownames(attr(model$terms, "factors"))[1]
@@ -67,7 +68,7 @@ extract_lhs.summary.lm <- extract_lhs.lm
 #' @return A character string
 #' @noRd
 extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, swap_var_names,
-                                var_colors, ...) {
+                                var_colors, logit_notation = FALSE,...) {
   check_dots(...)
   lhs <- all.vars(formula(model))[1]
   lhs_nm <- lhs
@@ -99,7 +100,7 @@ extract_lhs.lmerMod <- function(model, ital_vars, use_coefs, swap_var_names,
 #' @return A character string
 #' @noRd
 extract_lhs.glmerMod <- function(model, ital_vars, use_coefs, ...) {
-  extract_lhs.lmerMod(model, ital_vars, use_coefs, ...)
+  extract_lhs.lmerMod(model, ital_vars, use_coefs, logit_notation = FALSE, ...)
 }
 
 #' Extract left-hand side of a glm object
@@ -115,11 +116,14 @@ extract_lhs.glmerMod <- function(model, ital_vars, use_coefs, ...) {
 #' @noRd
 
 extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs,
-                            swap_var_names, var_colors,...) {
+swap_var_names, var_colors, logit_notation = FALSE, ...) {
+  
   if (show_distribution) {
     if (model$family$family == "binomial") {
+      if (!isFALSE(logit_notation))
+        message("logit_notation = TRUE ignored when show_distribution is TRUE.")
       return(extract_lhs2_binomial(model, ital_vars, use_coefs,
-                                   swap_var_names, var_colors))
+        swap_var_names, var_colors, logit_notation = logit_notation))
     } else {
       message("This distribution is not presently supported; the distribution assumption
       will not be displayed")
@@ -133,7 +137,7 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs,
 
       lhs_escaped <- escape_tex(lhs)
 
-      if(!is.null(var_colors)) {
+      if (!is.null(var_colors)) {
         names(lhs) <- lhs_nm
         names(lhs_escaped) <- lhs_nm
         lhs_escaped <- colorize_terms(var_colors, list(lhs), list(lhs_escaped))
@@ -150,7 +154,7 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs,
   }
   if (model$family$family == "binomial") {
     return(extract_lhs_binomial(model, ital_vars, use_coefs,
-                                swap_var_names, var_colors))
+      swap_var_names, var_colors, logit_notation = logit_notation))
   } else {
     lhs <- all.vars(formula(model))[1]
     lhs_nm <- lhs
@@ -162,7 +166,7 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs,
 
     lhs_escaped <- escape_tex(lhs)
 
-    if(!is.null(var_colors)) {
+    if (!is.null(var_colors)) {
       names(lhs) <- lhs_nm
       names(lhs_escaped) <- lhs_nm
       lhs_escaped <- colorize_terms(var_colors, list(lhs), list(lhs_escaped))
@@ -183,7 +187,8 @@ extract_lhs.glm <- function(model, ital_vars, show_distribution, use_coefs,
 #' @noRd
 
 extract_lhs_binomial <- function(model, ital_vars, use_coefs,
-                                 swap_var_names, var_colors) {
+swap_var_names, var_colors, logit_notation = FALSE) {
+  
   outcome <- all.vars(formula(model))[1]
   outcome_nm <- outcome
   names(outcome) <- outcome_nm
@@ -192,15 +197,13 @@ extract_lhs_binomial <- function(model, ital_vars, use_coefs,
     outcome <- swap_names(swap_var_names, outcome)[[1]]
   }
 
-  # This returns a 1x1 data.frame
-  ss <- model$data[which(model$y == 1)[1], outcome_nm]
-
-  # Convert to single character
-  ss <- as.character(unlist(ss))
-
   outcome_escaped <- escape_tex(outcome)
   outcome_escaped <- add_tex_ital_v(outcome_escaped, ital_vars)
 
+  # This returns a 1x1 data.frame
+  ss <- model$data[which(model$y == 1)[1], outcome_nm]
+  # Convert to single character
+  ss <- as.character(unlist(ss))
   ss_escaped <- escape_tex(ss)
   ss_escaped <- add_tex_ital_v(ss_escaped, ital_vars)
 
@@ -213,21 +216,38 @@ extract_lhs_binomial <- function(model, ital_vars, use_coefs,
     names(ss_escaped) <- outcome_nm
     ss_escaped <- colorize_terms(var_colors, list(outcome), list(ss_escaped))
   }
-
-  if (is.na(ss)) {
-    full_lhs <- paste("P(", outcome_escaped, ")")
+  
+  if (isTRUE(logit_notation)) {
+    if (use_coefs) {
+      full_lhs <- paste0(
+        "\\operatorname{logit}\\left[ P(\\hat{",
+        outcome_escaped,
+        "}) \\right]"
+      )
+    } else {
+      full_lhs <- paste0(
+        "\\operatorname{logit}\\left[ P(",
+        outcome_escaped,
+        ") \\right]"
+      )
+    }
   } else {
-    full_lhs <- paste(
-      "P(", outcome_escaped,
-      "=",
-      ss_escaped, ")"
-    )
-  }
-  if (use_coefs) {
-    full_lhs <- add_hat(full_lhs)
+    if (is.na(ss)) {
+      full_lhs <- paste("P(", outcome_escaped, ")")
+    } else {
+      full_lhs <- paste(
+        "P(", outcome_escaped,
+        "=",
+        ss_escaped, ")"
+      )
+    }
+    if (use_coefs) {
+      full_lhs <- add_hat(full_lhs)
+    }
   }
 
-  full_lhs <- modify_lhs_for_link(model, full_lhs)
+  if (!isTRUE(logit_notation))
+    full_lhs <- modify_lhs_for_link(model, full_lhs)
   class(full_lhs) <- c("character", class(model))
   full_lhs
 }
@@ -235,7 +255,8 @@ extract_lhs_binomial <- function(model, ital_vars, use_coefs,
 #' @keywords internal
 #' @noRd
 extract_lhs2_binomial <- function(model, ital_vars, use_coefs, swap_var_names,
-                                  var_colors) {
+var_colors, logit_notation = FALSE) {
+  
   outcome <- all.vars(formula(model))[1]
   outcome_nm <- outcome
   names(outcome) <- outcome_nm
