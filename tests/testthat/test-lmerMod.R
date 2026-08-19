@@ -152,10 +152,10 @@ test_that("Really big models work", {
 
 
 DF <- structure(list(brochure = structure(c(2L, 1L, 2L, 1L, 1L, 1L, 1L, 2L, 1L, 1L), 
-                                          .Label = c("pictorial", "standard"), 
+                                          levels = c("pictorial", "standard"), 
                                           class = "factor"), 
                      disease = structure(c(1L, 2L, 2L, 2L, 1L, 2L, 2L, 1L, 1L, 2L), 
-                                         .Label = c("BC", "DS"), 
+                                         levels = c("BC", "DS"), 
                                          class = "factor"), 
                      ID = c(1L, 2L, 3L, 4L, 5L, 1L, 2L, 3L, 4L, 5L), 
                      error = c(5, 3.9, 70, 73.5, 0.2, 19.9, 60.6, 50.8, 0.1, 0.3), 

@@ -1,3 +1,7 @@
+# equatiomatic 0.4.9
+
+* In tests/testthat/test-lmerMod.R, the deprecated `structure(..., .Label=)` is replaced by `structure(..., levels=)`. 
+
 # equatiomatic 0.4.8
 
 * Another correction for the URL for CRAN resubmission.
