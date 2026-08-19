@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -183,14 +183,14 @@ variable names (unless we specify the <code>swap_var_names=</code>
 argument, of course):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/extract_eq.html">extract_eq</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></span></code></pre></div>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>Sepal.Length</mo><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mo>Sepal.Width</mo><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">Sepal.Length</mi><mo>⁡</mo></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Sepal.Width</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{Sepal.Length} = \alpha + \beta_{1}(\operatorname{Sepal.Width}) + \epsilon
 </annotation></semantics></math></p>
 <p>Now, using <code><a href="../reference/equation.html">equation()</a></code> instead, we use the labels and
 units attributes of the variables in the dataset:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/equation.html">equation</a></span><span class="op">(</span><span class="va">lm1</span><span class="op">)</span></span></code></pre></div>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mi mathvariant="normal">l</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mspace width="0.222em"></mspace><mrow><mo stretchy="true" form="prefix" mathvariant="normal">[</mo><mi mathvariant="normal">c</mi><mi mathvariant="normal">m</mi><mo stretchy="true" form="postfix" mathvariant="normal">]</mo></mrow></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mrow></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mi mathvariant="normal">w</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mspace width="0.222em"></mspace><mrow><mo stretchy="true" form="prefix" mathvariant="normal">[</mo><mi mathvariant="normal">c</mi><mi mathvariant="normal">m</mi><mo stretchy="true" form="postfix" mathvariant="normal">]</mo></mrow></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">Sepal length [cm]</mi><mo>⁡</mo></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mrow></mrow></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Sepal width [cm]</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{Sepal\ length
 \ [cm]} = \alpha + \beta_{}(\operatorname{Sepal\ width
 \ [cm]}) + \epsilon
@@ -208,7 +208,7 @@ default).</p>
 <p>Now, if you want an inline equation (an equation inside the text),
 you can easily use an inline R chunk calling the <code><a href="../reference/equation.html">eq_()</a></code>
 function like this: <code>`r eq_(lm1)`</code>. This produces
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mi mathvariant="normal">l</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mspace width="0.222em"></mspace><mrow><mo stretchy="true" form="prefix" mathvariant="normal">[</mo><mi mathvariant="normal">c</mi><mi mathvariant="normal">m</mi><mo stretchy="true" form="postfix" mathvariant="normal">]</mo></mrow></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mrow></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mi mathvariant="normal">w</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mspace width="0.222em"></mspace><mrow><mo stretchy="true" form="prefix" mathvariant="normal">[</mo><mi mathvariant="normal">c</mi><mi mathvariant="normal">m</mi><mo stretchy="true" form="postfix" mathvariant="normal">]</mo></mrow></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\operatorname{Sepal\ length
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">Sepal length [cm]</mi><mo>⁡</mo></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mrow></mrow></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Sepal width [cm]</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\operatorname{Sepal\ length
 \ [cm]} = \alpha + \beta_{}(\operatorname{Sepal\ width
 \ [cm]}) + \epsilon</annotation></semantics></math>, thus right inside
 the text. Note that <code><a href="../reference/equation.html">eq_()</a></code> also handles <code>label</code>
@@ -239,7 +239,7 @@ your document:</p>
 `r eq__(lm1)`
 $${#eq-model1}</code></pre>
 <p>which translates into:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mi mathvariant="normal">l</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">g</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mspace width="0.222em"></mspace><mrow><mo stretchy="true" form="prefix" mathvariant="normal">[</mo><mi mathvariant="normal">c</mi><mi mathvariant="normal">m</mi><mo stretchy="true" form="postfix" mathvariant="normal">]</mo></mrow></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mrow></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi><mspace width="0.222em"></mspace><mi mathvariant="normal">w</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">h</mi><mspace width="0.222em"></mspace><mrow><mo stretchy="true" form="prefix" mathvariant="normal">[</mo><mi mathvariant="normal">c</mi><mi mathvariant="normal">m</mi><mo stretchy="true" form="postfix" mathvariant="normal">]</mo></mrow></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">Sepal length [cm]</mi><mo>⁡</mo></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mrow></mrow></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Sepal width [cm]</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
 \operatorname{Sepal\ length
 \ [cm]} = \alpha + \beta_{}(\operatorname{Sepal\ width
 \ [cm]}) + \epsilon
@@ -261,11 +261,11 @@ etc.). Here is an example:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/equation.html">equation</a></span><span class="op">(</span><span class="va">lm1</span>, var_colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Sepal.Width  <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>,</span>
 <span>  ital_vars <span class="op">=</span> <span class="cn">TRUE</span>, use_coefs <span class="op">=</span> <span class="cn">TRUE</span>, coef_digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">$$
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mrow><mi>S</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>l</mi><mspace width="0.222em"></mspace><mi>l</mi><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><mi>h</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="prefix">[</mo><mi>c</mi><mi>m</mi><mo stretchy="false" form="postfix">]</mo></mrow><mo accent="true">̂</mo></mover><mo>=</mo><mn>6.526</mn><mo>−</mo><mn>0.223</mn><mo stretchy="false" form="prefix">(</mo><mrow><mi>S</mi><mi>e</mi><mi>p</mi><mi>a</mi><mi>l</mi><mspace width="0.222em"></mspace><mi>w</mi><mi>i</mi><mi>d</mi><mi>t</mi><mi>h</mi><mspace width="0.222em"></mspace><mo stretchy="false" form="prefix">[</mo><mi>c</mi><mi>m</mi><mo stretchy="false" form="postfix">]</mo></mrow><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 \widehat{Sepal\ length
 \ [cm]} = 6.526 - 0.223({\color{red}{Sepal\ width
 \ [cm]}})
-$$</span></p>
+</annotation></semantics></math></p>
 </div>
   </div>
 
@@ -284,7 +284,7 @@ $$</span></p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>

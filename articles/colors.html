@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">equatiomatic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -140,10 +140,9 @@ variables. We can do this with colors. For example:</p>
 <span>    body_mass_g    <span class="op">=</span> <span class="st">"firebrick"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">$$
-{\color{cornflowerblue}{\operatorname{bill\_length\_mm}}} = \alpha +
-\beta_{1}({\color{firebrick}{\operatorname{body\_mass\_g}}}) + \epsilon
-$$</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">bill_length_mm</mi><mo>⁡</mo></mrow><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">body_mass_g</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">
+{\color{cornflowerblue}{\operatorname{bill\_length\_mm}}} = \alpha + \beta_{1}({\color{firebrick}{\operatorname{body\_mass\_g}}}) + \epsilon
+</annotation></semantics></math></p>
 <p>and then we can use those same colors later in text, as in “The <span style="color: cornflowerblue;">Dependent Variable</span> is the length
 of the penguins bill, which is predicted by the <span style="color: firebrick;">Independent Variable</span>, the body mass of
 the penguin.”</p>
@@ -307,17 +306,12 @@ model might look something like this:</p>
 <span>    body_mass_g         <span class="op">=</span> <span class="st">"cornflowerblue"</span><span class="op">)</span>,</span>
 <span>  wrap <span class="op">=</span> <span class="cn">TRUE</span>, terms_per_line <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">$$
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mi mathvariant="normal">Bill Length [mm]</mi></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mi>α</mi><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Body Mass [g])</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Flipper Length [mm]</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mspace width="0.222em"></mspace><mo>+</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mspace width="1.0em"></mspace><msub><mi>β</mi><mn>3</mn></msub><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="normal">Body Mass [g])</mi><mo>⁡</mo></mrow><mo>×</mo><mrow><mi mathvariant="normal">Flipper Length [mm]</mi><mo>⁡</mo></mrow><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>ϵ</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
-\operatorname{Bill\ Length\ [mm]} &amp;= \alpha +
-\beta_{1}({\color{cornflowerblue}{\operatorname{Body\ Mass\ [g])}}}) +
-\beta_{2}({\color{firebrick}{\operatorname{Flipper\ Length\ [mm]}}})\ +
-\\
-&amp;\quad \beta_{3}({\color{cornflowerblue}{\operatorname{Body\ Mass\
-[g])}}} \times {\color{firebrick}{\operatorname{Flipper\ Length\
-[mm]}}}) + \epsilon
+\operatorname{Bill\ Length\ [mm]} &amp;= \alpha + \beta_{1}({\color{cornflowerblue}{\operatorname{Body\ Mass\ [g])}}}) + \beta_{2}({\color{firebrick}{\operatorname{Flipper\ Length\ [mm]}}})\ + \\
+&amp;\quad \beta_{3}({\color{cornflowerblue}{\operatorname{Body\ Mass\ [g])}}} \times {\color{firebrick}{\operatorname{Flipper\ Length\ [mm]}}}) + \epsilon
 \end{aligned}
-$$</span></p>
+</annotation></semantics></math></p>
 <p>You can similarly change the variable subscript names. For
 example:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -410,7 +404,7 @@ hesitate to get in touch.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>
