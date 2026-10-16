@@ -122,7 +122,7 @@ Converting to a single line is a good solution when text size is the driving fac
 
 Common strings that may need replacing:
 
-- `\\being{aligned}`, `\\end{aligned}`, `\\begin{alignat}{#}`, and `\\end{alignat}{#}` are often used at the beginning and end of multi-line equations to control alignment. These should be removed.
+- `\\begin{aligned}`, `\\end{aligned}`, `\\begin{alignat}{#}`, and `\\end{alignat}{#}` are often used at the beginning and end of multi-line equations to control alignment. These should be removed.
 - `&` control alignment will likely be used in conjunction with the `\\begin` and `\\end` statements above. `{alignat}` uses multiple `&` to represent different alignment points (e.g. `&&` for the second alignment point). These should also be removed.
 - `\\` is commonly used to denote the end of a line. This is where a $\text{where}$, or $\text{such that}$, or $\owns$ may be useful.
 - If using $\text{where}$, or $\text{such that}$, or $\owns$, the equation can be made more legible replacing the second and subsequent new line (`\\`) with a comma (`,`) or semicolon (`;`).
@@ -133,7 +133,7 @@ Following the parsing notes in the previous section, the equation can be split u
 
 ### Limitations and future development
 
-For simple equations, it's fairly straightforward to incorporate the equation into the plot. The difficulty of incorporating equations into figures increases as the equation becomes more complicated. As mentioned above, `\operatorname{}` is unfortunately not supported by `latex2exp::Tex()` so if you are getting an error or missing operators, check that `ital_vars = TRUE` is set in `equatiomatic::extract:eq()`. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue. 
+For simple equations, it's fairly straightforward to incorporate the equation into the plot. The difficulty of incorporating equations into figures increases as the equation becomes more complicated. As mentioned above, `\operatorname{}` is unfortunately not supported by `latex2exp::TeX()` so if you are getting an error or missing operators, check that `ital_vars = TRUE` is set in `equatiomatic::extract_eq()`. Additionally, as shown above, underscores and other parts of the equation may not directly translate. If you run into issues, please do file an issue. 
 
 Much of the above is fairly "manual", and at this point we don't have plans to build out a full parser for {equatiomatic} because {latex2exp} should work for many use cases. However, we do hope to include helper functions in the future to make some of the above a little easier (e.g., fixing the the underscore issue, or moving to inline equations). Please let us know if there is something you can't do with {latex2exp} by submitting an issue.
 

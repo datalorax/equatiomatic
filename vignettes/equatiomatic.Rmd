@@ -243,15 +243,11 @@ knitr::kable(res)
 ```
 
 
-# Things the package does not yet do
+# Model support and limitations
 
-We are aware of a few things the package doesn't yet do, but that we hope to add later. These include:
+Support depends on the model class and formula features used; not every model covered by [{broom}](https://broom.tidymodels.org) is supported. Mixed-effects models fitted with `lme4::lmer()` are supported; see the [lme4::lmer models vignette](lme4-lmer.html) for examples and limitations.
 
-- Math functions (e.g., `log`, `exp`, `sqrt`)
-- Polynomial (e.g., `lm(y ~ poly(x, 3))`)
-- A range of other models, including multi-level (or mixed effects) models
-
-Regarding this last point, we are hopeful that we can incorporate essentially all the models covered by [{broom}](https://broom.tidymodels.org). Multilevel models are particularly high on our wish list. But we have not yet had the time to develop these.
+Polynomial terms have known limitations; see [issue #214](https://github.com/datalorax/equatiomatic/issues/214).
 
 # Contributing
 
