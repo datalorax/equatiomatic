@@ -1,6 +1,7 @@
 # equatiomatic 0.4.9
 
 * In tests/testthat/test-lmerMod.R, the deprecated `structure(..., .Label=)` is replaced by `structure(..., levels=)`. 
+* Preserve variable names containing `log` or `exp` in equations (#209).
 
 # equatiomatic 0.4.8
 
