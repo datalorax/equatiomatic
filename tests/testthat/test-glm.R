@@ -79,6 +79,44 @@ test_that("colorizing works", {
   )
 })
 
+test_that("Binomial labels use the fitted factor levels", {
+  d <- data.frame(
+    outcome = factor(c(
+      "failure", "failure", "success", "success", "failure", "success"
+    )),
+    x = c(NA, 0, 0, 1, 1, 1)
+  )
+  models <- list(
+    glm(outcome ~ x, data = d, family = binomial(), na.action = na.exclude),
+    glm(outcome ~ x, data = d, family = binomial(), subset = c(3, 2, 4, 5, 6)),
+    glm(outcome ~ x, data = d, family = binomial(), y = FALSE)
+  )
+  rm(d)
+
+  for (model in models) {
+    for (show in c(FALSE, TRUE)) {
+      eq <- extract_eq(
+        model, show_distribution = show, ital_vars = TRUE,
+        swap_var_names = c(outcome = "Choice")
+      )
+      expect_match(as.character(eq), "Choice = success", fixed = TRUE)
+    }
+  }
+})
+
+test_that("Binomial labels include all non-first levels of a factor", {
+  d <- data.frame(
+    outcome = factor(rep(c("alpha", "beta", "gamma"), 2)),
+    x = rep(0:1, each = 3)
+  )
+  model <- glm(outcome ~ x, data = d, family = binomial())
+
+  for (show in c(FALSE, TRUE)) {
+    eq <- extract_eq(model, show_distribution = show, ital_vars = TRUE)
+    expect_match(as.character(eq), "outcome \\ne alpha", fixed = TRUE)
+  }
+})
+
 test_that("logit_notation works for logistic glm", {
   set.seed(1234)
   df <- data.frame(
