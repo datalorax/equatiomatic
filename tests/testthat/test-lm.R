@@ -76,6 +76,19 @@ test_that("Math extraction works", {
   expect_snapshot_output(extract_eq(m1))
   expect_snapshot_output(extract_eq(m2))
 })
+
+test_that("Math operators preserve log and exp in variable names", {
+  d <- transform(mtcars, exper = hp, logistics = wt, log = drat, exp = qsec / 10)
+  m <- lm(mpg ~ exper + logistics + log + exp + log(logistics) + exp(exp),
+          data = d)
+  eq <- as.character(extract_eq(m, use_coefs = TRUE))
+
+  terms <- c("exper", "logistics", "log", "exp", "\\log(logistics)", "\\exp(exp)")
+  for (term in terms) {
+    expect_match(eq, paste0("\\operatorname{", term, "}"), fixed = TRUE)
+  }
+})
+
 test_that("Collapsing lm factors works", {
   d <- mtcars
   d$gear <- as.factor(d$gear)

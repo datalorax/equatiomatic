@@ -381,8 +381,11 @@ add_math <- function(primary, subscripts) {
 }
 
 check_math <- function(primary, subscripts) {
-  checks <- c("log", "exp", "poly\\((.+),.+", "I\\((.+)\\)")
-  replacements <- c("\\\\log", "\\\\exp", paste0("\\1^", subscripts), "\\1")
+  # Match complete operator names followed by an opening parenthesis.
+  primary <- gsub("(*UCP)(?<![\\w.])(log|exp)(?=\\()", "\\\\\\1",
+                  primary, perl = TRUE)
+  checks <- c("poly\\((.+),.+", "I\\((.+)\\)")
+  replacements <- c(paste0("\\1^", subscripts), "\\1")
   for(i in seq_along(checks)) {
     primary <- gsub(checks[i], replacements[i], primary)  
   }
