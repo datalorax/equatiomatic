@@ -1,5 +1,7 @@
 # equatiomatic 0.4.9
 
+* Use the fitted factor response to label binomial equations after missing rows
+  or subsets change the rows used by the model (#240).
 * In tests/testthat/test-lmerMod.R, the deprecated `structure(..., .Label=)` is replaced by `structure(..., levels=)`. 
 
 # equatiomatic 0.4.8

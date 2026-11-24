@@ -182,6 +182,22 @@ swap_var_names, var_colors, logit_notation = FALSE, ...) {
   }
 }
 
+binomial_event <- function(model, outcome) {
+  frame <- model[["model"]]
+  response <- if (!is.null(frame)) stats::model.response(frame)
+  if (is.factor(response)) {
+    response_levels <- levels(response)
+    if (length(response_levels) == 2L) {
+      return(list(label = response_levels[[2L]], operator = "="))
+    }
+    # glm() treats every level other than the first as a success.
+    return(list(label = response_levels[[1L]], operator = "\\ne"))
+  }
+
+  label <- model$data[which(model$y == 1)[1], outcome]
+  list(label = as.character(unlist(label)), operator = "=")
+}
+
 #' @return A character string
 #' @keywords internal
 #' @noRd
@@ -200,10 +216,8 @@ swap_var_names, var_colors, logit_notation = FALSE) {
   outcome_escaped <- escape_tex(outcome)
   outcome_escaped <- add_tex_ital_v(outcome_escaped, ital_vars)
 
-  # This returns a 1x1 data.frame
-  ss <- model$data[which(model$y == 1)[1], outcome_nm]
-  # Convert to single character
-  ss <- as.character(unlist(ss))
+  event <- binomial_event(model, outcome_nm)
+  ss <- event$label
   ss_escaped <- escape_tex(ss)
   ss_escaped <- add_tex_ital_v(ss_escaped, ital_vars)
 
@@ -237,7 +251,7 @@ swap_var_names, var_colors, logit_notation = FALSE) {
     } else {
       full_lhs <- paste(
         "P(", outcome_escaped,
-        "=",
+        event$operator,
         ss_escaped, ")"
       )
     }
@@ -277,11 +291,8 @@ var_colors, logit_notation = FALSE) {
     ))
   }
 
-  # This returns a 1x1 data.frame
-  ss <- model$data[which(model$y == 1)[1], outcome_nm]
-
-  # Convert to single character
-  ss <- as.character(unlist(ss))
+  event <- binomial_event(model, outcome_nm)
+  ss <- event$label
 
   outcome_escaped <- escape_tex(outcome)
   outcome_escaped <- add_tex_ital_v(outcome_escaped, ital_vars)
@@ -303,7 +314,7 @@ var_colors, logit_notation = FALSE) {
     "\\operatorname{prob}",
     add_tex_subscripts(
       paste0(
-        outcome_escaped, " = ", ss_escaped
+        outcome_escaped, " ", event$operator, " ", ss_escaped
       )
     )
   )
