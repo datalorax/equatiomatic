@@ -97,6 +97,34 @@ extract_rhs.default <- function(model, index_factors, ...) {
     full_rhs$primary,
     full_rhs$split
   )
+
+  # The fitted design identifies variables that only appear in interactions.
+  if (inherits(model, "lm") && !is.null(model$assign)) {
+    coefficient_names <- names(coef(model))
+    if (!anyDuplicated(coefficient_names)) {
+      term_index <- model$assign[match(full_rhs$term, coefficient_names)]
+      fitted_terms <- terms(model)
+      factors <- attr(fitted_terms, "factors")
+      expressions <- as.list(attr(fitted_terms, "variables"))[-1L]
+      interactions <- which(attr(fitted_terms, "order") > 1L)
+      for (i in which(term_index %in% interactions)) {
+        active <- which(factors[, term_index[i]] != 0L)
+        variables <- rownames(factors)[active]
+        parts <- full_rhs$split[[i]]
+        # Keep formula calls on the existing math-formatting path.
+        if (!all(variables %in% formula_rhs_terms) &&
+            all(vapply(expressions[active], is.symbol, logical(1))) &&
+            length(parts) == length(variables) &&
+            all(startsWith(parts, variables))) {
+          full_rhs$primary[[i]] <- variables
+          full_rhs$subscripts[[i]] <- setNames(
+            substring(parts, nchar(variables) + 1L), variables
+          )
+        }
+      }
+    }
+  }
+
   if (index_factors) {
     full_rhs <- distinct(full_rhs, "primary")
     unique_ss <- unique(unlist(full_rhs$subscripts))
