@@ -1,5 +1,36 @@
 library(lme4)
 
+test_that("quoted factor names retain their levels and coefficients", {
+  d <- sim_longitudinal
+  d$`group dummy` <- d$group_dummy <- factor(d$group)
+  quoted <- lmer(score ~ treatment + `group dummy` + (1 | school), data = d)
+  plain <- lmer(score ~ treatment + group_dummy + (1 | school), data = d)
+
+  expected <- gsub(
+    "group\\_dummy", "group\\ dummy",
+    as.character(extract_eq(plain, use_coefs = TRUE)), fixed = TRUE
+  )
+  expect_identical(as.character(extract_eq(quoted, use_coefs = TRUE)), expected)
+})
+
+test_that("quoted predictors retain their roles in cross-level interactions", {
+  d <- sim_longitudinal
+  school_id <- match(d$school, unique(d$school))
+  d$`school type` <- d$school_type <- factor(school_id %% 2)
+  d$`x wave` <- d$wave
+  plain <- suppressMessages(lmer(
+    score ~ wave * school_type + (wave | school), data = d
+  ))
+  quoted <- suppressMessages(lmer(
+    score ~ `x wave` * `school type` + (`x wave` | school), data = d
+  ))
+
+  expected <- as.character(extract_eq(plain))
+  expected <- gsub("school\\_type", "school\\ type", expected, fixed = TRUE)
+  expected <- gsub("{wave}", "{x\\ wave}", expected, fixed = TRUE)
+  expect_identical(as.character(extract_eq(quoted)), expected)
+})
+
 test_that("Checking for random/fixed effects works", {
   # PhG: On MacOS the following model fails to converge, thus issuing
   # warnings that are not part of the test itself... So, I suppress them.

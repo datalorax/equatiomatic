@@ -236,6 +236,7 @@ pull_cross_var <- function(cross_splt_frame, order) {
 rm_crosslev_int_redundancy <- function(model, lev_data, term) {
   formula_rhs <- labels(terms(formula(model)))
   formula_rhs <- formula_rhs[!grepl(":|\\|", formula_rhs)]
+  formula_rhs <- gsub("^`?(.+)`$?", "\\1", formula_rhs)
   terms <- vapply(term, function(x) {
     unlist(extract_primary_term(formula_rhs, x))
   }, FUN.VALUE = character(1))

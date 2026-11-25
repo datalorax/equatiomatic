@@ -140,7 +140,14 @@ extract_rhs.lmerMod <- function(model, return_variances, ...) {
   full_rhs$group <- recode_groups(full_rhs)
 
   full_rhs$original_order <- seq_len(nrow(full_rhs))
-  full_rhs$term <- gsub("^`?(.+)`$?", "\\1", full_rhs$term)
+  # Mixed model terms can include a factor level after a quoted name.
+  fixed <- full_rhs$effect == "fixed"
+  full_rhs$term[fixed] <- gsub(
+    "(^|:)`((?:[^`\\\\]|\\\\.)+)`", "\\1\\2", full_rhs$term[fixed], perl = TRUE
+  )
+  full_rhs$term[!fixed] <- gsub(
+    "(__|\\.)`((?:[^`\\\\]|\\\\.)+)`", "\\1\\2", full_rhs$term[!fixed], perl = TRUE
+  )
 
   # Split interactions split into character vectors
   full_rhs$split <- strsplit(full_rhs$term, ":")
